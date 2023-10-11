@@ -7,9 +7,9 @@ import { NavigationContainer } from "@react-navigation/native";
 
 const Stack = createNativeStackNavigator();
 
-type RouterProps = {
+interface RouterProps {
   initialRouterName: VIEW_NAME;
-};
+}
 
 export function Router({ initialRouterName }: RouterProps) {
   return (
