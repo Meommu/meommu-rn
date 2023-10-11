@@ -7,10 +7,14 @@ import { NavigationContainer } from "@react-navigation/native";
 
 const Stack = createNativeStackNavigator();
 
-export function Router() {
+type RouterProps = {
+  initialRouterName: VIEW_NAME;
+};
+
+export function Router({ initialRouterName }: RouterProps) {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={VIEW_NAME.ON_BOARDING}>
+      <Stack.Navigator initialRouteName={initialRouterName}>
         <Stack.Screen name={VIEW_NAME.ON_BOARDING} component={OnBoarding} />
         <Stack.Screen name={VIEW_NAME.HOME} component={Home} />
         <Stack.Screen name={VIEW_NAME.MAIN} component={Main} />
