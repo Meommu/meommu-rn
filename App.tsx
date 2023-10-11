@@ -1,8 +1,8 @@
-import { SplashScreen } from "expo-router";
 import { useFonts } from "expo-font";
 import { useEffect, useState } from "react";
 import { Router } from "./src/Router";
 import { VIEW_NAME } from "./src/constants";
+import * as SplashScreen from "expo-splash-screen";
 
 SplashScreen.preventAutoHideAsync();
 

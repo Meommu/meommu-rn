@@ -1,13 +1,14 @@
 import { useState, createRef } from "react";
 import { View, Text, Image, GestureResponderEvent } from "react-native";
 import { StyleSheet } from "react-native";
-import Swiper from "react-native-swiper";
+import Swiper from "react-native-web-swiper";
 import { NavigationButton } from "../components/NavigationButton";
 import Constants from "expo-constants";
-import type { SwiperStates } from "react-native-swiper";
 import { useNavigation } from "@react-navigation/native";
 import { VIEW_NAME } from "../constants";
 import { StatusBar } from "expo-status-bar";
+
+const SLIDE_MAX_COUNT = 3;
 
 export function OnBoarding() {
   const [swiperIndex, setSwiperIndex] = useState(0);
@@ -25,16 +26,14 @@ export function OnBoarding() {
       return;
     }
 
-    const { index, total } = swiper.current.state as SwiperStates;
+    swiper.current.goToNext();
 
-    if (index < total - 1) {
-      swiper.current.scrollTo(index + 1);
-    }
+    const index = swiper.current.getActiveIndex();
 
     /**
      * TODO: OnBoarding 종료 기록
      */
-    if (index === total - 1) {
+    if (index === SLIDE_MAX_COUNT - 1) {
       navigation.navigate(VIEW_NAME.HOME);
     }
   };
@@ -45,12 +44,21 @@ export function OnBoarding() {
 
       <Swiper
         ref={swiper}
-        style={styles.swiper}
-        dotColor="#CCCCD9"
-        activeDotColor="#565667"
+        containerStyle={styles.swiper}
         loop={false}
-        dotStyle={styles.dotStyle}
-        activeDotStyle={styles.dotStyle}
+        springConfig={{
+          overshootClamping: true,
+        }}
+        controlsProps={{
+          dotsTouchable: true,
+          dotActiveStyle: { ...styles.dotStyle, backgroundColor: "#565667" },
+          dotProps: {
+            badgeStyle: { ...styles.dotStyle, backgroundColor: "#CCCCD9" },
+            containerStyle: { margin: 0 },
+          },
+          nextPos: false,
+          prevPos: false,
+        }}
         onIndexChanged={swiperIndexChangeHandler}
       >
         <View style={styles.slideLayout}>
@@ -74,7 +82,6 @@ export function OnBoarding() {
         </View>
         <View style={styles.slideLayout}>
           <Text style={styles.guideText}>
-            {" "}
             글과 사진을 함께 구성하며{"\n"}지루하지 않게 꾸며봐요!
           </Text>
           <Image
@@ -86,7 +93,7 @@ export function OnBoarding() {
 
       <View style={styles.buttonView}>
         <NavigationButton
-          content={swiperIndex === 2 ? "시작하기" : "다음"}
+          content={swiperIndex === SLIDE_MAX_COUNT - 1 ? "시작하기" : "다음"}
           onPress={nextButtonClickHandler}
         />
       </View>
@@ -133,5 +140,10 @@ const styles = StyleSheet.create({
     marginRight: 3.75,
     width: 6,
     height: 6,
+    /**
+     * react-native-web-swiper 패키지의
+     * minWidth 속성 default(8)값을 제거해주기 위함
+     */
+    minWidth: 0,
   },
 });
