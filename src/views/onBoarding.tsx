@@ -7,6 +7,7 @@ import Constants from "expo-constants";
 import type { SwiperStates } from "react-native-swiper";
 import { useNavigation } from "@react-navigation/native";
 import { VIEW_NAME } from "../constants";
+import { StatusBar } from "expo-status-bar";
 
 export function OnBoarding() {
   const [swiperIndex, setSwiperIndex] = useState(0);
@@ -40,6 +41,8 @@ export function OnBoarding() {
 
   return (
     <View style={styles.container}>
+      <StatusBar style="dark" />
+
       <Swiper
         ref={swiper}
         style={styles.swiper}
