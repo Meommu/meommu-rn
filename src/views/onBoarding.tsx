@@ -1,5 +1,5 @@
 import { useState, createRef } from "react";
-import { View, Text, GestureResponderEvent } from "react-native";
+import { View, Text, Image, GestureResponderEvent } from "react-native";
 import { StyleSheet } from "react-native";
 import Swiper from "react-native-swiper";
 import { NavigationButton } from "../components/NavigationButton";
@@ -50,14 +50,34 @@ export function OnBoarding() {
         activeDotStyle={styles.dotStyle}
         onIndexChanged={swiperIndexChangeHandler}
       >
-        <View>
-          <Text>화면 1</Text>
+        <View style={styles.slideLayout}>
+          <Text style={styles.guideText}>
+            추억하고 싶은 순간을{"\n"}멈무일기에서 기록해봐요!
+          </Text>
+          <Image
+            style={styles.imageLayout}
+            source={require("../../assets/images/onboarding/onboarding-1.png")}
+          />
         </View>
-        <View>
-          <Text>화면 2</Text>
+        <View style={styles.slideLayout}>
+          <Text style={styles.guideText}>
+            활동을 카테고리에 따라{"\n"}
+            GPT로 간단하게 완성해봐요!
+          </Text>
+          <Image
+            style={styles.imageLayout}
+            source={require("../../assets/images/onboarding/onboarding-2.png")}
+          />
         </View>
-        <View>
-          <Text>화면 3</Text>
+        <View style={styles.slideLayout}>
+          <Text style={styles.guideText}>
+            {" "}
+            글과 사진을 함께 구성하며{"\n"}지루하지 않게 꾸며봐요!
+          </Text>
+          <Image
+            style={styles.imageLayout}
+            source={require("../../assets/images/onboarding/onboarding-3.png")}
+          />
         </View>
       </Swiper>
 
@@ -80,8 +100,26 @@ const styles = StyleSheet.create({
     paddingBottom: 40,
   },
   swiper: {
+    /**
+     * ※ width 값을 고정시키면 슬라이더가 동작하지 않음
+     */
     height: "100%",
-    backgroundColor: "red",
+  },
+  slideLayout: {
+    width: "100%",
+    height: "100%",
+  },
+  guideText: {
+    fontSize: 25,
+    fontFamily: "Pretendard-SemiBold",
+    position: "absolute",
+    left: 20,
+    top: 108 - Constants.statusBarHeight,
+  },
+  imageLayout: {
+    width: "100%",
+    height: "100%",
+    marginTop: 60,
   },
   buttonView: {
     width: "100%",
