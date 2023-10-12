@@ -1,8 +1,20 @@
 import { View, Text, Image } from "react-native";
 import { StyleSheet } from "react-native";
 import { NavigationButton } from "../components/NavigationButton";
+import { useNavigation } from "@react-navigation/native";
+import { VIEW_NAME } from "../constants";
 
 export function Home() {
+  const navigation = useNavigation();
+
+  const signInButtonClickHandler = () => {
+    navigation.navigate(VIEW_NAME.SIGN_IN);
+  };
+
+  const signUpButtonClickHandler = () => {
+    navigation.navigate(VIEW_NAME.SIGN_UP);
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.titleView}>
@@ -20,10 +32,11 @@ export function Home() {
       </View>
 
       <View style={styles.navigationButtonView}>
-        <NavigationButton content="로그인" />
+        <NavigationButton content="로그인" onPress={signInButtonClickHandler} />
         <NavigationButton
           content="이메일 아이디로 회원가입하기"
           backgroundColor="#B7B7CB"
+          onPress={signUpButtonClickHandler}
         />
       </View>
     </View>
