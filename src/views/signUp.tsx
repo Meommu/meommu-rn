@@ -10,6 +10,8 @@ import { VIEW_NAME } from "../constants";
 const SLIDE_MAX_COUNT = 3;
 
 export function SignUp() {
+  const [isEmailDup, setIsEmailDup] = useState(true);
+
   const navigation = useNavigation();
 
   const [swiperIndex, setSwiperIndex] = useState(0);
@@ -29,13 +31,18 @@ export function SignUp() {
       return;
     }
 
-    swiper.current.goToNext();
+    if (isLastSlide()) {
+      /**
+       * TODO: 덮어쓰기 형태로 페이지 이동시키도록 구현
+       */
+      navigation.navigate(VIEW_NAME.MAIN);
+
+      return;
+    }
 
     const index = swiper.current.getActiveIndex();
 
-    if (index === SLIDE_MAX_COUNT - 1) {
-      navigation.navigate(VIEW_NAME.MAIN);
-    }
+    swiper.current.goTo(index + 1);
   };
 
   const goBackButtonClickHandler = () => {
@@ -68,11 +75,31 @@ export function SignUp() {
     return swiperIndex === SLIDE_MAX_COUNT - 1;
   };
 
-  const isNavigationButtonActive = () => {
-    /**
-     * TODO: 현재 단계에 따라 다음 단계로 넘어갈 수 있는지 판단하는 함수 구현
-     */
-    return true;
+  const isNavigationButtonActive = (): boolean => {
+    if (!swiper.current) {
+      return false;
+    }
+
+    const index = swiper.current.getActiveIndex();
+
+    switch (index) {
+      case 0:
+        /**
+         * - 이메일 중복여부 체크
+         * - 비밀번호 유효성, 일치 여부 체크
+         * - 약관 동의 여부 체크
+         */
+        return !isEmailDup;
+      case 1:
+        /**
+         * - 유치원 이름 입력, 유효성 체크
+         * - 대표자 이름 입력, 유효성 체크
+         * - 전화번호 입력, 유효성 체크
+         */
+        return true;
+      default:
+        return true;
+    }
   };
 
   return (
