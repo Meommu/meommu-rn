@@ -3,10 +3,10 @@ import { View, Text, Image, GestureResponderEvent } from "react-native";
 import { StyleSheet } from "react-native";
 import Swiper from "react-native-web-swiper";
 import { NavigationButton } from "../components/NavigationButton";
-import Constants from "expo-constants";
 import { useNavigation } from "@react-navigation/native";
 import { VIEW_NAME } from "../constants";
 import { StatusBar } from "expo-status-bar";
+import { size } from "../constants";
 
 const SLIDE_MAX_COUNT = 3;
 
@@ -66,7 +66,7 @@ export function OnBoarding() {
             추억하고 싶은 순간을{"\n"}멈무일기에서 기록해봐요!
           </Text>
           <Image
-            style={styles.imageLayout}
+            style={styles.bannerImage}
             source={require("../../assets/images/onboarding/onboarding-1.png")}
           />
         </View>
@@ -76,7 +76,7 @@ export function OnBoarding() {
             GPT로 간단하게 완성해봐요!
           </Text>
           <Image
-            style={styles.imageLayout}
+            style={styles.bannerImage}
             source={require("../../assets/images/onboarding/onboarding-2.png")}
           />
         </View>
@@ -85,7 +85,7 @@ export function OnBoarding() {
             글과 사진을 함께 구성하며{"\n"}지루하지 않게 꾸며봐요!
           </Text>
           <Image
-            style={styles.imageLayout}
+            style={styles.bannerImage}
             source={require("../../assets/images/onboarding/onboarding-3.png")}
           />
         </View>
@@ -106,34 +106,43 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     backgroundColor: "white",
-    position: "absolute",
+    padding: 20,
   },
+
   swiper: {
     /**
      * ※ width 값을 고정시키면 슬라이더가 동작하지 않음
      */
     height: "100%",
+    marginBottom: 20,
   },
+
   slideLayout: {
     width: "100%",
     height: "100%",
+    justifyContent: "center",
+    alignContent: "center",
+    position: "relative",
   },
+
   guideText: {
     fontSize: 25,
     fontFamily: "Pretendard-SemiBold",
     position: "absolute",
-    left: 20,
     top: 64,
+    zIndex: 1,
   },
-  imageLayout: {
+
+  bannerImage: {
     width: "100%",
-    height: "100%",
-    marginTop: 60,
+    aspectRatio: "1/1",
+    marginTop: size.NAVIGATION_BUTTON_HEIGHT + 20,
   },
+
   buttonView: {
     width: "100%",
-    padding: 20,
   },
+
   dotStyle: {
     marginLeft: 3.75,
     marginRight: 3.75,

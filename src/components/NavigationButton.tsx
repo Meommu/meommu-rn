@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   GestureResponderEvent,
 } from "react-native";
+import { size } from "../constants";
 
 interface NavigationButtonProps {
   fontColor?: string;
@@ -31,7 +32,7 @@ export function NavigationButton({
 const styles = StyleSheet.create({
   container: {
     width: "100%",
-    height: 48,
+    height: size.NAVIGATION_BUTTON_HEIGHT,
     borderRadius: 6,
     justifyContent: "center",
     alignItems: "center",
