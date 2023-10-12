@@ -22,7 +22,11 @@ export function Router({ initialRouterName }: RouterProps) {
             component={OnBoarding}
             options={{ headerShown: false }}
           />
-          <Stack.Screen name={VIEW_NAME.HOME} component={Home} />
+          <Stack.Screen
+            name={VIEW_NAME.HOME}
+            component={Home}
+            options={{ headerShown: false }}
+          />
           <Stack.Screen name={VIEW_NAME.MAIN} component={Main} />
         </Stack.Navigator>
       </NavigationContainer>
