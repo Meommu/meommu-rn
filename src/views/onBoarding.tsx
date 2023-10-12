@@ -106,8 +106,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     backgroundColor: "white",
-    paddingTop: Constants.statusBarHeight,
-    paddingBottom: 40,
+    position: "absolute",
   },
   swiper: {
     /**
@@ -124,7 +123,7 @@ const styles = StyleSheet.create({
     fontFamily: "Pretendard-SemiBold",
     position: "absolute",
     left: 20,
-    top: 108 - Constants.statusBarHeight,
+    top: 64,
   },
   imageLayout: {
     width: "100%",
