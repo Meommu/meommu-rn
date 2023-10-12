@@ -1,0 +1,28 @@
+name: vercel continuous deployment
+
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  Deploy-Preview:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Vercel CLI 설치
+        run: npm install --global vercel@latest
+
+      - name: Vercel 환경 정보 가져오기
+        run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Vercel 프로젝트에 등록해 둔 빌드 스크립트 실행
+        run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Vercel 프로젝트의 등록해 둔 배포 스크립트 실행
+        run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
