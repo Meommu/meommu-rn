@@ -39,15 +39,19 @@ export function SignUp() {
   };
 
   const goBackButtonClickHandler = () => {
-    if (!swiper.current) {
-      return;
-    }
-
-    swiper.current.goToPrev();
-
-    if (swiper.current.getActiveIndex() === 0 && navigation.canGoBack()) {
+    if (isFirstSlide()) {
       navigation.goBack();
+    } else {
+      if (!swiper.current) {
+        return;
+      }
+
+      swiper.current.goToPrev();
     }
+  };
+
+  const isFirstSlide = () => {
+    return swiperIndex === 0;
   };
 
   const isLastSlide = () => {
@@ -64,7 +68,10 @@ export function SignUp() {
   return (
     <View style={styles.container}>
       <View style={styles.headerView}>
-        <GoBackButton onPress={goBackButtonClickHandler} />
+        <GoBackButton
+          onPress={goBackButtonClickHandler}
+          disable={isLastSlide()}
+        />
       </View>
 
       <Swiper

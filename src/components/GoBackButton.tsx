@@ -11,9 +11,10 @@ import CaretLeft from "../../assets/svgs/caret-left.svg";
 
 interface GoBackButtonProps {
   onPress?: (event: GestureResponderEvent) => void;
+  disable?: boolean;
 }
 
-export function GoBackButton({ onPress }: GoBackButtonProps) {
+export function GoBackButton({ onPress, disable = false }: GoBackButtonProps) {
   const navigation = useNavigation();
 
   const goBackButtonClickHandler = () => {
@@ -23,8 +24,11 @@ export function GoBackButton({ onPress }: GoBackButtonProps) {
   };
 
   return (
-    <TouchableOpacity onPress={onPress || goBackButtonClickHandler}>
-      <View style={styles.container}>
+    <TouchableOpacity
+      onPress={onPress || goBackButtonClickHandler}
+      disabled={disable}
+    >
+      <View style={[styles.container, { opacity: disable ? 0 : 1 }]}>
         <Image source={CaretLeft} style={styles.caretImage} />
       </View>
     </TouchableOpacity>
