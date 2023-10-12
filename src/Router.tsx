@@ -31,7 +31,13 @@ export function Router({ initialRouterName }: RouterProps) {
           />
           <Stack.Screen name={VIEW_NAME.MAIN} component={Main} />
           <Stack.Screen name={VIEW_NAME.SIGN_IN} component={SignIn} />
-          <Stack.Screen name={VIEW_NAME.SIGN_UP} component={SignUp} />
+          <Stack.Screen
+            name={VIEW_NAME.SIGN_UP}
+            component={SignUp}
+            options={{
+              headerShown: false,
+            }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </GlobalLayout>
