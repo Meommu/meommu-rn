@@ -39,15 +39,25 @@ export function SignUp() {
   };
 
   const goBackButtonClickHandler = () => {
+    if (isLastSlide()) {
+      return;
+    }
+
     if (isFirstSlide()) {
-      navigation.goBack();
-    } else {
-      if (!swiper.current) {
+      if (!navigation.canGoBack()) {
         return;
       }
 
-      swiper.current.goToPrev();
+      navigation.goBack();
+
+      return;
     }
+
+    if (!swiper.current) {
+      return;
+    }
+
+    swiper.current.goToPrev();
   };
 
   const isFirstSlide = () => {
