@@ -3,10 +3,10 @@ import { View, Text, Image, GestureResponderEvent } from "react-native";
 import { StyleSheet } from "react-native";
 import Swiper from "react-native-web-swiper";
 import { NavigationButton } from "../components/NavigationButton";
-import Constants from "expo-constants";
 import { useNavigation } from "@react-navigation/native";
 import { VIEW_NAME } from "../constants";
 import { StatusBar } from "expo-status-bar";
+import { size } from "../constants";
 
 const SLIDE_MAX_COUNT = 3;
 
@@ -65,29 +65,35 @@ export function OnBoarding() {
           <Text style={styles.guideText}>
             추억하고 싶은 순간을{"\n"}멈무일기에서 기록해봐요!
           </Text>
-          <Image
-            style={styles.imageLayout}
-            source={require("../../assets/images/onboarding/onboarding-1.png")}
-          />
+          <View style={styles.bannerImageWrapper}>
+            <Image
+              style={styles.bannerImage}
+              source={require("../../assets/images/onboarding/onboarding-1.png")}
+            />
+          </View>
         </View>
         <View style={styles.slideLayout}>
           <Text style={styles.guideText}>
             활동을 카테고리에 따라{"\n"}
             GPT로 간단하게 완성해봐요!
           </Text>
-          <Image
-            style={styles.imageLayout}
-            source={require("../../assets/images/onboarding/onboarding-2.png")}
-          />
+          <View style={styles.bannerImageWrapper}>
+            <Image
+              style={styles.bannerImage}
+              source={require("../../assets/images/onboarding/onboarding-2.png")}
+            />
+          </View>
         </View>
         <View style={styles.slideLayout}>
           <Text style={styles.guideText}>
             글과 사진을 함께 구성하며{"\n"}지루하지 않게 꾸며봐요!
           </Text>
-          <Image
-            style={styles.imageLayout}
-            source={require("../../assets/images/onboarding/onboarding-3.png")}
-          />
+          <View style={styles.bannerImageWrapper}>
+            <Image
+              style={styles.bannerImage}
+              source={require("../../assets/images/onboarding/onboarding-3.png")}
+            />
+          </View>
         </View>
       </Swiper>
 
@@ -106,35 +112,48 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     backgroundColor: "white",
-    paddingTop: Constants.statusBarHeight,
-    paddingBottom: 40,
   },
+
   swiper: {
     /**
      * ※ width 값을 고정시키면 슬라이더가 동작하지 않음
      */
     height: "100%",
   },
+
   slideLayout: {
     width: "100%",
     height: "100%",
+    position: "relative",
+    justifyContent: "center",
+    alignContent: "center",
   },
+
   guideText: {
     fontSize: 25,
     fontFamily: "Pretendard-SemiBold",
     position: "absolute",
     left: 20,
-    top: 108 - Constants.statusBarHeight,
+    top: 64,
+    zIndex: 1,
   },
-  imageLayout: {
+
+  bannerImageWrapper: {
+    width: "100%",
+    aspectRatio: "1/1",
+    marginTop: size.NAVIGATION_BUTTON_HEIGHT + 20,
+  },
+
+  bannerImage: {
     width: "100%",
     height: "100%",
-    marginTop: 60,
   },
+
   buttonView: {
     width: "100%",
     padding: 20,
   },
+
   dotStyle: {
     marginLeft: 3.75,
     marginRight: 3.75,

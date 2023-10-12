@@ -1,0 +1,1 @@
+export const NAVIGATION_BUTTON_HEIGHT = 48;

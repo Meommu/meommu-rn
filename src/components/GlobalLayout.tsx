@@ -1,5 +1,6 @@
 import { View, StyleSheet } from "react-native";
 import type { ReactNode } from "react";
+import Constants from "expo-constants";
 
 interface GlobalLayoutProps {
   children: ReactNode;
@@ -16,5 +17,7 @@ const styles = StyleSheet.create({
     aspectRatio: "9 / 16",
     marginLeft: "auto",
     marginRight: "auto",
+    paddingTop: Constants.statusBarHeight,
+    paddingBottom: Constants.statusBarHeight,
   },
 });
