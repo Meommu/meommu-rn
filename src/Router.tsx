@@ -5,6 +5,8 @@ import { Home } from "./views/home";
 import { Main } from "./views/main";
 import { NavigationContainer } from "@react-navigation/native";
 import { GlobalLayout } from "./components/GlobalLayout";
+import { SignIn } from "./views/signIn";
+import { SignUp } from "./views/signUp";
 
 const Stack = createNativeStackNavigator();
 
@@ -22,8 +24,14 @@ export function Router({ initialRouterName }: RouterProps) {
             component={OnBoarding}
             options={{ headerShown: false }}
           />
-          <Stack.Screen name={VIEW_NAME.HOME} component={Home} />
+          <Stack.Screen
+            name={VIEW_NAME.HOME}
+            component={Home}
+            options={{ headerShown: false }}
+          />
           <Stack.Screen name={VIEW_NAME.MAIN} component={Main} />
+          <Stack.Screen name={VIEW_NAME.SIGN_IN} component={SignIn} />
+          <Stack.Screen name={VIEW_NAME.SIGN_UP} component={SignUp} />
         </Stack.Navigator>
       </NavigationContainer>
     </GlobalLayout>
