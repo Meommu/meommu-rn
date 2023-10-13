@@ -22,6 +22,7 @@ export function StepOne({}: StepOneProps) {
   const agreement = watch("agreement");
   const emailInputValue = watch("email");
   const emailDupChk = watch("emailDupChk");
+  const password = watch("password");
 
   const agreementButtonClickHandler = () => {
     setValue("agreement", !agreement);
@@ -64,7 +65,7 @@ export function StepOne({}: StepOneProps) {
       ? typeof emailDupChk === "boolean"
         ? `사용 ${!emailDupChk ? "불" : ""}가능한 이메일 입니다.`
         : ""
-      : "이메일 형태가 잘못되었습니다.";
+      : errors.email.message;
 
   return (
     <View style={styles.container}>
@@ -88,7 +89,7 @@ export function StepOne({}: StepOneProps) {
               required: true,
               pattern: {
                 value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
-                message: "에러",
+                message: "이메일 형식이 올바르지 않습니다.",
               },
             }}
             render={({ field: { onChange, onBlur, value } }) => (
@@ -118,17 +119,21 @@ export function StepOne({}: StepOneProps) {
         <View style={styles.fieldTextLayoutView}>
           <Text style={styles.fieldGuideText}>비밀번호를 입력해주세요</Text>
 
-          {emailDupChk !== null && (
-            <AlertText condition={emailDupChk}>
-              사용 {emailDupChk ? "" : "불"}가능한 이메일 입니다.
-            </AlertText>
-          )}
+          <AlertText condition={!errors.password ? true : false}>
+            {(errors.password && errors.password.message) || ""}
+          </AlertText>
         </View>
 
         <Controller
           name="password"
           control={control}
-          rules={{ required: true }}
+          rules={{
+            required: true,
+            pattern: {
+              value: /^(?=.*\d)(?=.*[!@#$%^~*+=-])[A-Za-z\d!@#$%^~*+=-]{8,20}$/,
+              message: "비밀번호 형식이 올바르지 않습니다.",
+            },
+          }}
           render={({ field: { onChange, onBlur, value } }) => (
             <FormInput
               placeholder="비밀번호"
@@ -149,25 +154,25 @@ export function StepOne({}: StepOneProps) {
 
       <View style={{ gap: 12 }}>
         <View style={{ flexDirection: "row", gap: 12 }}>
-          <Text
-            style={{
-              fontSize: 14,
-              fontFamily: "Pretendard-SemiBold",
-            }}
-          >
-            비밀번호를 확인해주세요
-          </Text>
-          {emailDupChk !== null && (
-            <AlertText condition={emailDupChk}>
-              사용 {emailDupChk ? "" : "불"}가능한 이메일 입니다.
-            </AlertText>
-          )}
+          <Text style={styles.fieldGuideText}>비밀번호를 확인해주세요</Text>
+
+          <AlertText condition={!errors.passwordConfirm ? true : false}>
+            {(errors.passwordConfirm && errors.passwordConfirm.message) || ""}
+          </AlertText>
         </View>
 
         <Controller
           name="passwordConfirm"
           control={control}
-          rules={{ required: true }}
+          rules={{
+            required: true,
+            validate: (value) => {
+              console.log("validate", value, password);
+              return value === password
+                ? true
+                : "패스워드가 일치하지 않습니다.";
+            },
+          }}
           render={({ field: { onChange, onBlur, value } }) => (
             <FormInput
               placeholder="비밀번호"
