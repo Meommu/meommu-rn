@@ -1,4 +1,4 @@
-import { View, TextInput } from "react-native";
+import { View, TextInput, Pressable, Keyboard } from "react-native";
 import type { TextInputProps } from "react-native";
 
 interface FormInputProps extends TextInputProps {}
@@ -11,19 +11,21 @@ export function FormInput({ ...props }: FormInputProps) {
         flexGrow: 1,
       }}
     >
-      <TextInput
-        style={{
-          width: "100%",
-          backgroundColor: "#EBEBF0",
-          borderRadius: 4,
-          fontSize: 16,
-          fontFamily: "Pretendard-SemiBold",
-          paddingHorizontal: 13,
-          paddingVertical: 10,
-        }}
-        placeholderTextColor="#B7B7CB"
-        {...props}
-      />
+      <Pressable onPress={() => Keyboard.dismiss()}>
+        <TextInput
+          style={{
+            width: "100%",
+            backgroundColor: "#EBEBF0",
+            borderRadius: 4,
+            fontSize: 16,
+            fontFamily: "Pretendard-SemiBold",
+            paddingHorizontal: 13,
+            paddingVertical: 10,
+          }}
+          placeholderTextColor="#B7B7CB"
+          {...props}
+        />
+      </Pressable>
     </View>
   );
 }
