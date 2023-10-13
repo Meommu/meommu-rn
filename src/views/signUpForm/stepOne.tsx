@@ -157,7 +157,9 @@ export function StepOne({}: StepOneProps) {
           <Text style={styles.fieldGuideText}>비밀번호를 확인해주세요</Text>
 
           <AlertText condition={!errors.passwordConfirm ? true : false}>
-            {(errors.passwordConfirm && errors.passwordConfirm.message) || ""}
+            {!errors.password
+              ? (errors.passwordConfirm && errors.passwordConfirm.message) || ""
+              : ""}
           </AlertText>
         </View>
 
@@ -166,12 +168,8 @@ export function StepOne({}: StepOneProps) {
           control={control}
           rules={{
             required: true,
-            validate: (value) => {
-              console.log("validate", value, password);
-              return value === password
-                ? true
-                : "패스워드가 일치하지 않습니다.";
-            },
+            validate: (value) =>
+              value === password ? true : "패스워드가 일치하지 않습니다.",
           }}
           render={({ field: { onChange, onBlur, value } }) => (
             <FormInput
