@@ -1,5 +1,5 @@
 import { useState, createRef } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
 import Swiper from "react-native-web-swiper";
 import { GoBackButton } from "../components/GoBackButton";
 import { NavigationButton } from "../components/NavigationButton";
@@ -172,7 +172,7 @@ export function SignUp() {
             tension: 0,
           }}
         >
-          <View>
+          <View style={styles.SlideView}>
             <View style={styles.GuideText}>
               <Text style={styles.GreetingText}>
                 안녕하세요,{"\n"}
@@ -183,7 +183,9 @@ export function SignUp() {
               </Text>
             </View>
 
-            <StepOne />
+            <ScrollView>
+              <StepOne />
+            </ScrollView>
           </View>
 
           <View>
@@ -220,6 +222,11 @@ const styles = StyleSheet.create({
 
   navigationView: {
     padding: 20,
+  },
+
+  SlideView: {
+    width: "100%",
+    height: "100%",
   },
 
   GuideText: {

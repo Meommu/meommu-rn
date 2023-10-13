@@ -1,6 +1,5 @@
 import { Controller, useFormContext } from "react-hook-form";
 import { View, Text, StyleSheet } from "react-native";
-import { useState } from "react";
 import { FormInput } from "../../components/FormInput";
 import { FormDupChkButton } from "../../components/FormDupChkButton";
 import { CheckBoxButton } from "../../components/CheckboxButton";
@@ -207,7 +206,6 @@ const styles = StyleSheet.create({
   container: {
     gap: 18,
     paddingHorizontal: 20,
-    height: "100%",
     width: "100%",
   },
 
