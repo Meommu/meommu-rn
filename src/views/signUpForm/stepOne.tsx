@@ -14,13 +14,11 @@ export function StepOne({}: StepOneProps) {
   const { control, setValue, errors, trigger, watch } =
     useFormContext<SignUpFormFieldValues>();
 
-  const [agreement, setAgreement] = useState(false);
-
+  const agreement = watch("agreement");
   const emailInputValue = watch("email");
   const emailDupChk = watch("emailDupChk");
 
   const agreementButtonClickHandler = () => {
-    setAgreement(!agreement);
     setValue("agreement", !agreement);
   };
 
