@@ -1,4 +1,4 @@
-import { Controller } from "react-hook-form";
+import { Controller, useWatch } from "react-hook-form";
 import { View, Text, StyleSheet } from "react-native";
 import { useState } from "react";
 import { FormInput } from "../../components/FormInput";
@@ -19,6 +19,13 @@ export function StepOne({ control, setValue, errors }: StepOneProps) {
   const [isEmailDup, setIsEmailDup] = useState<boolean | null>(null);
 
   const [agreement, setAgreement] = useState(false);
+
+  const emailInputValue = useWatch<SignUpFormFieldValues>({
+    control,
+    name: "email",
+  });
+
+  console.log("watch", emailInputValue);
 
   const agreementButtonClickHandler = () => {
     setAgreement(!agreement);
@@ -90,6 +97,7 @@ export function StepOne({ control, setValue, errors }: StepOneProps) {
           <FormDupChkButton
             isDup={isEmailDup}
             onPress={emailDupChkButtonClickHandler}
+            disabled={!emailInputValue}
           />
         </View>
       </View>
