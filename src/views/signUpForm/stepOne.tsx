@@ -1,4 +1,4 @@
-import { Controller, useWatch } from "react-hook-form";
+import { Controller, useWatch, useFormContext } from "react-hook-form";
 import { View, Text, StyleSheet } from "react-native";
 import { useState } from "react";
 import { FormInput } from "../../components/FormInput";
@@ -7,15 +7,13 @@ import { CheckBoxButton } from "../../components/CheckboxButton";
 import { AlertText } from "../../components/AlertText";
 import CaretRight from "../../../assets/svgs/caret-right.svg";
 import type { SignUpFormFieldValues } from "../signUp";
-import type { Control, UseFormSetValue, FieldErrors } from "react-hook-form";
 
-interface StepOneProps {
-  control: Control<SignUpFormFieldValues, any>;
-  setValue: UseFormSetValue<SignUpFormFieldValues>;
-  errors: FieldErrors<SignUpFormFieldValues>;
-}
+interface StepOneProps {}
 
-export function StepOne({ control, setValue, errors }: StepOneProps) {
+export function StepOne({}: StepOneProps) {
+  const { control, setValue, errors, trigger } =
+    useFormContext<SignUpFormFieldValues>();
+
   const [isEmailDup, setIsEmailDup] = useState<boolean | null>(null);
 
   const [agreement, setAgreement] = useState(false);
