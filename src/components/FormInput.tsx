@@ -7,6 +7,7 @@ export function FormInput({ ...props }: FormInputProps) {
   return (
     <View
       style={{
+        flexShrink: 1,
         flexGrow: 1,
       }}
     >
