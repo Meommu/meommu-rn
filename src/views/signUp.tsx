@@ -30,12 +30,7 @@ export function SignUp() {
     },
   });
 
-  const {
-    handleSubmit,
-    formState: { errors },
-    watch,
-    trigger,
-  } = methods;
+  const { handleSubmit, watch, trigger } = methods;
 
   const navigation = useNavigation();
 
@@ -50,7 +45,12 @@ export function SignUp() {
   const nextButtonClickHandler = async (
     event: GestureResponderEvent
   ): Promise<void> => {
-    if (!swiper.current) {
+    /**
+     * 비동기 처리 이후 swiper.current가 null로 변경되는 이슈가 있어 `swiperObj` 변수에 저장해두고 사용
+     */
+    const swiperObj = swiper.current;
+
+    if (!swiperObj) {
       return;
     }
 
@@ -71,7 +71,7 @@ export function SignUp() {
       return;
     }
 
-    swiper.current.goTo(swiperIndex + 1);
+    swiperObj.goTo(swiperIndex + 1);
   };
 
   const goBackButtonClickHandler = () => {
@@ -125,9 +125,7 @@ export function SignUp() {
     switch (swiperIndex) {
       case 0:
         /**
-         * - 이메일 중복여부, 유효성 체크
-         * - 비밀번호 유효성, 일치 여부 체크
-         * - 약관 동의 여부 체크
+         * - 비밀번호 일치 여부 체크
          */
         if (!emailDupChk) {
           return false;
@@ -196,15 +194,6 @@ export function SignUp() {
             <Text>페이지 3</Text>
           </View>
         </Swiper>
-
-        <Text>
-          [폼 상태]{"\n"}
-          {JSON.stringify(formState, null, 2)}
-        </Text>
-        <Text>
-          [폼 오류]{"\n"}
-          {JSON.stringify(errors, null, 2)}
-        </Text>
 
         <View style={styles.navigationView}>
           <NavigationButton
