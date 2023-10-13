@@ -43,6 +43,11 @@ export function StepOne({ control, setValue, errors }: StepOneProps) {
     return;
   };
 
+  const resetEmailDupChk = () => {
+    setIsEmailDup(null);
+    setValue("emailDupChk", false);
+  };
+
   return (
     <View style={styles.container}>
       {/**
@@ -74,7 +79,10 @@ export function StepOne({ control, setValue, errors }: StepOneProps) {
               <FormInput
                 placeholder="이메일"
                 onBlur={onBlur}
-                onChangeText={onChange}
+                onChangeText={(text: string) => {
+                  resetEmailDupChk();
+                  onChange(text);
+                }}
                 value={value}
               />
             )}
