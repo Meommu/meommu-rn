@@ -4,6 +4,7 @@ import { useState } from "react";
 import { FormInput } from "../../components/FormInput";
 import { FormDupChkButton } from "../../components/FormDupChkButton";
 import { CheckBoxButton } from "../../components/CheckboxButton";
+import { AlertText } from "../../components/AlertText";
 import CaretRight from "../../../assets/svgs/caret-right.svg";
 import type { SignUpFormFieldValues } from "../signUp";
 import type { Control, UseFormSetValue, FieldErrors } from "react-hook-form";
@@ -52,16 +53,9 @@ export function StepOne({ control, setValue, errors }: StepOneProps) {
           <Text style={styles.fieldGuideText}>이메일 주소를 입력해주세요</Text>
 
           {isEmailDup !== null && (
-            <Text
-              style={[
-                styles.fieldAlertText,
-                {
-                  color: isEmailDup ? "#FF8585" : "#63BCA9",
-                },
-              ]}
-            >
+            <AlertText condition={isEmailDup}>
               사용 {isEmailDup ? "불" : ""}가능한 이메일 입니다.
-            </Text>
+            </AlertText>
           )}
         </View>
 
@@ -100,16 +94,9 @@ export function StepOne({ control, setValue, errors }: StepOneProps) {
           <Text style={styles.fieldGuideText}>비밀번호를 입력해주세요</Text>
 
           {isEmailDup !== null && (
-            <Text
-              style={[
-                styles.fieldAlertText,
-                {
-                  color: isEmailDup ? "#FF8585" : "#63BCA9",
-                },
-              ]}
-            >
+            <AlertText condition={isEmailDup}>
               사용 {isEmailDup ? "불" : ""}가능한 이메일 입니다.
-            </Text>
+            </AlertText>
           )}
         </View>
 
@@ -146,16 +133,9 @@ export function StepOne({ control, setValue, errors }: StepOneProps) {
             비밀번호를 확인해주세요
           </Text>
           {isEmailDup !== null && (
-            <Text
-              style={[
-                styles.fieldAlertText,
-                {
-                  color: isEmailDup ? "#FF8585" : "#63BCA9",
-                },
-              ]}
-            >
+            <AlertText condition={isEmailDup}>
               사용 {isEmailDup ? "불" : ""}가능한 이메일 입니다.
-            </Text>
+            </AlertText>
           )}
         </View>
 
@@ -213,11 +193,6 @@ const styles = StyleSheet.create({
   },
 
   fieldGuideText: {
-    fontSize: 14,
-    fontFamily: "Pretendard-SemiBold",
-  },
-
-  fieldAlertText: {
     fontSize: 14,
     fontFamily: "Pretendard-SemiBold",
   },
