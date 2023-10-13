@@ -11,8 +11,13 @@ import type { SignUpFormFieldValues } from "../signUp";
 interface StepOneProps {}
 
 export function StepOne({}: StepOneProps) {
-  const { control, setValue, errors, trigger, watch } =
-    useFormContext<SignUpFormFieldValues>();
+  const {
+    control,
+    setValue,
+    formState: { errors },
+    trigger,
+    watch,
+  } = useFormContext<SignUpFormFieldValues>();
 
   const agreement = watch("agreement");
   const emailInputValue = watch("email");
@@ -23,6 +28,12 @@ export function StepOne({}: StepOneProps) {
   };
 
   const emailDupChkButtonClickHandler = async () => {
+    const emailIsValid = await trigger("email");
+
+    if (!emailIsValid) {
+      return;
+    }
+
     /**
      * todo: 이메일 중복 체크 api 호출
      */
@@ -41,6 +52,20 @@ export function StepOne({}: StepOneProps) {
     setValue("emailDupChk", null);
   };
 
+  const emailInputCondition =
+    errors.email === undefined
+      ? typeof emailDupChk === "boolean"
+        ? emailDupChk
+        : false
+      : false;
+
+  const emailInputAlertMessage =
+    errors.email === undefined
+      ? typeof emailDupChk === "boolean"
+        ? `사용 ${!emailDupChk ? "불" : ""}가능한 이메일 입니다.`
+        : ""
+      : "이메일 형태가 잘못되었습니다.";
+
   return (
     <View style={styles.container}>
       {/**
@@ -50,11 +75,9 @@ export function StepOne({}: StepOneProps) {
         <View style={styles.fieldTextLayoutView}>
           <Text style={styles.fieldGuideText}>이메일 주소를 입력해주세요</Text>
 
-          {emailDupChk !== null && (
-            <AlertText condition={emailDupChk}>
-              사용 {emailDupChk ? "" : "불"}가능한 이메일 입니다.
-            </AlertText>
-          )}
+          <AlertText condition={emailInputCondition}>
+            {emailInputAlertMessage}
+          </AlertText>
         </View>
 
         <View style={styles.emailFieldControllerLayoutView}>
