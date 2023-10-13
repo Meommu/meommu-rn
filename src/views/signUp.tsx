@@ -26,6 +26,7 @@ export function SignUp() {
     formState: { errors },
     setValue,
     watch,
+    trigger,
   } = useForm<SignUpFormFieldValues>({
     defaultValues: {
       email: "",
@@ -35,8 +36,6 @@ export function SignUp() {
       agreement: false,
     },
   });
-
-  const [isEmailDup, setIsEmailDup] = useState<boolean | null>(null);
 
   const navigation = useNavigation();
 
@@ -48,12 +47,18 @@ export function SignUp() {
     setSwiperIndex(index);
   };
 
-  const nextButtonClickHandler = (event: GestureResponderEvent): void => {
+  const nextButtonClickHandler = async (
+    event: GestureResponderEvent
+  ): Promise<void> => {
     if (!swiper.current) {
       return;
     }
 
     if (!isNavigationButtonActive()) {
+      return;
+    }
+
+    if (!(await isCurrentStepFieldAvailable())) {
       return;
     }
 
@@ -66,9 +71,7 @@ export function SignUp() {
       return;
     }
 
-    const index = swiper.current.getActiveIndex();
-
-    swiper.current.goTo(index + 1);
+    swiper.current.goTo(swiperIndex + 1);
   };
 
   const goBackButtonClickHandler = () => {
@@ -101,15 +104,43 @@ export function SignUp() {
     return swiperIndex === SLIDE_MAX_COUNT - 1;
   };
 
+  const formState = watch();
+
+  const isCurrentStepFieldAvailable = async () => {
+    switch (swiperIndex) {
+      case 0:
+        return (
+          (await trigger("email")) &&
+          (await trigger("password")) &&
+          (await trigger("passwordConfirm"))
+        );
+      default:
+        return true;
+    }
+  };
+
   const isNavigationButtonActive = (): boolean => {
+    const { password, passwordConfirm, emailDupChk, agreement } = formState;
+
     switch (swiperIndex) {
       case 0:
         /**
-         * - 이메일 중복여부 체크
+         * - 이메일 중복여부, 유효성 체크
          * - 비밀번호 유효성, 일치 여부 체크
          * - 약관 동의 여부 체크
          */
-        //return !isEmailDup;
+        if (!emailDupChk) {
+          return false;
+        }
+
+        if (!agreement) {
+          return false;
+        }
+
+        if (!password || !passwordConfirm) {
+          return false;
+        }
+
         return true;
       case 1:
         /**
@@ -165,7 +196,14 @@ export function SignUp() {
         </View>
       </Swiper>
 
-      <Text>{JSON.stringify(watch(), null, 2)}</Text>
+      <Text>
+        [폼 상태]{"\n"}
+        {JSON.stringify(formState, null, 2)}
+      </Text>
+      <Text>
+        [폼 오류]{"\n"}
+        {JSON.stringify(errors, null, 2)}
+      </Text>
 
       <View style={styles.navigationView}>
         <NavigationButton
