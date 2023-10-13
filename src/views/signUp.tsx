@@ -11,7 +11,7 @@ import { StepOne } from "./signUpForm/stepOne";
 
 export type SignUpFormFieldValues = {
   email: string;
-  emailDupChk: boolean;
+  emailDupChk: null | boolean;
   password: string;
   passwordConfirm: string;
   agreement: boolean;
@@ -23,7 +23,7 @@ export function SignUp() {
   const methods = useForm<SignUpFormFieldValues>({
     defaultValues: {
       email: "",
-      emailDupChk: false,
+      emailDupChk: null,
       password: "",
       passwordConfirm: "",
       agreement: false,

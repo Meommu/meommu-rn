@@ -1,4 +1,4 @@
-import { Controller, useWatch, useFormContext } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 import { View, Text, StyleSheet } from "react-native";
 import { useState } from "react";
 import { FormInput } from "../../components/FormInput";
@@ -11,19 +11,13 @@ import type { SignUpFormFieldValues } from "../signUp";
 interface StepOneProps {}
 
 export function StepOne({}: StepOneProps) {
-  const { control, setValue, errors, trigger } =
+  const { control, setValue, errors, trigger, watch } =
     useFormContext<SignUpFormFieldValues>();
-
-  const [isEmailDup, setIsEmailDup] = useState<boolean | null>(null);
 
   const [agreement, setAgreement] = useState(false);
 
-  const emailInputValue = useWatch<SignUpFormFieldValues>({
-    control,
-    name: "email",
-  });
-
-  console.log("watch", emailInputValue);
+  const emailInputValue = watch("email");
+  const emailDupChk = watch("emailDupChk");
 
   const agreementButtonClickHandler = () => {
     setAgreement(!agreement);
@@ -40,17 +34,13 @@ export function StepOne({}: StepOneProps) {
       }, 500);
     });
 
-    const isDup = isEmailDup === null ? true : !isEmailDup;
-
-    setIsEmailDup(isDup);
-    setValue("emailDupChk", !isDup);
+    setValue("emailDupChk", !emailDupChk);
 
     return;
   };
 
   const resetEmailDupChk = () => {
-    setIsEmailDup(null);
-    setValue("emailDupChk", false);
+    setValue("emailDupChk", null);
   };
 
   return (
@@ -62,9 +52,9 @@ export function StepOne({}: StepOneProps) {
         <View style={styles.fieldTextLayoutView}>
           <Text style={styles.fieldGuideText}>이메일 주소를 입력해주세요</Text>
 
-          {isEmailDup !== null && (
-            <AlertText condition={isEmailDup}>
-              사용 {isEmailDup ? "불" : ""}가능한 이메일 입니다.
+          {emailDupChk !== null && (
+            <AlertText condition={emailDupChk}>
+              사용 {emailDupChk ? "" : "불"}가능한 이메일 입니다.
             </AlertText>
           )}
         </View>
@@ -93,7 +83,7 @@ export function StepOne({}: StepOneProps) {
             )}
           />
           <FormDupChkButton
-            isDup={isEmailDup}
+            isDupChk={emailDupChk}
             onPress={emailDupChkButtonClickHandler}
             disabled={!emailInputValue}
           />
@@ -107,9 +97,9 @@ export function StepOne({}: StepOneProps) {
         <View style={styles.fieldTextLayoutView}>
           <Text style={styles.fieldGuideText}>비밀번호를 입력해주세요</Text>
 
-          {isEmailDup !== null && (
-            <AlertText condition={isEmailDup}>
-              사용 {isEmailDup ? "불" : ""}가능한 이메일 입니다.
+          {emailDupChk !== null && (
+            <AlertText condition={emailDupChk}>
+              사용 {emailDupChk ? "" : "불"}가능한 이메일 입니다.
             </AlertText>
           )}
         </View>
@@ -146,9 +136,9 @@ export function StepOne({}: StepOneProps) {
           >
             비밀번호를 확인해주세요
           </Text>
-          {isEmailDup !== null && (
-            <AlertText condition={isEmailDup}>
-              사용 {isEmailDup ? "불" : ""}가능한 이메일 입니다.
+          {emailDupChk !== null && (
+            <AlertText condition={emailDupChk}>
+              사용 {emailDupChk ? "" : "불"}가능한 이메일 입니다.
             </AlertText>
           )}
         </View>

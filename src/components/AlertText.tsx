@@ -10,7 +10,7 @@ export function AlertText({ condition, children }: AlertTextProps) {
       style={{
         fontSize: 14,
         fontFamily: "Pretendard-SemiBold",
-        color: condition ? "#FF8585" : "#63BCA9",
+        color: condition ? "#63BCA9" : "#FF8585",
       }}
     >
       {children}

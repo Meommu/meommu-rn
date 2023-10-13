@@ -7,14 +7,36 @@ import {
 } from "react-native";
 
 interface FormDupChkButtonProps extends TouchableOpacityProps {
-  isDup: boolean | null;
+  isDupChk: boolean | null;
 }
 
-export function FormDupChkButton({ isDup, ...props }: FormDupChkButtonProps) {
-  const fontColor = isDup === null ? "#B7B7CB" : !isDup ? "#63BCA9" : "#FF8585";
+export function FormDupChkButton({
+  isDupChk,
+  ...props
+}: FormDupChkButtonProps) {
+  const getFontColor = (): string => {
+    if (isDupChk === null) {
+      return "#B7B7CB";
+    }
 
-  const borderColor =
-    isDup === null ? "transparent" : !isDup ? "#63BCA9" : "#FF8585";
+    if (isDupChk === false) {
+      return "#FF8585";
+    }
+
+    return "#63BCA9";
+  };
+
+  const getBorderColor = (): string => {
+    if (isDupChk === null) {
+      return "transparent";
+    }
+
+    if (isDupChk === false) {
+      return "#FF8585";
+    }
+
+    return "#63BCA9";
+  };
 
   const BORDER_WIDTH = 2;
 
@@ -31,14 +53,14 @@ export function FormDupChkButton({ isDup, ...props }: FormDupChkButtonProps) {
           backgroundColor: "#EBEBF0",
           borderRadius: 4,
           borderWidth: BORDER_WIDTH,
-          borderColor: borderColor,
+          borderColor: getBorderColor(),
         }}
       >
         <Text
           style={{
             fontSize: 16,
             fontFamily: "Pretendard-SemiBold",
-            color: fontColor,
+            color: getFontColor(),
           }}
         >
           중복확인
