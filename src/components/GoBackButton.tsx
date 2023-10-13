@@ -1,7 +1,5 @@
 import {
   View,
-  Text,
-  Image,
   StyleSheet,
   TouchableOpacity,
   GestureResponderEvent,
@@ -29,7 +27,7 @@ export function GoBackButton({ onPress, disable = false }: GoBackButtonProps) {
       disabled={disable}
     >
       <View style={[styles.container, { opacity: disable ? 0 : 1 }]}>
-        <Image source={CaretLeft} style={styles.caretImage} />
+        <CaretLeft />
       </View>
     </TouchableOpacity>
   );
