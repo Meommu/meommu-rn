@@ -12,9 +12,8 @@ export function GlobalLayout({ children }: GlobalLayoutProps) {
 
 const styles = StyleSheet.create({
   container: {
-    maxWidth: "100%",
+    width: "100%",
     height: "100%",
-    aspectRatio: "9 / 16",
     marginLeft: "auto",
     marginRight: "auto",
     paddingTop: Constants.statusBarHeight,
