@@ -15,6 +15,7 @@ import type { GestureResponderEvent } from "react-native";
 import { VIEW_NAME } from "../constants";
 import { useForm, FormProvider } from "react-hook-form";
 import { StepOne } from "./signUpForm/stepOne";
+import { StepTwo } from "./signUpForm/stepTwo";
 
 export type SignUpFormFieldValues = {
   email: string;
@@ -22,6 +23,9 @@ export type SignUpFormFieldValues = {
   password: string;
   passwordConfirm: string;
   agreement: boolean;
+  kindergartenName: string;
+  kindergartenDirectorName: string;
+  phoneNumber: string;
 };
 
 const SLIDE_MAX_COUNT = 3;
@@ -34,6 +38,9 @@ export function SignUp() {
       password: "",
       passwordConfirm: "",
       agreement: false,
+      kindergartenName: "",
+      kindergartenDirectorName: "",
+      phoneNumber: "",
     },
   });
 
@@ -69,16 +76,40 @@ export function SignUp() {
       return;
     }
 
-    if (isLastSlide()) {
-      /**
-       * TODO: 덮어쓰기 형태로 페이지 이동시키도록 구현
-       */
-      navigation.navigate(VIEW_NAME.MAIN);
+    switch (swiperIndex) {
+      case 0:
+        swiperObj.goTo(1);
+        break;
+      case 1:
+        handleSubmit(async (data) => {
+          try {
+            /**
+             * TODO: 회원가입 요청로직 작성
+             */
+            await new Promise((resolve) => {
+              setTimeout(() => {
+                resolve(true);
+              }, 1000);
+            });
+          } catch (e) {
+            /**
+             * TODO: 회원가입 실패 시 로직 작성
+             */
+            console.log(e);
+          }
 
-      return;
+          swiperObj.goTo(2);
+        })();
+        break;
+      case 2:
+        /**
+         * TODO: 덮어쓰기 형태로 페이지 이동시키도록 구현
+         */
+        navigation.navigate(VIEW_NAME.MAIN);
+        break;
+      default:
+        break;
     }
-
-    swiperObj.goTo(swiperIndex + 1);
   };
 
   const goBackButtonClickHandler = () => {
@@ -113,7 +144,7 @@ export function SignUp() {
 
   const formState = watch();
 
-  const isCurrentStepFieldAvailable = async () => {
+  const isCurrentStepFieldAvailable = async (): Promise<boolean> => {
     switch (swiperIndex) {
       case 0:
         return (
@@ -196,8 +227,18 @@ export function SignUp() {
               </ScrollView>
             </View>
 
-            <View>
-              <Text>페이지 2</Text>
+            <View style={styles.SlideView}>
+              <View style={styles.GuideText}>
+                <Text style={styles.GreetingText}>
+                  이제 곧 끝나요!{"\n"}
+                  유치원 정보를 입력해주세요
+                </Text>
+                <Text style={styles.IntroductionText}>
+                  반려동물과의 건강한 추억을 기록해드리겠습니다.
+                </Text>
+              </View>
+
+              <StepTwo />
             </View>
 
             <View>
