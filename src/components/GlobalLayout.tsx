@@ -1,4 +1,4 @@
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, KeyboardAvoidingView, Platform } from "react-native";
 import type { ReactNode } from "react";
 import Constants from "expo-constants";
 
@@ -7,7 +7,17 @@ interface GlobalLayoutProps {
 }
 
 export function GlobalLayout({ children }: GlobalLayoutProps) {
-  return <View style={styles.container}>{children}</View>;
+  return (
+    <KeyboardAvoidingView
+      behavior={Platform.select({
+        ios: "padding",
+        android: undefined,
+        web: undefined,
+      })}
+    >
+      <View style={styles.container}>{children}</View>
+    </KeyboardAvoidingView>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -17,6 +27,6 @@ const styles = StyleSheet.create({
     marginLeft: "auto",
     marginRight: "auto",
     paddingTop: Constants.statusBarHeight,
-    paddingBottom: Constants.statusBarHeight,
+    paddingBottom: 20,
   },
 });
