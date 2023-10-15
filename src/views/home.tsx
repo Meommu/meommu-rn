@@ -50,7 +50,6 @@ const styles = StyleSheet.create({
   container: {
     width: "100%",
     height: "100%",
-    padding: 20,
     backgroundColor: "white",
     flexDirection: "column",
     justifyContent: "space-between",
@@ -97,5 +96,6 @@ const styles = StyleSheet.create({
 
   navigationButtonView: {
     gap: 9,
+    padding: 20,
   },
 });
