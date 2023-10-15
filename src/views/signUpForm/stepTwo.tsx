@@ -55,7 +55,7 @@ export function StepTwo({}: StepTwoProps) {
             condition={!errors.kindergartenDirectorName ? true : false}
           >
             {errors.kindergartenDirectorName
-              ? "2에서 3글자 사이의 한글 이름을 입력해주세요."
+              ? "3에서 4글자 사이의 한글 이름을 입력해주세요."
               : ""}
           </AlertText>
         </View>
