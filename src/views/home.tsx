@@ -3,6 +3,7 @@ import { StyleSheet } from "react-native";
 import { NavigationButton } from "../components/NavigationButton";
 import { useNavigation } from "@react-navigation/native";
 import { VIEW_NAME } from "../constants";
+import { size } from "../constants";
 
 export function Home() {
   const navigation = useNavigation();
@@ -17,18 +18,20 @@ export function Home() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.titleView}>
-        <Text style={styles.titleText}>meom-mu</Text>
-        <Text style={styles.subTitleText}>
-          계획하고 기록해요,{"\n"}우리 강아지 다이어리 꾸미기
-        </Text>
-      </View>
+      <View style={styles.contentView}>
+        <View style={styles.titleView}>
+          <Text style={styles.titleText}>meom-mu</Text>
+          <Text style={styles.subTitleText}>
+            계획하고 기록해요,{"\n"}우리 강아지 다이어리 꾸미기
+          </Text>
+        </View>
 
-      <View style={styles.bannerImageWrapper}>
-        <Image
-          source={require("../../assets/images/home/home.png")}
-          style={styles.bannerImage}
-        />
+        <View style={styles.bannerImageWrapper}>
+          <Image
+            source={require("../../assets/images/home/home.png")}
+            style={styles.bannerImage}
+          />
+        </View>
       </View>
 
       <View style={styles.navigationButtonView}>
@@ -53,14 +56,25 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
 
+  contentView: {
+    flex: 1,
+    height: "100%",
+    overflow: "hidden",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
   titleView: {
+    position: "absolute",
+    top: 45,
     gap: 5,
+    zIndex: 1,
+    width: "100%",
   },
 
   titleText: {
     fontSize: 60,
     textAlign: "center",
-    marginTop: 45,
   },
 
   subTitleText: {
@@ -72,6 +86,7 @@ const styles = StyleSheet.create({
   bannerImageWrapper: {
     width: "100%",
     aspectRatio: "1/1",
+    marginTop: size.NAVIGATION_BUTTON_HEIGHT + 20,
   },
 
   bannerImage: {
