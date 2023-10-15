@@ -16,6 +16,7 @@ import { VIEW_NAME } from "../constants";
 import { useForm, FormProvider } from "react-hook-form";
 import { StepOne } from "./signUpForm/stepOne";
 import { StepTwo } from "./signUpForm/stepTwo";
+import { Complete } from "./signUpForm/complete";
 
 export type SignUpFormFieldValues = {
   email: string;
@@ -241,8 +242,8 @@ export function SignUp() {
               <StepTwo />
             </View>
 
-            <View>
-              <Text>페이지 3</Text>
+            <View style={[styles.SlideView]}>
+              <Complete />
             </View>
           </Swiper>
 
