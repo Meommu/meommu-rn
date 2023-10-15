@@ -75,6 +75,7 @@ const styles = StyleSheet.create({
   titleText: {
     fontSize: 60,
     textAlign: "center",
+    fontFamily: "Author-Medium",
   },
 
   subTitleText: {
