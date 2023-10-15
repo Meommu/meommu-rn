@@ -11,7 +11,7 @@ export function FormInput({ ...props }: FormInputProps) {
         flexGrow: 1,
       }}
     >
-      <Pressable onPress={() => Keyboard.dismiss()}>
+      <Pressable onPress={(e) => e.stopPropagation()}>
         <TextInput
           style={{
             width: "100%",

@@ -1,5 +1,12 @@
 import { useState, createRef } from "react";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from "react-native";
 import Swiper from "react-native-web-swiper";
 import { GoBackButton } from "../components/GoBackButton";
 import { NavigationButton } from "../components/NavigationButton";
@@ -154,57 +161,61 @@ export function SignUp() {
 
   return (
     <FormProvider {...methods}>
-      <View style={styles.container}>
-        <View style={styles.headerView}>
-          <GoBackButton
-            onPress={goBackButtonClickHandler}
-            disable={isLastSlide()}
-          />
-        </View>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.container}>
+          <View style={styles.headerView}>
+            <GoBackButton
+              onPress={goBackButtonClickHandler}
+              disable={isLastSlide()}
+            />
+          </View>
 
-        <Swiper
-          ref={swiper}
-          controlsEnabled={false}
-          onIndexChanged={swiperIndexChangeHandler}
-          gesturesEnabled={() => false}
-          loop={false}
-          springConfig={{
-            tension: 0,
-          }}
-        >
-          <View style={styles.SlideView}>
-            <View style={styles.GuideText}>
-              <Text style={styles.GreetingText}>
-                안녕하세요,{"\n"}
-                멈무유치원에 오신걸 환영합니다!
-              </Text>
-              <Text style={styles.IntroductionText}>
-                반려동물과의 건강한 추억을 기록해드리겠습니다.
-              </Text>
+          <Swiper
+            ref={swiper}
+            controlsEnabled={false}
+            onIndexChanged={swiperIndexChangeHandler}
+            gesturesEnabled={() => false}
+            loop={false}
+            springConfig={{
+              tension: 0,
+            }}
+          >
+            <View style={styles.SlideView}>
+              <View style={styles.GuideText}>
+                <Text style={styles.GreetingText}>
+                  안녕하세요,{"\n"}
+                  멈무유치원에 오신걸 환영합니다!
+                </Text>
+                <Text style={styles.IntroductionText}>
+                  반려동물과의 건강한 추억을 기록해드리겠습니다.
+                </Text>
+              </View>
+
+              <ScrollView>
+                <StepOne />
+              </ScrollView>
             </View>
 
-            <ScrollView>
-              <StepOne />
-            </ScrollView>
-          </View>
+            <View>
+              <Text>페이지 2</Text>
+            </View>
 
-          <View>
-            <Text>페이지 2</Text>
-          </View>
+            <View>
+              <Text>페이지 3</Text>
+            </View>
+          </Swiper>
 
-          <View>
-            <Text>페이지 3</Text>
+          <View style={styles.navigationView}>
+            <NavigationButton
+              backgroundColor={
+                isNavigationButtonActive() ? "#8579F1" : "#B7B7CB"
+              }
+              content={isLastSlide() ? "시작하기" : "다음"}
+              onPress={nextButtonClickHandler}
+            />
           </View>
-        </Swiper>
-
-        <View style={styles.navigationView}>
-          <NavigationButton
-            backgroundColor={isNavigationButtonActive() ? "#8579F1" : "#B7B7CB"}
-            content={isLastSlide() ? "시작하기" : "다음"}
-            onPress={nextButtonClickHandler}
-          />
         </View>
-      </View>
+      </TouchableWithoutFeedback>
     </FormProvider>
   );
 }
