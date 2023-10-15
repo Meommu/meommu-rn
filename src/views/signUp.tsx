@@ -159,13 +159,18 @@ export function SignUp() {
   };
 
   const isNavigationButtonActive = (): boolean => {
-    const { password, passwordConfirm, emailDupChk, agreement } = formState;
+    const {
+      password,
+      passwordConfirm,
+      emailDupChk,
+      agreement,
+      kindergartenName,
+      kindergartenDirectorName,
+      phoneNumber,
+    } = formState;
 
     switch (swiperIndex) {
       case 0:
-        /**
-         * - 비밀번호 일치 여부 체크
-         */
         if (!emailDupChk) {
           return false;
         }
@@ -180,11 +185,18 @@ export function SignUp() {
 
         return true;
       case 1:
-        /**
-         * - 유치원 이름 입력, 유효성 체크
-         * - 대표자 이름 입력, 유효성 체크
-         * - 전화번호 입력, 유효성 체크
-         */
+        if (!kindergartenName) {
+          return false;
+        }
+
+        if (!kindergartenDirectorName) {
+          return false;
+        }
+
+        if (!phoneNumber) {
+          return false;
+        }
+
         return true;
       default:
         return true;
