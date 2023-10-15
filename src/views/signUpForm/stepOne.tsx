@@ -85,7 +85,10 @@ export function StepOne({}: StepOneProps) {
             name="email"
             control={control}
             rules={{
-              required: true,
+              required: {
+                value: true,
+                message: "이메일이 입력되지 않았습니다.",
+              },
               pattern: {
                 value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
                 message: "이메일 형식이 올바르지 않습니다.",
@@ -106,7 +109,6 @@ export function StepOne({}: StepOneProps) {
           <FormDupChkButton
             isDupChk={emailDupChk}
             onPress={emailDupChkButtonClickHandler}
-            disabled={!emailInputValue}
           />
         </View>
       </View>
