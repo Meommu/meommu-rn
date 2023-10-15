@@ -7,17 +7,21 @@ interface GlobalLayoutProps {
 }
 
 export function GlobalLayout({ children }: GlobalLayoutProps) {
-  return (
-    <KeyboardAvoidingView
-      behavior={Platform.select({
-        ios: "padding",
-        android: undefined,
-        web: undefined,
-      })}
-    >
-      <View style={styles.container}>{children}</View>
-    </KeyboardAvoidingView>
-  );
+  if (Platform.OS === "ios") {
+    return (
+      <KeyboardAvoidingView
+        behavior={Platform.select({
+          ios: "padding",
+          android: undefined,
+          web: undefined,
+        })}
+      >
+        <View style={styles.container}>{children}</View>
+      </KeyboardAvoidingView>
+    );
+  }
+
+  return <View style={styles.container}>{children}</View>;
 }
 
 const styles = StyleSheet.create({
@@ -27,6 +31,6 @@ const styles = StyleSheet.create({
     marginLeft: "auto",
     marginRight: "auto",
     paddingTop: Constants.statusBarHeight,
-    paddingBottom: 20,
+    paddingBottom: Platform.OS === "ios" ? 20 : 0,
   },
 });
