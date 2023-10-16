@@ -7,6 +7,7 @@ import { useNavigation } from "@react-navigation/native";
 import { VIEW_NAME } from "../constants";
 import { StatusBar } from "expo-status-bar";
 import { size } from "../constants";
+import { BannerImage } from "../components/BannerImage";
 
 const SLIDE_MAX_COUNT = 3;
 
@@ -65,35 +66,31 @@ export function OnBoarding() {
           <Text style={styles.guideText}>
             추억하고 싶은 순간을{"\n"}멈무일기에서 기록해봐요!
           </Text>
-          <View style={styles.bannerImageWrapper}>
-            <Image
-              style={styles.bannerImage}
-              source={require("../../assets/images/onboarding/onboarding-1.png")}
-            />
-          </View>
+
+          <BannerImage
+            source={require("../../assets/images/onboarding/onboarding-1.png")}
+          />
         </View>
+
         <View style={styles.slideLayout}>
           <Text style={styles.guideText}>
             활동을 카테고리에 따라{"\n"}
             GPT로 간단하게 완성해봐요!
           </Text>
-          <View style={styles.bannerImageWrapper}>
-            <Image
-              style={styles.bannerImage}
-              source={require("../../assets/images/onboarding/onboarding-2.png")}
-            />
-          </View>
+
+          <BannerImage
+            source={require("../../assets/images/onboarding/onboarding-2.png")}
+          />
         </View>
+
         <View style={styles.slideLayout}>
           <Text style={styles.guideText}>
             글과 사진을 함께 구성하며{"\n"}지루하지 않게 꾸며봐요!
           </Text>
-          <View style={styles.bannerImageWrapper}>
-            <Image
-              style={styles.bannerImage}
-              source={require("../../assets/images/onboarding/onboarding-3.png")}
-            />
-          </View>
+
+          <BannerImage
+            source={require("../../assets/images/onboarding/onboarding-3.png")}
+          />
         </View>
       </Swiper>
 
@@ -136,17 +133,6 @@ const styles = StyleSheet.create({
     left: 20,
     top: 64,
     zIndex: 1,
-  },
-
-  bannerImageWrapper: {
-    width: "100%",
-    aspectRatio: "1/1",
-    marginTop: size.NAVIGATION_BUTTON_HEIGHT + 20,
-  },
-
-  bannerImage: {
-    width: "100%",
-    height: "100%",
   },
 
   buttonView: {
