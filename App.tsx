@@ -4,68 +4,11 @@ import { Router } from "./src/Router";
 import { VIEW_NAME } from "./src/constants";
 import * as SplashScreen from "expo-splash-screen";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { createServer } from "miragejs";
-import { Server, Registry, Response } from "miragejs";
-import type { AnyModels, AnyFactories } from "miragejs/-types";
+import { MockApiService } from "./src/mockApi";
 
-declare global {
-  interface Window {
-    server: Server<Registry<AnyModels, AnyFactories>>;
-  }
+if (process.env.NODE_ENV === "development") {
+  new MockApiService().register();
 }
-
-if (window.server) {
-  window.server.shutdown();
-}
-
-const responseTemplate = (data: unknown) => ({
-  code: "",
-  mesasge: "",
-  data,
-});
-
-window.server = createServer({
-  routes() {
-    this.get("/api/v1/kindergartens/email", (schema, request) => {
-      const {
-        queryParams: { email },
-      } = request;
-
-      if (!email) {
-        return responseTemplate(false);
-      }
-
-      if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
-        return responseTemplate(false);
-      }
-
-      /**
-       * 중복된 이메일 검사
-       */
-      if (email === "dup1@test.com") {
-        return responseTemplate(false);
-      }
-
-      return responseTemplate(true);
-    });
-
-    this.post("/api/v1/kindergartens/signup", (schema, request) => {
-      const { requestBody } = request;
-
-      const { name, ownerName, phone, email, password, passwordConfirmation } =
-        JSON.parse(requestBody);
-
-      /**
-       * 프론트엔드에서 중복검사가 되지 않았을 경우
-       */
-      if (email === "dup2@test.com") {
-        return new Response(400, {}, responseTemplate(""));
-      }
-
-      return new Response(201, {}, responseTemplate(true));
-    });
-  },
-});
 
 SplashScreen.preventAutoHideAsync();
 
