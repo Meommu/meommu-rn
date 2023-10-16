@@ -6,6 +6,7 @@ import { CheckBoxButton } from "../../components/CheckboxButton";
 import { AlertText } from "../../components/AlertText";
 import CaretRight from "../../../assets/svgs/caret-right.svg";
 import type { SignUpFormFieldValues } from "../signUp";
+import { apiService } from "../../apis";
 
 interface StepOneProps {}
 
@@ -34,16 +35,15 @@ export function StepOne({}: StepOneProps) {
       return;
     }
 
-    /**
-     * todo: 이메일 중복 체크 api 호출
-     */
-    await new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(true);
-      }, 500);
-    });
+    try {
+      const isDuplication = await apiService.getEmailDuplicationStatus(
+        emailInputValue
+      );
 
-    setValue("emailDupChk", !emailDupChk);
+      setValue("emailDupChk", isDuplication);
+    } catch (e) {
+      setValue("emailDupChk", false);
+    }
 
     return;
   };

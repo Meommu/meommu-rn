@@ -17,6 +17,7 @@ import { useForm, FormProvider } from "react-hook-form";
 import { StepOne } from "./signUpForm/stepOne";
 import { StepTwo } from "./signUpForm/stepTwo";
 import { Complete } from "./signUpForm/complete";
+import { apiService } from "../apis";
 
 export type SignUpFormFieldValues = {
   email: string;
@@ -88,16 +89,9 @@ export function SignUp() {
 
         break;
       case 1:
-        handleSubmit(async (data) => {
+        handleSubmit(async (formData) => {
           try {
-            /**
-             * TODO: 회원가입 요청로직 작성
-             */
-            await new Promise((resolve) => {
-              setTimeout(() => {
-                resolve(true);
-              }, 1000);
-            });
+            await apiService.setUserInfo(formData.email);
 
             swiperObj.goTo(2);
           } catch (e) {

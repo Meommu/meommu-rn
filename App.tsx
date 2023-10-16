@@ -4,6 +4,11 @@ import { Router } from "./src/Router";
 import { VIEW_NAME } from "./src/constants";
 import * as SplashScreen from "expo-splash-screen";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { MockApiService } from "./src/mockApi";
+
+if (process.env.NODE_ENV === "development") {
+  new MockApiService().register();
+}
 
 SplashScreen.preventAutoHideAsync();
 
