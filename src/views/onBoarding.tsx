@@ -6,8 +6,8 @@ import { NavigationButton } from "../components/NavigationButton";
 import { useNavigation } from "@react-navigation/native";
 import { VIEW_NAME } from "../constants";
 import { StatusBar } from "expo-status-bar";
-import { size } from "../constants";
 import { BannerImage } from "../components/BannerImage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const SLIDE_MAX_COUNT = 3;
 
@@ -22,7 +22,9 @@ export function OnBoarding() {
     setSwiperIndex(index);
   };
 
-  const nextButtonClickHandler = (event: GestureResponderEvent): void => {
+  const nextButtonClickHandler = async (
+    event: GestureResponderEvent
+  ): Promise<void> => {
     if (!swiper.current) {
       return;
     }
@@ -31,10 +33,13 @@ export function OnBoarding() {
 
     const index = swiper.current.getActiveIndex();
 
-    /**
-     * TODO: OnBoarding 종료 기록
-     */
     if (index === SLIDE_MAX_COUNT - 1) {
+      try {
+        await AsyncStorage.setItem("onboarding", "end");
+      } catch (e) {
+        console.log(e);
+      }
+
       navigation.navigate(VIEW_NAME.HOME);
     }
   };
