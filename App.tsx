@@ -5,7 +5,7 @@ import { VIEW_NAME } from "./src/constants";
 import * as SplashScreen from "expo-splash-screen";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createServer } from "miragejs";
-import type { Server, Registry } from "miragejs";
+import { Server, Registry, Response } from "miragejs";
 import type { AnyModels, AnyFactories } from "miragejs/-types";
 
 declare global {
@@ -42,11 +42,27 @@ window.server = createServer({
       /**
        * 중복된 이메일 검사
        */
-      if (email === "dup@test.com") {
+      if (email === "dup1@test.com") {
         return responseTemplate(false);
       }
 
       return responseTemplate(true);
+    });
+
+    this.post("/api/v1/kindergartens/signup", (schema, request) => {
+      const { requestBody } = request;
+
+      const { name, ownerName, phone, email, password, passwordConfirmation } =
+        JSON.parse(requestBody);
+
+      /**
+       * 프론트엔드에서 중복검사가 되지 않았을 경우
+       */
+      if (email === "dup2@test.com") {
+        return new Response(400, {}, responseTemplate(""));
+      }
+
+      return new Response(201, {}, responseTemplate(true));
     });
   },
 });
