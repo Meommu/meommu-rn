@@ -6,7 +6,7 @@ import { CheckBoxButton } from "../../components/CheckboxButton";
 import { AlertText } from "../../components/AlertText";
 import CaretRight from "../../../assets/svgs/caret-right.svg";
 import type { SignUpFormFieldValues } from "../signUp";
-import axios from "axios";
+import { apiService } from "../../apis";
 
 interface StepOneProps {}
 
@@ -36,16 +36,11 @@ export function StepOne({}: StepOneProps) {
     }
 
     try {
-      const {
-        data: { data },
-      } = await axios.get<ResponseTemplate<boolean>>(
-        "/api/v1/kindergartens/email",
-        {
-          params: { email: emailInputValue },
-        }
+      const isDuplication = await apiService.getEmailDuplicationStatus(
+        emailInputValue
       );
 
-      setValue("emailDupChk", data);
+      setValue("emailDupChk", isDuplication);
     } catch (e) {
       setValue("emailDupChk", false);
     }

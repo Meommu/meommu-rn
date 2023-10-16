@@ -17,7 +17,7 @@ import { useForm, FormProvider } from "react-hook-form";
 import { StepOne } from "./signUpForm/stepOne";
 import { StepTwo } from "./signUpForm/stepTwo";
 import { Complete } from "./signUpForm/complete";
-import axios from "axios";
+import { apiService } from "../apis";
 
 export type SignUpFormFieldValues = {
   email: string;
@@ -91,9 +91,7 @@ export function SignUp() {
       case 1:
         handleSubmit(async (formData) => {
           try {
-            const response = await axios.post("/api/v1/kindergartens/signup", {
-              email: formData.email,
-            });
+            await apiService.setUserInfo(formData.email);
 
             swiperObj.goTo(2);
           } catch (e) {
