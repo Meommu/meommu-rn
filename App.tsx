@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Router } from "./src/Router";
 import { VIEW_NAME } from "./src/constants";
 import * as SplashScreen from "expo-splash-screen";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -22,9 +23,10 @@ export default function App() {
   };
 
   const chkOnBoardingIsEnd = async (): Promise<boolean> => {
-    /**
-     * TODO: 온보딩 종료 여부 확인 로직 추가
-     */
+    if ((await AsyncStorage.getItem("onboarding")) === "end") {
+      return true;
+    }
+
     return false;
   };
 
