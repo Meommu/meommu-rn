@@ -17,7 +17,7 @@ export default function App() {
 
   const [fontsLoaded] = useFonts({
     "Pretendard-SemiBold": require("./assets/fonts/Pretendard-SemiBold.otf"),
-    "Author-Medium": require("./assets/fonts/Author-Medium.otf"),
+    yeonTheLand: require("./assets/fonts/yeonTheLand.ttf"),
   });
 
   const chkLogin = async (): Promise<boolean> => {

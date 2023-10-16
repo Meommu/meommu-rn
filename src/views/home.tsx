@@ -20,7 +20,7 @@ export function Home() {
     <View style={styles.container}>
       <View style={styles.contentView}>
         <View style={styles.titleView}>
-          <Text style={styles.titleText}>meom-mu</Text>
+          <Text style={styles.titleText}>meommu</Text>
           <Text style={styles.subTitleText}>
             계획하고 기록해요,{"\n"}우리 강아지 다이어리 꾸미기
           </Text>
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
   titleText: {
     fontSize: 60,
     textAlign: "center",
-    fontFamily: "Author-Medium",
+    fontFamily: "yeonTheLand",
   },
 
   subTitleText: {
