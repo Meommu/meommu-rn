@@ -1,9 +1,9 @@
-import { View, Text, Image } from "react-native";
+import { View, Text } from "react-native";
 import { StyleSheet } from "react-native";
 import { NavigationButton } from "../components/NavigationButton";
 import { useNavigation } from "@react-navigation/native";
 import { VIEW_NAME } from "../constants";
-import { size } from "../constants";
+import { BannerImage } from "../components/BannerImage";
 
 export function Home() {
   const navigation = useNavigation();
@@ -26,12 +26,7 @@ export function Home() {
           </Text>
         </View>
 
-        <View style={styles.bannerImageWrapper}>
-          <Image
-            source={require("../../assets/images/home/home.png")}
-            style={styles.bannerImage}
-          />
-        </View>
+        <BannerImage source={require("../../assets/images/home/home.png")} />
       </View>
 
       <View style={styles.navigationButtonView}>
@@ -81,17 +76,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: "Pretendard-SemiBold",
     textAlign: "center",
-  },
-
-  bannerImageWrapper: {
-    width: "100%",
-    aspectRatio: "1/1",
-    marginTop: size.NAVIGATION_BUTTON_HEIGHT + 20,
-  },
-
-  bannerImage: {
-    width: "100%",
-    height: "100%",
   },
 
   navigationButtonView: {

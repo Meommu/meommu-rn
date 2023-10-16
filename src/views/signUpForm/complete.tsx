@@ -1,7 +1,7 @@
 import { useFormContext } from "react-hook-form";
 import type { SignUpFormFieldValues } from "../signUp";
-import { View, StyleSheet, Text, Image } from "react-native";
-import { size } from "../../constants";
+import { View, StyleSheet, Text } from "react-native";
+import { BannerImage } from "../../components/BannerImage";
 
 interface CompleteProps {}
 
@@ -23,12 +23,9 @@ export function Complete({}: CompleteProps) {
         </Text>
       </View>
 
-      <View style={styles.bannerImageWrapper}>
-        <Image
-          style={styles.bannerImage}
-          source={require("../../../assets/images/signup/signup-end.png")}
-        />
-      </View>
+      <BannerImage
+        source={require("../../../assets/images/signup/signup-end.png")}
+      />
     </View>
   );
 }
@@ -62,16 +59,5 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: "Pretendard-SemiBold",
     color: "#B7B7CB",
-  },
-
-  bannerImageWrapper: {
-    width: "100%",
-    aspectRatio: "1/1",
-    marginTop: size.NAVIGATION_BUTTON_HEIGHT + 20,
-  },
-
-  bannerImage: {
-    width: "100%",
-    height: "100%",
   },
 });
