@@ -45,7 +45,12 @@ export function SignUp() {
     },
   });
 
-  const { handleSubmit, watch, trigger } = methods;
+  const {
+    handleSubmit,
+    watch,
+    trigger,
+    formState: { isSubmitting },
+  } = methods;
 
   const navigation = useNavigation();
 
@@ -80,6 +85,7 @@ export function SignUp() {
     switch (swiperIndex) {
       case 0:
         swiperObj.goTo(1);
+
         break;
       case 1:
         handleSubmit(async (data) => {
@@ -92,21 +98,23 @@ export function SignUp() {
                 resolve(true);
               }, 1000);
             });
+
+            swiperObj.goTo(2);
           } catch (e) {
             /**
              * TODO: 회원가입 실패 시 로직 작성
              */
             console.log(e);
           }
-
-          swiperObj.goTo(2);
         })();
+
         break;
       case 2:
         /**
          * TODO: 덮어쓰기 형태로 페이지 이동시키도록 구현
          */
         navigation.navigate(VIEW_NAME.MAIN);
+
         break;
       default:
         break;
@@ -266,6 +274,7 @@ export function SignUp() {
               }
               content={isLastSlide() ? "시작하기" : "다음"}
               onPress={nextButtonClickHandler}
+              disabled={swiperIndex === 1 && isSubmitting}
             />
           </View>
         </View>
