@@ -6,6 +6,7 @@ import { CheckBoxButton } from "../../components/CheckboxButton";
 import { AlertText } from "../../components/AlertText";
 import CaretRight from "../../../assets/svgs/caret-right.svg";
 import type { SignUpFormFieldValues } from "../signUp";
+import axios from "axios";
 
 interface StepOneProps {}
 
@@ -34,16 +35,20 @@ export function StepOne({}: StepOneProps) {
       return;
     }
 
-    /**
-     * todo: 이메일 중복 체크 api 호출
-     */
-    await new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(true);
-      }, 500);
-    });
+    try {
+      const {
+        data: { data },
+      } = await axios.get<ResponseTemplate<boolean>>(
+        "/api/v1/kindergartens/email",
+        {
+          params: { email: emailInputValue },
+        }
+      );
 
-    setValue("emailDupChk", !emailDupChk);
+      setValue("emailDupChk", data);
+    } catch (e) {
+      setValue("emailDupChk", false);
+    }
 
     return;
   };
