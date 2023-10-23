@@ -1,13 +1,25 @@
-import { View, Text, Image, StyleSheet } from "react-native";
+// react
 import { useEffect } from "react";
-import { useFonts } from "expo-font";
-import { router } from "expo-router";
-
-import * as SplashScreen from "expo-splash-screen";
-
+import { View, Image, StyleSheet } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+// expo
+import { useFonts } from "expo-font";
+import { router } from "expo-router";
+import * as SplashScreen from "expo-splash-screen";
+
+// constants
 import { VIEW_NAME } from "../constants";
+
+// utils
+import { MockApiService } from "../utils/mockApi";
+
+/**
+ * 개발중일 경우 mirage mock 서버 활성화
+ */
+if (process.env.NODE_ENV === "development") {
+  new MockApiService().register();
+}
 
 /**
  * 루트(`/`) 페이지, 스플래시 화면
