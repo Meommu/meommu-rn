@@ -1,3 +1,4 @@
+// react
 import {
   View,
   Text,
@@ -5,7 +6,9 @@ import {
   TouchableOpacity,
   TouchableOpacityProps,
 } from "react-native";
-import { size } from "../constants";
+
+// constants
+import { size } from "@/constants";
 
 interface NavigationButtonProps extends TouchableOpacityProps {
   fontColor?: string;

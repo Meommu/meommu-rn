@@ -16,8 +16,8 @@ import { useForm, FormProvider } from "react-hook-form";
 import { router } from "expo-router";
 
 // components
-import { GoBackButton } from "@/components/GoBackButton";
-import { NavigationButton } from "@/components/NavigationButton";
+import { GoBackButton } from "@/components/Button/GoBackButton";
+import { NavigationButton } from "@/components/Button/NavigationButton";
 import { StepOne } from "@/components/signUpForm/stepOne";
 import { StepTwo } from "@/components/signUpForm/stepTwo";
 import { Complete } from "@/components/signUpForm/complete";

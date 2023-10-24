@@ -8,7 +8,7 @@ import { StatusBar } from "expo-status-bar";
 import { router } from "expo-router";
 
 // components
-import { NavigationButton } from "@/components/NavigationButton";
+import { NavigationButton } from "@/components/Button/NavigationButton";
 import { BannerImage } from "@/components/Image/BannerImage";
 
 // constants

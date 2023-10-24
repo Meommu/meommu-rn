@@ -5,7 +5,7 @@ import { View, Text, StyleSheet } from "react-native";
 import { router } from "expo-router";
 
 // components
-import { NavigationButton } from "@/components/NavigationButton";
+import { NavigationButton } from "@/components/Button/NavigationButton";
 import { BannerImage } from "@/components/Image/BannerImage";
 
 // constants
@@ -30,7 +30,7 @@ export default function Home() {
           </Text>
         </View>
 
-        <BannerImage source={require("../../assets/images/home/home.png")} />
+        <BannerImage source={require("@/assets/images/home/home.png")} />
       </View>
 
       <View style={styles.navigationButtonView}>
