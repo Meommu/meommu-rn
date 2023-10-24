@@ -1,8 +1,10 @@
-import { Controller, useFormContext } from "react-hook-form";
-import type { SignUpFormFieldValues } from "../signUp";
+// react
 import { View, Text, StyleSheet } from "react-native";
-import { FormInput } from "../../components/FormInput";
-import { AlertText } from "../../components/AlertText";
+import { Controller, useFormContext } from "react-hook-form";
+
+// components
+import { FormInput } from "@/components/FormInput";
+import { AlertText } from "@/components/AlertText";
 
 interface StepTwoProps {}
 

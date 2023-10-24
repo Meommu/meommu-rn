@@ -1,3 +1,4 @@
+// react
 import {
   View,
   StyleSheet,
@@ -5,7 +6,9 @@ import {
   GestureResponderEvent,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import CaretLeft from "../../assets/svgs/caret-left.svg";
+
+// svgs
+import CaretLeft from "@/assets/svgs/caret-left.svg";
 
 interface GoBackButtonProps {
   onPress?: (event: GestureResponderEvent) => void;
