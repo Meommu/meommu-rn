@@ -1,6 +1,9 @@
+// react
 import { View, Image, StyleSheet } from "react-native";
-import { ImageProps } from "react-native";
-import { size } from "../constants";
+import type { ImageProps } from "react-native";
+
+// constants
+import { size } from "@/constants";
 
 export function BannerImage({ ...props }: ImageProps) {
   return (

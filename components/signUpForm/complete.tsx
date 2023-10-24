@@ -3,7 +3,7 @@ import { useFormContext } from "react-hook-form";
 import { View, StyleSheet, Text } from "react-native";
 
 // components
-import { BannerImage } from "@/components/BannerImage";
+import { BannerImage } from "@/components/Image/BannerImage";
 
 interface CompleteProps {}
 

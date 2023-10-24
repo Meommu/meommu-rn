@@ -9,7 +9,7 @@ import { router } from "expo-router";
 
 // components
 import { NavigationButton } from "@/components/NavigationButton";
-import { BannerImage } from "@/components/BannerImage";
+import { BannerImage } from "@/components/Image/BannerImage";
 
 // constants
 import { VIEW_NAME } from "@/constants";

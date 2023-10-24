@@ -4,7 +4,7 @@ import { Controller, useFormContext } from "react-hook-form";
 
 // components
 import { FormInput } from "@/components/FormInput";
-import { AlertText } from "@/components/AlertText";
+import { AlertText } from "@/components/Text/AlertText";
 
 interface StepTwoProps {}
 

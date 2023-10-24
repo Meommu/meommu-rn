@@ -6,7 +6,7 @@ import { View, Text, StyleSheet } from "react-native";
 import { FormInput } from "@/components/FormInput";
 import { FormDupChkButton } from "@/components/FormDupChkButton";
 import { CheckBoxButton } from "@/components/CheckboxButton";
-import { AlertText } from "@/components/AlertText";
+import { AlertText } from "@/components/Text/AlertText";
 
 // svgs
 import CaretRight from "@/assets/svgs/caret-right.svg";
