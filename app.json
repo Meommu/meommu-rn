@@ -22,10 +22,16 @@
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.png",
+      "output": "static",
+      "bundler": "metro"
     },
     "packagerOpts": {
       "config": "metro.config.js"
+    },
+    "plugins": ["expo-router"],
+    "experiments": {
+      "tsconfigPaths": true
     }
   }
 }

@@ -1,3 +1,4 @@
+// react
 import { Text, TextProps } from "react-native";
 
 interface AlertTextProps extends TextProps {

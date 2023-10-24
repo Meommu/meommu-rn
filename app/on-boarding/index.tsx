@@ -1,22 +1,28 @@
+// react
 import { useState, createRef } from "react";
-import { View, Text, Image, GestureResponderEvent } from "react-native";
-import { StyleSheet } from "react-native";
-import Swiper from "react-native-web-swiper";
-import { NavigationButton } from "../components/NavigationButton";
-import { useNavigation } from "@react-navigation/native";
-import { VIEW_NAME } from "../constants";
-import { StatusBar } from "expo-status-bar";
-import { BannerImage } from "../components/BannerImage";
+import { View, Text, GestureResponderEvent, StyleSheet } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+
+// expo
+import { StatusBar } from "expo-status-bar";
+import { router } from "expo-router";
+
+// components
+import { NavigationButton } from "@/components/Button/NavigationButton";
+import { BannerImage } from "@/components/Image/BannerImage";
+
+// constants
+import { VIEW_NAME } from "@/constants";
+
+// other library
+import Swiper from "react-native-web-swiper";
 
 const SLIDE_MAX_COUNT = 3;
 
-export function OnBoarding() {
+export default function OnBoarding() {
   const [swiperIndex, setSwiperIndex] = useState(0);
 
   const swiper = createRef<Swiper>();
-
-  const navigation = useNavigation();
 
   const swiperIndexChangeHandler = (index: number) => {
     setSwiperIndex(index);
@@ -40,7 +46,7 @@ export function OnBoarding() {
         console.log(e);
       }
 
-      navigation.navigate(VIEW_NAME.HOME);
+      router.replace(VIEW_NAME.HOME);
     }
   };
 
@@ -73,7 +79,7 @@ export function OnBoarding() {
           </Text>
 
           <BannerImage
-            source={require("../../assets/images/onboarding/onboarding-1.png")}
+            source={require("@/assets/images/onboarding/onboarding-1.png")}
           />
         </View>
 
@@ -84,7 +90,7 @@ export function OnBoarding() {
           </Text>
 
           <BannerImage
-            source={require("../../assets/images/onboarding/onboarding-2.png")}
+            source={require("@/assets/images/onboarding/onboarding-2.png")}
           />
         </View>
 
@@ -94,7 +100,7 @@ export function OnBoarding() {
           </Text>
 
           <BannerImage
-            source={require("../../assets/images/onboarding/onboarding-3.png")}
+            source={require("@/assets/images/onboarding/onboarding-3.png")}
           />
         </View>
       </Swiper>

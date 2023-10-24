@@ -1,3 +1,4 @@
+// react
 import { useState, createRef } from "react";
 import {
   View,
@@ -8,31 +9,28 @@ import {
   Keyboard,
 } from "react-native";
 import Swiper from "react-native-web-swiper";
-import { GoBackButton } from "../components/GoBackButton";
-import { NavigationButton } from "../components/NavigationButton";
-import { useNavigation } from "@react-navigation/native";
 import type { GestureResponderEvent } from "react-native";
-import { VIEW_NAME } from "../constants";
 import { useForm, FormProvider } from "react-hook-form";
-import { StepOne } from "./signUpForm/stepOne";
-import { StepTwo } from "./signUpForm/stepTwo";
-import { Complete } from "./signUpForm/complete";
-import { apiService } from "../apis";
 
-export type SignUpFormFieldValues = {
-  email: string;
-  emailDupChk: null | boolean;
-  password: string;
-  passwordConfirm: string;
-  agreement: boolean;
-  kindergartenName: string;
-  kindergartenDirectorName: string;
-  phoneNumber: string;
-};
+// expo
+import { router } from "expo-router";
+
+// components
+import { GoBackButton } from "@/components/Button/GoBackButton";
+import { NavigationButton } from "@/components/Button/NavigationButton";
+import { StepOne } from "@/components/signUpForm/stepOne";
+import { StepTwo } from "@/components/signUpForm/stepTwo";
+import { Complete } from "@/components/signUpForm/complete";
+
+// constants
+import { VIEW_NAME } from "@/constants";
+
+// apis
+import { apiService } from "@/apis";
 
 const SLIDE_MAX_COUNT = 3;
 
-export function SignUp() {
+export default function SignUp() {
   const methods = useForm<SignUpFormFieldValues>({
     defaultValues: {
       email: "",
@@ -52,8 +50,6 @@ export function SignUp() {
     trigger,
     formState: { isSubmitting },
   } = methods;
-
-  const navigation = useNavigation();
 
   const [swiperIndex, setSwiperIndex] = useState(0);
 
@@ -104,10 +100,7 @@ export function SignUp() {
 
         break;
       case 2:
-        /**
-         * TODO: 덮어쓰기 형태로 페이지 이동시키도록 구현
-         */
-        navigation.navigate(VIEW_NAME.MAIN);
+        router.replace(VIEW_NAME.MAIN);
 
         break;
       default:
@@ -121,11 +114,11 @@ export function SignUp() {
     }
 
     if (isFirstSlide()) {
-      if (!navigation.canGoBack()) {
+      if (!router.canGoBack()) {
         return;
       }
 
-      navigation.goBack();
+      router.back();
 
       return;
     }

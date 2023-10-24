@@ -1,12 +1,18 @@
+// react
 import { Controller, useFormContext } from "react-hook-form";
 import { View, Text, StyleSheet } from "react-native";
-import { FormInput } from "../../components/FormInput";
-import { FormDupChkButton } from "../../components/FormDupChkButton";
-import { CheckBoxButton } from "../../components/CheckboxButton";
-import { AlertText } from "../../components/AlertText";
-import CaretRight from "../../../assets/svgs/caret-right.svg";
-import type { SignUpFormFieldValues } from "../signUp";
-import { apiService } from "../../apis";
+
+// components
+import { FormInput } from "@/components/Input/FormInput";
+import { FormDupChkButton } from "@/components/Button/FormDupChkButton";
+import { CheckBoxButton } from "@/components/Button/CheckboxButton";
+import { AlertText } from "@/components/Text/AlertText";
+
+// svgs
+import CaretRight from "@/assets/svgs/caret-right.svg";
+
+// apis
+import { apiService } from "@/apis";
 
 interface StepOneProps {}
 

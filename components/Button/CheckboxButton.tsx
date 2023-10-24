@@ -1,6 +1,9 @@
+// react
 import { View, TouchableOpacity, TouchableOpacityProps } from "react-native";
-import Check from "../../assets/svgs/check.svg";
 import { Svg, Circle } from "react-native-svg";
+
+// svgs
+import Check from "@/assets/svgs/check.svg";
 
 interface CheckBoxButtonProps extends TouchableOpacityProps {
   isCheck: boolean;

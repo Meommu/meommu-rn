@@ -1,7 +1,9 @@
+// react
 import { useFormContext } from "react-hook-form";
-import type { SignUpFormFieldValues } from "../signUp";
 import { View, StyleSheet, Text } from "react-native";
-import { BannerImage } from "../../components/BannerImage";
+
+// components
+import { BannerImage } from "@/components/Image/BannerImage";
 
 interface CompleteProps {}
 
@@ -23,9 +25,7 @@ export function Complete({}: CompleteProps) {
         </Text>
       </View>
 
-      <BannerImage
-        source={require("../../../assets/images/signup/signup-end.png")}
-      />
+      <BannerImage source={require("@/assets/images/signup/signup-end.png")} />
     </View>
   );
 }
