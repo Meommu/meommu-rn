@@ -1,4 +1,5 @@
-import { View, TextInput, Pressable, Keyboard } from "react-native";
+// react
+import { View, TextInput, Pressable } from "react-native";
 import type { TextInputProps } from "react-native";
 
 interface FormInputProps extends TextInputProps {}

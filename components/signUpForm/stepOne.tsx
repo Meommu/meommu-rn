@@ -3,7 +3,7 @@ import { Controller, useFormContext } from "react-hook-form";
 import { View, Text, StyleSheet } from "react-native";
 
 // components
-import { FormInput } from "@/components/FormInput";
+import { FormInput } from "@/components/Input/FormInput";
 import { FormDupChkButton } from "@/components/FormDupChkButton";
 import { CheckBoxButton } from "@/components/CheckboxButton";
 import { AlertText } from "@/components/Text/AlertText";

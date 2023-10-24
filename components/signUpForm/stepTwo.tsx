@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from "react-native";
 import { Controller, useFormContext } from "react-hook-form";
 
 // components
-import { FormInput } from "@/components/FormInput";
+import { FormInput } from "@/components/Input/FormInput";
 import { AlertText } from "@/components/Text/AlertText";
 
 interface StepTwoProps {}
