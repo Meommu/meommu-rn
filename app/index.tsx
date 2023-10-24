@@ -16,8 +16,8 @@ import { VIEW_NAME } from "../constants";
  */
 export default function App() {
   const [fontsLoaded] = useFonts({
-    "Pretendard-SemiBold": require("../assets/fonts/Pretendard-SemiBold.otf"),
-    yeonTheLand: require("../assets/fonts/yeonTheLand.ttf"),
+    "Pretendard-SemiBold": require("@/assets/fonts/Pretendard-SemiBold.otf"),
+    yeonTheLand: require("@/assets/fonts/yeonTheLand.ttf"),
   });
 
   const chkLogin = async (): Promise<boolean> => {
@@ -70,7 +70,7 @@ export default function App() {
       <Image
         resizeMode="cover"
         style={styles.splashImage}
-        source={require("../assets/splash.png")}
+        source={require("@/assets/splash.png")}
       />
     </View>
   );

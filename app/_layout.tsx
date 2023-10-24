@@ -19,8 +19,8 @@ export default function AppLayout() {
    * 2. 특정 URL에서 새로고침
    */
   useFonts({
-    "Pretendard-SemiBold": require("../assets/fonts/Pretendard-SemiBold.otf"),
-    yeonTheLand: require("../assets/fonts/yeonTheLand.ttf"),
+    "Pretendard-SemiBold": require("@/assets/fonts/Pretendard-SemiBold.otf"),
+    yeonTheLand: require("@/assets/fonts/yeonTheLand.ttf"),
   });
 
   /**

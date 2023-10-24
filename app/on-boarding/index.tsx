@@ -79,7 +79,7 @@ export default function OnBoarding() {
           </Text>
 
           <BannerImage
-            source={require("../../assets/images/onboarding/onboarding-1.png")}
+            source={require("@/assets/images/onboarding/onboarding-1.png")}
           />
         </View>
 
@@ -90,7 +90,7 @@ export default function OnBoarding() {
           </Text>
 
           <BannerImage
-            source={require("../../assets/images/onboarding/onboarding-2.png")}
+            source={require("@/assets/images/onboarding/onboarding-2.png")}
           />
         </View>
 
@@ -100,7 +100,7 @@ export default function OnBoarding() {
           </Text>
 
           <BannerImage
-            source={require("../../assets/images/onboarding/onboarding-3.png")}
+            source={require("@/assets/images/onboarding/onboarding-3.png")}
           />
         </View>
       </Swiper>
