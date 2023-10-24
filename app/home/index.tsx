@@ -1,19 +1,23 @@
-import { View, Text } from "react-native";
-import { StyleSheet } from "react-native";
-import { NavigationButton } from "../components/NavigationButton";
-import { useNavigation } from "@react-navigation/native";
-import { VIEW_NAME } from "../constants";
-import { BannerImage } from "../components/BannerImage";
+// react
+import { View, Text, StyleSheet } from "react-native";
 
-export function Home() {
-  const navigation = useNavigation();
+// expo
+import { router } from "expo-router";
 
+// components
+import { NavigationButton } from "@/components/NavigationButton";
+import { BannerImage } from "@/components/BannerImage";
+
+// constants
+import { VIEW_NAME } from "@/constants";
+
+export default function Home() {
   const signInButtonClickHandler = () => {
-    navigation.navigate(VIEW_NAME.SIGN_IN);
+    router.push(VIEW_NAME.SIGN_IN);
   };
 
   const signUpButtonClickHandler = () => {
-    navigation.navigate(VIEW_NAME.SIGN_UP);
+    router.push(VIEW_NAME.SIGN_UP);
   };
 
   return (
