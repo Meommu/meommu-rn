@@ -8,11 +8,11 @@ import { StatusBar } from "expo-status-bar";
 import { router } from "expo-router";
 
 // components
-import { NavigationButton } from "../../components/NavigationButton";
-import { BannerImage } from "../../components/BannerImage";
+import { NavigationButton } from "@/components/NavigationButton";
+import { BannerImage } from "@/components/BannerImage";
 
 // constants
-import { VIEW_NAME } from "../../constants";
+import { VIEW_NAME } from "@/constants";
 
 // other library
 import Swiper from "react-native-web-swiper";
