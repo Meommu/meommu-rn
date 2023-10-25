@@ -115,6 +115,8 @@ export default function SignUp() {
 
     if (isFirstSlide()) {
       if (!router.canGoBack()) {
+        router.replace(VIEW_NAME.HOME);
+
         return;
       }
 
@@ -123,11 +125,9 @@ export default function SignUp() {
       return;
     }
 
-    if (!swiper.current) {
-      return;
+    if (swiper.current) {
+      swiper.current.goToPrev();
     }
-
-    swiper.current.goToPrev();
   };
 
   const isFirstSlide = () => {
