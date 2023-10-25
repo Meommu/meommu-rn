@@ -8,3 +8,8 @@ type SignUpFormFieldValues = {
   kindergartenDirectorName: string;
   phoneNumber: string;
 };
+
+type SignInFormFieldValues = {
+  id: string;
+  password: string;
+};
