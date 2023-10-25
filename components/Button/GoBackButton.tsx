@@ -2,8 +2,8 @@
 import {
   View,
   StyleSheet,
-  TouchableOpacity,
   GestureResponderEvent,
+  Pressable,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
@@ -25,14 +25,13 @@ export function GoBackButton({ onPress, disable = false }: GoBackButtonProps) {
   };
 
   return (
-    <TouchableOpacity
+    <Pressable
+      style={[styles.container, { opacity: disable ? 0 : 1 }]}
       onPress={onPress || goBackButtonClickHandler}
       disabled={disable}
     >
-      <View style={[styles.container, { opacity: disable ? 0 : 1 }]}>
-        <CaretLeft />
-      </View>
-    </TouchableOpacity>
+      <CaretLeft />
+    </Pressable>
   );
 }
 
