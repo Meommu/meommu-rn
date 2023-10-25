@@ -29,6 +29,18 @@ export default function Home() {
   });
 
   const signInButtonClickHandler = () => {
+    if (errors.id || errors.password) {
+      /**
+       * TODO: 아이디 혹은 패스워드가 입력되지 않았을 경우
+       * 오류 타입에 따라서 경고 메세지를 출력하도록 구현
+       */
+      console.log(
+        "[error] 아이디 혹은 패스워드가 입력되지 않았거나 올바르지 않은 형태입니다."
+      );
+
+      return;
+    }
+
     handleSubmit(async (formData) => {
       try {
         /**
@@ -41,6 +53,9 @@ export default function Home() {
         /**
          * TODO: 실패 시 경고 메세지를 출력하도록 구현
          */
+        console.log(
+          "[error] 로그인에 실패하였습니다. 아이디 혹은 패스워드를 확인해주세요."
+        );
       }
     })();
   };
@@ -69,7 +84,16 @@ export default function Home() {
         <Controller
           name="id"
           control={control}
-          rules={{}}
+          rules={{
+            required: {
+              value: true,
+              message: "아이디(이메일)가 입력되지 않았습니다.",
+            },
+            pattern: {
+              value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+              message: "이메일 형식이 올바르지 않습니다.",
+            },
+          }}
           render={({ field: { onChange, onBlur, value } }) => (
             <FormInput
               placeholder="아이디 (이메일)"
@@ -82,7 +106,12 @@ export default function Home() {
         <Controller
           name="password"
           control={control}
-          rules={{}}
+          rules={{
+            required: {
+              value: true,
+              message: "패스워드가 입력되지 않았습니다.",
+            },
+          }}
           render={({ field: { onChange, onBlur, value } }) => (
             <FormInput
               placeholder="비밀번호"
