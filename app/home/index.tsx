@@ -111,6 +111,10 @@ export default function Home() {
               value: true,
               message: "패스워드가 입력되지 않았습니다.",
             },
+            pattern: {
+              value: /^(?=.*\d)(?=.*[!@#$%^~*+=-])[A-Za-z\d!@#$%^~*+=-]{8,20}$/,
+              message: "비밀번호 형식이 올바르지 않습니다.",
+            },
           }}
           render={({ field: { onChange, onBlur, value } }) => (
             <FormInput
