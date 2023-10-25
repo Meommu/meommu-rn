@@ -43,15 +43,27 @@ export class MockApiService {
         this.post("/api/v1/kindergartens/signin", (schema, request) => {
           const { requestBody } = request;
 
-          const { id, password } = JSON.parse(requestBody);
+          const { email, password } = JSON.parse(requestBody);
+
+          if (email === "meommu@exam.com" && password === "Password1!") {
+            return new Response(
+              201,
+              {},
+              responseTemplate({
+                code: "0000",
+                message: "로그인 되었습니다",
+                data: { accessToken: "<ACCESS_TOKEN>" },
+              })
+            );
+          }
 
           return new Response(
-            201,
+            400,
             {},
             responseTemplate({
-              code: "0000",
-              message: "로그인 되었습니다",
-              data: { accessToken: "<ACCESS_TOKEN>" },
+              code: "XXXX",
+              message: "로그인이 실패하였습니다",
+              data: null,
             })
           );
         });
