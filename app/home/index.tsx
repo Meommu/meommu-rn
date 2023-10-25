@@ -1,5 +1,6 @@
 // react
 import { View, Text, StyleSheet, Pressable } from "react-native";
+import { useForm, Controller } from "react-hook-form";
 
 // expo
 import { router } from "expo-router";
@@ -7,14 +8,41 @@ import { router } from "expo-router";
 // components
 import { NavigationButton } from "@/components/Button/NavigationButton";
 import { BannerImage } from "@/components/Image/BannerImage";
+import { FormInput } from "@/components/Input/FormInput";
 
 // constants
 import { VIEW_NAME } from "@/constants";
-import { FormInput } from "@/components/Input/FormInput";
+
+// utils
+import { sleep } from "@/utils/time";
 
 export default function Home() {
+  const {
+    control,
+    handleSubmit,
+    formState: { isSubmitting, errors },
+  } = useForm<SignInFormFieldValues>({
+    defaultValues: {
+      id: "",
+      password: "",
+    },
+  });
+
   const signInButtonClickHandler = () => {
-    router.push(VIEW_NAME.SIGN_IN);
+    handleSubmit(async (formData) => {
+      try {
+        /**
+         * TODO: 로그인 프로세스를 처리
+         */
+        await sleep(2000);
+
+        router.replace(VIEW_NAME.SIGN_IN);
+      } catch (e) {
+        /**
+         * TODO: 실패 시 경고 메세지를 출력하도록 구현
+         */
+      }
+    })();
   };
 
   const signUpButtonClickHandler = () => {
@@ -38,8 +66,32 @@ export default function Home() {
       </View>
 
       <View style={styles.signInFormView}>
-        <FormInput placeholder="이메일 아이디" />
-        <FormInput placeholder="비밀번호" />
+        <Controller
+          name="id"
+          control={control}
+          rules={{}}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <FormInput
+              placeholder="아이디 (이메일)"
+              onBlur={onBlur}
+              onChange={onChange}
+              value={value}
+            />
+          )}
+        />
+        <Controller
+          name="password"
+          control={control}
+          rules={{}}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <FormInput
+              placeholder="비밀번호"
+              onBlur={onBlur}
+              onChange={onChange}
+              value={value}
+            />
+          )}
+        />
 
         <View style={styles.navigationLayoutView}>
           <Pressable>
@@ -59,7 +111,11 @@ export default function Home() {
           </Pressable>
         </View>
 
-        <NavigationButton content="로그인" onPress={signInButtonClickHandler} />
+        <NavigationButton
+          content="로그인"
+          onPress={signInButtonClickHandler}
+          disabled={isSubmitting}
+        />
       </View>
     </View>
   );
