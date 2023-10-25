@@ -40,6 +40,22 @@ export class MockApiService {
           return responseTemplate(true);
         });
 
+        this.post("/api/v1/kindergartens/signin", (schema, request) => {
+          const { requestBody } = request;
+
+          const { id, password } = JSON.parse(requestBody);
+
+          return new Response(
+            201,
+            {},
+            responseTemplate({
+              code: "0000",
+              message: "로그인 되었습니다",
+              data: { accessToken: "<ACCESS_TOKEN>" },
+            })
+          );
+        });
+
         this.post("/api/v1/kindergartens/signup", (schema, request) => {
           const { requestBody } = request;
 

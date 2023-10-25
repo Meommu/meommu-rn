@@ -16,6 +16,9 @@ import { VIEW_NAME } from "@/constants";
 // utils
 import { sleep } from "@/utils/time";
 
+// api
+import { apiService } from "@/apis";
+
 export default function Home() {
   const {
     control,
@@ -46,7 +49,10 @@ export default function Home() {
         /**
          * TODO: 로그인 프로세스를 처리
          */
-        await sleep(2000);
+        const accessToken = await apiService.signin(
+          formData.id,
+          formData.password
+        );
 
         router.replace(VIEW_NAME.SIGN_IN);
       } catch (e) {
