@@ -13,9 +13,6 @@ import { FormInput } from "@/components/Input/FormInput";
 // constants
 import { VIEW_NAME } from "@/constants";
 
-// utils
-import { sleep } from "@/utils/time";
-
 // api
 import { apiService } from "@/apis";
 
@@ -54,7 +51,7 @@ export default function Home() {
           formData.password
         );
 
-        router.replace(VIEW_NAME.SIGN_IN);
+        router.replace(VIEW_NAME.MAIN);
       } catch (e) {
         /**
          * TODO: 실패 시 경고 메세지를 출력하도록 구현
@@ -128,6 +125,7 @@ export default function Home() {
               onBlur={onBlur}
               onChange={onChange}
               value={value}
+              secureTextEntry={true}
             />
           )}
         />
