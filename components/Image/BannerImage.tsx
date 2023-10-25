@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
   },
 
   bannerImageWrapper: {
-    maxWidth: 400,
+    maxWidth: size.MOBILE_WIDTH,
     width: "100%",
     aspectRatio: "1/1",
     marginTop: size.NAVIGATION_BUTTON_HEIGHT + 20,
