@@ -20,7 +20,7 @@ export default function AppLayout() {
   const [isPcWeb, setIsPcWeb] = useState<boolean | null>(null);
 
   useEffect(() => {
-    setIsPcWeb(Platform.OS === "web" && width > size.TABLET_WIDTH);
+    setIsPcWeb(Platform.OS === "web" && width >= size.LAPTOP_WIDTH);
   }, [width]);
 
   const mobileLayoutStyle: StyleProp<ViewStyle> = {
