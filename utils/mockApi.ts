@@ -112,8 +112,8 @@ export class MockApiService {
               data: {
                 data: {
                   id: 1,
-                  name: "멈무유치원",
-                  email: "meommu@exam.com",
+                  name,
+                  email,
                   createdAt: "2023-10-24T23:41:59.932223",
                 },
               },

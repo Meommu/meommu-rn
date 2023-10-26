@@ -87,7 +87,7 @@ export default function SignUp() {
       case 1:
         handleSubmit(async (formData) => {
           try {
-            await apiService.setUserInfo(formData.email);
+            await apiService.setUserInfo({ ...formData });
 
             swiperObj.goTo(2);
           } catch (e) {

@@ -1,9 +1,21 @@
 // axios
 import axios from "axios";
 
-export const setUserInfo = async (email: string): Promise<void> => {
+export const setUserInfo = async ({
+  email,
+  password,
+  passwordConfirm,
+  kindergartenName,
+  kindergartenDirectorName,
+  phoneNumber,
+}: SignUpFormFieldValues): Promise<void> => {
   await axios.post("/api/v1/kindergartens/signup", {
+    name: kindergartenName,
     email,
+    ownerName: kindergartenDirectorName,
+    phone: phoneNumber,
+    password,
+    passwordConfirmation: passwordConfirm,
   });
 };
 
