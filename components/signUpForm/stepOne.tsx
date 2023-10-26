@@ -48,7 +48,9 @@ export function StepOne({}: StepOneProps) {
 
       setValue("emailDupChk", isDuplication);
     } catch (e) {
-      setValue("emailDupChk", false);
+      /**
+       * TODO: API에러 발생 시 알맞은 처리 구현 (중앙집중식 에러처리가 구현되면 해당 로직 이동)
+       */
     }
 
     return;

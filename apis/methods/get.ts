@@ -1,16 +1,16 @@
+// axios
 import axios from "axios";
 
 export const getEmailDuplicationStatus = async (
   email: string
 ): Promise<boolean> => {
-  const {
-    data: { data },
-  } = await axios.get<ResponseTemplate<boolean>>(
-    "/api/v1/kindergartens/email",
-    {
+  try {
+    await axios.get<ResponseTemplate<null>>("/api/v1/kindergartens/email", {
       params: { email },
-    }
-  );
+    });
 
-  return data;
+    return true;
+  } catch (e) {
+    return false;
+  }
 };

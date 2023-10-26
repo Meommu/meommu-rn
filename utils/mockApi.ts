@@ -1,19 +1,15 @@
+// miragejs
 import { createServer } from "miragejs";
 import { Response } from "miragejs";
 
-const responseTemplate = ({
-  code = "",
-  message = "",
-  data,
-}: {
-  code?: string;
-  message?: string;
-  data: unknown;
-}) => ({
-  code,
-  message,
-  data,
-});
+// constants
+import { CODE } from "@/constants";
+
+// utils
+import { resBodyTemplate } from "@/utils";
+
+// other
+import httpStatus from "http-status";
 
 export class MockApiService {
   register() {
@@ -25,29 +21,46 @@ export class MockApiService {
 
     window.server = createServer({
       routes() {
+        /**
+         * [GET] 이메일 중복검사
+         */
         this.get("/api/v1/kindergartens/email", (schema, request) => {
           const {
             queryParams: { email },
           } = request;
 
-          if (!email) {
-            return responseTemplate({ data: false });
+          if (!email || !/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
+            return new Response(
+              httpStatus.BAD_REQUEST,
+              {},
+              resBodyTemplate({
+                code: CODE.BAD_REQUEST,
+                message: "이메일이 올바르지 않습니다.",
+              })
+            );
           }
 
-          if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
-            return responseTemplate({ data: false });
-          }
-
-          /**
-           * 중복된 이메일 검사
-           */
           if (email === "dup1@test.com") {
-            return responseTemplate({ data: false });
+            return new Response(
+              httpStatus.BAD_REQUEST,
+              {},
+              resBodyTemplate({
+                code: CODE.EMAIL_DUP,
+                message: "이메일이 중복되었습니다.",
+              })
+            );
           }
 
-          return responseTemplate({ data: true });
+          return new Response(
+            httpStatus.OK,
+            {},
+            resBodyTemplate({ code: CODE.OK, message: "정상" })
+          );
         });
 
+        /**
+         * [POST] 이메일 패스워드로 로그인
+         */
         this.post("/api/v1/kindergartens/signin", (schema, request) => {
           const { requestBody } = request;
 
@@ -55,10 +68,10 @@ export class MockApiService {
 
           if (email === "meommu@exam.com" && password === "Password1!") {
             return new Response(
-              201,
+              httpStatus.CREATED,
               {},
-              responseTemplate({
-                code: "0000",
+              resBodyTemplate({
+                code: CODE.OK,
                 message: "로그인 되었습니다",
                 data: { accessToken: "<ACCESS_TOKEN>" },
               })
@@ -66,16 +79,18 @@ export class MockApiService {
           }
 
           return new Response(
-            400,
+            httpStatus.BAD_REQUEST,
             {},
-            responseTemplate({
-              code: "XXXX",
+            resBodyTemplate({
+              code: CODE.BAD_REQUEST,
               message: "로그인이 실패하였습니다",
-              data: null,
             })
           );
         });
 
+        /**
+         * [POST] 회원가입
+         */
         this.post("/api/v1/kindergartens/signup", (schema, request) => {
           const { requestBody } = request;
 
@@ -88,14 +103,29 @@ export class MockApiService {
             passwordConfirmation,
           } = JSON.parse(requestBody);
 
-          /**
-           * 프론트엔드에서 중복검사가 되지 않았을 경우
-           */
           if (email === "dup2@test.com") {
-            return new Response(400, {}, responseTemplate({ data: null }));
+            return new Response(
+              httpStatus.BAD_REQUEST,
+              {},
+              resBodyTemplate({ code: CODE.EMAIL_DUP })
+            );
           }
 
-          return new Response(201, {}, responseTemplate({ data: true }));
+          return new Response(
+            httpStatus.CREATED,
+            {},
+            resBodyTemplate({
+              code: CODE.OK,
+              data: {
+                data: {
+                  id: 1,
+                  name: "멈무유치원",
+                  email: "meommu@exam.com",
+                  createdAt: "2023-10-24T23:41:59.932223",
+                },
+              },
+            })
+          );
         });
       },
     });

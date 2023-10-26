@@ -92,7 +92,7 @@ export default function SignUp() {
             swiperObj.goTo(2);
           } catch (e) {
             /**
-             * TODO: 회원가입 실패 시 로직 작성
+             * TODO: 회원가입 실패 시 로직 작성  (중앙집중식 에러처리가 구현되면 해당 로직 이동)
              */
             console.log(e);
           }
