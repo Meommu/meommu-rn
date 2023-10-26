@@ -1,21 +1,15 @@
+// miragejs
 import { createServer } from "miragejs";
 import { Response } from "miragejs";
-import { CODE } from "@/constants";
-import httpStatus from "http-status";
 
-const resBodyTemplate = ({
-  code,
-  message = "",
-  data = null,
-}: {
-  code: CODE;
-  message?: string;
-  data?: unknown;
-}) => ({
-  code,
-  message,
-  data,
-});
+// constants
+import { CODE } from "@/constants";
+
+// utils
+import { resBodyTemplate } from "./template";
+
+// other
+import httpStatus from "http-status";
 
 export class MockApiService {
   register() {
