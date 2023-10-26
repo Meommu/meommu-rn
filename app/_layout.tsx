@@ -9,7 +9,7 @@ import { Stack } from "expo-router";
 import Constants from "expo-constants";
 
 // utils
-import { MockApiService } from "../utils/mockApi";
+import { MockApiService } from "@/utils";
 
 // constants
 import { size } from "@/constants";

@@ -6,7 +6,7 @@ import { Response } from "miragejs";
 import { CODE } from "@/constants";
 
 // utils
-import { resBodyTemplate } from "./template";
+import { resBodyTemplate } from "@/utils";
 
 // other
 import httpStatus from "http-status";
