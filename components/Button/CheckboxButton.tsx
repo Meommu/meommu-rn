@@ -17,8 +17,8 @@ export function CheckBoxButton({ isCheck, ...props }: CheckBoxButtonProps) {
       <View
         style={{
           position: "relative",
-          width: 26,
-          height: 26,
+          width: 30,
+          height: 30,
           justifyContent: "center",
           alignItems: "center",
         }}
