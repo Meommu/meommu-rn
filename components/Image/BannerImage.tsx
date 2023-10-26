@@ -5,10 +5,22 @@ import type { ImageProps } from "react-native";
 // constants
 import { size } from "@/constants";
 
-export function BannerImage({ ...props }: ImageProps) {
+interface BannerImageProps extends ImageProps {
+  extraMarginTop?: number;
+}
+
+export function BannerImage({
+  extraMarginTop = 0,
+  ...props
+}: BannerImageProps) {
   return (
     <View style={styles.container}>
-      <View style={styles.bannerImageWrapper}>
+      <View
+        style={[
+          styles.bannerImageWrapper,
+          { marginTop: size.NAVIGATION_BUTTON_HEIGHT + 20 + extraMarginTop },
+        ]}
+      >
         <Image style={styles.bannerImage} {...props} />
       </View>
     </View>
@@ -27,7 +39,6 @@ const styles = StyleSheet.create({
     maxWidth: size.MOBILE_WIDTH,
     width: "100%",
     aspectRatio: "1/1",
-    marginTop: size.NAVIGATION_BUTTON_HEIGHT + 20,
   },
 
   bannerImage: {
