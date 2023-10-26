@@ -13,4 +13,9 @@ export const enum CODE {
    * 잘못된 요청일 경우 코드
    */
   "BAD_REQUEST" = "C400",
+
+  /**
+   * 인증에 실패한 경우 코드
+   */
+  "AUTH_NOT_FOUND" = "A001",
 }
