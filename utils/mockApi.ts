@@ -40,21 +40,14 @@ export class MockApiService {
             );
           }
 
-          if (email === "dup1@test.com") {
-            return new Response(
-              httpStatus.BAD_REQUEST,
-              {},
-              resBodyTemplate({
-                code: CODE.EMAIL_DUP,
-                message: "이메일이 중복되었습니다.",
-              })
-            );
-          }
-
           return new Response(
             httpStatus.OK,
             {},
-            resBodyTemplate({ code: CODE.OK, message: "정상" })
+            resBodyTemplate({
+              code: CODE.OK,
+              message: "정상",
+              data: email !== "dup1@test.com",
+            })
           );
         });
 
