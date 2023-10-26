@@ -100,7 +100,7 @@ export default function SignUp() {
 
         break;
       case 2:
-        router.replace(VIEW_NAME.MAIN);
+        router.replace(VIEW_NAME.HOME);
 
         break;
       default:
