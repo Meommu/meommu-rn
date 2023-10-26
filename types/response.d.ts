@@ -1,5 +1,9 @@
-type ResponseTemplate<T> = {
-  code: string;
-  message: string;
-  data: T;
-};
+import { CODE } from "@/constants";
+
+declare global {
+  type ResponseTemplate<T> = {
+    code: CODE;
+    message: string;
+    data: T;
+  };
+}
