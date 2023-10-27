@@ -118,7 +118,7 @@ export function StepOne({}: StepOneProps) {
           <FormDupChkButton
             isDupChk={emailDupChk}
             onPress={emailDupChkButtonClickHandler}
-            testID="email-dup-chk-button"
+            testID="email-button-dup-chk"
           />
         </View>
       </View>
