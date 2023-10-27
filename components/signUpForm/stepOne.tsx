@@ -111,12 +111,14 @@ export function StepOne({}: StepOneProps) {
                   onChange(text);
                 }}
                 value={value}
+                testID="input-email"
               />
             )}
           />
           <FormDupChkButton
             isDupChk={emailDupChk}
             onPress={emailDupChkButtonClickHandler}
+            testID="email-button-dup-chk"
           />
         </View>
       </View>
@@ -150,6 +152,7 @@ export function StepOne({}: StepOneProps) {
               onChangeText={onChange}
               value={value}
               secureTextEntry={true}
+              testID="input-password"
             />
           )}
         />
@@ -187,6 +190,7 @@ export function StepOne({}: StepOneProps) {
               onChangeText={onChange}
               value={value}
               secureTextEntry={true}
+              testID="input-password-confirm"
             />
           )}
         />
@@ -199,6 +203,7 @@ export function StepOne({}: StepOneProps) {
         <CheckBoxButton
           isCheck={agreement}
           onPress={agreementButtonClickHandler}
+          testID="button-agreement"
         />
 
         <View style={styles.agreementFieldControllerTextLayoutView}>

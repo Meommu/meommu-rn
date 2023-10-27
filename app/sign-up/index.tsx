@@ -262,6 +262,7 @@ export default function SignUp() {
               content={isLastSlide() ? "시작하기" : "다음"}
               onPress={nextButtonClickHandler}
               disabled={swiperIndex === 1 && isSubmitting}
+              testID="button-next-step-of-signup"
             />
           </View>
         </View>

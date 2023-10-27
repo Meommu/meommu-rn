@@ -44,6 +44,7 @@ export function StepTwo({}: StepTwoProps) {
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
+              testID="input-kindergarten-name"
             />
           )}
         />
@@ -76,6 +77,7 @@ export function StepTwo({}: StepTwoProps) {
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
+              testID="input-kindergarten-director-name"
             />
           )}
         />
@@ -97,7 +99,7 @@ export function StepTwo({}: StepTwoProps) {
             required: true,
             pattern: {
               value: /^\d{3}-\d{3,4}-\d{4}$/,
-              message: "*올바른 형식의 전화번호를 입력하세요",
+              message: "올바른 형식의 전화번호를 입력하세요",
             },
           }}
           render={({ field: { onChange, onBlur, value } }) => (
@@ -106,6 +108,7 @@ export function StepTwo({}: StepTwoProps) {
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
+              testID="input-phone-number"
             />
           )}
         />
