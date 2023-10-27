@@ -152,6 +152,7 @@ export function StepOne({}: StepOneProps) {
               onChangeText={onChange}
               value={value}
               secureTextEntry={true}
+              testID="input-password"
             />
           )}
         />
@@ -189,6 +190,7 @@ export function StepOne({}: StepOneProps) {
               onChangeText={onChange}
               value={value}
               secureTextEntry={true}
+              testID="input-password-confirm"
             />
           )}
         />
@@ -201,6 +203,7 @@ export function StepOne({}: StepOneProps) {
         <CheckBoxButton
           isCheck={agreement}
           onPress={agreementButtonClickHandler}
+          testID="button-agreement"
         />
 
         <View style={styles.agreementFieldControllerTextLayoutView}>
