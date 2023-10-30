@@ -1,6 +1,7 @@
 // react
 import { View, StyleSheet, Platform, useWindowDimensions } from "react-native";
 import { useEffect, useState } from "react";
+import { QueryClient, QueryClientProvider } from "react-query";
 import type { StyleProp, ViewStyle } from "react-native";
 
 // expo
@@ -13,6 +14,8 @@ import { MockApiService } from "@/utils";
 
 // constants
 import { size } from "@/constants";
+
+const queryClient = new QueryClient();
 
 export default function AppLayout() {
   const { width } = useWindowDimensions();
@@ -58,18 +61,20 @@ export default function AppLayout() {
   }, []);
 
   return (
-    <View
-      style={[
-        styles.container,
-        isPcWeb === null
-          ? hiddenStyle
-          : isPcWeb
-          ? mobileLayoutStyle
-          : dummyStyle,
-      ]}
-    >
-      <Stack screenOptions={{ headerShown: false }} />
-    </View>
+    <QueryClientProvider client={queryClient}>
+      <View
+        style={[
+          styles.container,
+          isPcWeb === null
+            ? hiddenStyle
+            : isPcWeb
+            ? mobileLayoutStyle
+            : dummyStyle,
+        ]}
+      >
+        <Stack screenOptions={{ headerShown: false }} />
+      </View>
+    </QueryClientProvider>
   );
 }
 
