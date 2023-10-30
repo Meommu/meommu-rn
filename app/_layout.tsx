@@ -13,9 +13,49 @@ import Constants from "expo-constants";
 import { MockApiService } from "@/utils";
 
 // constants
-import { size } from "@/constants";
+import { CODE, size } from "@/constants";
 
-const queryClient = new QueryClient();
+// axios
+import { AxiosError } from "axios";
+
+/**
+ * 중앙 집중식 에러 처리
+ */
+const errorHandler = (error: unknown) => {
+  if (!(error instanceof AxiosError)) {
+    /**
+     * TODO: api 이외의 에러에 대한 처리
+     */
+    return;
+  }
+
+  if (!error.response) {
+    return;
+  }
+
+  const { code, message } = error.response
+    .data as unknown as ResponseTemplate<unknown>;
+
+  switch (code) {
+    case CODE.BAD_REQUEST:
+      /**
+       * TODO: snackbar로 메세지 출력
+       */
+      console.log(code, message);
+      break;
+  }
+};
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      onError: errorHandler,
+    },
+    mutations: {
+      onError: errorHandler,
+    },
+  },
+});
 
 export default function AppLayout() {
   const { width } = useWindowDimensions();

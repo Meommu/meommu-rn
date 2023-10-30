@@ -36,9 +36,6 @@ export default function Home() {
       return accessToken;
     },
     {
-      onError: (e) => {
-        console.log("[react query error]", e);
-      },
       onSuccess: (data) => {
         /**
          * TODO: 로그인 성공 시 전달받은 토큰을 저장하도록 구현
