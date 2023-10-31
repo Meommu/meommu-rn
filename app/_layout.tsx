@@ -16,6 +16,9 @@ import Constants from "expo-constants";
 // utils
 import { MockApiService } from "@/utils";
 
+// components
+import { Toast } from "@/components/Overlay/Toast";
+
 // constants
 import { size } from "@/constants";
 
@@ -77,6 +80,7 @@ export default function AppLayout() {
         ]}
       >
         <Stack screenOptions={{ headerShown: false }} />
+        <Toast />
       </View>
     </Provider>
   );
