@@ -4,6 +4,11 @@ import { useEffect, useState } from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import type { StyleProp, ViewStyle } from "react-native";
 
+// redux
+import { legacy_createStore as createStore } from "redux";
+import { Provider } from "react-redux";
+import rootReducer from "@/store";
+
 // expo
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
@@ -11,6 +16,9 @@ import Constants from "expo-constants";
 
 // utils
 import { MockApiService } from "@/utils";
+
+// components
+import { Toast } from "@/components/Overlay/Toast";
 
 // constants
 import { CODE, size } from "@/constants";
@@ -57,6 +65,8 @@ const queryClient = new QueryClient({
   },
 });
 
+const store = createStore(rootReducer);
+
 export default function AppLayout() {
   const { width } = useWindowDimensions();
 
@@ -101,20 +111,23 @@ export default function AppLayout() {
   }, []);
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <View
-        style={[
-          styles.container,
-          isPcWeb === null
-            ? hiddenStyle
-            : isPcWeb
-            ? mobileLayoutStyle
-            : dummyStyle,
-        ]}
-      >
-        <Stack screenOptions={{ headerShown: false }} />
-      </View>
-    </QueryClientProvider>
+    <Provider store={store}>
+      <QueryClientProvider client={queryClient}>
+        <View
+          style={[
+            styles.container,
+            isPcWeb === null
+              ? hiddenStyle
+              : isPcWeb
+              ? mobileLayoutStyle
+              : dummyStyle,
+          ]}
+        >
+          <Stack screenOptions={{ headerShown: false }} />
+          <Toast />
+        </View>
+      </QueryClientProvider>
+    </Provider>
   );
 }
 
