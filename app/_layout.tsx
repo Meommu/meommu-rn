@@ -16,6 +16,7 @@ import Constants from "expo-constants";
 
 // utils
 import { MockApiService } from "@/utils";
+import { fireToast } from "@/utils";
 
 // components
 import { Toast } from "@/components/Overlay/Toast";
@@ -25,6 +26,11 @@ import { CODE, size } from "@/constants";
 
 // axios
 import { AxiosError } from "axios";
+
+/**
+ * redux 저장소
+ */
+const store = createStore(rootReducer);
 
 /**
  * 중앙 집중식 에러 처리
@@ -46,10 +52,8 @@ const errorHandler = (error: unknown) => {
 
   switch (code) {
     case CODE.BAD_REQUEST:
-      /**
-       * TODO: snackbar로 메세지 출력
-       */
-      console.log(code, message);
+      fireToast(store.dispatch, message, 3000);
+
       break;
   }
 };
@@ -64,8 +68,6 @@ const queryClient = new QueryClient({
     },
   },
 });
-
-const store = createStore(rootReducer);
 
 export default function AppLayout() {
   const { width } = useWindowDimensions();
