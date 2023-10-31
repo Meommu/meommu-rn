@@ -3,6 +3,11 @@ import { View, StyleSheet, Platform, useWindowDimensions } from "react-native";
 import { useEffect, useState } from "react";
 import type { StyleProp, ViewStyle } from "react-native";
 
+// redux
+import { legacy_createStore as createStore } from "redux";
+import { Provider } from "react-redux";
+import rootReducer from "@/store";
+
 // expo
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
@@ -13,6 +18,8 @@ import { MockApiService } from "@/utils";
 
 // constants
 import { size } from "@/constants";
+
+const store = createStore(rootReducer);
 
 export default function AppLayout() {
   const { width } = useWindowDimensions();
@@ -58,18 +65,20 @@ export default function AppLayout() {
   }, []);
 
   return (
-    <View
-      style={[
-        styles.container,
-        isPcWeb === null
-          ? hiddenStyle
-          : isPcWeb
-          ? mobileLayoutStyle
-          : dummyStyle,
-      ]}
-    >
-      <Stack screenOptions={{ headerShown: false }} />
-    </View>
+    <Provider store={store}>
+      <View
+        style={[
+          styles.container,
+          isPcWeb === null
+            ? hiddenStyle
+            : isPcWeb
+            ? mobileLayoutStyle
+            : dummyStyle,
+        ]}
+      >
+        <Stack screenOptions={{ headerShown: false }} />
+      </View>
+    </Provider>
   );
 }
 
