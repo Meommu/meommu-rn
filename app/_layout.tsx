@@ -59,6 +59,12 @@ const errorHandler = (error: unknown) => {
       fireToast(store.dispatch, "이메일을 다시 확인하세요.", 3000);
 
       break;
+
+    case CODE.INTERNAL_SERVER_ERROR:
+    case CODE.JSON_PROCESSING_ERROR:
+      fireToast(store.dispatch, message, 3000);
+
+      break;
   }
 };
 
