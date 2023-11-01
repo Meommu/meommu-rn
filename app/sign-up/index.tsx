@@ -237,7 +237,10 @@ export default function SignUp() {
 
             <View style={styles.SlideView}>
               <View style={styles.GuideText}>
-                <Text style={styles.GreetingText}>
+                <Text
+                  style={styles.GreetingText}
+                  testID="text-guide-of-step-two"
+                >
                   이제 곧 끝나요!{"\n"}
                   유치원 정보를 입력해주세요
                 </Text>
