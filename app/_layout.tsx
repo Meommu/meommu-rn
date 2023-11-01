@@ -55,6 +55,10 @@ const errorHandler = (error: unknown) => {
       fireToast(store.dispatch, message, 3000);
 
       break;
+    case CODE.EMAIL_DUP:
+      fireToast(store.dispatch, "이메일을 다시 확인하세요.", 3000);
+
+      break;
   }
 };
 
