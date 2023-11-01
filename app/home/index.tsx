@@ -17,17 +17,22 @@ import { VIEW_NAME } from "@/constants";
 // api
 import { apiService } from "@/apis";
 
+// hooks
+import { useToast } from "@/hooks";
+
 export default function Home() {
   const {
     control,
     handleSubmit,
-    formState: { isSubmitting, errors },
+    formState: { isSubmitting },
   } = useForm<SignInFormFieldValues>({
     defaultValues: {
       id: "",
       password: "",
     },
   });
+
+  const { fireToast } = useToast();
 
   const signinMutation = useMutation(
     async (data: SignInFormFieldValues) => {
@@ -51,21 +56,33 @@ export default function Home() {
   );
 
   const signInButtonClickHandler = () => {
-    if (errors.id || errors.password) {
-      /**
-       * TODO: 아이디 혹은 패스워드가 입력되지 않았을 경우
-       * 오류 타입에 따라서 경고 메세지를 출력하도록 구현
-       */
-      console.log(
-        "[error] 아이디 혹은 패스워드가 입력되지 않았거나 올바르지 않은 형태입니다."
-      );
+    handleSubmit(
+      (formData) => {
+        signinMutation.mutate(formData);
+      },
+      (errors) => {
+        if (errors.id) {
+          switch (errors.id.type) {
+            case "required":
+              fireToast("이메일이 입력되지 않았습니다.", 2000);
 
-      return;
-    }
+              break;
+            case "pattern":
+              fireToast("이메일 형식이 올바르지 않습니다.", 2000);
 
-    handleSubmit((formData) => {
-      signinMutation.mutate(formData);
-    })();
+              break;
+          }
+
+          return;
+        }
+
+        if (errors.password) {
+          fireToast("패스워드가 입력되지 않았습니다.", 2000);
+
+          return;
+        }
+      }
+    )();
   };
 
   const signUpButtonClickHandler = () => {
@@ -108,6 +125,7 @@ export default function Home() {
               onBlur={onBlur}
               onChange={onChange}
               value={value}
+              testID="input-signin-email"
             />
           )}
         />
@@ -119,10 +137,6 @@ export default function Home() {
               value: true,
               message: "패스워드가 입력되지 않았습니다.",
             },
-            pattern: {
-              value: /^(?=.*\d)(?=.*[!@#$%^~*+=-])[A-Za-z\d!@#$%^~*+=-]{8,20}$/,
-              message: "비밀번호 형식이 올바르지 않습니다.",
-            },
           }}
           render={({ field: { onChange, onBlur, value } }) => (
             <FormInput
@@ -131,6 +145,7 @@ export default function Home() {
               onChange={onChange}
               value={value}
               secureTextEntry={true}
+              testID="input-signin-password"
             />
           )}
         />
@@ -148,7 +163,10 @@ export default function Home() {
 
           <View style={styles.splitBarView} />
 
-          <Pressable onPress={signUpButtonClickHandler}>
+          <Pressable
+            onPress={signUpButtonClickHandler}
+            testID="text-goto-signup"
+          >
             <Text style={styles.navigationText}>회원가입</Text>
           </Pressable>
         </View>
@@ -157,6 +175,7 @@ export default function Home() {
           content="로그인"
           onPress={signInButtonClickHandler}
           disabled={isSubmitting}
+          testID="button-signin"
         />
       </View>
     </View>
