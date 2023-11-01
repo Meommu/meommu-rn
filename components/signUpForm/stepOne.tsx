@@ -1,6 +1,7 @@
 // react
 import { Controller, useFormContext } from "react-hook-form";
 import { View, Text, StyleSheet } from "react-native";
+import { useMutation } from "react-query";
 
 // components
 import { FormInput } from "@/components/Input/FormInput";
@@ -30,6 +31,21 @@ export function StepOne({}: StepOneProps) {
   const emailDupChk = watch("emailDupChk");
   const password = watch("password");
 
+  const emailDupChkMutation = useMutation(
+    async () => {
+      const isDuplication = await apiService.getEmailDuplicationStatus(
+        emailInputValue
+      );
+
+      return isDuplication;
+    },
+    {
+      onSuccess: (isDuplication) => {
+        setValue("emailDupChk", isDuplication);
+      },
+    }
+  );
+
   const agreementButtonClickHandler = () => {
     setValue("agreement", !agreement);
   };
@@ -41,17 +57,7 @@ export function StepOne({}: StepOneProps) {
       return;
     }
 
-    try {
-      const isDuplication = await apiService.getEmailDuplicationStatus(
-        emailInputValue
-      );
-
-      setValue("emailDupChk", isDuplication);
-    } catch (e) {
-      /**
-       * TODO: API에러 발생 시 알맞은 처리 구현 (중앙집중식 에러처리가 구현되면 해당 로직 이동)
-       */
-    }
+    emailDupChkMutation.mutate();
 
     return;
   };

@@ -21,8 +21,7 @@ export const enum CODE {
 
   /**
    * 알수없는 에러가 발생했을 경우
-   *
-   * TODO: 임의로 설정된 값 변경할 것
    */
-  "INTERNAL_SERVER_ERROR" = "S5XX",
+  "INTERNAL_SERVER_ERROR" = "S500",
+  "JSON_PROCESSING_ERROR" = "S501",
 }

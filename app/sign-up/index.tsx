@@ -1,5 +1,5 @@
 // react
-import { useState, createRef } from "react";
+import { useState, useRef } from "react";
 import {
   View,
   Text,
@@ -11,6 +11,7 @@ import {
 import Swiper from "react-native-web-swiper";
 import type { GestureResponderEvent } from "react-native";
 import { useForm, FormProvider } from "react-hook-form";
+import { useMutation } from "react-query";
 
 // expo
 import { router } from "expo-router";
@@ -53,7 +54,22 @@ export default function SignUp() {
 
   const [swiperIndex, setSwiperIndex] = useState(0);
 
-  const swiper = createRef<Swiper>();
+  const swiper = useRef<Swiper>(null);
+
+  const signUpMutation = useMutation(
+    async (data: SignUpFormFieldValues) => {
+      await apiService.setUserInfo(data);
+    },
+    {
+      onSuccess: () => {
+        if (!swiper.current) {
+          return;
+        }
+
+        swiper.current.goTo(2);
+      },
+    }
+  );
 
   const swiperIndexChangeHandler = (index: number) => {
     setSwiperIndex(index);
@@ -62,12 +78,7 @@ export default function SignUp() {
   const nextButtonClickHandler = async (
     event: GestureResponderEvent
   ): Promise<void> => {
-    /**
-     * 비동기 처리 이후 swiper.current가 null로 변경되는 이슈가 있어 `swiperObj` 변수에 저장해두고 사용
-     */
-    const swiperObj = swiper.current;
-
-    if (!swiperObj) {
+    if (!swiper.current) {
       return;
     }
 
@@ -81,21 +92,12 @@ export default function SignUp() {
 
     switch (swiperIndex) {
       case 0:
-        swiperObj.goTo(1);
+        swiper.current.goTo(1);
 
         break;
       case 1:
         handleSubmit(async (formData) => {
-          try {
-            await apiService.setUserInfo({ ...formData });
-
-            swiperObj.goTo(2);
-          } catch (e) {
-            /**
-             * TODO: 회원가입 실패 시 로직 작성  (중앙집중식 에러처리가 구현되면 해당 로직 이동)
-             */
-            console.log(e);
-          }
+          signUpMutation.mutate(formData);
         })();
 
         break;
@@ -237,7 +239,10 @@ export default function SignUp() {
 
             <View style={styles.SlideView}>
               <View style={styles.GuideText}>
-                <Text style={styles.GreetingText}>
+                <Text
+                  style={styles.GreetingText}
+                  testID="text-guide-of-step-two"
+                >
                   이제 곧 끝나요!{"\n"}
                   유치원 정보를 입력해주세요
                 </Text>

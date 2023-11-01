@@ -1,6 +1,7 @@
 // react
 import { View, StyleSheet, Platform, useWindowDimensions } from "react-native";
 import { useEffect, useState } from "react";
+import { QueryClient, QueryClientProvider } from "react-query";
 import type { StyleProp, ViewStyle } from "react-native";
 
 // redux
@@ -15,14 +16,68 @@ import Constants from "expo-constants";
 
 // utils
 import { MockApiService } from "@/utils";
+import { fireToast } from "@/utils";
 
 // components
 import { Toast } from "@/components/Overlay/Toast";
 
 // constants
-import { size } from "@/constants";
+import { CODE, size } from "@/constants";
 
+// axios
+import { AxiosError } from "axios";
+
+/**
+ * redux 저장소
+ */
 const store = createStore(rootReducer);
+
+/**
+ * 중앙 집중식 에러 처리
+ */
+const errorHandler = (error: unknown) => {
+  if (!(error instanceof AxiosError)) {
+    /**
+     * TODO: api 이외의 에러에 대한 처리
+     */
+    return;
+  }
+
+  if (!error.response) {
+    return;
+  }
+
+  const { code, message } = error.response
+    .data as unknown as ResponseTemplate<unknown>;
+
+  switch (code) {
+    case CODE.BAD_REQUEST:
+      fireToast(store.dispatch, message, 3000);
+
+      break;
+    case CODE.EMAIL_DUP:
+      fireToast(store.dispatch, "이메일을 다시 확인하세요.", 3000);
+
+      break;
+
+    case CODE.INTERNAL_SERVER_ERROR:
+    case CODE.JSON_PROCESSING_ERROR:
+      fireToast(store.dispatch, message, 3000);
+
+      break;
+  }
+};
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      onError: errorHandler,
+    },
+    mutations: {
+      onError: errorHandler,
+    },
+  },
+});
 
 export default function AppLayout() {
   const { width } = useWindowDimensions();
@@ -69,19 +124,21 @@ export default function AppLayout() {
 
   return (
     <Provider store={store}>
-      <View
-        style={[
-          styles.container,
-          isPcWeb === null
-            ? hiddenStyle
-            : isPcWeb
-            ? mobileLayoutStyle
-            : dummyStyle,
-        ]}
-      >
-        <Stack screenOptions={{ headerShown: false }} />
-        <Toast />
-      </View>
+      <QueryClientProvider client={queryClient}>
+        <View
+          style={[
+            styles.container,
+            isPcWeb === null
+              ? hiddenStyle
+              : isPcWeb
+              ? mobileLayoutStyle
+              : dummyStyle,
+          ]}
+        >
+          <Stack screenOptions={{ headerShown: false }} />
+          <Toast />
+        </View>
+      </QueryClientProvider>
     </Provider>
   );
 }

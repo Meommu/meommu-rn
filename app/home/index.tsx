@@ -1,6 +1,7 @@
 // react
 import { View, Text, StyleSheet, Pressable } from "react-native";
 import { useForm, Controller } from "react-hook-form";
+import { useMutation } from "react-query";
 
 // expo
 import { router } from "expo-router";
@@ -28,6 +29,27 @@ export default function Home() {
     },
   });
 
+  const signinMutation = useMutation(
+    async (data: SignInFormFieldValues) => {
+      const accessToken = apiService.signin(data.id, data.password);
+
+      return accessToken;
+    },
+    {
+      onSuccess: (data) => {
+        /**
+         * TODO: 로그인 성공 시 전달받은 토큰을 저장하도록 구현
+         */
+        const accessToken = data;
+
+        /**
+         * 로그인 성공 시 메인 페이지로 이동
+         */
+        router.replace(VIEW_NAME.MAIN);
+      },
+    }
+  );
+
   const signInButtonClickHandler = () => {
     if (errors.id || errors.password) {
       /**
@@ -41,25 +63,8 @@ export default function Home() {
       return;
     }
 
-    handleSubmit(async (formData) => {
-      try {
-        /**
-         * TODO: 로그인 성공 시 전달받은 토큰을 저장하도록 구현
-         */
-        const accessToken = await apiService.signin(
-          formData.id,
-          formData.password
-        );
-
-        router.replace(VIEW_NAME.MAIN);
-      } catch (e) {
-        /**
-         * TODO: 실패 시 경고 메세지를 출력하도록 구현 (중앙집중식 에러처리가 구현되면 해당 로직 이동)
-         */
-        console.log(
-          "[error] 로그인에 실패하였습니다. 아이디 혹은 패스워드를 확인해주세요."
-        );
-      }
+    handleSubmit((formData) => {
+      signinMutation.mutate(formData);
     })();
   };
 

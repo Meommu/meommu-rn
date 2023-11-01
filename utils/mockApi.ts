@@ -40,6 +40,18 @@ export class MockApiService {
             );
           }
 
+          if (email === "server@error.test") {
+            return new Response(
+              httpStatus.INTERNAL_SERVER_ERROR,
+              {},
+              resBodyTemplate({
+                code: CODE.INTERNAL_SERVER_ERROR,
+                message:
+                  "시스템 내부 에러가 발생했습니다. 담당자에게 문의 바랍니다.",
+              })
+            );
+          }
+
           return new Response(
             httpStatus.OK,
             {},
