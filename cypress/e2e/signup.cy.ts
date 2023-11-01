@@ -92,9 +92,17 @@ describe("회원가입 페이지", () => {
 
       cy.get('[data-testid="button-next-step-of-signup"]').click();
 
-      cy.contains("이제 곧 끝나요!");
+      cy.get("body").then(($el) => {
+        const boundaryX = $el[0].getBoundingClientRect().right;
 
-      cy.wait(1000);
+        cy.wait(1000);
+
+        cy.get('[data-testid="text-guide-of-step-two"]').then(($el) => {
+          expect($el[0].getBoundingClientRect().right <= boundaryX).is.equal(
+            true
+          );
+        });
+      });
 
       /**
        * `다음` 버튼을 누르기 위한 준비
@@ -159,9 +167,17 @@ describe("회원가입 페이지", () => {
 
       cy.get('[data-testid="button-next-step-of-signup"]').click();
 
-      cy.contains("이제 곧 끝나요!");
+      cy.get("body").then(($el) => {
+        const boundaryX = $el[0].getBoundingClientRect().right;
 
-      cy.wait(1000);
+        cy.wait(1000);
+
+        cy.get('[data-testid="text-guide-of-step-two"]').then(($el) => {
+          expect($el[0].getBoundingClientRect().right <= boundaryX).is.equal(
+            true
+          );
+        });
+      });
 
       /**
        * `다음` 버튼을 누르기 위한 준비
