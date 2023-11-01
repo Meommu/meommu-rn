@@ -121,7 +121,7 @@ export default function AppLayout() {
    * 개발중일 경우 mirage mock 서버 활성화
    */
   useEffect(() => {
-    if (process.env.NODE_ENV === "development") {
+    if (process.env.EXPO_PUBLIC_MODE === "dev") {
       new MockApiService().register();
     }
   }, []);
