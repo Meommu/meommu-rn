@@ -145,6 +145,7 @@ export default function Home() {
               onChange={onChange}
               value={value}
               secureTextEntry={true}
+              testID="input-signin-password"
             />
           )}
         />
@@ -162,7 +163,10 @@ export default function Home() {
 
           <View style={styles.splitBarView} />
 
-          <Pressable onPress={signUpButtonClickHandler}>
+          <Pressable
+            onPress={signUpButtonClickHandler}
+            testID="text-goto-signup"
+          >
             <Text style={styles.navigationText}>회원가입</Text>
           </Pressable>
         </View>
@@ -171,6 +175,7 @@ export default function Home() {
           content="로그인"
           onPress={signInButtonClickHandler}
           disabled={isSubmitting}
+          testID="button-signin"
         />
       </View>
     </View>
