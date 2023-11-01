@@ -72,25 +72,6 @@ describe("회원가입 페이지", () => {
       cy.get('[data-testid="button-next-step-of-signup"]').click();
       cy.contains("패스워드가 일치하지 않습니다.");
     });
-
-    it("올바른 비밀번호를 입력하였을 경우 두 번째 단계로 이동", () => {
-      cy.contains("비밀번호를 입력해주세요");
-      cy.get('[data-testid="input-password"]').type("12345678a!");
-      cy.get('[data-testid="input-password-confirm"]').type("12345678a!");
-      cy.get('[data-testid="button-next-step-of-signup"]').click();
-
-      cy.get("body").then(($el) => {
-        const boundaryX = $el[0].getBoundingClientRect().right;
-
-        cy.wait(1000);
-
-        cy.get('[data-testid="text-guide-of-step-two"]').then(($el) => {
-          expect($el[0].getBoundingClientRect().right <= boundaryX).is.equal(
-            true
-          );
-        });
-      });
-    });
   });
 
   describe("이름 Validation", () => {
@@ -194,6 +175,78 @@ describe("회원가입 페이지", () => {
       cy.get('[data-testid="input-phone-number"]').type("010-12345678");
       cy.get('[data-testid="button-next-step-of-signup"]').click();
       cy.contains("올바른 형식의 전화번호를 입력하세요");
+    });
+  });
+
+  describe("회원가입 프로세스", () => {
+    beforeEach(() => {
+      /**
+       * step 1
+       */
+      cy.contains("이메일 주소를 입력해주세요");
+      cy.get('[data-testid="input-email"]').type("no-dup@test.com");
+      cy.get('[data-testid="email-button-dup-chk"]').click();
+      cy.contains("사용 가능한 이메일 입니다.");
+
+      cy.contains("비밀번호를 입력해주세요");
+      cy.get('[data-testid="input-password"]').type("12345678a!");
+      cy.get('[data-testid="input-password-confirm"]').type("12345678a!");
+
+      cy.get('[data-testid="button-agreement"]').click();
+
+      cy.get('[data-testid="button-next-step-of-signup"]').click();
+    });
+
+    it("첫 번째 폼을 모두 올바르게 입력한 후 다음 버튼을 누를 경우, 두 번째 단계로 이동", () => {
+      cy.get("body").then(($el) => {
+        const boundaryX = $el[0].getBoundingClientRect().right;
+
+        cy.wait(1000);
+
+        cy.get('[data-testid="text-guide-of-step-two"]').then(($el) => {
+          expect($el[0].getBoundingClientRect().right <= boundaryX).is.equal(
+            true
+          );
+        });
+      });
+    });
+
+    it("두 번째 폼을 모두 올바르게 입력한 후 다음 버튼을 눌러 회원가입이 완료되었을 경우, 회원가입 완료 단계로 이동", () => {
+      /**
+       * step 1
+       */
+      cy.get("body").then(($el) => {
+        const boundaryX = $el[0].getBoundingClientRect().right;
+
+        cy.wait(1000);
+
+        cy.get('[data-testid="text-guide-of-step-two"]').then(($el) => {
+          expect($el[0].getBoundingClientRect().right <= boundaryX).is.equal(
+            true
+          );
+        });
+      });
+
+      /**
+       * step 2
+       */
+      cy.get('[data-testid="input-kindergarten-name"]').type("유치원이름");
+      cy.get('[data-testid="input-kindergarten-director-name"]').type("김숙자");
+      cy.get('[data-testid="input-phone-number"]').type("010-1234-5678");
+
+      cy.get('[data-testid="button-next-step-of-signup"]').click();
+
+      cy.get("body").then(($el) => {
+        const boundaryX = $el[0].getBoundingClientRect().right;
+
+        cy.wait(1000);
+
+        cy.get('[data-testid="text-guide-of-complete"]').then(($el) => {
+          expect($el[0].getBoundingClientRect().right <= boundaryX).is.equal(
+            true
+          );
+        });
+      });
     });
   });
 });
