@@ -62,8 +62,8 @@ const errorHandler = (error: unknown) => {
 
     case CODE.LOGIN_FAILD:
       fireToast(store.dispatch, "로그인이 실패하였습니다.", 3000);
-      break;
 
+      break;
     case CODE.INTERNAL_SERVER_ERROR:
     case CODE.JSON_PROCESSING_ERROR:
       fireToast(store.dispatch, message, 3000);
