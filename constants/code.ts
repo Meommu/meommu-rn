@@ -20,6 +20,11 @@ export const enum CODE {
   "AUTH_NOT_FOUND" = "A001",
 
   /**
+   * 로그인에 실패한 경우 코드
+   */
+  "LOGIN_FAILD" = "A007",
+
+  /**
    * 알수없는 에러가 발생했을 경우
    */
   "INTERNAL_SERVER_ERROR" = "S500",

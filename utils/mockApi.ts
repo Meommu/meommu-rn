@@ -87,7 +87,7 @@ export class MockApiService {
             httpStatus.BAD_REQUEST,
             {},
             resBodyTemplate({
-              code: CODE.BAD_REQUEST,
+              code: CODE.LOGIN_FAILD,
               message: "로그인이 실패하였습니다",
             })
           );
