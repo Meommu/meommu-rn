@@ -58,13 +58,22 @@ export class MockApiService {
          * [GET] 일기 조회
          */
         this.get("/api/v1/diaries", (schema, request) => {
-          /**
-           * TODO: 헤더로부터 토큰을 추출해 사용자 식별
-           */
-
           const {
             queryParams: { year, month },
+            requestHeaders: { Authorization },
           } = request;
+
+          if (Authorization !== "<ACCESS_TOKEN>") {
+            return new Response(
+              httpStatus.UNAUTHORIZED,
+              {},
+              resBodyTemplate({
+                code: CODE.AUTH_NOT_FOUND,
+                message: "인증 실패",
+                data: null,
+              })
+            );
+          }
 
           return new Response(
             httpStatus.OK,
