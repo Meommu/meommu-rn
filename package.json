@@ -6,12 +6,14 @@
     "start": "expo start --tunnel",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web",
-    "build:web": "npx expo export -p web --output-dir web-build",
+    "web": "EXPO_PUBLIC_MODE=dev expo start --web",
+    "web:qa": "EXPO_PUBLIC_MODE=qa expo start --web",
+    "build:web": "EXPO_PUBLIC_MODE=prod npx expo export -p web --output-dir web-build",
     "cypress:open": "cypress open"
   },
   "dependencies": {
     "@expo/webpack-config": "^19.0.0",
+    "@faker-js/faker": "^8.2.0",
     "@react-native-async-storage/async-storage": "^1.19.3",
     "@react-navigation/native": "^6.1.8",
     "@svgr/webpack": "^8.1.0",

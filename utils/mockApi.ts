@@ -1,6 +1,7 @@
 // miragejs
-import { createServer } from "miragejs";
-import { Response } from "miragejs";
+import { createServer, Response } from "miragejs";
+import type { ServerConfig } from "miragejs/server";
+import type { AnyModels, AnyFactories } from "miragejs/-types";
 
 // constants
 import { CODE } from "@/constants";
@@ -19,7 +20,7 @@ export class MockApiService {
       window.server.shutdown();
     }
 
-    window.server = createServer({
+    const serverConfig: ServerConfig<AnyModels, AnyFactories> = {
       routes() {
         /**
          * [GET] 이메일 중복검사
@@ -40,17 +41,7 @@ export class MockApiService {
             );
           }
 
-          if (email === "server@error.test") {
-            return new Response(
-              httpStatus.INTERNAL_SERVER_ERROR,
-              {},
-              resBodyTemplate({
-                code: CODE.INTERNAL_SERVER_ERROR,
-                message:
-                  "시스템 내부 에러가 발생했습니다. 담당자에게 문의 바랍니다.",
-              })
-            );
-          }
+          const user = schema.db.users.findBy({ email });
 
           return new Response(
             httpStatus.OK,
@@ -58,7 +49,7 @@ export class MockApiService {
             resBodyTemplate({
               code: CODE.OK,
               message: "정상",
-              data: email !== "dup1@test.com",
+              data: !user,
             })
           );
         });
@@ -68,27 +59,28 @@ export class MockApiService {
          */
         this.post("/api/v1/kindergartens/signin", (schema, request) => {
           const { requestBody } = request;
-
           const { email, password } = JSON.parse(requestBody);
 
-          if (email === "meommu@exam.com" && password === "Password1!") {
+          const user = schema.db.users.findBy({ email });
+
+          if (user.password !== password) {
             return new Response(
-              httpStatus.CREATED,
+              httpStatus.BAD_REQUEST,
               {},
               resBodyTemplate({
-                code: CODE.OK,
-                message: "로그인 되었습니다",
-                data: { accessToken: "<ACCESS_TOKEN>" },
+                code: CODE.LOGIN_FAILD,
+                message: "로그인이 실패하였습니다",
               })
             );
           }
 
           return new Response(
-            httpStatus.BAD_REQUEST,
+            httpStatus.CREATED,
             {},
             resBodyTemplate({
-              code: CODE.LOGIN_FAILD,
-              message: "로그인이 실패하였습니다",
+              code: CODE.OK,
+              message: "로그인 되었습니다",
+              data: { accessToken: "<ACCESS_TOKEN>" },
             })
           );
         });
@@ -133,6 +125,19 @@ export class MockApiService {
           );
         });
       },
+    };
+
+    const server = createServer(serverConfig);
+
+    server.db.loadData({
+      users: [
+        {
+          email: "meommu@exam.com",
+          password: "Password1!",
+        },
+      ],
     });
+
+    window.server = server;
   }
 }

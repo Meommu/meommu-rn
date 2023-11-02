@@ -10,6 +10,11 @@ export const enum CODE {
   "EMAIL_DUP" = "K001",
 
   /**
+   * 이메일 형식이 잘못되었을 경우 코드
+   */
+  "BAD_EMAIL" = "K002",
+
+  /**
    * 잘못된 요청일 경우 코드
    */
   "BAD_REQUEST" = "C400",
@@ -25,7 +30,7 @@ export const enum CODE {
   "LOGIN_FAILD" = "A007",
 
   /**
-   * 알수없는 에러가 발생했을 경우
+   * 알수없는 에러가 발생했을 경우 코드
    */
   "INTERNAL_SERVER_ERROR" = "S500",
   "JSON_PROCESSING_ERROR" = "S501",
