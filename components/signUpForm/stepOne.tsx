@@ -15,6 +15,9 @@ import CaretRight from "@/assets/svgs/caret-right.svg";
 // apis
 import { apiService } from "@/apis";
 
+// utils
+import { regExp } from "@/utils";
+
 interface StepOneProps {}
 
 export function StepOne({}: StepOneProps) {
@@ -104,7 +107,7 @@ export function StepOne({}: StepOneProps) {
                 message: "이메일이 입력되지 않았습니다.",
               },
               pattern: {
-                value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+                value: regExp.email,
                 message: "이메일 형식이 올바르지 않습니다.",
               },
             }}
@@ -147,7 +150,7 @@ export function StepOne({}: StepOneProps) {
           rules={{
             required: true,
             pattern: {
-              value: /^(?=.*\d)(?=.*[!@#$%^~*+=-])[A-Za-z\d!@#$%^~*+=-]{8,20}$/,
+              value: regExp.password,
               message: "비밀번호 형식이 올바르지 않습니다.",
             },
           }}

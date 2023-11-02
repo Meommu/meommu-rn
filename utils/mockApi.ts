@@ -7,7 +7,7 @@ import type { AnyModels, AnyFactories } from "miragejs/-types";
 import { CODE } from "@/constants";
 
 // utils
-import { resBodyTemplate } from "@/utils";
+import { resBodyTemplate, regExp } from "@/utils";
 
 // other
 import httpStatus from "http-status";
@@ -30,7 +30,7 @@ export class MockApiService {
             queryParams: { email },
           } = request;
 
-          if (!email || !/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
+          if (!email || !regExp.email.test(email)) {
             return new Response(
               httpStatus.BAD_REQUEST,
               {},
@@ -100,7 +100,17 @@ export class MockApiService {
             passwordConfirmation,
           } = JSON.parse(requestBody);
 
-          if (email === "dup2@test.com") {
+          const user = schema.db.users.findBy({ email });
+
+          if (!regExp.email.test(email)) {
+            return new Response(
+              httpStatus.BAD_REQUEST,
+              {},
+              resBodyTemplate({ code: CODE.BAD_EMAIL })
+            );
+          }
+
+          if (user) {
             return new Response(
               httpStatus.BAD_REQUEST,
               {},
