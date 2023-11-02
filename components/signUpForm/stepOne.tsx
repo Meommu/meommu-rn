@@ -173,8 +173,8 @@ export function StepOne({}: StepOneProps) {
         </Text>
       </View>
 
-      <View style={{ gap: 12 }}>
-        <View style={{ flexDirection: "row", gap: 12 }}>
+      <View style={styles.fieldView}>
+        <View style={styles.fieldTextLayoutView}>
           <Text style={styles.fieldGuideText}>비밀번호를 확인해주세요</Text>
 
           <AlertText condition={!errors.passwordConfirm ? true : false}>
@@ -239,6 +239,7 @@ const styles = StyleSheet.create({
 
   fieldTextLayoutView: {
     flexDirection: "row",
+    justifyContent: "space-between",
     gap: 12,
   },
 

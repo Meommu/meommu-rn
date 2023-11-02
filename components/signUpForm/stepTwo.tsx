@@ -129,6 +129,7 @@ const styles = StyleSheet.create({
 
   fieldTextLayoutView: {
     flexDirection: "row",
+    justifyContent: "space-between",
     gap: 12,
   },
 
