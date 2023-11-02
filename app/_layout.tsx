@@ -17,7 +17,6 @@ import Constants from "expo-constants";
 import { router } from "expo-router";
 
 // utils
-import { MockApiService } from "@/utils";
 import { fireToast } from "@/utils";
 
 // components
@@ -28,6 +27,9 @@ import { CODE, VIEW_NAME, size } from "@/constants";
 
 // axios
 import axios, { AxiosError } from "axios";
+
+// mocking api
+import { MockApiService } from "@/mocking/mockApi";
 
 /**
  * redux 저장소
