@@ -33,15 +33,15 @@ const utils = {
   },
 };
 
+let email = "";
+
+const CORRECT_PASSWORD = "12345678a*!";
+
+const CORRECT_KINDERGARTEN_NAME = "유치원이름";
+const CORRECT_KINDERGARTEN_DIRECTOR_NAME = "김숙자";
+const CORRECT_PHONE_NUMBER = "010-1234-5678";
+
 describe("회원가입 페이지", () => {
-  let email = "";
-
-  const CORRECT_PASSWORD = "12345678a*!";
-
-  const CORRECT_KINDERGARTEN_NAME = "유치원이름";
-  const CORRECT_KINDERGARTEN_DIRECTOR_NAME = "김숙자";
-  const CORRECT_PHONE_NUMBER = "010-1234-5678";
-
   before(() => {
     cy.visit("http://localhost:8081/sign-up");
   });
@@ -211,5 +211,76 @@ describe("회원가입 페이지", () => {
 
       utils.chkElementInTheScreen("text-guide-of-complete");
     });
+  });
+});
+
+describe("로그인 페이지", () => {
+  before(() => {
+    cy.visit("http://localhost:8081/home");
+  });
+
+  describe("아이디 Validation", () => {
+    it('이메일을 입력하지 않을 경우, "이메일이 입력되지 않았습니다." Toast 형태의 오버레이가 등장', () => {
+      cy.get('[data-testid="button-signin"]').click();
+
+      cy.contains("이메일이 입력되지 않았습니다.");
+    });
+
+    it('올바르지 않은 형태의 이메일을 입력할 경우, "이메일 형식이 올바르지 않습니다." Toast 형태의 오버레이가 등장', () => {
+      utils.clearAndWriteInputText("input-signin-email", "wrong@email@form");
+
+      cy.get('[data-testid="button-signin"]').click();
+
+      cy.contains("이메일 형식이 올바르지 않습니다.");
+    });
+
+    after(() => {
+      utils.clearAndWriteInputText("input-signin-email", email);
+    });
+  });
+
+  describe("패스워드 Validation", () => {
+    it('패스워드를 입력하지 않을 경우, "패스워드가 입력되지 않았습니다." Toast 형태의 오버레이가 등장', () => {
+      cy.get('[data-testid="button-signin"]').click();
+
+      cy.contains("패스워드가 입력되지 않았습니다.");
+    });
+
+    after(() => {
+      utils.clearAndWriteInputText("input-signin-password", CORRECT_PASSWORD);
+
+      cy.get('[data-testid="button-signin"]').click();
+
+      cy.location().should((location) => {
+        expect(location.pathname).is.equal("/main");
+      });
+    });
+  });
+
+  describe("홈 페이지 프로세스", () => {
+    before(() => {
+      cy.visit("http://localhost:8081/home");
+    });
+
+    it('로그인이 실패하였을 경우, "로그인이 실패하였습니다." Toast 형태의 오버레이가 등장 ', () => {
+      utils.clearAndWriteInputText("input-signin-email", "wrong@email.com");
+      utils.clearAndWriteInputText("input-signin-password", "wrongPassword");
+
+      cy.get('[data-testid="button-signin"]').click();
+
+      cy.contains("로그인이 실패하였습니다.");
+    });
+
+    it('회원가입 버튼을 클릭하였을 경우 "/sign-up" 경로로 이동', () => {
+      cy.get('[data-testid="text-goto-signup"]').click();
+
+      cy.location().should((location) => {
+        expect(location.pathname).is.equal("/sign-up");
+      });
+    });
+
+    /**
+     * TODO: 아이디/패스워드 찾기 버튼 클릭 시 페이지 이동에 대한 테스트 코드도 작성
+     */
   });
 });
