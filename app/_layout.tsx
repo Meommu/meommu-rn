@@ -52,6 +52,7 @@ const errorHandler = (error: unknown) => {
 
   switch (code) {
     case CODE.BAD_REQUEST:
+    case CODE.BAD_EMAIL:
       fireToast(store.dispatch, message, 3000);
 
       break;
