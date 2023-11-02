@@ -21,6 +21,7 @@ import axios from "axios";
 
 // hooks
 import { useToast } from "@/hooks";
+import { KView } from "@/components/Layout/KView";
 
 export default function Home() {
   const {
@@ -93,7 +94,7 @@ export default function Home() {
   };
 
   return (
-    <View style={styles.container}>
+    <KView style={styles.container}>
       <View style={styles.contentView}>
         <View style={styles.titleView}>
           <Text style={styles.titleText}>meommu</Text>
@@ -181,7 +182,7 @@ export default function Home() {
           testID="button-signin"
         />
       </View>
-    </View>
+    </KView>
   );
 }
 
