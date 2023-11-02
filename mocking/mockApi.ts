@@ -132,7 +132,7 @@ export class MockApiService {
 
           const user = schema.db.users.findBy({ email });
 
-          if (user.password !== password) {
+          if (!user || user.password !== password) {
             return new Response(
               httpStatus.BAD_REQUEST,
               {},
@@ -186,6 +186,8 @@ export class MockApiService {
               resBodyTemplate({ code: CODE.EMAIL_DUP })
             );
           }
+
+          schema.db.users.insert({ email, password });
 
           return new Response(
             httpStatus.CREATED,
