@@ -23,6 +23,9 @@ import axios from "axios";
 import { useToast } from "@/hooks";
 import { KView } from "@/components/Layout/KView";
 
+// utils
+import { regExp } from "@/utils";
+
 export default function Home() {
   const {
     control,
@@ -119,7 +122,7 @@ export default function Home() {
               message: "아이디(이메일)가 입력되지 않았습니다.",
             },
             pattern: {
-              value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+              value: regExp.email,
               message: "이메일 형식이 올바르지 않습니다.",
             },
           }}
