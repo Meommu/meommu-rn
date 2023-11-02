@@ -6,15 +6,15 @@ import { Controller, useFormContext } from "react-hook-form";
 import { FormInput } from "@/components/Input/FormInput";
 import { AlertText } from "@/components/Text/AlertText";
 
+// utils
+import { regExp } from "@/utils";
+
 interface StepTwoProps {}
 
 export function StepTwo({}: StepTwoProps) {
   const {
     control,
-    setValue,
     formState: { errors },
-    trigger,
-    watch,
   } = useFormContext<SignUpFormFieldValues>();
 
   return (
@@ -98,7 +98,7 @@ export function StepTwo({}: StepTwoProps) {
           rules={{
             required: true,
             pattern: {
-              value: /^\d{3}-\d{3,4}-\d{4}$/,
+              value: regExp.phone,
               message: "올바른 형식의 전화번호를 입력하세요",
             },
           }}
