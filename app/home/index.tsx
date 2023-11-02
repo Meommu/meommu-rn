@@ -2,6 +2,7 @@
 import { View, Text, StyleSheet, Pressable } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import { useMutation } from "react-query";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // expo
 import { router } from "expo-router";
@@ -16,6 +17,7 @@ import { VIEW_NAME } from "@/constants";
 
 // api
 import { apiService } from "@/apis";
+import axios from "axios";
 
 // hooks
 import { useToast } from "@/hooks";
@@ -41,11 +43,12 @@ export default function Home() {
       return accessToken;
     },
     {
-      onSuccess: (data) => {
-        /**
-         * TODO: 로그인 성공 시 전달받은 토큰을 저장하도록 구현
-         */
+      onSuccess: async (data) => {
         const accessToken = data;
+
+        axios.defaults.headers.common.Authorization = accessToken;
+
+        await AsyncStorage.setItem("accessToken", accessToken);
 
         /**
          * 로그인 성공 시 메인 페이지로 이동

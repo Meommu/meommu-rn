@@ -3,6 +3,7 @@ import { View, StyleSheet, Platform, useWindowDimensions } from "react-native";
 import { useEffect, useState } from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import type { StyleProp, ViewStyle } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // redux
 import { legacy_createStore as createStore } from "redux";
@@ -13,6 +14,7 @@ import rootReducer from "@/store";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import Constants from "expo-constants";
+import { router } from "expo-router";
 
 // utils
 import { MockApiService } from "@/utils";
@@ -22,10 +24,10 @@ import { fireToast } from "@/utils";
 import { Toast } from "@/components/Overlay/Toast";
 
 // constants
-import { CODE, size } from "@/constants";
+import { CODE, VIEW_NAME, size } from "@/constants";
 
 // axios
-import { AxiosError } from "axios";
+import axios, { AxiosError } from "axios";
 
 /**
  * redux 저장소
@@ -70,6 +72,12 @@ const errorHandler = (error: unknown) => {
       fireToast(store.dispatch, message, 3000);
 
       break;
+    case CODE.AUTH_NOT_FOUND:
+      delete axios.defaults.headers.common.Authorization;
+
+      router.replace(VIEW_NAME.HOME);
+
+      break;
   }
 };
 
@@ -77,6 +85,7 @@ const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       onError: errorHandler,
+      refetchOnWindowFocus: false,
     },
     mutations: {
       onError: errorHandler,
@@ -118,13 +127,24 @@ export default function AppLayout() {
     yeonTheLand: require("@/assets/fonts/yeonTheLand.ttf"),
   });
 
-  /**
-   * 개발중일 경우 mirage mock 서버 활성화
-   */
   useEffect(() => {
+    /**
+     * 개발중일 경우 mirage mock 서버 활성화
+     */
     if (process.env.EXPO_PUBLIC_MODE === "dev") {
       new MockApiService().register();
     }
+
+    /**
+     * accessToken이 존재할 경우 헤더에 등록
+     */
+    AsyncStorage.getItem("accessToken").then((accessToken) => {
+      if (!accessToken) {
+        return;
+      }
+
+      axios.defaults.headers.common.Authorization = accessToken;
+    });
   }, []);
 
   return (
