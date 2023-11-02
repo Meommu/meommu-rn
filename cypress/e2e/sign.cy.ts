@@ -210,15 +210,13 @@ describe("회원가입 페이지", () => {
       cy.wait(2000);
 
       utils.chkElementInTheScreen("text-guide-of-complete");
+
+      utils.clickNextStepButton();
     });
   });
 });
 
 describe("로그인 페이지", () => {
-  before(() => {
-    cy.visit("http://localhost:8081/home");
-  });
-
   describe("아이디 Validation", () => {
     it('이메일을 입력하지 않을 경우, "이메일이 입력되지 않았습니다." Toast 형태의 오버레이가 등장', () => {
       cy.get('[data-testid="button-signin"]').click();
@@ -246,6 +244,11 @@ describe("로그인 페이지", () => {
       cy.contains("패스워드가 입력되지 않았습니다.");
     });
 
+    /**
+     * 해당 부분에서 암묵적으로 회원가입한 아이디 & 패스워드로 로그인을 시도함.
+     *
+     * 별도의 테스트케이스로 분리할 필요가 있음
+     */
     after(() => {
       utils.clearAndWriteInputText("input-signin-password", CORRECT_PASSWORD);
 
