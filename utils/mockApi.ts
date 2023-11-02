@@ -55,6 +55,31 @@ export class MockApiService {
         });
 
         /**
+         * [GET] 일기 조회
+         */
+        this.get("/api/v1/diaries", (schema, request) => {
+          /**
+           * TODO: 헤더로부터 토큰을 추출해 사용자 식별
+           */
+
+          const {
+            queryParams: { year, month },
+          } = request;
+
+          return new Response(
+            httpStatus.OK,
+            {},
+            resBodyTemplate({
+              code: CODE.OK,
+              message: "정상",
+              data: {
+                diaries: [],
+              },
+            })
+          );
+        });
+
+        /**
          * [POST] 이메일 패스워드로 로그인
          */
         this.post("/api/v1/kindergartens/signin", (schema, request) => {
@@ -146,6 +171,10 @@ export class MockApiService {
           password: "Password1!",
         },
       ],
+      /**
+       * TODO: users와의 관계 정의
+       */
+      diary: [],
     });
 
     window.server = server;
