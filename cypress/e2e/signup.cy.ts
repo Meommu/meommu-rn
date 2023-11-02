@@ -1,46 +1,30 @@
+import { faker } from "@faker-js/faker";
+
 const utils = {
-  fillFormOne: ({ email = true, password = true, agreement = true }) => {
-    if (email) {
-      cy.contains("이메일 주소를 입력해주세요");
-      cy.get('[data-testid="input-email"]').type("no-dup@test.com");
-      cy.get('[data-testid="email-button-dup-chk"]').click();
-      cy.contains("사용 가능한 이메일 입니다.");
-    }
-
-    if (password) {
-      cy.contains("비밀번호를 입력해주세요");
-      cy.get('[data-testid="input-password"]').type("12345678a!");
-      cy.get('[data-testid="input-password-confirm"]').type("12345678a!");
-    }
-
-    if (agreement) {
-      cy.get('[data-testid="button-agreement"]').click();
-    }
+  clickAgreementButton: () => {
+    cy.get('[data-testid="button-agreement"]').click();
   },
 
-  fillFormTwo: ({ name = true, director = true, phone = true }) => {
-    if (name) {
-      cy.get('[data-testid="input-kindergarten-name"]').type("유치원이름");
-    }
-
-    if (director) {
-      cy.get('[data-testid="input-kindergarten-director-name"]').type("김숙자");
-    }
-
-    if (phone) {
-      cy.get('[data-testid="input-phone-number"]').type("010-1234-5678");
-    }
+  clickEmailDupChkButton: () => {
+    cy.get('[data-testid="email-button-dup-chk"]').click();
   },
 
-  clickNextButton: (nextPageSelectorToVerify: string) => {
+  clickNextStepButton: () => {
     cy.get('[data-testid="button-next-step-of-signup"]').click();
+  },
 
-    cy.wait(1000);
+  clearAndWriteInputText: (testId: string, text: string) => {
+    const $inputElement = cy.get(`[data-testid="${testId}"]`);
 
+    $inputElement.clear();
+    $inputElement.type(text);
+  },
+
+  chkElementInTheScreen: (testId: string) => {
     cy.get("body").then(($el) => {
       const boundaryX = $el[0].getBoundingClientRect().right;
 
-      cy.get(`[data-testid="${nextPageSelectorToVerify}"]`).then(($el) => {
+      cy.get(`[data-testid="${testId}"]`).then(($el) => {
         expect($el[0].getBoundingClientRect().right <= boundaryX).is.equal(
           true
         );
@@ -50,147 +34,182 @@ const utils = {
 };
 
 describe("회원가입 페이지", () => {
-  beforeEach(() => {
+  let email = "";
+
+  const CORRECT_PASSWORD = "12345678a*!";
+
+  const CORRECT_KINDERGARTEN_NAME = "유치원이름";
+  const CORRECT_KINDERGARTEN_DIRECTOR_NAME = "김숙자";
+  const CORRECT_PHONE_NUMBER = "010-1234-5678";
+
+  before(() => {
     cy.visit("http://localhost:8081/sign-up");
   });
 
-  describe("이메일 Validation", () => {
-    it('중복된 이메일을 입력했을 경우, "사용 불가능한 이메일 입니다." 메세지 출력', () => {
+  it(
+    "중복되지 않은 이메일 생성",
+    // 10번의 새로운 이메일을 생성할 경우 높은 확률로 중복을 피할 수 있을 것이라 예상
+    { retries: 10 },
+    () => {
       cy.contains("이메일 주소를 입력해주세요");
-      cy.get('[data-testid="input-email"]').type("dup1@test.com");
-      cy.get('[data-testid="email-button-dup-chk"]').click();
-      cy.contains("사용 불가능한 이메일 입니다.");
-    });
 
-    it('중복되지 않는 이메일을 입력했을 경우, "사용 가능한 이메일 입니다." 메세지 출력', () => {
-      cy.contains("이메일 주소를 입력해주세요");
-      cy.get('[data-testid="input-email"]').type("no-dup@test.com");
-      cy.get('[data-testid="email-button-dup-chk"]').click();
+      email = faker.internet.exampleEmail().toLowerCase();
+
+      utils.clearAndWriteInputText("input-email", email);
+      utils.clickEmailDupChkButton();
+
       cy.contains("사용 가능한 이메일 입니다.");
+    }
+  );
+
+  describe("이메일 Validation", () => {
+    it('이메일 형식이 올바르지 않은 경우, "이메일 형식이 올바르지 않습니다." 메세지 출력', () => {
+      utils.clearAndWriteInputText("input-email", "wrong@email@form");
+      utils.clickEmailDupChkButton();
+
+      cy.contains("이메일 형식이 올바르지 않습니다.");
     });
 
-    it('이메일 형식이 올바르지 않은 경우, "이메일 형식이 올바르지 않습니다." 메세지 출력', () => {
-      cy.contains("이메일 주소를 입력해주세요");
-      cy.get('[data-testid="input-email"]').type("wrong@email@form");
-      cy.get('[data-testid="email-button-dup-chk"]').click();
-      cy.contains("이메일 형식이 올바르지 않습니다.");
+    after(() => {
+      utils.clearAndWriteInputText("input-email", email);
+      utils.clickEmailDupChkButton();
     });
   });
 
   describe("비밀번호 Validation", () => {
-    beforeEach(() => {
-      utils.fillFormOne({ password: false });
+    before(() => {
+      utils.clickAgreementButton();
     });
 
     it('8글자 미만의 올바른 형태의 비밀번호가 입력되었을 경우 "비밀번호 형식이 올바르지 않습니다." 메세지 출력', () => {
-      cy.contains("비밀번호를 입력해주세요");
-      cy.get('[data-testid="input-password"]').type("12345a!");
-      cy.get('[data-testid="input-password-confirm"]').type("12345a!");
-      cy.get('[data-testid="button-next-step-of-signup"]').click();
+      utils.clearAndWriteInputText("input-password", "12345a!");
+      utils.clearAndWriteInputText("input-password-confirm", "12345a!");
+
+      utils.clickNextStepButton();
+
       cy.contains("비밀번호 형식이 올바르지 않습니다.");
     });
 
     it('20글자를 초과하는 올바른 형태의 비밀번호가 입력되었을 경우 "비밀번호 형식이 올바르지 않습니다." 메세지 출력', () => {
-      cy.contains("비밀번호를 입력해주세요");
-      cy.get('[data-testid="input-password"]').type("12345678901234567890a!");
-      cy.get('[data-testid="input-password-confirm"]').type(
+      utils.clearAndWriteInputText("input-password", "12345678901234567890a!");
+      utils.clearAndWriteInputText(
+        "input-password-confirm",
         "12345678901234567890a!"
       );
-      cy.get('[data-testid="button-next-step-of-signup"]').click();
+
+      utils.clickNextStepButton();
+
       cy.contains("비밀번호 형식이 올바르지 않습니다.");
     });
 
     it('특수기호가 포함되지 않은 비밀번호가 입력되었을 경우 "비밀번호 형식이 올바르지 않습니다." 메세지 출력', () => {
-      cy.contains("비밀번호를 입력해주세요");
-      cy.get('[data-testid="input-password"]').type("12345678a");
-      cy.get('[data-testid="input-password-confirm"]').type("12345678a");
-      cy.get('[data-testid="button-next-step-of-signup"]').click();
+      utils.clearAndWriteInputText("input-password", "12345678a");
+      utils.clearAndWriteInputText("input-password-confirm", "12345678a");
+
+      utils.clickNextStepButton();
+
       cy.contains("비밀번호 형식이 올바르지 않습니다.");
     });
 
     it("비밀번호가 일치하지 않을 경우 입력되었을 경우 `패스워드가 일치하지 않습니다.` 메세지 출력", () => {
-      cy.contains("비밀번호를 입력해주세요");
-      cy.get('[data-testid="input-password"]').type("12345678a!");
-      cy.get('[data-testid="input-password-confirm"]').type("1234!");
-      cy.get('[data-testid="button-next-step-of-signup"]').click();
+      utils.clearAndWriteInputText("input-password", "12345678a!");
+      utils.clearAndWriteInputText("input-password-confirm", "1234!");
+
+      utils.clickNextStepButton();
+
       cy.contains("패스워드가 일치하지 않습니다.");
+    });
+
+    after(() => {
+      utils.clearAndWriteInputText("input-password", CORRECT_PASSWORD);
+      utils.clearAndWriteInputText("input-password-confirm", CORRECT_PASSWORD);
+
+      utils.clickNextStepButton();
+      cy.wait(1000);
+      utils.chkElementInTheScreen("text-guide-of-step-two");
     });
   });
 
   describe("이름 Validation", () => {
-    beforeEach(() => {
-      utils.fillFormOne({});
-      utils.clickNextButton("button-next-step-of-signup");
-      utils.fillFormTwo({});
+    before(() => {
+      utils.clearAndWriteInputText(
+        "input-kindergarten-name",
+        CORRECT_KINDERGARTEN_NAME
+      );
+      utils.clearAndWriteInputText(
+        "input-kindergarten-director-name",
+        CORRECT_KINDERGARTEN_DIRECTOR_NAME
+      );
+      utils.clearAndWriteInputText("input-phone-number", CORRECT_PHONE_NUMBER);
     });
 
     it('2글자 미만의 유치원 이름이 입력되었을 경우 "2에서 8글자 사이의 이름을 입력해주세요." 메세지 출력', () => {
-      cy.contains("유치원 이름을 입력해주세요");
-      cy.get('[data-testid="input-kindergarten-name"]').clear();
-      cy.get('[data-testid="input-kindergarten-name"]').type("유");
-      cy.get('[data-testid="button-next-step-of-signup"]').click();
+      utils.clearAndWriteInputText("input-kindergarten-name", "유");
+
+      utils.clickNextStepButton();
+
       cy.contains("2에서 8글자 사이의 이름을 입력해주세요.");
     });
 
     it('8글자를 초과하는 유치원 이름이 입력되었을 경우 "2에서 8글자 사이의 이름을 입력해주세요." 메세지 출력', () => {
-      cy.contains("유치원 이름을 입력해주세요");
-      cy.get('[data-testid="input-kindergarten-name"]').clear();
-      cy.get('[data-testid="input-kindergarten-name"]').type(
+      utils.clearAndWriteInputText(
+        "input-kindergarten-name",
         "유치원이름유치원이름"
       );
-      cy.get('[data-testid="button-next-step-of-signup"]').click();
+
+      utils.clickNextStepButton();
+
       cy.contains("2에서 8글자 사이의 이름을 입력해주세요.");
     });
 
     it('3글자 미만의 유치원 이름이 입력되었을 경우 "3에서 4글자 사이의 한글 이름을 입력해주세요." 메세지 출력', () => {
-      cy.contains("대표자 이름을 입력해주세요");
-      cy.get('[data-testid="input-kindergarten-director-name"]').clear();
-      cy.get('[data-testid="input-kindergarten-director-name"]').type("김숙");
-      cy.get('[data-testid="button-next-step-of-signup"]').click();
+      utils.clearAndWriteInputText("input-kindergarten-director-name", "김숙");
+
+      utils.clickNextStepButton();
+
       cy.contains("3에서 4글자 사이의 한글 이름을 입력해주세요.");
     });
 
     it('4글자를 초과하는 유치원 이름이 입력되었을 경우 "2에서 8글자 사이의 이름을 입력해주세요." 메세지 출력', () => {
-      cy.contains("대표자 이름을 입력해주세요");
-      cy.get('[data-testid="input-kindergarten-director-name"]').clear();
-      cy.get('[data-testid="input-kindergarten-director-name"]').type(
+      utils.clearAndWriteInputText(
+        "input-kindergarten-director-name",
         "김숙자김숙자"
       );
-      cy.get('[data-testid="button-next-step-of-signup"]').click();
+
+      utils.clickNextStepButton();
+
       cy.contains("3에서 4글자 사이의 한글 이름을 입력해주세요.");
+    });
+
+    after(() => {
+      utils.clearAndWriteInputText(
+        "input-kindergarten-name",
+        CORRECT_KINDERGARTEN_NAME
+      );
+      utils.clearAndWriteInputText(
+        "input-kindergarten-director-name",
+        CORRECT_KINDERGARTEN_DIRECTOR_NAME
+      );
     });
   });
 
   describe("전화번호 Validation", () => {
-    beforeEach(() => {
-      utils.fillFormOne({});
-      utils.clickNextButton("button-next-step-of-signup");
-      utils.fillFormTwo({ phone: false });
-    });
-
     it('xxx-xxxx-xxxx 형태의 전화번호가 입력되지 않았을 경우 "올바른 형식의 전화번호를 입력하세요" 메세지 출력', () => {
-      cy.contains("유치원 이름을 입력해주세요");
-      cy.get('[data-testid="input-phone-number"]').type("010-12345678");
-      cy.get('[data-testid="button-next-step-of-signup"]').click();
+      utils.clearAndWriteInputText("input-phone-number", "010-12345678");
+
+      utils.clickNextStepButton();
+
       cy.contains("올바른 형식의 전화번호를 입력하세요");
     });
-  });
 
-  describe("회원가입 프로세스", () => {
-    beforeEach(() => {
-      utils.fillFormOne({});
-    });
+    after(() => {
+      utils.clearAndWriteInputText("input-phone-number", CORRECT_PHONE_NUMBER);
 
-    it("첫 번째 폼을 모두 올바르게 입력한 후 다음 버튼을 누를 경우, 두 번째 단계로 이동", () => {
-      utils.clickNextButton("text-guide-of-step-two");
-    });
+      utils.clickNextStepButton();
 
-    it("두 번째 폼을 모두 올바르게 입력한 후 다음 버튼을 눌러 회원가입이 완료되었을 경우, 회원가입 완료 단계로 이동", () => {
-      utils.clickNextButton("text-guide-of-step-two");
+      cy.wait(2000);
 
-      utils.fillFormTwo({});
-
-      utils.clickNextButton("text-guide-of-complete");
+      utils.chkElementInTheScreen("text-guide-of-complete");
     });
   });
 });
