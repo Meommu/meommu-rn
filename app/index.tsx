@@ -11,6 +11,9 @@ import * as SplashScreen from "expo-splash-screen";
 // constants
 import { VIEW_NAME } from "../constants";
 
+// apis
+import { apiService } from "@/apis";
+
 /**
  * 루트(`/`) 페이지, 스플래시 화면
  */
@@ -22,9 +25,16 @@ export default function App() {
 
   const chkLogin = async (): Promise<boolean> => {
     /**
-     * TODO: 로그인 확인 로직 추가
+     * react-query의 공통 에러처리를 피하기 위해서
+     * useQuery를 사용하지 않고 try-catch 문을 이용함.
      */
-    return false;
+    try {
+      await apiService.getLoginInfo();
+
+      return true;
+    } catch (e) {
+      return false;
+    }
   };
 
   const chkOnBoardingIsEnd = async (): Promise<boolean> => {

@@ -23,6 +23,41 @@ export class MockApiService {
     const serverConfig: ServerConfig<AnyModels, AnyFactories> = {
       routes() {
         /**
+         * [GET] 로그인 여부 확인
+         */
+        this.get("/api/v1/kindergartens/me", (schema, request) => {
+          const {
+            requestHeaders: { Authorization },
+          } = request;
+
+          if (Authorization !== "<ACCESS_TOKEN>") {
+            return new Response(
+              httpStatus.UNAUTHORIZED,
+              {},
+              resBodyTemplate({
+                code: CODE.AUTH_NOT_FOUND,
+                message: "인증 실패",
+              })
+            );
+          }
+
+          return new Response(
+            httpStatus.OK,
+            {},
+            resBodyTemplate({
+              code: CODE.OK,
+              message: "정상",
+              data: {
+                id: 1,
+                name: "",
+                email: "",
+                createdAt: new Date().toString(),
+              },
+            })
+          );
+        });
+
+        /**
          * [GET] 이메일 중복검사
          */
         this.get("/api/v1/kindergartens/email", (schema, request) => {

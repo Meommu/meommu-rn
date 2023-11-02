@@ -36,3 +36,11 @@ export const getDiaries = async (
 
   return diaries;
 };
+
+export const getLoginInfo = async (): Promise<User> => {
+  const {
+    data: { data },
+  } = await axios.get<ResponseTemplate<User>>("/api/v1/kindergartens/me");
+
+  return data;
+};
