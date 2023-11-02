@@ -130,7 +130,7 @@ export default function Home() {
             <FormInput
               placeholder="아이디 (이메일)"
               onBlur={onBlur}
-              onChange={onChange}
+              onChangeText={onChange}
               value={value}
               testID="input-signin-email"
             />
@@ -149,7 +149,7 @@ export default function Home() {
             <FormInput
               placeholder="비밀번호"
               onBlur={onBlur}
-              onChange={onChange}
+              onChangeText={onChange}
               value={value}
               secureTextEntry={true}
               testID="input-signin-password"
