@@ -225,6 +225,9 @@ export default function SignUp() {
               </Text>
             </View>
 
+            {/**
+             * Swiper 내부에 있어서인지, KeyboardAvoidingView가 ScrollView 없이 적용되지 않음
+             */}
             <ScrollView>
               <StepOne />
             </ScrollView>
@@ -241,7 +244,12 @@ export default function SignUp() {
               </Text>
             </View>
 
-            <StepTwo />
+            {/**
+             * Swiper 내부에 있어서인지, KeyboardAvoidingView가 ScrollView 없이 적용되지 않음
+             */}
+            <ScrollView>
+              <StepTwo />
+            </ScrollView>
           </View>
 
           <View style={[styles.SlideView]}>
