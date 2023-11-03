@@ -35,7 +35,7 @@ export class MockApiService {
               httpStatus.UNAUTHORIZED,
               {},
               resBodyTemplate({
-                code: CODE.AUTH_NOT_FOUND,
+                code: CODE.INVALID_HEADER_FORMAT,
                 message: "인증 실패",
               })
             );
@@ -103,7 +103,7 @@ export class MockApiService {
               httpStatus.UNAUTHORIZED,
               {},
               resBodyTemplate({
-                code: CODE.AUTH_NOT_FOUND,
+                code: CODE.INVALID_HEADER_FORMAT,
                 message: "인증 실패",
                 data: null,
               })
@@ -137,7 +137,7 @@ export class MockApiService {
               httpStatus.BAD_REQUEST,
               {},
               resBodyTemplate({
-                code: CODE.LOGIN_FAILD,
+                code: CODE.LOGIN_FAILED,
                 message: "로그인이 실패하였습니다",
               })
             );
