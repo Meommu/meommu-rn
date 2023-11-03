@@ -104,7 +104,23 @@ const queryClient = new QueryClient({
   },
 });
 
+const mobileLayoutStyle: StyleProp<ViewStyle> = {
+  width: "auto",
+  maxWidth: "100%",
+  height: "100%",
+  aspectRatio: "9 / 16",
+};
+
+const hiddenStyle: StyleProp<ViewStyle> = {
+  display: "none",
+};
+
+const dummyStyle: StyleProp<ViewStyle> = {};
+
 export default function AppLayout() {
+  /**
+   * 반응형 레이아웃
+   */
   const { width } = useWindowDimensions();
 
   const [isPcWeb, setIsPcWeb] = useState<boolean | null>(null);
@@ -113,67 +129,56 @@ export default function AppLayout() {
     setIsPcWeb(Platform.OS === "web" && width >= size.LAPTOP_WIDTH);
   }, [width]);
 
-  const mobileLayoutStyle: StyleProp<ViewStyle> = {
-    width: "auto",
-    maxWidth: "100%",
-    height: "100%",
-    aspectRatio: "9 / 16",
-  };
-
-  const hiddenStyle: StyleProp<ViewStyle> = {
-    display: "none",
-  };
-
-  const dummyStyle: StyleProp<ViewStyle> = {};
-
   /**
-   * Web 환경에서 다음과 같은 동작을 했을 때, 폰트가 불러와지지 않는 문제를 수정하기위해
-   * 페이지마다 항상 실행되는 루트 `_layout.tsx` 에서 useFonts 중복으로 사용함.
-   *
-   * 1. URL를 조작하여 페이지 이동 시
-   * 2. 특정 URL에서 새로고침
+   * 초기 설정
    */
-  useFonts({
+  const [fontsLoaded] = useFonts({
     "Pretendard-SemiBold": require("@/assets/fonts/Pretendard-SemiBold.otf"),
     yeonTheLand: require("@/assets/fonts/yeonTheLand.ttf"),
   });
 
-  useEffect(() => {
-    /**
-     * 개발중일 경우 mirage mock 서버 활성화
-     */
-    if (process.env.EXPO_PUBLIC_MODE === "dev") {
-      new MockApiService().register();
-    }
+  const [ready, setReady] = useState(false);
 
-    /**
-     * accessToken이 존재할 경우 헤더에 등록
-     */
-    AsyncStorage.getItem("accessToken").then((accessToken) => {
-      if (!accessToken) {
-        return;
+  useEffect(() => {
+    (async () => {
+      /**
+       * 개발 환경일 경우 mirage mock 서버 활성화
+       */
+      if (process.env.EXPO_PUBLIC_MODE === "dev") {
+        new MockApiService().register();
       }
 
-      axios.defaults.headers.common.Authorization = accessToken;
-    });
+      /**
+       * accessToken이 존재할 경우 헤더에 등록
+       */
+      const accessToken = await AsyncStorage.getItem("accessToken");
+
+      if (accessToken) {
+        axios.defaults.headers.common.Authorization = accessToken;
+      }
+
+      setReady(true);
+    })();
   }, []);
 
   return (
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
-        <View
-          style={[
-            styles.container,
-            isPcWeb === null
-              ? hiddenStyle
-              : isPcWeb
-              ? mobileLayoutStyle
-              : dummyStyle,
-          ]}
-        >
-          <Stack screenOptions={{ headerShown: false }} />
-          <Toast />
-        </View>
+        {fontsLoaded && ready && (
+          <View
+            style={[
+              styles.container,
+              isPcWeb === null
+                ? hiddenStyle
+                : isPcWeb
+                ? mobileLayoutStyle
+                : dummyStyle,
+            ]}
+          >
+            <Stack screenOptions={{ headerShown: false }} />
+            <Toast />
+          </View>
+        )}
       </QueryClientProvider>
     </Provider>
   );

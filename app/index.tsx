@@ -4,7 +4,6 @@ import { View, Image, StyleSheet } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // expo
-import { useFonts } from "expo-font";
 import { router } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 
@@ -18,11 +17,6 @@ import { apiService } from "@/apis";
  * 루트(`/`) 페이지, 스플래시 화면
  */
 export default function App() {
-  const [fontsLoaded] = useFonts({
-    "Pretendard-SemiBold": require("@/assets/fonts/Pretendard-SemiBold.otf"),
-    yeonTheLand: require("@/assets/fonts/yeonTheLand.ttf"),
-  });
-
   const chkLogin = async (): Promise<boolean> => {
     /**
      * react-query의 공통 에러처리를 피하기 위해서
@@ -70,10 +64,8 @@ export default function App() {
   };
 
   useEffect(() => {
-    if (fontsLoaded) {
-      initial();
-    }
-  }, [fontsLoaded]);
+    initial();
+  }, []);
 
   return (
     <View style={styles.container}>
