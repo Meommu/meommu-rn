@@ -124,6 +124,45 @@ export class MockApiService {
         });
 
         /**
+         * [GET] 사용자가 작성한 모든 일기의 작성 일자를 조회
+         */
+        this.get("/api/v1/diaries/date", (schema, request) => {
+          const {
+            requestHeaders: { Authorization },
+          } = request;
+
+          if (Authorization !== "<ACCESS_TOKEN>") {
+            return new Response(
+              httpStatus.UNAUTHORIZED,
+              {},
+              resBodyTemplate({
+                code: CODE.INVALID_HEADER_FORMAT,
+                message: "인증 실패",
+                data: null,
+              })
+            );
+          }
+
+          const diaries = schema.db.diaries;
+
+          return new Response(
+            httpStatus.OK,
+            {},
+            resBodyTemplate({
+              code: CODE.OK,
+              message: "정상",
+              data: diaries.map((diary) => {
+                const { date, imageIds } = diary;
+                return {
+                  date,
+                  imageIds,
+                };
+              }),
+            })
+          );
+        });
+
+        /**
          * [POST] 이메일 패스워드로 로그인
          */
         this.post("/api/v1/kindergartens/signin", (schema, request) => {
@@ -220,7 +259,35 @@ export class MockApiService {
       /**
        * TODO: users와의 관계 정의
        */
-      diary: [],
+      diaries: [
+        {
+          id: 3,
+          date: "2023-09-04",
+          dogName: "사랑이",
+          createdAt: "2023-09-04T17:42:18.744742",
+          imageIds: [6, 7],
+          title: "일기 3 제목",
+          content: "일기 3 내용",
+        },
+        {
+          id: 2,
+          date: "2023-10-26",
+          dogName: "똘이",
+          createdAt: "2023-10-26T17:42:18.744742",
+          imageIds: [1, 2, 3, 4, 5],
+          title: "일기 2 제목",
+          content: "일기 2 내용",
+        },
+        {
+          id: 1,
+          date: "2023-10-25",
+          dogName: "코코",
+          createdAt: "2023-10-26T17:42:18.744735",
+          imageIds: [1, 2, 3, 4, 5],
+          title: "일기 1 제목",
+          content: "일기 1 내용",
+        },
+      ],
     });
 
     window.server = server;
