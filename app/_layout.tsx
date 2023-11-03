@@ -57,6 +57,8 @@ const errorHandler = (error: unknown) => {
   switch (code) {
     case CODE.BAD_REQUEST:
     case CODE.BAD_EMAIL:
+    case CODE.INTERNAL_SERVER_ERROR:
+    case CODE.JSON_PROCESSING_ERROR:
       fireToast(store.dispatch, message, 3000);
 
       break;
@@ -69,11 +71,6 @@ const errorHandler = (error: unknown) => {
       fireToast(store.dispatch, "로그인이 실패하였습니다.", 3000);
 
       break;
-    case CODE.INTERNAL_SERVER_ERROR:
-    case CODE.JSON_PROCESSING_ERROR:
-      fireToast(store.dispatch, message, 3000);
-
-      break;
     case CODE.UNSUPPORTED_JWT:
     case CODE.EXPIRED_JWT:
     case CODE.MALFORMED_JWT:
@@ -84,6 +81,8 @@ const errorHandler = (error: unknown) => {
         delete axios.defaults.headers.common.Authorization;
 
         await AsyncStorage.removeItem("accessToken");
+
+        fireToast(store.dispatch, "잘못된 접근입니다.", 3000);
 
         router.replace(VIEW_NAME.HOME);
       })();
