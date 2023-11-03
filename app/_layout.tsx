@@ -65,7 +65,7 @@ const errorHandler = (error: unknown) => {
 
       break;
 
-    case CODE.LOGIN_FAILD:
+    case CODE.LOGIN_FAILED:
       fireToast(store.dispatch, "로그인이 실패하였습니다.", 3000);
 
       break;
@@ -74,10 +74,19 @@ const errorHandler = (error: unknown) => {
       fireToast(store.dispatch, message, 3000);
 
       break;
-    case CODE.AUTH_NOT_FOUND:
-      delete axios.defaults.headers.common.Authorization;
+    case CODE.UNSUPPORTED_JWT:
+    case CODE.EXPIRED_JWT:
+    case CODE.MALFORMED_JWT:
+    case CODE.INVALID_SIGNATURE:
+    case CODE.NO_AUTHORIZATION_HEADER:
+    case CODE.INVALID_HEADER_FORMAT:
+      (async () => {
+        delete axios.defaults.headers.common.Authorization;
 
-      router.replace(VIEW_NAME.HOME);
+        await AsyncStorage.removeItem("accessToken");
+
+        router.replace(VIEW_NAME.HOME);
+      })();
 
       break;
   }
