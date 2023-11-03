@@ -1,0 +1,27 @@
+diff --git a/node_modules/react-native-reanimated/lib/module/reanimated2/js-reanimated/JSReanimated.js b/node_modules/react-native-reanimated/lib/module/reanimated2/js-reanimated/JSReanimated.js
+index 694d3c4..1e21296 100644
+--- a/node_modules/react-native-reanimated/lib/module/reanimated2/js-reanimated/JSReanimated.js
++++ b/node_modules/react-native-reanimated/lib/module/reanimated2/js-reanimated/JSReanimated.js
+@@ -3,6 +3,9 @@ function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typ
+ function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+ import { NativeReanimated } from '../NativeReanimated/NativeReanimated';
+ import { SensorType } from '../commonTypes';
++
++const requestAnimationFrame = globalThis.requestAnimationFrame || globalThis.setImmediate;
++
+ export default class JSReanimated extends NativeReanimated {
+   constructor() {
+     super(false);
+diff --git a/node_modules/react-native-reanimated/src/reanimated2/js-reanimated/JSReanimated.ts b/node_modules/react-native-reanimated/src/reanimated2/js-reanimated/JSReanimated.ts
+index c70d0df..7aac17a 100644
+--- a/node_modules/react-native-reanimated/src/reanimated2/js-reanimated/JSReanimated.ts
++++ b/node_modules/react-native-reanimated/src/reanimated2/js-reanimated/JSReanimated.ts
+@@ -7,6 +7,8 @@ import {
+ } from '../commonTypes';
+ import { WebSensor } from './WebSensor';
+ 
++const requestAnimationFrame = globalThis.requestAnimationFrame || globalThis.setImmediate;
++
+ export default class JSReanimated extends NativeReanimated {
+   nextSensorId = 0;
+   sensors = new Map<number, WebSensor>();
