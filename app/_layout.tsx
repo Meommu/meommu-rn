@@ -104,19 +104,6 @@ const queryClient = new QueryClient({
   },
 });
 
-const mobileLayoutStyle: StyleProp<ViewStyle> = {
-  width: "auto",
-  maxWidth: "100%",
-  height: "100%",
-  aspectRatio: "9 / 16",
-};
-
-const hiddenStyle: StyleProp<ViewStyle> = {
-  display: "none",
-};
-
-const dummyStyle: StyleProp<ViewStyle> = {};
-
 export default function AppLayout() {
   /**
    * 반응형 레이아웃
@@ -130,7 +117,7 @@ export default function AppLayout() {
   }, [width]);
 
   /**
-   * 초기 설정
+   * 폰트, Mocking API, accessToken 설정
    */
   const [fontsLoaded] = useFonts({
     "Pretendard-SemiBold": require("@/assets/fonts/Pretendard-SemiBold.otf"),
@@ -195,3 +182,16 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
 });
+
+const mobileLayoutStyle: StyleProp<ViewStyle> = {
+  width: "auto",
+  maxWidth: "100%",
+  height: "100%",
+  aspectRatio: "9 / 16",
+};
+
+const hiddenStyle: StyleProp<ViewStyle> = {
+  display: "none",
+};
+
+const dummyStyle: StyleProp<ViewStyle> = {};
