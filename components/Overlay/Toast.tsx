@@ -16,8 +16,8 @@ export function Toast() {
 
   return (
     <View style={styles.container}>
-      <AView isMount={isOpen} duration={300}>
-        <View style={styles.dimmed}>
+      <AView isMount={isOpen} duration={300} style={styles.contentLayout}>
+        <View style={styles.contentBody}>
           <Text style={styles.message}>{message}</Text>
         </View>
       </AView>
@@ -30,17 +30,19 @@ const styles = StyleSheet.create({
     position: "absolute",
     width: "100%",
     height: "100%",
-
-    justifyContent: "center",
     alignItems: "center",
-
     pointerEvents: "none",
   },
 
-  dimmed: {
+  contentLayout: {
+    position: "absolute",
+    bottom: 120,
+  },
+
+  contentBody: {
     opacity: 0.9,
     backgroundColor: "#626262",
-    borderRadius: 100,
+    borderRadius: 10,
   },
 
   message: {
