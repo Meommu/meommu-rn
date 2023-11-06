@@ -39,6 +39,9 @@ import {
 import { PlusButton } from "@/components/Button/PlusButton";
 import { UserButton } from "@/components/Button/UserButton";
 
+// svgs
+import ArrowDropDown from "@/assets/svgs/arrow-drop-down.svg";
+
 export default function Main() {
   /**
    * useQuery
@@ -52,6 +55,9 @@ export default function Main() {
       retry: 0,
     }
   );
+
+  const [year, setYear] = useState(2023);
+  const [month, setMonth] = useState(11);
 
   /**
    * bottomSheets
@@ -73,6 +79,10 @@ export default function Main() {
     setSheetIndex(index);
   }, []);
 
+  const handleSheetOpen = useCallback(() => {
+    bottomSheetRef.current?.present();
+  }, []);
+
   /**
    * bottom sheet의 반응형 너비 계산
    */
@@ -90,6 +100,9 @@ export default function Main() {
   return (
     <BottomSheetModalProvider>
       <View style={styles.container}>
+        {/**
+         * 헤더
+         */}
         <View style={styles.header}>
           <Text style={styles.logoText}>meommu</Text>
 
@@ -99,16 +112,15 @@ export default function Main() {
           </View>
         </View>
 
-        <Text>메인 페이지</Text>
-
-        <Text>인덱스 : {sheetIndex}</Text>
-
-        <Button
-          onPress={() => {
-            bottomSheetRef.current?.present();
-          }}
-          title="모달 열기"
-        />
+        {/**
+         * 날짜 선택기
+         */}
+        <Pressable style={styles.datePicker} onPress={handleSheetOpen}>
+          <Text style={styles.datePickerText}>
+            {year}년 {month}월
+          </Text>
+          <ArrowDropDown />
+        </Pressable>
 
         <Button
           onPress={() => {
@@ -199,6 +211,18 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     paddingVertical: 8,
     gap: 16,
+  },
+
+  datePicker: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 20,
+    gap: 12,
+  },
+
+  datePickerText: {
+    fontFamily: "yeonTheLand",
+    color: "#89899C",
   },
 
   bottomSheetContainer: {
