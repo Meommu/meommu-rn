@@ -2,6 +2,7 @@
 import { useState, useEffect, useRef } from "react";
 import type { ReactNode } from "react";
 import Animated from "react-native-reanimated";
+import { ViewStyle } from "react-native";
 
 // hooks
 import { FadeIn, FadeOut } from "@/hooks/useReanimated";
@@ -13,12 +14,14 @@ export function AView({
   children,
   isMount,
   duration,
+  style,
   entering = FadeIn,
   exiting = FadeOut,
 }: {
   isMount: boolean;
   children: ReactNode;
   duration: number;
+  style?: ViewStyle;
   entering?: AnimatedHook;
   exiting?: AnimatedHook;
 }) {
@@ -53,7 +56,7 @@ export function AView({
   }
 
   return (
-    <Animated.View style={[enteringStyle, exitingStyle]}>
+    <Animated.View style={[style, enteringStyle, exitingStyle]}>
       {children}
     </Animated.View>
   );
