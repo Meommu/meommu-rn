@@ -16,6 +16,7 @@
     "@babel/plugin-proposal-export-namespace-from": "^7.18.9",
     "@expo/webpack-config": "^19.0.0",
     "@faker-js/faker": "^8.2.0",
+    "@gorhom/bottom-sheet": "^5.0.0-alpha.0",
     "@react-native-async-storage/async-storage": "1.18.2",
     "@react-navigation/native": "^6.1.8",
     "@svgr/webpack": "^8.1.0",
