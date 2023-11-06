@@ -120,6 +120,7 @@ export default function AppLayout() {
    */
   const [fontsLoaded] = useFonts({
     "Pretendard-SemiBold": require("@/assets/fonts/Pretendard-SemiBold.otf"),
+    "Pretendard-Regular": require("@/assets/fonts/Pretendard-Regular.otf"),
     yeonTheLand: require("@/assets/fonts/yeonTheLand.ttf"),
   });
 

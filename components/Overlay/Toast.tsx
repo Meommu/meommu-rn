@@ -47,6 +47,7 @@ const styles = StyleSheet.create({
 
   message: {
     fontSize: 16,
+    fontFamily: "Pretendard-Regular",
     color: "white",
     paddingHorizontal: 13,
     paddingVertical: 9,
