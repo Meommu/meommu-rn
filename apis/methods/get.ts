@@ -45,10 +45,10 @@ export const getLoginInfo = async (): Promise<User> => {
   return data;
 };
 
-export const getDiariesSummary = async (): Promise<DiarySummary> => {
+export const getDiariesSummary = async (): Promise<DiarySummary[]> => {
   const {
     data: { data },
-  } = await axios.get<ResponseTemplate<DiarySummary>>(
+  } = await axios.get<ResponseTemplate<DiarySummary[]>>(
     "/api/v1/diaries/summary"
   );
 
