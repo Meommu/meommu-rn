@@ -9,6 +9,8 @@ import { FadeIn, FadeOut } from "@/hooks/useReanimated";
 
 /**
  * AView : Animated View
+ *
+ * 마운트, 언마운트 시 애니메이션을 적용할 수 있는 컴포넌트
  */
 export function AView({
   children,
