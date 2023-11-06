@@ -6,16 +6,21 @@ import { useSelector } from "react-redux";
 import type { RootState } from "@/store";
 import type { ToastState } from "@/store/modules/toast";
 
+// components
+import { AView } from "@/components/Layout/AView";
+
 export function Toast() {
   const { isOpen, message } = useSelector<RootState, ToastState>(
     (state) => state.toast
   );
 
   return (
-    <View style={[styles.container, { display: isOpen ? "flex" : "none" }]}>
-      <View style={styles.dimmed}>
-        <Text style={styles.message}>{message}</Text>
-      </View>
+    <View style={styles.container}>
+      <AView isMount={isOpen} duration={300}>
+        <View style={styles.dimmed}>
+          <Text style={styles.message}>{message}</Text>
+        </View>
+      </AView>
     </View>
   );
 }
