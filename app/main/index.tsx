@@ -1,5 +1,5 @@
 // react
-import React, { useRef, useMemo, useCallback } from "react";
+import React, { useRef, useMemo, useCallback, useEffect } from "react";
 import {
   View,
   Text,
@@ -40,7 +40,7 @@ import {
 } from "@gorhom/bottom-sheet";
 
 // svgs
-import ArrowDropDown from "@/assets/svgs/arrow-drop-down.svg";
+import { DatePickerButton } from "@/components/Button/DatePickerButton";
 
 export default function Main() {
   /**
@@ -56,8 +56,25 @@ export default function Main() {
     }
   );
 
-  const [year, setYear] = useState(2023);
-  const [month, setMonth] = useState(11);
+  const [year, setYear] = useState(-1);
+  const [month, setMonth] = useState(-1);
+
+  useEffect(() => {
+    if (!data) {
+      return;
+    }
+
+    const latestDate = !data.length
+      ? new Date()
+      : new Date(
+          data.sort((a, b) => {
+            return a.createdAt > b.createdAt ? -1 : 1;
+          })[0].createdAt
+        );
+
+    setYear(latestDate.getFullYear());
+    setMonth(latestDate.getMonth() + 1);
+  }, [data]);
 
   /**
    * bottomSheets
@@ -115,12 +132,7 @@ export default function Main() {
         {/**
          * 날짜 선택기
          */}
-        <Pressable style={styles.datePicker} onPress={handleSheetOpen}>
-          <Text style={styles.datePickerText}>
-            {year}년 {month}월
-          </Text>
-          <ArrowDropDown />
-        </Pressable>
+        <DatePickerButton onPress={handleSheetOpen} year={year} month={month} />
 
         <Button
           onPress={() => {
@@ -211,18 +223,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     paddingVertical: 8,
     gap: 16,
-  },
-
-  datePicker: {
-    flexDirection: "row",
-    alignItems: "center",
-    paddingHorizontal: 20,
-    gap: 12,
-  },
-
-  datePickerText: {
-    fontFamily: "yeonTheLand",
-    color: "#89899C",
   },
 
   bottomSheetContainer: {
