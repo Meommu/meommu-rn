@@ -36,6 +36,8 @@ import {
   BottomSheetView,
   useBottomSheetDynamicSnapPoints,
 } from "@gorhom/bottom-sheet";
+import { PlusButton } from "@/components/Button/PlusButton";
+import { UserButton } from "@/components/Button/UserButton";
 
 export default function Main() {
   /**
@@ -88,6 +90,15 @@ export default function Main() {
   return (
     <BottomSheetModalProvider>
       <View style={styles.container}>
+        <View style={styles.header}>
+          <Text style={styles.logoText}>meommu</Text>
+
+          <View style={styles.controllerBox}>
+            <UserButton />
+            <PlusButton />
+          </View>
+        </View>
+
         <Text>메인 페이지</Text>
 
         <Text>인덱스 : {sheetIndex}</Text>
@@ -170,6 +181,24 @@ const styles = StyleSheet.create({
 
   contentContainer: {
     flex: 1,
+  },
+
+  header: {
+    justifyContent: "space-between",
+    flexDirection: "row",
+    alignItems: "center",
+    padding: 20,
+  },
+
+  logoText: {
+    fontSize: 30,
+    fontFamily: "yeonTheLand",
+  },
+
+  controllerBox: {
+    flexDirection: "row",
+    paddingVertical: 8,
+    gap: 16,
   },
 
   bottomSheetContainer: {
