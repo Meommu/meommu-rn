@@ -45,13 +45,11 @@ export const getLoginInfo = async (): Promise<User> => {
   return data;
 };
 
-export const getDiariesDate = async (): Promise<
-  Pick<Diary, "date" | "imageIds">
-> => {
+export const getDiariesSummary = async (): Promise<DiarySummary> => {
   const {
     data: { data },
-  } = await axios.get<ResponseTemplate<Pick<Diary, "date" | "imageIds">>>(
-    "/api/v1/diaries/date"
+  } = await axios.get<ResponseTemplate<DiarySummary>>(
+    "/api/v1/diaries/summary"
   );
 
   return data;

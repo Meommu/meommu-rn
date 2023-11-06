@@ -7,3 +7,5 @@ type Diary = {
   title: string;
   content: string;
 };
+
+type DiarySummary = Omit<Diary, "dogName" | "title" | "content">;

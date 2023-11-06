@@ -28,6 +28,8 @@ import { useDyanmicStyle } from "@/hooks";
 // components
 import { AView } from "@/components/Layout/AView";
 import { NavigationButton } from "@/components/Button/NavigationButton";
+import { PlusButton } from "@/components/Button/PlusButton";
+import { UserButton } from "@/components/Button/UserButton";
 
 // bottom sheets
 import {
@@ -36,8 +38,6 @@ import {
   BottomSheetView,
   useBottomSheetDynamicSnapPoints,
 } from "@gorhom/bottom-sheet";
-import { PlusButton } from "@/components/Button/PlusButton";
-import { UserButton } from "@/components/Button/UserButton";
 
 // svgs
 import ArrowDropDown from "@/assets/svgs/arrow-drop-down.svg";
@@ -49,7 +49,7 @@ export default function Main() {
   const { data } = useQuery(
     [],
     async () => {
-      return await apiService.getDiariesDate();
+      return await apiService.getDiariesSummary();
     },
     {
       retry: 0,

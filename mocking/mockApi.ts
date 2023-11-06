@@ -126,7 +126,7 @@ export class MockApiService {
         /**
          * [GET] 사용자가 작성한 모든 일기의 작성 일자를 조회
          */
-        this.get("/api/v1/diaries/date", (schema, request) => {
+        this.get("/api/v1/diaries/summary", (schema, request) => {
           const {
             requestHeaders: { Authorization },
           } = request;
@@ -152,9 +152,11 @@ export class MockApiService {
               code: CODE.OK,
               message: "정상",
               data: diaries.map((diary) => {
-                const { date, imageIds } = diary;
+                const { id, date, imageIds, createdAt } = diary;
                 return {
+                  id,
                   date,
+                  createdAt,
                   imageIds,
                 };
               }),
