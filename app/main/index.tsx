@@ -12,6 +12,15 @@ import {
 import { useQuery } from "react-query";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+// redux
+import { useDispatch, useSelector } from "react-redux";
+import type { RootState } from "@/store";
+import type { DiaryDateState } from "@/store/modules/diaryDate";
+import {
+  changeCurrentYearMonth,
+  changeSelectedYearMonth,
+} from "@/store/modules/diaryDate";
+
 // apis
 import { apiService } from "@/apis";
 import { useState } from "react";
@@ -27,10 +36,13 @@ import { useDyanmicStyle } from "@/hooks";
 
 // components
 import { AView } from "@/components/Layout/AView";
+import { SView } from "@/components/Layout/SView";
 import { NavigationButton } from "@/components/Button/NavigationButton";
 import { PlusButton } from "@/components/Button/PlusButton";
 import { UserButton } from "@/components/Button/UserButton";
-import { DatePickerButton } from "@/components/Button/DatePickerButton";
+
+// svgs
+import ArrowDropDown from "@/assets/svgs/arrow-drop-down.svg";
 
 // bottom sheets
 import {
@@ -42,9 +54,9 @@ import {
 
 export default function Main() {
   /**
-   * useQuery
+   * diary date
    */
-  const { data } = useQuery(
+  const { data, isLoading } = useQuery(
     [],
     async () => {
       return await apiService.getDiariesSummary();
@@ -54,8 +66,7 @@ export default function Main() {
     }
   );
 
-  const [year, setYear] = useState(-1);
-  const [month, setMonth] = useState(-1);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!data) {
@@ -70,9 +81,16 @@ export default function Main() {
           })[0].createdAt
         );
 
-    setYear(latestDate.getFullYear());
-    setMonth(latestDate.getMonth() + 1);
+    const year = latestDate.getFullYear();
+    const month = latestDate.getMonth() + 1;
+
+    dispatch(changeCurrentYearMonth(year, month));
+    dispatch(changeSelectedYearMonth(year, month));
   }, [data]);
+
+  const { currentMonth, currentYear } = useSelector<RootState, DiaryDateState>(
+    (state) => state.diaryDate
+  );
 
   /**
    * bottomSheets
@@ -130,7 +148,18 @@ export default function Main() {
         {/**
          * 날짜 선택기
          */}
-        <DatePickerButton onPress={handleSheetOpen} year={year} month={month} />
+        {isLoading ? (
+          <View style={styles.datePicker}>
+            <SView textLength={7} />
+          </View>
+        ) : (
+          <Pressable style={styles.datePicker} onPress={handleSheetOpen}>
+            <Text style={styles.datePickerText}>
+              {currentYear}년 {currentMonth}월
+            </Text>
+            <ArrowDropDown />
+          </Pressable>
+        )}
 
         {/**
          * (임시) 로그아웃 버튼
@@ -205,6 +234,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 
+  /**
+   * header
+   */
   header: {
     justifyContent: "space-between",
     flexDirection: "row",
@@ -217,12 +249,33 @@ const styles = StyleSheet.create({
     fontFamily: "yeonTheLand",
   },
 
+  /**
+   * controller
+   */
   controllerBox: {
     flexDirection: "row",
     paddingVertical: 8,
     gap: 16,
   },
 
+  /**
+   * date picker
+   */
+  datePicker: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 20,
+    gap: 12,
+  },
+
+  datePickerText: {
+    fontFamily: "yeonTheLand",
+    color: "#89899C",
+  },
+
+  /**
+   * bottom sheet
+   */
   bottomSheetContainer: {
     marginHorizontal: "auto",
   },
