@@ -20,6 +20,7 @@ import {
   applyCurrentBySelected,
   changeCurrentYearMonth,
   changeSelectedYearMonth,
+  updateDiariesThumbnailImage,
 } from "@/store/modules/diaryDate";
 
 // apis
@@ -53,6 +54,7 @@ import {
   BottomSheetView,
   useBottomSheetDynamicSnapPoints,
 } from "@gorhom/bottom-sheet";
+import { createYearMonthKey } from "@/utils";
 
 export default function Main() {
   /**
@@ -99,6 +101,11 @@ export default function Main() {
       return;
     }
 
+    /**
+     * 최신 일기가 존재하는 년, 월 추출
+     *
+     * TODO: createdAt이 아닌 date로 날짜 파싱하기
+     */
     const latestDate = !data.length
       ? new Date()
       : new Date(
@@ -112,6 +119,21 @@ export default function Main() {
 
     dispatch(changeCurrentYearMonth(year, month));
     dispatch(changeSelectedYearMonth(year, month));
+
+    /**
+     * 년, 월에 존재하는 일기들의 대표 이미지 추출
+     */
+    const yearMonthToImageId: Map<string, number> = new Map();
+
+    data.forEach(({ date, imageIds }) => {
+      if (!imageIds.length) {
+        return;
+      }
+
+      yearMonthToImageId.set(createYearMonthKey(new Date(date)), imageIds[0]);
+    });
+
+    dispatch(updateDiariesThumbnailImage(yearMonthToImageId));
   }, [data]);
 
   const { currentMonth, currentYear } = useSelector<RootState, DiaryDateState>(

@@ -1,4 +1,5 @@
 // react
+import { Suspense, useMemo } from "react";
 import { View, Text, StyleSheet, Pressable, Image } from "react-native";
 
 // redux
@@ -6,7 +7,8 @@ import { useSelector, useDispatch } from "react-redux";
 import type { RootState } from "@/store";
 import type { DiaryDateState } from "@/store/modules/diaryDate";
 import { changeSelectedYearMonth } from "@/store/modules/diaryDate";
-import { useMemo } from "react";
+import { apiService } from "@/apis";
+import { useQuery } from "react-query";
 
 interface MonthCalendarProps {
   year: number;
@@ -15,8 +17,13 @@ interface MonthCalendarProps {
 export function MonthCalendar({ year }: MonthCalendarProps) {
   const dispatch = useDispatch();
 
-  const { selectedYear, selectedMonth, currentMonth, currentYear } =
-    useSelector<RootState, DiaryDateState>((state) => state.diaryDate);
+  const {
+    selectedYear,
+    selectedMonth,
+    currentMonth,
+    currentYear,
+    yearMonthToImageId,
+  } = useSelector<RootState, DiaryDateState>((state) => state.diaryDate);
 
   const handleMonthSelect = (month: number) => () => {
     dispatch(changeSelectedYearMonth(year, month));
@@ -30,37 +37,72 @@ export function MonthCalendar({ year }: MonthCalendarProps) {
         .fill(null)
         .map((_, i) => {
           const month = i + 1;
+          const yearMonthKey = `${year}|${month}`;
 
           const isSelected = year === selectedYear && month === selectedMonth;
-
           const isFuture =
-            year > now.getFullYear() ? true : month > now.getMonth() + 1;
-
+            now.getFullYear() > year ? false : month > now.getMonth() + 1;
           const isCurrentDate = year === currentYear && month === currentMonth;
 
+          const diaryImageId = yearMonthToImageId.get(yearMonthKey);
+
           return (
-            <View style={styles.monthElementLayout} key={`${year}|${month}`}>
+            <View style={styles.monthElementLayout} key={yearMonthKey}>
               <View style={styles.monthElement}>
                 <Pressable
                   style={[
                     styles.monthElementCircle,
                     {
                       borderColor: isSelected ? "black" : "white",
-                      backgroundColor: isCurrentDate
-                        ? "rgba(0, 0, 0, 0.3)"
-                        : "transparnet",
                     },
                   ]}
                   onPress={handleMonthSelect(month)}
                   disabled={isFuture}
                 >
+                  {diaryImageId &&
+                    (() => {
+                      /**
+                       * TODO: 이미지 캐싱할 것
+                       */
+                      const { data, isLoading } = useQuery(
+                        [diaryImageId],
+                        async () => {
+                          return await apiService.getImageUrl(diaryImageId);
+                        },
+                        {
+                          retry: 0,
+                          suspense: true,
+                        }
+                      );
+
+                      if (isLoading) return null;
+
+                      return (
+                        <Image
+                          style={styles.monthElementCircleImage}
+                          source={{ uri: data?.url }}
+                        />
+                      );
+                    })()}
+
+                  <View
+                    style={[
+                      styles.monthElementCircleImage,
+                      {
+                        backgroundColor: isCurrentDate
+                          ? "rgba(0, 0, 0, 0.3)"
+                          : "transparnet",
+                      },
+                    ]}
+                  />
+
                   <Text
                     style={[
                       styles.monthElementText,
                       {
                         color: isFuture
                           ? "lightgray"
-                          : isCurrentDate
+                          : isCurrentDate || diaryImageId !== undefined
                           ? "white"
                           : "#4A5660",
                       },
@@ -87,7 +129,7 @@ const styles = StyleSheet.create({
   },
 
   monthElementLayout: {
-    width: "25%",
+    width: "20%",
   },
 
   monthElement: {
