@@ -1,5 +1,5 @@
 // react
-import { View, Text, StyleSheet, Pressable } from "react-native";
+import { View, Text, StyleSheet, Pressable, Image } from "react-native";
 
 // redux
 import { useSelector, useDispatch } from "react-redux";
@@ -15,10 +15,8 @@ interface MonthCalendarProps {
 export function MonthCalendar({ year }: MonthCalendarProps) {
   const dispatch = useDispatch();
 
-  const { selectedYear, selectedMonth } = useSelector<
-    RootState,
-    DiaryDateState
-  >((state) => state.diaryDate);
+  const { selectedYear, selectedMonth, currentMonth, currentYear } =
+    useSelector<RootState, DiaryDateState>((state) => state.diaryDate);
 
   const handleMonthSelect = (month: number) => () => {
     dispatch(changeSelectedYearMonth(year, month));
@@ -38,6 +36,8 @@ export function MonthCalendar({ year }: MonthCalendarProps) {
           const isFuture =
             year > now.getFullYear() ? true : month > now.getMonth() + 1;
 
+          const isCurrentDate = year === currentYear && month === currentMonth;
+
           return (
             <View style={styles.monthElementLayout} key={`${year}|${month}`}>
               <View style={styles.monthElement}>
@@ -46,6 +46,9 @@ export function MonthCalendar({ year }: MonthCalendarProps) {
                     styles.monthElementCircle,
                     {
                       borderColor: isSelected ? "black" : "white",
+                      backgroundColor: isCurrentDate
+                        ? "rgba(0, 0, 0, 0.3)"
+                        : "transparnet",
                     },
                   ]}
                   onPress={handleMonthSelect(month)}
@@ -55,7 +58,11 @@ export function MonthCalendar({ year }: MonthCalendarProps) {
                     style={[
                       styles.monthElementText,
                       {
-                        color: isFuture ? "lightgray" : "#4A5660",
+                        color: isFuture
+                          ? "lightgray"
+                          : isCurrentDate
+                          ? "white"
+                          : "#4A5660",
                       },
                     ]}
                   >
@@ -101,6 +108,16 @@ const styles = StyleSheet.create({
 
     borderRadius: 999,
     borderWidth: 1,
+
+    overflow: "hidden",
+
+    position: "relative",
+  },
+
+  monthElementCircleImage: {
+    position: "absolute",
+    width: "100%",
+    height: "100%",
   },
 
   monthElementText: {
