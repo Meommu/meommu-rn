@@ -217,6 +217,10 @@ export default function Main() {
             bottomSheetMaxWidthStyle,
             styles.bottomSheetContainer,
           ]}
+          handleIndicatorStyle={{
+            backgroundColor: "rgba(0, 0, 0, 0.3)",
+            width: "10%",
+          }}
         >
           <BottomSheetView
             style={styles.contentContainer}
