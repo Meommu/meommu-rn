@@ -3,6 +3,11 @@ import React, { Component, useRef, useState } from "react";
 import { View, Text, Pressable, StyleSheet } from "react-native";
 import Swiper from "react-native-web-swiper";
 
+// redux
+import { useSelector } from "react-redux";
+import type { RootState } from "@/store";
+import type { DiaryDateState } from "@/store/modules/diaryDate";
+
 // svgs
 import CaretRight from "@/assets/svgs/caret-right.svg";
 import CaretLeft from "@/assets/svgs/caret-left.svg";
@@ -19,7 +24,14 @@ const MONTH_PICKER_HEIGHT = 300;
 export function MonthPicker() {
   const swiperRef = useRef<Swiper | null>(null);
 
-  const [index, setIndex] = useState(MAXIMUM_PAST_YEAR - 1);
+  const { currentYear } = useSelector<RootState, DiaryDateState>(
+    (state) => state.diaryDate
+  );
+
+  const initialSwiperIndex =
+    MAXIMUM_PAST_YEAR - (new Date().getFullYear() - currentYear) - 1;
+
+  const [index, setIndex] = useState(initialSwiperIndex);
 
   const swiperIndexChangeHandler = (index: number) => {
     setIndex(index);
@@ -35,7 +47,7 @@ export function MonthPicker() {
 
       <Swiper
         ref={swiperRef}
-        from={MAXIMUM_PAST_YEAR - 1}
+        from={initialSwiperIndex}
         onIndexChanged={swiperIndexChangeHandler}
         controlsProps={{
           dotsPos: false,
