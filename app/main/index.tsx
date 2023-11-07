@@ -97,22 +97,18 @@ export default function Main() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!data) {
+    if (!data || !data.length) {
       return;
     }
 
     /**
      * 최신 일기가 존재하는 년, 월 추출
-     *
-     * TODO: createdAt이 아닌 date로 날짜 파싱하기
      */
-    const latestDate = !data.length
-      ? new Date()
-      : new Date(
-          data.sort((a, b) => {
-            return a.createdAt > b.createdAt ? -1 : 1;
-          })[0].createdAt
-        );
+    const latestDate = data
+      .map(({ date }) => new Date(date))
+      .sort((a, b) => {
+        return a > b ? -1 : 1;
+      })[0];
 
     const year = latestDate.getFullYear();
     const month = latestDate.getMonth() + 1;
