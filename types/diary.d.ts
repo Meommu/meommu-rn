@@ -9,3 +9,8 @@ type Diary = {
 };
 
 type DiarySummary = Omit<Diary, "dogName" | "title" | "content">;
+
+type DiaryImage = {
+  id: number;
+  url: string;
+};

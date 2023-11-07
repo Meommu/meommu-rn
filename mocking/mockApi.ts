@@ -11,6 +11,7 @@ import { resBodyTemplate, regExp } from "@/utils";
 
 // other
 import httpStatus from "http-status";
+import { faker } from "@faker-js/faker";
 
 export class MockApiService {
   register() {
@@ -165,6 +166,38 @@ export class MockApiService {
         });
 
         /**
+         * [GET] 이미지 조회
+         */
+        this.get("/api/v1/images/:id", (schema, request) => {
+          const {
+            params: { id },
+          } = request;
+
+          const image = schema.db.images.findBy({ id });
+
+          if (!image) {
+            return new Response(
+              httpStatus.BAD_REQUEST,
+              {},
+              resBodyTemplate({
+                code: CODE.IMAGE_NOT_FOUND,
+                message: "id로 이미지를 찾을 수 없음",
+              })
+            );
+          }
+
+          return new Response(
+            httpStatus.OK,
+            {},
+            resBodyTemplate({
+              code: CODE.OK,
+              message: "정상",
+              data: image,
+            })
+          );
+        });
+
+        /**
          * [POST] 이메일 패스워드로 로그인
          */
         this.post("/api/v1/kindergartens/signin", (schema, request) => {
@@ -261,6 +294,14 @@ export class MockApiService {
       /**
        * TODO: users와의 관계 정의
        */
+      images: Array(7)
+        .fill(null)
+        .map((_, i) => {
+          return {
+            id: i + 1,
+            url: faker.image.url(),
+          };
+        }),
       diaries: [
         {
           id: 3,
@@ -282,12 +323,21 @@ export class MockApiService {
         },
         {
           id: 1,
-          date: "2023-10-25",
+          date: "2022-05-25",
           dogName: "코코",
-          createdAt: "2023-10-26T17:42:18.744735",
+          createdAt: "2023-05-25T17:42:18.744735",
           imageIds: [1, 2, 3, 4, 5],
           title: "일기 1 제목",
           content: "일기 1 내용",
+        },
+        {
+          id: 4,
+          date: "2023-10-25",
+          dogName: "코코",
+          createdAt: "2023-10-25T17:42:18.744735",
+          imageIds: [4, 5],
+          title: "일기 4 제목",
+          content: "일기 4 내용",
         },
       ],
     });

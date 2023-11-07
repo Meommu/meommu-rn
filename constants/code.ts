@@ -64,4 +64,9 @@ export const enum CODE {
    */
   "INTERNAL_SERVER_ERROR" = "S500",
   "JSON_PROCESSING_ERROR" = "S501",
+
+  /**
+   * id로 이미지를 찾을 수 없음
+   */
+  "IMAGE_NOT_FOUND" = "I001",
 }
