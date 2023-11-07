@@ -17,6 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "@/store";
 import type { DiaryDateState } from "@/store/modules/diaryDate";
 import {
+  applyCurrentBySelected,
   changeCurrentYearMonth,
   changeSelectedYearMonth,
 } from "@/store/modules/diaryDate";
@@ -40,6 +41,7 @@ import { SView } from "@/components/Layout/SView";
 import { NavigationButton } from "@/components/Button/NavigationButton";
 import { PlusButton } from "@/components/Button/PlusButton";
 import { UserButton } from "@/components/Button/UserButton";
+import { MonthPicker } from "@/components/MonthPicker";
 
 // svgs
 import ArrowDropDown from "@/assets/svgs/arrow-drop-down.svg";
@@ -53,6 +55,30 @@ import {
 } from "@gorhom/bottom-sheet";
 
 export default function Main() {
+  /**
+   * bottomSheets
+   */
+  const bottomSheetRef = useRef<BottomSheetModal>(null);
+
+  const initialSnapPoints = useMemo(() => ["CONTENT_HEIGHT"], []);
+
+  const {
+    animatedHandleHeight,
+    animatedSnapPoints,
+    animatedContentHeight,
+    handleContentLayout,
+  } = useBottomSheetDynamicSnapPoints(initialSnapPoints);
+
+  const [sheetIndex, setSheetIndex] = useState(-1);
+
+  const handleSheetChanges = useCallback((index: number) => {
+    setSheetIndex(index);
+  }, []);
+
+  const handleSheetOpen = useCallback(() => {
+    bottomSheetRef.current?.present();
+  }, []);
+
   /**
    * diary date
    */
@@ -92,29 +118,11 @@ export default function Main() {
     (state) => state.diaryDate
   );
 
-  /**
-   * bottomSheets
-   */
-  const bottomSheetRef = useRef<BottomSheetModal>(null);
+  const handleDatePickButtonClick = () => {
+    dispatch(applyCurrentBySelected());
 
-  const initialSnapPoints = useMemo(() => ["CONTENT_HEIGHT"], []);
-
-  const {
-    animatedHandleHeight,
-    animatedSnapPoints,
-    animatedContentHeight,
-    handleContentLayout,
-  } = useBottomSheetDynamicSnapPoints(initialSnapPoints);
-
-  const [sheetIndex, setSheetIndex] = useState(-1);
-
-  const handleSheetChanges = useCallback((index: number) => {
-    setSheetIndex(index);
-  }, []);
-
-  const handleSheetOpen = useCallback(() => {
-    bottomSheetRef.current?.present();
-  }, []);
+    bottomSheetRef.current?.dismiss();
+  };
 
   /**
    * bottom sheet의 반응형 너비 계산
@@ -192,7 +200,12 @@ export default function Main() {
             style={styles.contentContainer}
             onLayout={handleContentLayout}
           >
-            <NavigationButton content="확인" style={{ padding: 20 }} />
+            <MonthPicker />
+            <NavigationButton
+              content="확인"
+              style={{ padding: 20 }}
+              onPress={handleDatePickButtonClick}
+            />
           </BottomSheetView>
         </BottomSheetModal>
 
