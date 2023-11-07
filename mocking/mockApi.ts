@@ -31,7 +31,7 @@ export class MockApiService {
             requestHeaders: { Authorization },
           } = request;
 
-          if (Authorization !== "<ACCESS_TOKEN>") {
+          if (Authorization.split(" ")[1] !== "<ACCESS_TOKEN>") {
             return new Response(
               httpStatus.UNAUTHORIZED,
               {},
@@ -99,7 +99,7 @@ export class MockApiService {
             requestHeaders: { Authorization },
           } = request;
 
-          if (Authorization !== "<ACCESS_TOKEN>") {
+          if (Authorization.split(" ")[1] !== "<ACCESS_TOKEN>") {
             return new Response(
               httpStatus.UNAUTHORIZED,
               {},
@@ -132,7 +132,7 @@ export class MockApiService {
             requestHeaders: { Authorization },
           } = request;
 
-          if (Authorization !== "<ACCESS_TOKEN>") {
+          if (Authorization.split(" ")[1] !== "<ACCESS_TOKEN>") {
             return new Response(
               httpStatus.UNAUTHORIZED,
               {},

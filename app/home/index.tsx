@@ -48,7 +48,7 @@ export default function Home() {
     },
     {
       onSuccess: async (data) => {
-        const accessToken = data;
+        const accessToken = `Bearer ${data}`;
 
         axios.defaults.headers.common.Authorization = accessToken;
 
