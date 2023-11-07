@@ -30,6 +30,7 @@ import { AView } from "@/components/Layout/AView";
 import { NavigationButton } from "@/components/Button/NavigationButton";
 import { PlusButton } from "@/components/Button/PlusButton";
 import { UserButton } from "@/components/Button/UserButton";
+import { DatePickerButton } from "@/components/Button/DatePickerButton";
 
 // bottom sheets
 import {
@@ -38,9 +39,6 @@ import {
   BottomSheetView,
   useBottomSheetDynamicSnapPoints,
 } from "@gorhom/bottom-sheet";
-
-// svgs
-import { DatePickerButton } from "@/components/Button/DatePickerButton";
 
 export default function Main() {
   /**
@@ -134,6 +132,9 @@ export default function Main() {
          */}
         <DatePickerButton onPress={handleSheetOpen} year={year} month={month} />
 
+        {/**
+         * (임시) 로그아웃 버튼
+         */}
         <Button
           onPress={() => {
             AsyncStorage.removeItem("accessToken");
@@ -143,12 +144,16 @@ export default function Main() {
           title="로그아웃"
         />
 
+        {/**
+         * 날짜 선택기 바텀시트 모달
+         */}
         <BottomSheetModal
           ref={bottomSheetRef}
           onChange={handleSheetChanges}
           snapPoints={animatedSnapPoints}
           contentHeight={animatedContentHeight}
           handleHeight={animatedHandleHeight}
+          enableContentPanningGesture={false}
           containerStyle={[
             bottomSheetMaxWidthStyle,
             styles.bottomSheetContainer,
@@ -158,42 +163,35 @@ export default function Main() {
             style={styles.contentContainer}
             onLayout={handleContentLayout}
           >
-            <View
-              style={{
-                height: 300,
-                width: "100%",
-                backgroundColor: "red",
-              }}
-            >
-              <Text>캘린더</Text>
-            </View>
-
             <NavigationButton content="확인" style={{ padding: 20 }} />
           </BottomSheetView>
         </BottomSheetModal>
-      </View>
 
-      <AView
-        isMount={sheetIndex !== -1}
-        duration={300}
-        style={{
-          position: "absolute",
-          width: "100%",
-          height: "100%",
-        }}
-      >
-        <Pressable
-          onPress={() => {
-            bottomSheetRef.current?.dismiss();
-          }}
+        {/**
+         * bottom sheet의 dimmed
+         */}
+        <AView
+          isMount={sheetIndex !== -1}
+          duration={300}
           style={{
+            position: "absolute",
             width: "100%",
             height: "100%",
-            backgroundColor: "black",
-            opacity: 0.5,
           }}
-        />
-      </AView>
+        >
+          <Pressable
+            onPress={() => {
+              bottomSheetRef.current?.dismiss();
+            }}
+            style={{
+              width: "100%",
+              height: "100%",
+              backgroundColor: "black",
+              opacity: 0.5,
+            }}
+          />
+        </AView>
+      </View>
     </BottomSheetModalProvider>
   );
 }
