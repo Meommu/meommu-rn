@@ -10,6 +10,9 @@ import {
 // svgs
 import ArrowDropDown from "@/assets/svgs/arrow-drop-down.svg";
 
+// components
+import { SView } from "../Layout/SView";
+
 interface DatePickerButtonProps extends PressableProps {
   year: number;
   month: number;
@@ -28,20 +31,14 @@ export function DatePickerButton({
   if (isLoading) {
     return (
       <View style={styles.datePicker}>
-        <View
-          style={{
-            backgroundColor: "lightgray",
-            borderRadius: 10,
-          }}
-        >
-          <Text style={[styles.datePickerText, { color: "transparent" }]}>
-            xxxx년 xx월 xxxx
-          </Text>
-        </View>
+        <SView textLength={7} />
       </View>
     );
   }
 
+  /**
+   * TODO: 이곳으로 바텀 시트 모달 이동
+   */
   return (
     <Pressable style={styles.datePicker} {...props}>
       <Text style={styles.datePickerText}>
