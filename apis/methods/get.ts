@@ -54,3 +54,13 @@ export const getDiariesSummary = async (): Promise<DiarySummary[]> => {
 
   return data;
 };
+
+export const getImageUrl = async (imageId: number): Promise<DiaryImage> => {
+  const {
+    data: { data },
+  } = await axios.get<ResponseTemplate<DiaryImage>>(
+    `/api/v1/images/${imageId}`
+  );
+
+  return data;
+};
