@@ -40,8 +40,7 @@ const styles = StyleSheet.create({
   },
 
   contentBody: {
-    opacity: 0.9,
-    backgroundColor: "#626262",
+    backgroundColor: "rgba(98, 98, 98, 0.9)",
     borderRadius: 10,
   },
 

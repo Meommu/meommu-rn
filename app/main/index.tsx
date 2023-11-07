@@ -228,8 +228,7 @@ export default function Main() {
             style={{
               width: "100%",
               height: "100%",
-              backgroundColor: "black",
-              opacity: 0.5,
+              backgroundColor: "rgba(0, 0, 0, 0.5)",
             }}
           />
         </AView>
