@@ -1,14 +1,16 @@
 // react
-import { Suspense, useMemo } from "react";
+import { useMemo } from "react";
 import { View, Text, StyleSheet, Pressable, Image } from "react-native";
+import { useQuery } from "react-query";
 
 // redux
 import { useSelector, useDispatch } from "react-redux";
 import type { RootState } from "@/store";
 import type { DiaryDateState } from "@/store/modules/diaryDate";
 import { changeSelectedYearMonth } from "@/store/modules/diaryDate";
+
+// apis
 import { apiService } from "@/apis";
-import { useQuery } from "react-query";
 
 interface MonthCalendarProps {
   year: number;
@@ -65,13 +67,9 @@ export function MonthCalendar({ year }: MonthCalendarProps) {
                        * TODO: 이미지 캐싱할 것
                        */
                       const { data, isLoading } = useQuery(
-                        [diaryImageId],
+                        ["diaryImage", diaryImageId],
                         async () => {
                           return await apiService.getImageUrl(diaryImageId);
-                        },
-                        {
-                          retry: 0,
-                          suspense: true,
                         }
                       );
 
@@ -129,7 +127,7 @@ const styles = StyleSheet.create({
   },
 
   monthElementLayout: {
-    width: "20%",
+    width: "25%",
   },
 
   monthElement: {
