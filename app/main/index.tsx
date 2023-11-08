@@ -40,8 +40,8 @@ import { useDyanmicStyle } from "@/hooks";
 import { SView } from "@/components/Layout/SView";
 import { NavigationButton } from "@/components/Button/NavigationButton";
 import { PlusButton } from "@/components/Button/PlusButton";
-import { UserButton } from "@/components/Button/UserButton";
 import { MonthPicker } from "@/components/MonthPicker";
+import { SettingButton } from "@/components/Button/SettingButton";
 
 // svgs
 import ArrowDropDown from "@/assets/svgs/arrow-drop-down.svg";
@@ -168,6 +168,13 @@ export default function Main() {
     []
   );
 
+  /**
+   * 컨트롤러(세팅, 글쓰기) 버튼 핸들러
+   */
+  const handleSettingButtonClick = () => {
+    router.push(VIEW_NAME.SETTING);
+  };
+
   return (
     <BottomSheetModalProvider>
       <View style={styles.container}>
@@ -178,7 +185,7 @@ export default function Main() {
           <Text style={styles.logoText}>meommu</Text>
 
           <View style={styles.controllerBox}>
-            <UserButton />
+            <SettingButton onPress={handleSettingButtonClick} />
             <PlusButton />
           </View>
         </View>

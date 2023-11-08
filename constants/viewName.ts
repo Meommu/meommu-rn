@@ -4,4 +4,5 @@ export const enum VIEW_NAME {
   MAIN = "main",
   SIGN_IN = "sign-in",
   SIGN_UP = "sign-up",
+  SETTING = "setting",
 }
