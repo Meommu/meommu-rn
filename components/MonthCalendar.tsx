@@ -128,6 +128,7 @@ const styles = StyleSheet.create({
 
   monthElementLayout: {
     width: "25%",
+    height: "33%",
   },
 
   monthElement: {
