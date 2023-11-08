@@ -228,10 +228,7 @@ export default function Main() {
           handleIndicatorStyle={styles.handleIndicator}
           backdropComponent={renderBackdrop}
         >
-          <BottomSheetView
-            style={styles.bottomSheetContent}
-            onLayout={handleContentLayout}
-          >
+          <BottomSheetView onLayout={handleContentLayout}>
             <MonthPicker />
             <NavigationButton
               content="확인"
@@ -293,11 +290,6 @@ const styles = StyleSheet.create({
    */
   bottomSheetContainer: {
     marginHorizontal: "auto",
-  },
-
-  bottomSheetContent: {
-    width: "100%",
-    height: "100%",
   },
 
   handleIndicator: {
