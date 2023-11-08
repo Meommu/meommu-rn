@@ -135,6 +135,15 @@ export class MockApiService {
             );
           }
 
+          const filteredDiaries = schema.db.diaries.filter(({ date }) => {
+            const currentDate = new Date(date);
+
+            return (
+              currentDate.getFullYear() === +year &&
+              currentDate.getMonth() + 1 === +month
+            );
+          });
+
           return new Response(
             httpStatus.OK,
             {},
@@ -142,7 +151,7 @@ export class MockApiService {
               code: CODE.OK,
               message: "정상",
               data: {
-                diaries: [],
+                diaries: filteredDiaries,
               },
             })
           );
