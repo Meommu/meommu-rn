@@ -1,33 +1,14 @@
 // react
-import { useMemo } from "react";
-import { View, Text } from "react-native";
-import type { ViewProps, DimensionValue } from "react-native";
+import { View } from "react-native";
+import type { ViewProps } from "react-native";
 
-interface SViewProps extends ViewProps {
-  width?: DimensionValue;
-  height?: DimensionValue;
-  textLength?: number;
-}
+interface SViewProps extends ViewProps {}
 
 /**
  * SView: Skeleton View (스켈레톤 뷰)
  */
-export function SView({
-  width = "auto",
-  height = "auto",
-  textLength,
-}: SViewProps) {
-  const blank = useMemo(() => "ㅤ", []);
-
+export function SView({ style }: SViewProps) {
   return (
-    <View
-      style={{ width, height, backgroundColor: "lightgray", borderRadius: 10 }}
-    >
-      {textLength && (
-        <Text style={{ color: "transparent" }}>
-          {Array(textLength).fill(blank).join("")}
-        </Text>
-      )}
-    </View>
+    <View style={[style, { backgroundColor: "lightgray", borderRadius: 10 }]} />
   );
 }
