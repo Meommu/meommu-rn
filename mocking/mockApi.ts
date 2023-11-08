@@ -31,6 +31,17 @@ export class MockApiService {
             requestHeaders: { Authorization },
           } = request;
 
+          if (!Authorization) {
+            return new Response(
+              httpStatus.UNAUTHORIZED,
+              {},
+              resBodyTemplate({
+                code: CODE.NO_AUTHORIZATION_HEADER,
+                message: "인증 헤더를 찾을 수 없음",
+              })
+            );
+          }
+
           if (Authorization.split(" ")[1] !== "<ACCESS_TOKEN>") {
             return new Response(
               httpStatus.UNAUTHORIZED,
@@ -101,6 +112,17 @@ export class MockApiService {
             requestHeaders: { Authorization },
           } = request;
 
+          if (!Authorization) {
+            return new Response(
+              httpStatus.UNAUTHORIZED,
+              {},
+              resBodyTemplate({
+                code: CODE.NO_AUTHORIZATION_HEADER,
+                message: "인증 헤더를 찾을 수 없음",
+              })
+            );
+          }
+
           if (Authorization.split(" ")[1] !== "<ACCESS_TOKEN>") {
             return new Response(
               httpStatus.UNAUTHORIZED,
@@ -133,6 +155,17 @@ export class MockApiService {
           const {
             requestHeaders: { Authorization },
           } = request;
+
+          if (!Authorization) {
+            return new Response(
+              httpStatus.UNAUTHORIZED,
+              {},
+              resBodyTemplate({
+                code: CODE.NO_AUTHORIZATION_HEADER,
+                message: "인증 헤더를 찾을 수 없음",
+              })
+            );
+          }
 
           if (Authorization.split(" ")[1] !== "<ACCESS_TOKEN>") {
             return new Response(
