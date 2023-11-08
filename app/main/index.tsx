@@ -39,6 +39,7 @@ import { NavigationButton } from "@/components/Button/NavigationButton";
 import { PlusButton } from "@/components/Button/PlusButton";
 import { MonthPicker } from "@/components/MonthPicker";
 import { SettingButton } from "@/components/Button/SettingButton";
+import { DiaryList } from "@/components/DiaryList";
 
 // svgs
 import ArrowDropDown from "@/assets/svgs/arrow-drop-down.svg";
@@ -204,6 +205,8 @@ export default function Main() {
             <ArrowDropDown />
           </Pressable>
         )}
+
+        <DiaryList />
 
         {/**
          * 날짜 선택기 바텀시트 모달
