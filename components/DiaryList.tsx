@@ -1,5 +1,5 @@
 // react
-import { View, Text, ScrollView, StyleSheet, Image } from "react-native";
+import { View, Text, StyleSheet, Image } from "react-native";
 import { useQuery } from "react-query";
 
 // redux
