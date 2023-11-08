@@ -15,13 +15,14 @@ import { NavigationButton } from "@/components/Button/NavigationButton";
 import { StepOne } from "@/components/signUpForm/stepOne";
 import { StepTwo } from "@/components/signUpForm/stepTwo";
 import { Complete } from "@/components/signUpForm/complete";
+import { KView } from "@/components/Layout/KView";
+import { Header } from "@/components/Layout/Header";
 
 // constants
 import { VIEW_NAME } from "@/constants";
 
 // apis
 import { apiService } from "@/apis";
-import { KView } from "@/components/Layout/KView";
 
 const SLIDE_MAX_COUNT = 3;
 
@@ -197,10 +198,14 @@ export default function SignUp() {
   return (
     <FormProvider {...methods}>
       <KView style={styles.container}>
-        <View style={styles.headerView}>
-          <GoBackButton
-            onPress={goBackButtonClickHandler}
-            disable={isLastSlide()}
+        <View style={styles.headerWrapper}>
+          <Header
+            left={
+              <GoBackButton
+                onPress={goBackButtonClickHandler}
+                disable={isLastSlide()}
+              />
+            }
           />
         </View>
 
@@ -278,7 +283,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
 
-  headerView: {
+  headerWrapper: {
     padding: 20,
   },
 
