@@ -16,7 +16,22 @@ const prodApiUrl =
 
 switch (process.env.EXPO_PUBLIC_MODE) {
   case "dev":
-    // mocking한 API를 사용하므로 아무것도 하지 않음
+    /**
+     * 캐싱 여부를 확인하기 위해 0.5초에서 1초 사이의 시간으로 지연이 발생하게끔 함.
+     */
+    axios.interceptors.request.use((config) => {
+      const delay = Math.floor(Math.random() * 501) + 500;
+
+      if (config.method === "get") {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resolve(config);
+          }, delay);
+        });
+      }
+
+      return config;
+    });
 
     break;
   case "qa":
