@@ -60,7 +60,12 @@ export function MonthCalendar({ year }: MonthCalendarProps) {
                   onPress={handleMonthSelect(month)}
                   disabled={isFuture}
                 >
-                  {diaryImageId && <LoadImage imageId={diaryImageId} />}
+                  {diaryImageId && (
+                    <LoadImage
+                      imageId={diaryImageId}
+                      style={styles.monthElementCircleImage}
+                    />
+                  )}
 
                   <View
                     style={[
