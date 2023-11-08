@@ -34,7 +34,7 @@ import { VIEW_NAME, size } from "@/constants";
 import { useDyanmicStyle } from "@/hooks";
 
 // components
-import { SView } from "@/components/Layout/SView";
+import { SText } from "@/components/Text/SText";
 import { NavigationButton } from "@/components/Button/NavigationButton";
 import { PlusButton } from "@/components/Button/PlusButton";
 import { MonthPicker } from "@/components/MonthPicker";
@@ -52,6 +52,8 @@ import {
   BottomSheetBackdrop,
   BottomSheetBackdropProps,
 } from "@gorhom/bottom-sheet";
+
+// utils
 import { createYearMonthKey } from "@/utils";
 
 export default function Main() {
@@ -192,7 +194,7 @@ export default function Main() {
          */}
         {isLoading ? (
           <View style={styles.datePicker}>
-            <SView textLength={7} />
+            <SText textLength={7} />
           </View>
         ) : (
           <Pressable style={styles.datePicker} onPress={handleSheetOpen}>
