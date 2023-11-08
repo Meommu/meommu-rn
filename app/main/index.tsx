@@ -4,13 +4,11 @@ import {
   View,
   Text,
   StyleSheet,
-  Button,
   useWindowDimensions,
   Platform,
   Pressable,
 } from "react-native";
 import { useQuery } from "react-query";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // redux
 import { useDispatch, useSelector } from "react-redux";
@@ -25,7 +23,6 @@ import {
 
 // apis
 import { apiService } from "@/apis";
-import { useState } from "react";
 
 // expo
 import { router } from "expo-router";
@@ -207,18 +204,6 @@ export default function Main() {
         )}
 
         {/**
-         * (임시) 로그아웃 버튼
-         */}
-        <Button
-          onPress={() => {
-            AsyncStorage.removeItem("accessToken");
-
-            router.replace(VIEW_NAME.HOME);
-          }}
-          title="로그아웃"
-        />
-
-        {/**
          * 날짜 선택기 바텀시트 모달
          */}
         <BottomSheetModal
@@ -231,10 +216,7 @@ export default function Main() {
             bottomSheetMaxWidthStyle,
             styles.bottomSheetContainer,
           ]}
-          handleIndicatorStyle={{
-            backgroundColor: "rgba(0, 0, 0, 0.3)",
-            width: "10%",
-          }}
+          handleIndicatorStyle={styles.handleIndicator}
           backdropComponent={renderBackdrop}
         >
           <BottomSheetView
@@ -244,7 +226,7 @@ export default function Main() {
             <MonthPicker />
             <NavigationButton
               content="확인"
-              style={{ padding: 20 }}
+              style={styles.chooseMonthButton}
               onPress={handleDatePickButtonClick}
             />
           </BottomSheetView>
@@ -307,5 +289,14 @@ const styles = StyleSheet.create({
    */
   bottomSheetContainer: {
     marginHorizontal: "auto",
+  },
+
+  handleIndicator: {
+    backgroundColor: "rgba(0, 0, 0, 0.3)",
+    width: "10%",
+  },
+
+  chooseMonthButton: {
+    padding: 20,
   },
 });
