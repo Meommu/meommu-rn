@@ -65,7 +65,9 @@ export function DiaryItem({ diary }: DiaryItemProps) {
         <KebabMenuButton style={styles.menu} />
 
         <View style={styles.order}>
-          {currentIndex + 1}/{imageIds.length}
+          <Text style={styles.orderText}>
+            {currentIndex + 1}/{imageIds.length}
+          </Text>
         </View>
       </View>
 
@@ -115,10 +117,13 @@ const styles = StyleSheet.create({
     right: 10,
     backgroundColor: "rgba(13, 61, 70, 0.8)",
     borderRadius: 400,
-    fontSize: 14,
     paddingHorizontal: 11,
     paddingTop: 1,
     paddingBottom: 3,
+  },
+
+  orderText: {
+    fontSize: 14,
     color: "white",
   },
 
