@@ -25,8 +25,6 @@ export default function Setting() {
     { retry: 0 }
   );
 
-  console.log("[user info data]", data);
-
   const handleLogoutButtonClick = () => {
     AsyncStorage.removeItem("accessToken");
 
@@ -74,13 +72,15 @@ export default function Setting() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    width: "100%",
+    height: "100%",
+    padding: 20,
     backgroundColor: "white",
   },
 
   content: {
-    flex: 1,
-    margin: 20,
+    width: "100%",
+    height: "100%",
     position: "relative",
   },
 
