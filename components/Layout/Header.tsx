@@ -3,7 +3,7 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 
 interface HeaderProps {
-  title: string;
+  title?: string;
   left?: React.ReactNode;
   right?: React.ReactNode;
 }
