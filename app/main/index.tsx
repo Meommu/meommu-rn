@@ -37,7 +37,6 @@ import { VIEW_NAME, size } from "@/constants";
 import { useDyanmicStyle } from "@/hooks";
 
 // components
-import { AView } from "@/components/Layout/AView";
 import { SView } from "@/components/Layout/SView";
 import { NavigationButton } from "@/components/Button/NavigationButton";
 import { PlusButton } from "@/components/Button/PlusButton";
@@ -53,6 +52,8 @@ import {
   BottomSheetModalProvider,
   BottomSheetView,
   useBottomSheetDynamicSnapPoints,
+  BottomSheetBackdrop,
+  BottomSheetBackdropProps,
 } from "@gorhom/bottom-sheet";
 import { createYearMonthKey } from "@/utils";
 
@@ -70,12 +71,6 @@ export default function Main() {
     animatedContentHeight,
     handleContentLayout,
   } = useBottomSheetDynamicSnapPoints(initialSnapPoints);
-
-  const [sheetIndex, setSheetIndex] = useState(-1);
-
-  const handleSheetChanges = useCallback((index: number) => {
-    setSheetIndex(index);
-  }, []);
 
   const handleSheetOpen = useCallback(() => {
     bottomSheetRef.current?.present();
@@ -156,6 +151,23 @@ export default function Main() {
     return { maxWidth };
   }, [width, height]);
 
+  /**
+   * bottom sheet의 dimmed
+   *
+   * ※ Web 환경에서는 뒷 배경 클릭시 바텀시트 모달이 닫히지 않음.
+   * ※ v5 버전에서 업데이트를 기다려야 할 것 같음.
+   */
+  const renderBackdrop = useCallback(
+    (props: BottomSheetBackdropProps) => (
+      <BottomSheetBackdrop
+        {...props}
+        appearsOnIndex={0}
+        disappearsOnIndex={-1}
+      />
+    ),
+    []
+  );
+
   return (
     <BottomSheetModalProvider>
       <View style={styles.container}>
@@ -204,7 +216,6 @@ export default function Main() {
          */}
         <BottomSheetModal
           ref={bottomSheetRef}
-          onChange={handleSheetChanges}
           snapPoints={animatedSnapPoints}
           contentHeight={animatedContentHeight}
           handleHeight={animatedHandleHeight}
@@ -217,6 +228,7 @@ export default function Main() {
             backgroundColor: "rgba(0, 0, 0, 0.3)",
             width: "10%",
           }}
+          backdropComponent={renderBackdrop}
         >
           <BottomSheetView
             style={styles.contentContainer}
@@ -230,30 +242,6 @@ export default function Main() {
             />
           </BottomSheetView>
         </BottomSheetModal>
-
-        {/**
-         * bottom sheet의 dimmed
-         */}
-        <AView
-          isMount={sheetIndex !== -1}
-          duration={300}
-          style={{
-            position: "absolute",
-            width: "100%",
-            height: "100%",
-          }}
-        >
-          <Pressable
-            onPress={() => {
-              bottomSheetRef.current?.dismiss();
-            }}
-            style={{
-              width: "100%",
-              height: "100%",
-              backgroundColor: "rgba(0, 0, 0, 0.5)",
-            }}
-          />
-        </AView>
       </View>
     </BottomSheetModalProvider>
   );
