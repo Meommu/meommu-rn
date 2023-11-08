@@ -8,6 +8,8 @@ import Swiper from "react-native-web-swiper";
 
 // components
 import { KebabMenuButton } from "./Button/KebabMenuButton";
+import { SView } from "./Layout/SView";
+import { SText } from "./Text/SText";
 
 // apis
 import { apiService } from "@/apis";
@@ -90,6 +92,20 @@ export function DiaryItem({ diary }: DiaryItemProps) {
   );
 }
 
+export function DiaryItemSkeleton() {
+  return (
+    <View style={styles.container}>
+      <SView style={styles.imageSwiperWrapper} />
+
+      <View style={styles.diaryBody}>
+        <SText style={styles.diaryTitle} textLength={10} />
+        <SText style={styles.diaryContent} textLength={50} />
+        <SText style={styles.diaryInfo} textLength={8} />
+      </View>
+    </View>
+  );
+}
+
 const styles = StyleSheet.create({
   container: {
     paddingTop: 20,
@@ -128,6 +144,7 @@ const styles = StyleSheet.create({
   },
 
   diaryBody: {
+    alignItems: "flex-start",
     gap: 6,
   },
 
