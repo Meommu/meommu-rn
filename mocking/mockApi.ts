@@ -42,6 +42,8 @@ export class MockApiService {
             );
           }
 
+          const user = schema.db.users.findBy({ id: 1 });
+
           return new Response(
             httpStatus.OK,
             {},
@@ -49,10 +51,10 @@ export class MockApiService {
               code: CODE.OK,
               message: "정상",
               data: {
-                id: 1,
-                name: "",
-                email: "",
-                createdAt: new Date().toString(),
+                id: user.id,
+                name: user.name,
+                email: user.email,
+                createdAt: user.createdAt,
               },
             })
           );
@@ -287,8 +289,11 @@ export class MockApiService {
     server.db.loadData({
       users: [
         {
+          id: 1,
+          name: "유치원이름",
           email: "meommu@exam.com",
           password: "Password1!",
+          createdAt: "2023-10-26T17:42:18.744742",
         },
       ],
       /**
