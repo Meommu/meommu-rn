@@ -1,7 +1,6 @@
 // react
 import { useMemo } from "react";
-import { View, Text, StyleSheet, Pressable, Image } from "react-native";
-import { useQuery } from "react-query";
+import { View, Text, StyleSheet, Pressable } from "react-native";
 
 // redux
 import { useSelector, useDispatch } from "react-redux";
@@ -9,8 +8,8 @@ import type { RootState } from "@/store";
 import type { DiaryDateState } from "@/store/modules/diaryDate";
 import { changeSelectedYearMonth } from "@/store/modules/diaryDate";
 
-// apis
-import { apiService } from "@/apis";
+// components
+import { LoadImage } from "./Image/LoadImage";
 
 interface MonthCalendarProps {
   year: number;
@@ -61,27 +60,7 @@ export function MonthCalendar({ year }: MonthCalendarProps) {
                   onPress={handleMonthSelect(month)}
                   disabled={isFuture}
                 >
-                  {diaryImageId &&
-                    (() => {
-                      /**
-                       * TODO: 이미지 캐싱할 것
-                       */
-                      const { data, isLoading } = useQuery(
-                        ["diaryImage", diaryImageId],
-                        async () => {
-                          return await apiService.getImageUrl(diaryImageId);
-                        }
-                      );
-
-                      if (isLoading) return null;
-
-                      return (
-                        <Image
-                          style={styles.monthElementCircleImage}
-                          source={{ uri: data?.url }}
-                        />
-                      );
-                    })()}
+                  {diaryImageId && <LoadImage imageId={diaryImageId} />}
 
                   <View
                     style={[

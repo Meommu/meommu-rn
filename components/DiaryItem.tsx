@@ -1,7 +1,6 @@
 // react
 import { useRef, useState } from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
-import { useQuery } from "react-query";
+import { View, Text, StyleSheet } from "react-native";
 
 // swiper
 import Swiper from "react-native-web-swiper";
@@ -10,31 +9,7 @@ import Swiper from "react-native-web-swiper";
 import { KebabMenuButton } from "./Button/KebabMenuButton";
 import { SView } from "./Layout/SView";
 import { SText } from "./Text/SText";
-
-// apis
-import { apiService } from "@/apis";
-
-interface LoadImageProps {
-  imageId: number;
-}
-
-function LoadImage({ imageId }: LoadImageProps) {
-  const { data, isLoading } = useQuery(["diaryImage", imageId], async () => {
-    return await apiService.getImageUrl(imageId);
-  });
-
-  if (isLoading) {
-    return null;
-  }
-
-  return (
-    <Image
-      resizeMode="cover"
-      style={{ width: "100%", height: "100%" }}
-      source={{ uri: data?.url }}
-    />
-  );
-}
+import { LoadImage } from "./Image/LoadImage";
 
 interface DiaryItemProps {
   diary: Diary;
