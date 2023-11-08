@@ -56,6 +56,7 @@ import {
 
 // utils
 import { createYearMonthKey } from "@/utils";
+import { Header } from "@/components/Layout/Header";
 
 export default function Main() {
   /**
@@ -181,13 +182,16 @@ export default function Main() {
         {/**
          * 헤더
          */}
-        <View style={styles.header}>
-          <Text style={styles.logoText}>meommu</Text>
-
-          <View style={styles.controllerBox}>
-            <SettingButton onPress={handleSettingButtonClick} />
-            <PlusButton />
-          </View>
+        <View style={styles.headerWrapper}>
+          <Header
+            left={<Text style={styles.logoText}>meommu</Text>}
+            right={
+              <View style={styles.controllerBox}>
+                <SettingButton onPress={handleSettingButtonClick} />
+                <PlusButton />
+              </View>
+            }
+          />
         </View>
 
         {/**
@@ -225,7 +229,7 @@ export default function Main() {
           backdropComponent={renderBackdrop}
         >
           <BottomSheetView
-            style={styles.contentContainer}
+            style={styles.bottomSheetContent}
             onLayout={handleContentLayout}
           >
             <MonthPicker />
@@ -244,20 +248,14 @@ export default function Main() {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "white",
-    flex: 1,
-  },
-
-  contentContainer: {
-    flex: 1,
+    width: "100%",
+    height: "100%",
   },
 
   /**
    * header
    */
-  header: {
-    justifyContent: "space-between",
-    flexDirection: "row",
-    alignItems: "center",
+  headerWrapper: {
     padding: 20,
   },
 
@@ -295,6 +293,11 @@ const styles = StyleSheet.create({
    */
   bottomSheetContainer: {
     marginHorizontal: "auto",
+  },
+
+  bottomSheetContent: {
+    width: "100%",
+    height: "100%",
   },
 
   handleIndicator: {
