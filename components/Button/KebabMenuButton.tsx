@@ -1,5 +1,5 @@
 // react
-import { Pressable } from "react-native";
+import { View, Pressable } from "react-native";
 import type { PressableProps } from "react-native";
 
 // svgs
@@ -9,8 +9,17 @@ interface KebabMenuButtonProps extends PressableProps {}
 
 export function KebabMenuButton({ ...props }: KebabMenuButtonProps) {
   return (
-    <Pressable style={{ width: 20, height: 20 }} {...props}>
-      <ThreeDotsVertical />
+    <Pressable {...props}>
+      <View
+        style={{
+          width: 20,
+          height: 20,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <ThreeDotsVertical />
+      </View>
     </Pressable>
   );
 }
