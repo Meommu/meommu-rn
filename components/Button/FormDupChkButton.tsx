@@ -1,13 +1,9 @@
 // react
 import React from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  TouchableOpacityProps,
-} from "react-native";
+import { View, Text, Pressable } from "react-native";
+import type { PressableProps } from "react-native";
 
-interface FormDupChkButtonProps extends TouchableOpacityProps {
+interface FormDupChkButtonProps extends PressableProps {
   isDupChk: boolean | null;
 }
 
@@ -42,7 +38,7 @@ export function FormDupChkButton({
   const BORDER_WIDTH = 2;
 
   return (
-    <TouchableOpacity {...props}>
+    <Pressable {...props}>
       <View
         style={{
           /**
@@ -67,6 +63,6 @@ export function FormDupChkButton({
           중복확인
         </Text>
       </View>
-    </TouchableOpacity>
+    </Pressable>
   );
 }

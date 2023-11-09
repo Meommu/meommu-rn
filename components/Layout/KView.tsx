@@ -2,9 +2,10 @@
 import {
   KeyboardAvoidingView,
   Keyboard,
-  TouchableWithoutFeedback,
+  Pressable,
   Platform,
   View,
+  StyleSheet,
 } from "react-native";
 import type { KeyboardAvoidingViewProps } from "react-native";
 
@@ -16,20 +17,27 @@ interface KViewProps extends KeyboardAvoidingViewProps {}
 export function KView({ children, ...props }: KViewProps) {
   if (Platform.OS === "ios") {
     return (
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <Pressable style={styles.container} onPress={Keyboard.dismiss}>
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "position"}
           {...props}
         >
           {children}
         </KeyboardAvoidingView>
-      </TouchableWithoutFeedback>
+      </Pressable>
     );
   }
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    <Pressable style={styles.container} onPress={Keyboard.dismiss}>
       <View {...props}>{children}</View>
-    </TouchableWithoutFeedback>
+    </Pressable>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    width: "100%",
+    height: "100%",
+  },
+});

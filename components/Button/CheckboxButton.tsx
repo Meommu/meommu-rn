@@ -1,11 +1,12 @@
 // react
-import { View, TouchableOpacity, TouchableOpacityProps } from "react-native";
+import { View, Pressable } from "react-native";
+import type { PressableProps } from "react-native";
 import { Svg, Circle } from "react-native-svg";
 
 // svgs
 import Check from "@/assets/svgs/check.svg";
 
-interface CheckBoxButtonProps extends TouchableOpacityProps {
+interface CheckBoxButtonProps extends PressableProps {
   isCheck: boolean;
 }
 
@@ -13,7 +14,7 @@ export function CheckBoxButton({ isCheck, ...props }: CheckBoxButtonProps) {
   const circleFill = isCheck ? "#1C1D22" : "#EBEBF0";
 
   return (
-    <TouchableOpacity {...props}>
+    <Pressable {...props}>
       <View
         style={{
           position: "relative",
@@ -34,6 +35,6 @@ export function CheckBoxButton({ isCheck, ...props }: CheckBoxButtonProps) {
         </View>
         <Check style={{ position: "absolute", zIndex: 1 }} />
       </View>
-    </TouchableOpacity>
+    </Pressable>
   );
 }

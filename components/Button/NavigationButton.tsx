@@ -1,16 +1,11 @@
 // react
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  TouchableOpacityProps,
-} from "react-native";
+import { View, Text, StyleSheet, Pressable } from "react-native";
+import type { PressableProps } from "react-native";
 
 // constants
 import { size } from "@/constants";
 
-interface NavigationButtonProps extends TouchableOpacityProps {
+interface NavigationButtonProps extends PressableProps {
   fontColor?: string;
   backgroundColor?: string;
   content?: string;
@@ -23,11 +18,11 @@ export function NavigationButton({
   ...props
 }: NavigationButtonProps) {
   return (
-    <TouchableOpacity {...props}>
+    <Pressable {...props}>
       <View style={[styles.container, { backgroundColor }]}>
         <Text style={[styles.buttonText, { color: fontColor }]}>{content}</Text>
       </View>
-    </TouchableOpacity>
+    </Pressable>
   );
 }
 
