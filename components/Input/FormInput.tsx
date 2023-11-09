@@ -11,7 +11,6 @@ export function FormInput({ ...props }: FormInputProps) {
   return (
     <View style={styles.container}>
       <Pressable
-        focusable={false}
         onFocus={() => {
           textInputRef.current?.focus();
         }}
