@@ -33,7 +33,7 @@ import { useDyanmicStyle } from "@/hooks";
 import ArrowDropDown from "@/assets/svgs/arrow-drop-down.svg";
 
 // constants
-import { size } from "@/constants";
+import { size, zIndex } from "@/constants";
 
 // apis
 import { apiService } from "@/apis";
@@ -219,12 +219,12 @@ const styles = StyleSheet.create({
    * bottom sheet
    */
   bottomSheetBackdrop: {
-    zIndex: 999,
+    zIndex: zIndex.bottomSheetBackdrop,
   },
 
   bottomSheetContainer: {
     marginHorizontal: "auto",
-    zIndex: 1000,
+    zIndex: zIndex.bottomSheetContainer,
   },
 
   handleIndicator: {
