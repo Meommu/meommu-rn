@@ -44,6 +44,7 @@ const CORRECT_PHONE_NUMBER = "010-1234-5678";
 describe("회원가입 페이지", () => {
   before(() => {
     cy.visit("http://localhost:8081/sign-up");
+    cy.clearLocalStorage("accessToken");
   });
 
   it(
@@ -263,6 +264,7 @@ describe("로그인 페이지", () => {
   describe("홈 페이지 프로세스", () => {
     before(() => {
       cy.visit("http://localhost:8081/home");
+      cy.clearLocalStorage("accessToken");
     });
 
     it('로그인이 실패하였을 경우, "로그인이 실패하였습니다." Toast 형태의 오버레이가 등장 ', () => {
