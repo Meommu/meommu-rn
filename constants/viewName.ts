@@ -1,4 +1,5 @@
 export const enum VIEW_NAME {
+  ROOT = "",
   ON_BOARDING = "on-boarding",
   HOME = "home",
   MAIN = "main",
