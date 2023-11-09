@@ -15,6 +15,7 @@ import { Header } from "@/components/Layout/Header";
 
 // apis
 import { apiService } from "@/apis";
+import axios from "axios";
 
 export default function Setting() {
   const { data, isLoading } = useQuery(
@@ -25,8 +26,10 @@ export default function Setting() {
     { retry: 0 }
   );
 
-  const handleLogoutButtonClick = () => {
-    AsyncStorage.removeItem("accessToken");
+  const handleLogoutButtonClick = async () => {
+    delete axios.defaults.headers.common.Authorization;
+
+    await AsyncStorage.removeItem("accessToken");
 
     router.replace(VIEW_NAME.HOME);
   };
