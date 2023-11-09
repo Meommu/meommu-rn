@@ -70,15 +70,12 @@ describe("회원가입 페이지", () => {
 
       cy.contains("이메일 형식이 올바르지 않습니다.");
     });
-
-    after(() => {
-      utils.clearAndWriteInputText("input-email", email);
-      utils.clickEmailDupChkButton();
-    });
   });
 
   describe("비밀번호 Validation", () => {
     before(() => {
+      utils.clearAndWriteInputText("input-email", email);
+      utils.clickEmailDupChkButton();
       utils.clickAgreementButton();
     });
 
