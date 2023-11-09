@@ -13,10 +13,14 @@ import { LoadImage } from "./Image/LoadImage";
 
 interface DiaryItemProps {
   diary: Diary;
+  handleKebabMenuButtonClick: (diaryId: number) => () => void;
 }
 
-export function DiaryItem({ diary }: DiaryItemProps) {
-  const { date, dogName, title, content, imageIds } = diary;
+export function DiaryItem({
+  diary,
+  handleKebabMenuButtonClick,
+}: DiaryItemProps) {
+  const { id, date, dogName, title, content, imageIds } = diary;
 
   const swiperRef = useRef<Swiper | null>(null);
 
@@ -39,7 +43,10 @@ export function DiaryItem({ diary }: DiaryItemProps) {
           ))}
         </Swiper>
 
-        <KebabMenuButton style={styles.menu} />
+        <KebabMenuButton
+          style={styles.menu}
+          onPress={handleKebabMenuButtonClick(id)}
+        />
 
         <View style={styles.order}>
           <Text style={styles.orderText}>
