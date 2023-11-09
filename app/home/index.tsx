@@ -11,6 +11,7 @@ import { router } from "expo-router";
 import { NavigationButton } from "@/components/Button/NavigationButton";
 import { BannerImage } from "@/components/Image/BannerImage";
 import { FormInput } from "@/components/Input/FormInput";
+import { KView } from "@/components/Layout/KView";
 
 // constants
 import { VIEW_NAME } from "@/constants";
@@ -21,12 +22,14 @@ import axios from "axios";
 
 // hooks
 import { useToast } from "@/hooks";
-import { KView } from "@/components/Layout/KView";
+import { useThrowRootIfLogin } from "@/hooks/useAccessControl";
 
 // utils
 import { regExp } from "@/utils";
 
 export default function Home() {
+  useThrowRootIfLogin();
+
   const {
     control,
     handleSubmit,

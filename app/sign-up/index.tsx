@@ -24,9 +24,14 @@ import { VIEW_NAME } from "@/constants";
 // apis
 import { apiService } from "@/apis";
 
+// hooks
+import { useThrowRootIfLogin } from "@/hooks/useAccessControl";
+
 const SLIDE_MAX_COUNT = 3;
 
 export default function SignUp() {
+  useThrowRootIfLogin();
+
   const methods = useForm<SignUpFormFieldValues>({
     defaultValues: {
       email: "",
