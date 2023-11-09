@@ -76,6 +76,9 @@ describe("회원가입 페이지", () => {
     before(() => {
       utils.clearAndWriteInputText("input-email", email);
       utils.clickEmailDupChkButton();
+
+      cy.contains("사용 가능한 이메일 입니다.");
+
       utils.clickAgreementButton();
     });
 
