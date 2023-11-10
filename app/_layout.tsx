@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import type { StyleProp, ViewStyle } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { ReactQueryDevtools } from "react-query/devtools";
 
 // redux
 import { legacy_createStore as createStore } from "redux";
@@ -164,6 +165,11 @@ export default function AppLayout() {
           >
             <Stack screenOptions={{ headerShown: false }} />
             <Toast />
+          </View>
+        )}
+        {Platform.OS === "web" && process.env.EXPO_PUBLIC_MODE === "dev" && (
+          <View style={{ position: "absolute" }}>
+            <ReactQueryDevtools />
           </View>
         )}
       </QueryClientProvider>
