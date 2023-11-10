@@ -18,13 +18,9 @@ import { apiService } from "@/apis";
 import axios from "axios";
 
 export default function Setting() {
-  const { data, isLoading } = useQuery(
-    [],
-    async () => {
-      return await apiService.getLoginInfo();
-    },
-    { retry: 0 }
-  );
+  const { data, isLoading } = useQuery(["userInfo"], async () => {
+    return await apiService.getLoginInfo();
+  });
 
   const handleLogoutButtonClick = async () => {
     delete axios.defaults.headers.common.Authorization;

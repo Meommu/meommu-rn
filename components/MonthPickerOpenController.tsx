@@ -62,12 +62,11 @@ export function MonthPickerOpenController() {
    * diary date
    */
   const { data } = useQuery(
-    [],
+    ["diariesSummary"],
     async () => {
       return await apiService.getDiariesSummary();
     },
     {
-      retry: 0,
       suspense: true,
     }
   );
