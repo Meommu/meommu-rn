@@ -66,7 +66,7 @@ export function DiaryList() {
 
   const handleKebabMenuButtonClick = (diaryId: number) => () => {
     /**
-     * TODO: 현재 선택된 다이어리 아이디 변경
+     * TODO: 현재 선택된 다이어리 아이디로 라우팅
      */
 
     console.log("[diary id]", diaryId);
