@@ -25,12 +25,12 @@ import { VIEW_NAME } from "@/constants";
 import { apiService } from "@/apis";
 
 // hooks
-import { useThrowRootIfLogin } from "@/hooks/useAccessControl";
+import { useThrowMainIfLogin } from "@/hooks/useAccessControl";
 
 const SLIDE_MAX_COUNT = 3;
 
 export default function SignUp() {
-  useThrowRootIfLogin();
+  useThrowMainIfLogin();
 
   const methods = useForm<SignUpFormFieldValues>({
     defaultValues: {
