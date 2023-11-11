@@ -22,13 +22,13 @@ import axios from "axios";
 
 // hooks
 import { useToast } from "@/hooks";
-import { useThrowRootIfLogin } from "@/hooks/useAccessControl";
+import { useThrowMainIfLogin } from "@/hooks/useAccessControl";
 
 // utils
 import { regExp } from "@/utils";
 
 export default function Home() {
-  useThrowRootIfLogin();
+  useThrowMainIfLogin();
 
   const {
     control,

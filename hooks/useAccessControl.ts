@@ -1,46 +1,46 @@
 // react
 import { useEffect } from "react";
 
+// expo
+import { router } from "expo-router";
+
 // apis
 import { apiService } from "@/apis";
 
-// expo
-import { router } from "expo-router";
+// constants
+import { CODE, VIEW_NAME } from "@/constants";
 
 // hooks
 import { useToast } from "./useToast";
 
-// constants
-import { VIEW_NAME } from "@/constants";
+// others
+import { globalErrorHandler } from "@/app/_layout";
 
-export function useThrowRootIfLogout() {
-  const { fireToast } = useToast();
+const UNAUTHORIZED_ERROR = Object.freeze({
+  response: { data: { code: CODE.INVALID_HEADER_FORMAT } },
+});
 
+export function useThrowHomeIfLogout() {
   useEffect(() => {
-    (async () => {
-      try {
-        await apiService.getLoginInfo();
-      } catch (e) {
-        fireToast("잘못된 접근입니다.", 2000);
-
-        router.replace(VIEW_NAME.ROOT);
-      }
-    })();
+    apiService.getLoginInfo().catch(() => {
+      globalErrorHandler(UNAUTHORIZED_ERROR);
+    });
   }, []);
 }
 
-export function useThrowRootIfLogin() {
+export function useThrowMainIfLogin() {
   const { fireToast } = useToast();
 
   useEffect(() => {
-    (async () => {
-      try {
-        await apiService.getLoginInfo();
-
+    apiService
+      .getLoginInfo()
+      .then(() => {
         fireToast("잘못된 접근입니다.", 2000);
 
-        router.replace(VIEW_NAME.ROOT);
-      } catch (e) {}
-    })();
+        router.replace(VIEW_NAME.MAIN);
+      })
+      .catch(() => {
+        // do nothing
+      });
   }, []);
 }

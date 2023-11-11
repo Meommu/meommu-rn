@@ -54,6 +54,7 @@ export default function Setting() {
           <Pressable
             style={styles.signButton}
             onPress={handleLogoutButtonClick}
+            testID="button-logout"
           >
             <Text style={styles.signButtonText}>로그아웃</Text>
           </Pressable>

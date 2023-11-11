@@ -18,7 +18,12 @@ import {
   MonthPickerOpenControllerSkeleton,
 } from "@/components/MonthPickerOpenController";
 
+// hooks
+import { useThrowHomeIfLogout } from "@/hooks/useAccessControl";
+
 export default function Main() {
+  useThrowHomeIfLogout();
+
   /**
    * 컨트롤러(세팅, 글쓰기) 버튼 핸들러
    */
@@ -33,7 +38,10 @@ export default function Main() {
           left={<Text style={styles.logoText}>meommu</Text>}
           right={
             <View style={styles.controllerBox}>
-              <SettingButton onPress={handleSettingButtonClick} />
+              <SettingButton
+                onPress={handleSettingButtonClick}
+                testID="button-setting"
+              />
               <PlusButton />
             </View>
           }
