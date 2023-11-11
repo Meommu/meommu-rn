@@ -1,10 +1,17 @@
 // react
-import { View, StyleSheet, Platform, useWindowDimensions } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Platform,
+  useWindowDimensions,
+  Text,
+} from "react-native";
 import { useEffect, useState } from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import type { StyleProp, ViewStyle } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ReactQueryDevtools } from "react-query/devtools";
+import { ErrorBoundary } from "react-error-boundary";
 
 // redux
 import { legacy_createStore as createStore } from "redux";
@@ -40,19 +47,14 @@ const store = createStore(rootReducer);
 /**
  * 중앙 집중식 에러 처리
  */
-const errorHandler = (error: unknown) => {
-  if (!(error instanceof AxiosError)) {
-    /**
-     * TODO: api 이외의 에러에 대한 처리
-     */
+export const globalErrorHandler = async (error: unknown) => {
+  const axiosError = error as AxiosError;
+
+  if (!axiosError.response) {
     return;
   }
 
-  if (!error.response) {
-    return;
-  }
-
-  const { code, message } = error.response
+  const { code, message } = axiosError.response
     .data as unknown as ResponseTemplate<unknown>;
 
   switch (code) {
@@ -63,6 +65,7 @@ const errorHandler = (error: unknown) => {
       fireToast(store.dispatch, message, 3000);
 
       break;
+
     case CODE.EMAIL_DUP:
       fireToast(store.dispatch, "이메일을 다시 확인하세요.", 3000);
 
@@ -72,21 +75,20 @@ const errorHandler = (error: unknown) => {
       fireToast(store.dispatch, "로그인이 실패하였습니다.", 3000);
 
       break;
+
     case CODE.UNSUPPORTED_JWT:
     case CODE.EXPIRED_JWT:
     case CODE.MALFORMED_JWT:
     case CODE.INVALID_SIGNATURE:
-    case CODE.NO_AUTHORIZATION_HEADER:
     case CODE.INVALID_HEADER_FORMAT:
-      (async () => {
-        delete axios.defaults.headers.common.Authorization;
+      delete axios.defaults.headers.common.Authorization;
 
-        await AsyncStorage.removeItem("accessToken");
+      await AsyncStorage.removeItem("accessToken");
 
-        fireToast(store.dispatch, "잘못된 접근입니다.", 3000);
+    case CODE.NO_AUTHORIZATION_HEADER:
+      fireToast(store.dispatch, "잘못된 접근입니다.", 3000);
 
-        router.replace(VIEW_NAME.HOME);
-      })();
+      router.replace(VIEW_NAME.HOME);
 
       break;
   }
@@ -95,11 +97,11 @@ const errorHandler = (error: unknown) => {
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      onError: errorHandler,
+      onError: globalErrorHandler,
       refetchOnWindowFocus: false,
     },
     mutations: {
-      onError: errorHandler,
+      onError: globalErrorHandler,
     },
   },
 });
@@ -163,7 +165,15 @@ export default function AppLayout() {
                 : dummyStyle,
             ]}
           >
-            <Stack screenOptions={{ headerShown: false }} />
+            <ErrorBoundary
+              fallback={
+                <View>
+                  <Text>오류 발생</Text>
+                </View>
+              }
+            >
+              <Stack screenOptions={{ headerShown: false }} />
+            </ErrorBoundary>
             <Toast />
           </View>
         )}
