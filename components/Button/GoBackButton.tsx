@@ -1,37 +1,26 @@
 // react
-import {
-  View,
-  StyleSheet,
-  GestureResponderEvent,
-  Pressable,
-} from "react-native";
+import { View, StyleSheet, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import type { PressableProps } from "react-native";
 
 // svgs
 import CaretLeft from "@/assets/svgs/caret-left.svg";
 
-interface GoBackButtonProps {
-  onPress?: (event: GestureResponderEvent) => void;
-  disable?: boolean;
-}
-
-export function GoBackButton({ onPress, disable = false }: GoBackButtonProps) {
+export function GoBackButton({ style, onPress, ...props }: PressableProps) {
   const navigation = useNavigation();
 
-  const goBackButtonClickHandler = () => {
+  const handleGoBackButtonClick = () => {
     if (navigation.canGoBack()) {
       navigation.goBack();
     }
   };
 
   return (
-    <Pressable
-      style={[styles.container, { opacity: disable ? 0 : 1 }]}
-      onPress={onPress || goBackButtonClickHandler}
-      disabled={disable}
-    >
-      <CaretLeft />
-    </Pressable>
+    <View style={styles.container}>
+      <Pressable onPress={onPress || handleGoBackButtonClick} {...props}>
+        <CaretLeft />
+      </Pressable>
+    </View>
   );
 }
 
@@ -42,6 +31,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+
   caretImage: {
     width: 7,
     height: 14,
