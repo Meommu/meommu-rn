@@ -1,25 +1,12 @@
 import { faker } from "@faker-js/faker";
+import {
+  clearAndWriteInputText,
+  clickAgreementButton,
+  clickEmailDupChkButton,
+  clickNextStepButton,
+} from "./utils";
 
 const utils = {
-  clickAgreementButton: () => {
-    cy.get('[data-testid="button-agreement"]').click();
-  },
-
-  clickEmailDupChkButton: () => {
-    cy.get('[data-testid="email-button-dup-chk"]').click();
-  },
-
-  clickNextStepButton: () => {
-    cy.get('[data-testid="button-next-step-of-signup"]').click();
-  },
-
-  clearAndWriteInputText: (testId: string, text: string) => {
-    const $inputElement = cy.get(`[data-testid="${testId}"]`);
-
-    $inputElement.clear();
-    $inputElement.type(text);
-  },
-
   chkElementInTheScreen: (testId: string) => {
     cy.get("body").then(($el) => {
       const boundaryX = $el[0].getBoundingClientRect().right;
@@ -56,8 +43,8 @@ describe("회원가입 페이지", () => {
 
       email = faker.internet.exampleEmail().toLowerCase();
 
-      utils.clearAndWriteInputText("input-email", email);
-      utils.clickEmailDupChkButton();
+      clearAndWriteInputText("input-email", email);
+      clickEmailDupChkButton();
 
       cy.contains("사용 가능한 이메일 입니다.");
     }
@@ -65,8 +52,8 @@ describe("회원가입 페이지", () => {
 
   describe("이메일 Validation", () => {
     it('이메일 형식이 올바르지 않은 경우, "이메일 형식이 올바르지 않습니다." 메세지 출력', () => {
-      utils.clearAndWriteInputText("input-email", "wrong@email@form");
-      utils.clickEmailDupChkButton();
+      clearAndWriteInputText("input-email", "wrong@email@form");
+      clickEmailDupChkButton();
 
       cy.contains("이메일 형식이 올바르지 않습니다.");
     });
@@ -74,58 +61,58 @@ describe("회원가입 페이지", () => {
 
   describe("비밀번호 Validation", () => {
     before(() => {
-      utils.clearAndWriteInputText("input-email", email);
-      utils.clickEmailDupChkButton();
+      clearAndWriteInputText("input-email", email);
+      clickEmailDupChkButton();
 
       cy.contains("사용 가능한 이메일 입니다.");
 
-      utils.clickAgreementButton();
+      clickAgreementButton();
     });
 
     it('8글자 미만의 올바른 형태의 비밀번호가 입력되었을 경우 "비밀번호 형식이 올바르지 않습니다." 메세지 출력', () => {
-      utils.clearAndWriteInputText("input-password", "12345a!");
-      utils.clearAndWriteInputText("input-password-confirm", "12345a!");
+      clearAndWriteInputText("input-password", "12345a!");
+      clearAndWriteInputText("input-password-confirm", "12345a!");
 
-      utils.clickNextStepButton();
+      clickNextStepButton();
 
       cy.contains("비밀번호 형식이 올바르지 않습니다.");
     });
 
     it('20글자를 초과하는 올바른 형태의 비밀번호가 입력되었을 경우 "비밀번호 형식이 올바르지 않습니다." 메세지 출력', () => {
-      utils.clearAndWriteInputText("input-password", "12345678901234567890a!");
-      utils.clearAndWriteInputText(
+      clearAndWriteInputText("input-password", "12345678901234567890a!");
+      clearAndWriteInputText(
         "input-password-confirm",
         "12345678901234567890a!"
       );
 
-      utils.clickNextStepButton();
+      clickNextStepButton();
 
       cy.contains("비밀번호 형식이 올바르지 않습니다.");
     });
 
     it('특수기호가 포함되지 않은 비밀번호가 입력되었을 경우 "비밀번호 형식이 올바르지 않습니다." 메세지 출력', () => {
-      utils.clearAndWriteInputText("input-password", "12345678a");
-      utils.clearAndWriteInputText("input-password-confirm", "12345678a");
+      clearAndWriteInputText("input-password", "12345678a");
+      clearAndWriteInputText("input-password-confirm", "12345678a");
 
-      utils.clickNextStepButton();
+      clickNextStepButton();
 
       cy.contains("비밀번호 형식이 올바르지 않습니다.");
     });
 
     it("비밀번호가 일치하지 않을 경우 입력되었을 경우 `패스워드가 일치하지 않습니다.` 메세지 출력", () => {
-      utils.clearAndWriteInputText("input-password", "12345678a!");
-      utils.clearAndWriteInputText("input-password-confirm", "1234!");
+      clearAndWriteInputText("input-password", "12345678a!");
+      clearAndWriteInputText("input-password-confirm", "1234!");
 
-      utils.clickNextStepButton();
+      clickNextStepButton();
 
       cy.contains("패스워드가 일치하지 않습니다.");
     });
 
     after(() => {
-      utils.clearAndWriteInputText("input-password", CORRECT_PASSWORD);
-      utils.clearAndWriteInputText("input-password-confirm", CORRECT_PASSWORD);
+      clearAndWriteInputText("input-password", CORRECT_PASSWORD);
+      clearAndWriteInputText("input-password-confirm", CORRECT_PASSWORD);
 
-      utils.clickNextStepButton();
+      clickNextStepButton();
       cy.wait(1000);
       utils.chkElementInTheScreen("text-guide-of-step-two");
     });
@@ -133,61 +120,58 @@ describe("회원가입 페이지", () => {
 
   describe("이름 Validation", () => {
     before(() => {
-      utils.clearAndWriteInputText(
+      clearAndWriteInputText(
         "input-kindergarten-name",
         CORRECT_KINDERGARTEN_NAME
       );
-      utils.clearAndWriteInputText(
+      clearAndWriteInputText(
         "input-kindergarten-director-name",
         CORRECT_KINDERGARTEN_DIRECTOR_NAME
       );
-      utils.clearAndWriteInputText("input-phone-number", CORRECT_PHONE_NUMBER);
+      clearAndWriteInputText("input-phone-number", CORRECT_PHONE_NUMBER);
     });
 
     it('2글자 미만의 유치원 이름이 입력되었을 경우 "2에서 8글자 사이의 이름을 입력해주세요." 메세지 출력', () => {
-      utils.clearAndWriteInputText("input-kindergarten-name", "유");
+      clearAndWriteInputText("input-kindergarten-name", "유");
 
-      utils.clickNextStepButton();
+      clickNextStepButton();
 
       cy.contains("2에서 8글자 사이의 이름을 입력해주세요.");
     });
 
     it('8글자를 초과하는 유치원 이름이 입력되었을 경우 "2에서 8글자 사이의 이름을 입력해주세요." 메세지 출력', () => {
-      utils.clearAndWriteInputText(
-        "input-kindergarten-name",
-        "유치원이름유치원이름"
-      );
+      clearAndWriteInputText("input-kindergarten-name", "유치원이름유치원이름");
 
-      utils.clickNextStepButton();
+      clickNextStepButton();
 
       cy.contains("2에서 8글자 사이의 이름을 입력해주세요.");
     });
 
     it('3글자 미만의 유치원 이름이 입력되었을 경우 "3에서 4글자 사이의 한글 이름을 입력해주세요." 메세지 출력', () => {
-      utils.clearAndWriteInputText("input-kindergarten-director-name", "김숙");
+      clearAndWriteInputText("input-kindergarten-director-name", "김숙");
 
-      utils.clickNextStepButton();
+      clickNextStepButton();
 
       cy.contains("3에서 4글자 사이의 한글 이름을 입력해주세요.");
     });
 
     it('4글자를 초과하는 유치원 이름이 입력되었을 경우 "2에서 8글자 사이의 이름을 입력해주세요." 메세지 출력', () => {
-      utils.clearAndWriteInputText(
+      clearAndWriteInputText(
         "input-kindergarten-director-name",
         "김숙자김숙자"
       );
 
-      utils.clickNextStepButton();
+      clickNextStepButton();
 
       cy.contains("3에서 4글자 사이의 한글 이름을 입력해주세요.");
     });
 
     after(() => {
-      utils.clearAndWriteInputText(
+      clearAndWriteInputText(
         "input-kindergarten-name",
         CORRECT_KINDERGARTEN_NAME
       );
-      utils.clearAndWriteInputText(
+      clearAndWriteInputText(
         "input-kindergarten-director-name",
         CORRECT_KINDERGARTEN_DIRECTOR_NAME
       );
@@ -196,23 +180,23 @@ describe("회원가입 페이지", () => {
 
   describe("전화번호 Validation", () => {
     it('xxx-xxxx-xxxx 형태의 전화번호가 입력되지 않았을 경우 "올바른 형식의 전화번호를 입력하세요" 메세지 출력', () => {
-      utils.clearAndWriteInputText("input-phone-number", "010-12345678");
+      clearAndWriteInputText("input-phone-number", "010-12345678");
 
-      utils.clickNextStepButton();
+      clickNextStepButton();
 
       cy.contains("올바른 형식의 전화번호를 입력하세요");
     });
 
     after(() => {
-      utils.clearAndWriteInputText("input-phone-number", CORRECT_PHONE_NUMBER);
+      clearAndWriteInputText("input-phone-number", CORRECT_PHONE_NUMBER);
 
-      utils.clickNextStepButton();
+      clickNextStepButton();
 
       cy.wait(2000);
 
       utils.chkElementInTheScreen("text-guide-of-complete");
 
-      utils.clickNextStepButton();
+      clickNextStepButton();
     });
   });
 });
@@ -226,7 +210,7 @@ describe("로그인 페이지", () => {
     });
 
     it('올바르지 않은 형태의 이메일을 입력할 경우, "이메일 형식이 올바르지 않습니다." Toast 형태의 오버레이가 등장', () => {
-      utils.clearAndWriteInputText("input-signin-email", "wrong@email@form");
+      clearAndWriteInputText("input-signin-email", "wrong@email@form");
 
       cy.get('[data-testid="button-signin"]').click();
 
@@ -234,7 +218,7 @@ describe("로그인 페이지", () => {
     });
 
     after(() => {
-      utils.clearAndWriteInputText("input-signin-email", email);
+      clearAndWriteInputText("input-signin-email", email);
     });
   });
 
@@ -251,7 +235,7 @@ describe("로그인 페이지", () => {
      * 별도의 테스트케이스로 분리할 필요가 있음
      */
     after(() => {
-      utils.clearAndWriteInputText("input-signin-password", CORRECT_PASSWORD);
+      clearAndWriteInputText("input-signin-password", CORRECT_PASSWORD);
 
       cy.get('[data-testid="button-signin"]').click();
 
@@ -268,8 +252,8 @@ describe("로그인 페이지", () => {
     });
 
     it('로그인이 실패하였을 경우, "로그인이 실패하였습니다." Toast 형태의 오버레이가 등장 ', () => {
-      utils.clearAndWriteInputText("input-signin-email", "wrong@email.com");
-      utils.clearAndWriteInputText("input-signin-password", "wrongPassword");
+      clearAndWriteInputText("input-signin-email", "wrong@email.com");
+      clearAndWriteInputText("input-signin-password", "wrongPassword");
 
       cy.get('[data-testid="button-signin"]').click();
 

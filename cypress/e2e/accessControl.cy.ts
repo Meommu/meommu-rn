@@ -1,9 +1,4 @@
-const clearAndWriteInputText = (testId: string, text: string) => {
-  const $inputElement = cy.get(`[data-testid="${testId}"]`);
-
-  $inputElement.clear();
-  $inputElement.type(text);
-};
+import { clearAndWriteInputText } from "./utils";
 
 describe("로그인/비로그인 상태에서의 페이지 접근제어", () => {
   before(() => {
