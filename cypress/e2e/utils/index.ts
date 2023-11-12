@@ -35,6 +35,13 @@ export const clickSignInButton = () => {
 };
 
 /**
+ * text (button)
+ */
+export const clickSignUpText = () => {
+  getTestElement("text-goto-signup").click();
+};
+
+/**
  * contains
  */
 export const chkSwiperIndex = (swiperIndex: number) => {
