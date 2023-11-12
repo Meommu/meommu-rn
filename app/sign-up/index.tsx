@@ -16,6 +16,7 @@ import { StepTwo } from "@/components/signUpForm/stepTwo";
 import { Complete } from "@/components/signUpForm/complete";
 import { KView } from "@/components/Layout/KView";
 import { Header } from "@/components/Layout/Header";
+import { SwiperIndexForTest } from "@/components/SwiperIndexForTest";
 
 // constants
 import { VIEW_NAME, color } from "@/constants";
@@ -245,6 +246,8 @@ export default function SignUp() {
             testID="button-next-step-of-signup"
           />
         </View>
+
+        <SwiperIndexForTest swiperIndex={swiperIndex} />
       </KView>
     </FormProvider>
   );
