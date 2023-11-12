@@ -8,6 +8,7 @@ import { FormInput } from "@/components/Input/FormInput";
 import { FormDupChkButton } from "@/components/Button/FormDupChkButton";
 import { CheckBoxButton } from "@/components/Button/CheckboxButton";
 import { AlertText } from "@/components/Text/AlertText";
+import { NonIndicatorScrollView } from "@/components/ScrollView/NonIndicatorScrollView";
 
 // svgs
 import CaretRight from "@/assets/svgs/caret-right.svg";
@@ -18,9 +19,7 @@ import { apiService } from "@/apis";
 // utils
 import { regExp } from "@/utils";
 
-interface StepOneProps {}
-
-export function StepOne({}: StepOneProps) {
+export function StepOne() {
   const {
     control,
     setValue,
@@ -84,145 +83,150 @@ export function StepOne({}: StepOneProps) {
       : errors.email.message;
 
   return (
-    <View style={styles.container}>
-      {/**
-       * 이메일
-       */}
-      <View style={styles.fieldView}>
-        <View style={styles.fieldTextLayoutView}>
-          <Text style={styles.fieldGuideText}>이메일 주소를 입력해주세요</Text>
+    <NonIndicatorScrollView>
+      <View style={styles.container}>
+        {/**
+         * 이메일
+         */}
+        <View style={styles.fieldView}>
+          <View style={styles.fieldTextLayoutView}>
+            <Text style={styles.fieldGuideText}>
+              이메일 주소를 입력해주세요
+            </Text>
 
-          <AlertText condition={emailInputCondition}>
-            {emailInputAlertMessage}
-          </AlertText>
+            <AlertText condition={emailInputCondition}>
+              {emailInputAlertMessage}
+            </AlertText>
+          </View>
+
+          <View style={styles.emailFieldControllerLayoutView}>
+            <Controller
+              name="email"
+              control={control}
+              rules={{
+                required: {
+                  value: true,
+                  message: "이메일이 입력되지 않았습니다.",
+                },
+                pattern: {
+                  value: regExp.email,
+                  message: "이메일 형식이 올바르지 않습니다.",
+                },
+              }}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <FormInput
+                  placeholder="이메일"
+                  onBlur={onBlur}
+                  onChangeText={(text: string) => {
+                    resetEmailDupChk();
+                    onChange(text);
+                  }}
+                  value={value}
+                  testID="input-email"
+                />
+              )}
+            />
+            <FormDupChkButton
+              isDupChk={emailDupChk}
+              onPress={emailDupChkButtonClickHandler}
+              testID="email-button-dup-chk"
+            />
+          </View>
         </View>
 
-        <View style={styles.emailFieldControllerLayoutView}>
+        {/**
+         * 패스워드
+         */}
+        <View style={styles.fieldView}>
+          <View style={styles.fieldTextLayoutView}>
+            <Text style={styles.fieldGuideText}>비밀번호를 입력해주세요</Text>
+
+            <AlertText condition={!errors.password ? true : false}>
+              {(errors.password && errors.password.message) || ""}
+            </AlertText>
+          </View>
+
           <Controller
-            name="email"
+            name="password"
             control={control}
             rules={{
-              required: {
-                value: true,
-                message: "이메일이 입력되지 않았습니다.",
-              },
+              required: true,
               pattern: {
-                value: regExp.email,
-                message: "이메일 형식이 올바르지 않습니다.",
+                value: regExp.password,
+                message: "비밀번호 형식이 올바르지 않습니다.",
               },
             }}
             render={({ field: { onChange, onBlur, value } }) => (
               <FormInput
-                placeholder="이메일"
+                placeholder="비밀번호"
                 onBlur={onBlur}
-                onChangeText={(text: string) => {
-                  resetEmailDupChk();
-                  onChange(text);
-                }}
+                onChangeText={onChange}
                 value={value}
-                testID="input-email"
+                secureTextEntry={true}
+                testID="input-password"
               />
             )}
           />
-          <FormDupChkButton
-            isDupChk={emailDupChk}
-            onPress={emailDupChkButtonClickHandler}
-            testID="email-button-dup-chk"
+
+          <Text style={styles.fieldIntroText}>
+            *영문 대/소문자, 숫자, 기호(!@#$%^~*+=-) 사용하여 8~20 글자 사이의
+            비밀번호를 사용하세요. 숫자와 특수기호가 한 글자 이상
+            포함되어야합니다.
+          </Text>
+        </View>
+
+        <View style={styles.fieldView}>
+          <View style={styles.fieldTextLayoutView}>
+            <Text style={styles.fieldGuideText}>비밀번호를 확인해주세요</Text>
+
+            <AlertText condition={!errors.passwordConfirm ? true : false}>
+              {!errors.password
+                ? (errors.passwordConfirm && errors.passwordConfirm.message) ||
+                  ""
+                : ""}
+            </AlertText>
+          </View>
+
+          <Controller
+            name="passwordConfirm"
+            control={control}
+            rules={{
+              required: true,
+              validate: (value) =>
+                value === password ? true : "패스워드가 일치하지 않습니다.",
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <FormInput
+                placeholder="비밀번호"
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+                secureTextEntry={true}
+                testID="input-password-confirm"
+              />
+            )}
           />
         </View>
-      </View>
 
-      {/**
-       * 패스워드
-       */}
-      <View style={styles.fieldView}>
-        <View style={styles.fieldTextLayoutView}>
-          <Text style={styles.fieldGuideText}>비밀번호를 입력해주세요</Text>
+        {/**
+         * 약관동의
+         */}
+        <View style={styles.agreementFieldControllerLayoutView}>
+          <CheckBoxButton
+            isCheck={agreement}
+            onPress={agreementButtonClickHandler}
+            testID="button-agreement"
+          />
 
-          <AlertText condition={!errors.password ? true : false}>
-            {(errors.password && errors.password.message) || ""}
-          </AlertText>
-        </View>
-
-        <Controller
-          name="password"
-          control={control}
-          rules={{
-            required: true,
-            pattern: {
-              value: regExp.password,
-              message: "비밀번호 형식이 올바르지 않습니다.",
-            },
-          }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <FormInput
-              placeholder="비밀번호"
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-              secureTextEntry={true}
-              testID="input-password"
-            />
-          )}
-        />
-
-        <Text style={styles.fieldIntroText}>
-          *영문 대/소문자, 숫자, 기호(!@#$%^~*+=-) 사용하여 8~20 글자 사이의
-          비밀번호를 사용하세요. 숫자와 특수기호가 한 글자 이상
-          포함되어야합니다.
-        </Text>
-      </View>
-
-      <View style={styles.fieldView}>
-        <View style={styles.fieldTextLayoutView}>
-          <Text style={styles.fieldGuideText}>비밀번호를 확인해주세요</Text>
-
-          <AlertText condition={!errors.passwordConfirm ? true : false}>
-            {!errors.password
-              ? (errors.passwordConfirm && errors.passwordConfirm.message) || ""
-              : ""}
-          </AlertText>
-        </View>
-
-        <Controller
-          name="passwordConfirm"
-          control={control}
-          rules={{
-            required: true,
-            validate: (value) =>
-              value === password ? true : "패스워드가 일치하지 않습니다.",
-          }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <FormInput
-              placeholder="비밀번호"
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-              secureTextEntry={true}
-              testID="input-password-confirm"
-            />
-          )}
-        />
-      </View>
-
-      {/**
-       * 약관동의
-       */}
-      <View style={styles.agreementFieldControllerLayoutView}>
-        <CheckBoxButton
-          isCheck={agreement}
-          onPress={agreementButtonClickHandler}
-          testID="button-agreement"
-        />
-
-        <View style={styles.agreementFieldControllerTextLayoutView}>
-          <Text style={styles.fieldGuideText}>
-            서비스 이용 및 개인정보 수집약관에 동의합니다.
-          </Text>
-          <CaretRight />
+          <View style={styles.agreementFieldControllerTextLayoutView}>
+            <Text style={styles.fieldGuideText}>
+              서비스 이용 및 개인정보 수집약관에 동의합니다.
+            </Text>
+            <CaretRight />
+          </View>
         </View>
       </View>
-    </View>
+    </NonIndicatorScrollView>
   );
 }
 

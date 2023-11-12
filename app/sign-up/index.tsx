@@ -2,7 +2,6 @@
 import { useState, useRef } from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import Swiper from "react-native-web-swiper";
-import type { GestureResponderEvent } from "react-native";
 import { useForm, FormProvider } from "react-hook-form";
 import { useMutation } from "react-query";
 
@@ -30,8 +29,14 @@ import { useThrowMainIfLogin } from "@/hooks/useAccessControl";
 const SLIDE_MAX_COUNT = 3;
 
 export default function SignUp() {
+  /**
+   * 접근제어
+   */
   useThrowMainIfLogin();
 
+  /**
+   * useForm
+   */
   const methods = useForm<SignUpFormFieldValues>({
     defaultValues: {
       email: "",
@@ -52,10 +57,20 @@ export default function SignUp() {
     formState: { isSubmitting },
   } = methods;
 
+  /**
+   * swiper
+   */
   const [swiperIndex, setSwiperIndex] = useState(0);
 
   const swiper = useRef<Swiper>(null);
 
+  const swiperIndexChangeHandler = (index: number) => {
+    setSwiperIndex(index);
+  };
+
+  /**
+   * useMutation
+   */
   const signUpMutation = useMutation(
     async (data: SignUpFormFieldValues) => {
       await apiService.setUserInfo(data);
@@ -71,13 +86,10 @@ export default function SignUp() {
     }
   );
 
-  const swiperIndexChangeHandler = (index: number) => {
-    setSwiperIndex(index);
-  };
-
-  const nextButtonClickHandler = async (
-    event: GestureResponderEvent
-  ): Promise<void> => {
+  /**
+   * 버튼 핸들러
+   */
+  const nextButtonClickHandler = async (): Promise<void> => {
     if (!swiper.current) {
       return;
     }
@@ -132,6 +144,11 @@ export default function SignUp() {
     }
   };
 
+  /**
+   * util 함수
+   */
+  const formState = watch();
+
   const isFirstSlide = () => {
     return swiperIndex === 0;
   };
@@ -139,8 +156,6 @@ export default function SignUp() {
   const isLastSlide = () => {
     return swiperIndex === SLIDE_MAX_COUNT - 1;
   };
-
-  const formState = watch();
 
   const isCurrentStepFieldAvailable = async (): Promise<boolean> => {
     switch (swiperIndex) {
@@ -235,12 +250,7 @@ export default function SignUp() {
               </Text>
             </View>
 
-            {/**
-             * Swiper 내부에 있어서인지, KeyboardAvoidingView가 ScrollView 없이 적용되지 않음
-             */}
-            <ScrollView>
-              <StepOne />
-            </ScrollView>
+            <StepOne />
           </View>
 
           <View style={styles.SlideView}>
@@ -254,12 +264,7 @@ export default function SignUp() {
               </Text>
             </View>
 
-            {/**
-             * Swiper 내부에 있어서인지, KeyboardAvoidingView가 ScrollView 없이 적용되지 않음
-             */}
-            <ScrollView>
-              <StepTwo />
-            </ScrollView>
+            <StepTwo />
           </View>
 
           <View style={[styles.SlideView]}>
@@ -272,7 +277,7 @@ export default function SignUp() {
             backgroundColor={isNavigationButtonActive() ? "#8579F1" : "#B7B7CB"}
             content={isLastSlide() ? "시작하기" : "다음"}
             onPress={nextButtonClickHandler}
-            disabled={swiperIndex === 1 && isSubmitting}
+            disabled={!isNavigationButtonActive() || isSubmitting}
             testID="button-next-step-of-signup"
           />
         </View>
