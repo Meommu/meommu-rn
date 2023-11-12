@@ -18,12 +18,7 @@ import {
   MonthPickerOpenControllerSkeleton,
 } from "@/components/MonthPickerOpenController";
 
-// hooks
-import { useThrowHomeIfLogout } from "@/hooks/useAccessControl";
-
 export default function Main() {
-  useThrowHomeIfLogout();
-
   /**
    * 컨트롤러(세팅, 글쓰기) 버튼 핸들러
    */

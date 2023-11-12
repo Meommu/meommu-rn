@@ -47,7 +47,7 @@ const store = createStore(rootReducer);
 /**
  * 중앙 집중식 에러 처리
  */
-export const globalErrorHandler = async (error: unknown) => {
+const globalErrorHandler = async (error: unknown) => {
   const axiosError = error as AxiosError;
 
   if (!axiosError.response) {
@@ -88,6 +88,14 @@ export const globalErrorHandler = async (error: unknown) => {
     case CODE.NO_AUTHORIZATION_HEADER:
       fireToast(store.dispatch, "잘못된 접근입니다.", 3000);
 
+      queryClient.removeQueries({
+        predicate: ({ queryKey }) => {
+          const [queryType, ..._] = queryKey;
+
+          return queryType === "diaryImage" ? false : true;
+        },
+      });
+
       router.replace(PATH.HOME);
 
       break;
@@ -99,6 +107,7 @@ const queryClient = new QueryClient({
     queries: {
       onError: globalErrorHandler,
       refetchOnWindowFocus: false,
+      retry: 0,
     },
     mutations: {
       onError: globalErrorHandler,
@@ -177,6 +186,7 @@ export default function AppLayout() {
             <Toast />
           </View>
         )}
+
         {Platform.OS === "web" && process.env.EXPO_PUBLIC_MODE === "dev" && (
           <View style={{ position: "absolute" }}>
             <ReactQueryDevtools />
