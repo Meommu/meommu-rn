@@ -26,6 +26,7 @@ import { useThrowMainIfLogin } from "@/hooks/useAccessControl";
 
 // utils
 import { regExp } from "@/utils";
+import { useCallback } from "react";
 
 export default function Home() {
   useThrowMainIfLogin();
@@ -57,37 +58,25 @@ export default function Home() {
 
         await AsyncStorage.setItem("accessToken", accessToken);
 
-        /**
-         * 로그인 성공 시 메인 페이지로 이동
-         */
         router.replace(PATH.MAIN);
       },
     }
   );
 
-  const signInButtonClickHandler = () => {
+  const handleSignInButtonClick = () => {
     handleSubmit(
       (formData) => {
         signinMutation.mutate(formData);
       },
       (errors) => {
-        if (errors.id) {
-          switch (errors.id.type) {
-            case "required":
-              fireToast("이메일이 입력되지 않았습니다.", 2000);
-
-              break;
-            case "pattern":
-              fireToast("이메일 형식이 올바르지 않습니다.", 2000);
-
-              break;
-          }
+        if (errors.id?.message) {
+          fireToast(errors.id.message, 2000);
 
           return;
         }
 
-        if (errors.password) {
-          fireToast("패스워드가 입력되지 않았습니다.", 2000);
+        if (errors.password?.message) {
+          fireToast(errors.password.message, 2000);
 
           return;
         }
@@ -95,9 +84,9 @@ export default function Home() {
     )();
   };
 
-  const signUpButtonClickHandler = () => {
+  const handleSignUpButtonClick = useCallback(() => {
     router.push(PATH.SIGN_UP);
-  };
+  }, []);
 
   return (
     <KView style={styles.container}>
@@ -122,7 +111,7 @@ export default function Home() {
           rules={{
             required: {
               value: true,
-              message: "아이디(이메일)가 입력되지 않았습니다.",
+              message: "이메일이 입력되지 않았습니다.",
             },
             pattern: {
               value: regExp.email,
@@ -173,14 +162,14 @@ export default function Home() {
 
           <View style={styles.splitBarView} />
 
-          <Pressable onPress={signUpButtonClickHandler} testID="button-signup">
+          <Pressable onPress={handleSignUpButtonClick} testID="button-signup">
             <Text style={styles.navigationText}>회원가입</Text>
           </Pressable>
         </View>
 
         <NavigationButton
           content="로그인"
-          onPress={signInButtonClickHandler}
+          onPress={handleSignInButtonClick}
           disabled={isSubmitting}
           testID="button-signin"
         />
