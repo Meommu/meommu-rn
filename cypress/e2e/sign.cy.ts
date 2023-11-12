@@ -6,6 +6,7 @@ import {
   clickEmailDupChkButton,
   clickNextStepButton,
   clickSignInButton,
+  clickSignUpText,
 } from "./utils";
 
 let email = "";
@@ -212,16 +213,23 @@ describe("로그인 페이지", () => {
 
       cy.contains("패스워드가 입력되지 않았습니다.");
     });
+  });
 
-    /**
-     * 해당 부분에서 암묵적으로 회원가입한 아이디 & 패스워드로 로그인을 시도함.
-     *
-     * 별도의 테스트케이스로 분리할 필요가 있음
-     */
-    after(() => {
+  describe("로그인 시도", () => {
+    it('로그인이 실패하였을 경우, "로그인이 실패하였습니다." Toast 형태의 오버레이가 등장 ', () => {
+      clearAndWriteInputText("input-signin-email", "wrong@email.com");
+      clearAndWriteInputText("input-signin-password", "wrongPassword");
+
+      clickSignInButton();
+
+      cy.contains("로그인이 실패하였습니다.");
+    });
+
+    it("로그인이 성공하였을 경우, 메인 페이지로 이동", () => {
+      clearAndWriteInputText("input-signin-email", email);
       clearAndWriteInputText("input-signin-password", CORRECT_PASSWORD);
 
-      cy.get('[data-testid="button-signin"]').click();
+      clickSignInButton();
 
       cy.location().should((location) => {
         expect(location.pathname).is.equal("/main");
@@ -231,21 +239,12 @@ describe("로그인 페이지", () => {
 
   describe("홈 페이지 프로세스", () => {
     before(() => {
-      cy.visit("http://localhost:8081/home");
       cy.clearLocalStorage("accessToken");
-    });
-
-    it('로그인이 실패하였을 경우, "로그인이 실패하였습니다." Toast 형태의 오버레이가 등장 ', () => {
-      clearAndWriteInputText("input-signin-email", "wrong@email.com");
-      clearAndWriteInputText("input-signin-password", "wrongPassword");
-
-      cy.get('[data-testid="button-signin"]').click();
-
-      cy.contains("로그인이 실패하였습니다.");
+      cy.visit("http://localhost:8081/home");
     });
 
     it('회원가입 버튼을 클릭하였을 경우 "/sign-up" 경로로 이동', () => {
-      cy.get('[data-testid="text-goto-signup"]').click();
+      clickSignUpText();
 
       cy.location().should((location) => {
         expect(location.pathname).is.equal("/sign-up");
