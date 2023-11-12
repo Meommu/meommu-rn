@@ -1,10 +1,9 @@
 // react
-import { useState, createRef } from "react";
-import { View, Text, GestureResponderEvent, StyleSheet } from "react-native";
+import { useState, createRef, useCallback } from "react";
+import { View, Text, StyleSheet } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // expo
-import { StatusBar } from "expo-status-bar";
 import { router } from "expo-router";
 
 // components
@@ -17,47 +16,45 @@ import { PATH } from "@/constants";
 // other library
 import Swiper from "react-native-web-swiper";
 
-const SLIDE_MAX_COUNT = 3;
+const FIRST_SLIDE_INDEX = 0;
+const SECOND_SLIDE_INDEX = 1;
+const LAST_SLIDE_INDEX = 2;
 
 export default function OnBoarding() {
-  const [swiperIndex, setSwiperIndex] = useState(0);
+  const [swiperIndex, setSwiperIndex] = useState(FIRST_SLIDE_INDEX);
 
   const swiper = createRef<Swiper>();
 
-  const swiperIndexChangeHandler = (index: number) => {
+  const handleSwiperIndexChange = useCallback((index: number) => {
     setSwiperIndex(index);
-  };
+  }, []);
 
-  const nextButtonClickHandler = async (
-    event: GestureResponderEvent
-  ): Promise<void> => {
+  const handleNextButtonClick = useCallback(async (): Promise<void> => {
     if (!swiper.current) {
       return;
     }
 
-    swiper.current.goToNext();
+    switch (swiperIndex) {
+      case FIRST_SLIDE_INDEX:
+      case SECOND_SLIDE_INDEX:
+        swiper.current.goToNext();
 
-    const index = swiper.current.getActiveIndex();
+        break;
 
-    if (index === SLIDE_MAX_COUNT - 1) {
-      try {
+      case LAST_SLIDE_INDEX:
         await AsyncStorage.setItem("onboarding", "end");
-      } catch (e) {
-        console.log(e);
-      }
 
-      router.replace(PATH.HOME);
+        router.replace(PATH.HOME);
+
+        break;
     }
-  };
+  }, [swiperIndex]);
 
   return (
     <View style={styles.container}>
-      <StatusBar style="dark" />
-
       <Swiper
         ref={swiper}
         containerStyle={styles.swiper}
-        loop={false}
         springConfig={{
           overshootClamping: true,
         }}
@@ -71,7 +68,7 @@ export default function OnBoarding() {
           nextPos: false,
           prevPos: false,
         }}
-        onIndexChanged={swiperIndexChangeHandler}
+        onIndexChanged={handleSwiperIndexChange}
       >
         <View style={styles.slideLayout}>
           <Text style={styles.guideText}>
@@ -107,8 +104,8 @@ export default function OnBoarding() {
 
       <View style={styles.buttonView}>
         <NavigationButton
-          content={swiperIndex === SLIDE_MAX_COUNT - 1 ? "시작하기" : "다음"}
-          onPress={nextButtonClickHandler}
+          content={swiperIndex === LAST_SLIDE_INDEX ? "시작하기" : "다음"}
+          onPress={handleNextButtonClick}
         />
       </View>
     </View>
