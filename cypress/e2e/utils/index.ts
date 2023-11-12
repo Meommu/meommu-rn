@@ -34,6 +34,14 @@ export const clickSignInButton = () => {
   getTestElement("button-signin").click();
 };
 
+export const clickSettingButtonClick = () => {
+  getTestElement("button-setting").click();
+};
+
+export const clickLogoutButtonClick = () => {
+  getTestElement("button-logout").click();
+};
+
 /**
  * text (button)
  */
