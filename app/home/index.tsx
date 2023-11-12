@@ -1,4 +1,5 @@
 // react
+import { useCallback } from "react";
 import { View, Text, StyleSheet, Pressable } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import { useMutation } from "react-query";
@@ -26,7 +27,6 @@ import { useThrowMainIfLogin } from "@/hooks/useAccessControl";
 
 // utils
 import { regExp } from "@/utils";
-import { useCallback } from "react";
 
 export default function Home() {
   useThrowMainIfLogin();
