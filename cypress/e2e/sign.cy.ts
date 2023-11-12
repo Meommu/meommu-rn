@@ -4,9 +4,9 @@ import {
   clearAndWriteInputText,
   clickAgreementButton,
   clickEmailDupChkButton,
-  clickNextStepButton,
+  clickSignUpNextStepButton,
   clickSignInButton,
-  clickSignUpText,
+  clickSignUpButton,
   getSignInEmailInput,
   getSignInPasswordInput,
   getSignUpEmailInput,
@@ -69,7 +69,7 @@ describe("회원가입 페이지", () => {
       clearAndWriteInputText(getSignUpPasswordInput(), "12345a!");
       clearAndWriteInputText(getSignUpPasswordConfirmInput(), "12345a!");
 
-      clickNextStepButton();
+      clickSignUpNextStepButton();
 
       cy.contains("비밀번호 형식이 올바르지 않습니다.");
     });
@@ -84,7 +84,7 @@ describe("회원가입 페이지", () => {
         "12345678901234567890a!"
       );
 
-      clickNextStepButton();
+      clickSignUpNextStepButton();
 
       cy.contains("비밀번호 형식이 올바르지 않습니다.");
     });
@@ -93,7 +93,7 @@ describe("회원가입 페이지", () => {
       clearAndWriteInputText(getSignUpPasswordInput(), "12345678a");
       clearAndWriteInputText(getSignUpPasswordConfirmInput(), "12345678a");
 
-      clickNextStepButton();
+      clickSignUpNextStepButton();
 
       cy.contains("비밀번호 형식이 올바르지 않습니다.");
     });
@@ -102,7 +102,7 @@ describe("회원가입 페이지", () => {
       clearAndWriteInputText(getSignUpPasswordInput(), "12345678a!");
       clearAndWriteInputText(getSignUpPasswordConfirmInput(), "1234!");
 
-      clickNextStepButton();
+      clickSignUpNextStepButton();
 
       cy.contains("패스워드가 일치하지 않습니다.");
     });
@@ -111,7 +111,7 @@ describe("회원가입 페이지", () => {
       clearAndWriteInputText(getSignUpPasswordInput(), CORRECT_PASSWORD);
       clearAndWriteInputText(getSignUpPasswordConfirmInput(), CORRECT_PASSWORD);
 
-      clickNextStepButton();
+      clickSignUpNextStepButton();
 
       chkSwiperIndex(1);
     });
@@ -133,7 +133,7 @@ describe("회원가입 페이지", () => {
     it('2글자 미만의 유치원 이름이 입력되었을 경우 "2에서 8글자 사이의 이름을 입력해주세요." 메세지 출력', () => {
       clearAndWriteInputText(getSignUpKindergartenNameInput(), "유");
 
-      clickNextStepButton();
+      clickSignUpNextStepButton();
 
       cy.contains("2에서 8글자 사이의 이름을 입력해주세요.");
     });
@@ -144,7 +144,7 @@ describe("회원가입 페이지", () => {
         "유치원이름유치원이름"
       );
 
-      clickNextStepButton();
+      clickSignUpNextStepButton();
 
       cy.contains("2에서 8글자 사이의 이름을 입력해주세요.");
     });
@@ -152,7 +152,7 @@ describe("회원가입 페이지", () => {
     it('3글자 미만의 유치원 이름이 입력되었을 경우 "3에서 4글자 사이의 한글 이름을 입력해주세요." 메세지 출력', () => {
       clearAndWriteInputText(getSignUpKindergartenDirectorNameInput(), "김숙");
 
-      clickNextStepButton();
+      clickSignUpNextStepButton();
 
       cy.contains("3에서 4글자 사이의 한글 이름을 입력해주세요.");
     });
@@ -163,7 +163,7 @@ describe("회원가입 페이지", () => {
         "김숙자김숙자"
       );
 
-      clickNextStepButton();
+      clickSignUpNextStepButton();
 
       cy.contains("3에서 4글자 사이의 한글 이름을 입력해주세요.");
     });
@@ -184,7 +184,7 @@ describe("회원가입 페이지", () => {
     it('xxx-xxxx-xxxx 형태의 전화번호가 입력되지 않았을 경우 "올바른 형식의 전화번호를 입력하세요" 메세지 출력', () => {
       clearAndWriteInputText(getSignUpPhoneNumberInput(), "010-12345678");
 
-      clickNextStepButton();
+      clickSignUpNextStepButton();
 
       cy.contains("올바른 형식의 전화번호를 입력하세요");
     });
@@ -192,11 +192,11 @@ describe("회원가입 페이지", () => {
     after(() => {
       clearAndWriteInputText(getSignUpPhoneNumberInput(), CORRECT_PHONE_NUMBER);
 
-      clickNextStepButton();
+      clickSignUpNextStepButton();
 
       chkSwiperIndex(2);
 
-      clickNextStepButton();
+      clickSignUpNextStepButton();
     });
   });
 });
@@ -258,7 +258,7 @@ describe("로그인 페이지", () => {
     });
 
     it('회원가입 버튼을 클릭하였을 경우 "/sign-up" 경로로 이동', () => {
-      clickSignUpText();
+      clickSignUpButton();
 
       cy.location().should((location) => {
         expect(location.pathname).is.equal("/sign-up");

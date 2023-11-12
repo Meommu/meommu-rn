@@ -64,23 +64,23 @@ export const clickEmailDupChkButton = () => {
   getTestElement("button-email-dup-chk").click();
 };
 
-export const clickNextStepButton = () => {
+export const clickSignUpNextStepButton = () => {
   getTestElement("button-next-step-of-signup").click();
+};
+
+export const clickSettingButton = () => {
+  getTestElement("button-setting").click();
+};
+
+export const clickLogoutButton = () => {
+  getTestElement("button-logout").click();
 };
 
 export const clickSignInButton = () => {
   getTestElement("button-signin").click();
 };
 
-export const clickSettingButtonClick = () => {
-  getTestElement("button-setting").click();
-};
-
-export const clickLogoutButtonClick = () => {
-  getTestElement("button-logout").click();
-};
-
-export const clickSignUpText = () => {
+export const clickSignUpButton = () => {
   getTestElement("button-signup").click();
 };
 

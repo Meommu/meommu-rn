@@ -1,7 +1,7 @@
 import {
   clearAndWriteInputText,
-  clickLogoutButtonClick,
-  clickSettingButtonClick,
+  clickLogoutButton,
+  clickSettingButton,
   clickSignInButton,
   getSignInEmailInput,
   getSignInPasswordInput,
@@ -47,11 +47,11 @@ describe("로그인/비로그인 상태에서의 페이지 접근제어", () => 
   });
 
   it("올바르게 로그아웃 할 경우 홈 페이지로 이동", () => {
-    clickSettingButtonClick();
+    clickSettingButton();
 
     cy.contains("로그아웃");
 
-    clickLogoutButtonClick();
+    clickLogoutButton();
 
     cy.contains("로그인");
   });
