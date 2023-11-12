@@ -1,5 +1,5 @@
 // react
-import React, { Suspense } from "react";
+import React, { Suspense, useCallback } from "react";
 import { View, Text, StyleSheet } from "react-native";
 
 // expo
@@ -22,9 +22,13 @@ export default function Main() {
   /**
    * 컨트롤러(세팅, 글쓰기) 버튼 핸들러
    */
-  const handleSettingButtonClick = () => {
+  const handleSettingButtonClick = useCallback(() => {
     router.push(PATH.SETTING);
-  };
+  }, []);
+
+  const handleWriteButtonClick = useCallback(() => {
+    router.push(PATH.WRITE);
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -37,7 +41,10 @@ export default function Main() {
                 onPress={handleSettingButtonClick}
                 testID="button-setting"
               />
-              <PlusButton />
+              <PlusButton
+                onPress={handleWriteButtonClick}
+                testID="button-write"
+              />
             </View>
           }
         />
