@@ -18,8 +18,12 @@ import { apiService } from "@/apis";
 
 // utils
 import { regExp } from "@/utils";
+import { useCallback } from "react";
 
 export function StepOne() {
+  /**
+   * useForm
+   */
   const {
     control,
     setValue,
@@ -33,6 +37,9 @@ export function StepOne() {
   const emailDupChk = watch("emailDupChk");
   const password = watch("password");
 
+  /**
+   * useMutation
+   */
   const emailDupChkMutation = useMutation(
     async () => {
       const isDuplication = await apiService.getEmailDuplicationStatus(
@@ -48,11 +55,14 @@ export function StepOne() {
     }
   );
 
-  const agreementButtonClickHandler = () => {
+  /**
+   * 버튼 클릭 핸들러
+   */
+  const handleAgreementButtonClick = useCallback(() => {
     setValue("agreement", !agreement);
-  };
+  }, []);
 
-  const emailDupChkButtonClickHandler = async () => {
+  const handleEmailDupChkButtonClick = useCallback(async () => {
     const emailIsValid = await trigger("email");
 
     if (!emailIsValid) {
@@ -62,11 +72,14 @@ export function StepOne() {
     emailDupChkMutation.mutate();
 
     return;
-  };
+  }, []);
 
-  const resetEmailDupChk = () => {
+  /**
+   * 유틸 함수
+   */
+  const resetEmailDupChk = useCallback(() => {
     setValue("emailDupChk", null);
-  };
+  }, []);
 
   const emailInputCondition =
     errors.email === undefined
@@ -128,7 +141,7 @@ export function StepOne() {
             />
             <FormDupChkButton
               isDupChk={emailDupChk}
-              onPress={emailDupChkButtonClickHandler}
+              onPress={handleEmailDupChkButtonClick}
               testID="email-button-dup-chk"
             />
           </View>
@@ -214,7 +227,7 @@ export function StepOne() {
         <View style={styles.agreementFieldControllerLayoutView}>
           <CheckBoxButton
             isCheck={agreement}
-            onPress={agreementButtonClickHandler}
+            onPress={handleAgreementButtonClick}
             testID="button-agreement"
           />
 
