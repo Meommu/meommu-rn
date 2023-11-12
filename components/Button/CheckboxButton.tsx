@@ -6,12 +6,15 @@ import { Svg, Circle } from "react-native-svg";
 // svgs
 import Check from "@/assets/svgs/check.svg";
 
+// constants
+import { color } from "@/constants";
+
 interface CheckBoxButtonProps extends PressableProps {
   isCheck: boolean;
 }
 
 export function CheckBoxButton({ isCheck, ...props }: CheckBoxButtonProps) {
-  const circleFill = isCheck ? "#1C1D22" : "#EBEBF0";
+  const circleFill = isCheck ? color.agreementClicked : color.formElementBg;
 
   return (
     <Pressable {...props}>
