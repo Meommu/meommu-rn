@@ -172,6 +172,9 @@ export default function SignUp() {
   return (
     <FormProvider {...methods}>
       <KView style={styles.container}>
+        {/**
+         * header
+         */}
         <View style={styles.headerWrapper}>
           <Header
             left={
@@ -182,6 +185,9 @@ export default function SignUp() {
           />
         </View>
 
+        {/**
+         * content (swiper)
+         */}
         <Swiper
           ref={swiper}
           controlsEnabled={false}
@@ -225,6 +231,9 @@ export default function SignUp() {
           </View>
         </Swiper>
 
+        {/**
+         * navigation button
+         */}
         <View style={styles.navigationView}>
           <NavigationButton
             backgroundColor={
