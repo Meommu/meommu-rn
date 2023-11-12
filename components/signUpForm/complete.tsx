@@ -15,7 +15,7 @@ export function Complete({}: CompleteProps) {
   return (
     <View style={styles.container}>
       <View style={styles.GuideText}>
-        <Text style={styles.GreetingText} testID="text-guide-of-complete">
+        <Text style={styles.GreetingText}>
           {`${kindergartenName}님,`}
           {"\n"}
           멈무유치원에 오신걸 환영합니다!

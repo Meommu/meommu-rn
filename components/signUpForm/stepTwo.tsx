@@ -48,7 +48,7 @@ export function StepTwo({}: StepTwoProps) {
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
-                testID="input-kindergarten-name"
+                testID="input-signup-kindergarten-name"
               />
             )}
           />
@@ -83,7 +83,7 @@ export function StepTwo({}: StepTwoProps) {
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
-                testID="input-kindergarten-director-name"
+                testID="input-signup-kindergarten-director-name"
               />
             )}
           />
@@ -114,7 +114,7 @@ export function StepTwo({}: StepTwoProps) {
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
-                testID="input-phone-number"
+                testID="input-signup-phone-number"
               />
             )}
           />

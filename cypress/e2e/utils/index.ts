@@ -22,27 +22,27 @@ export const clearAndWriteInputText = (
  * get
  */
 export const getSignUpEmailInput = () => {
-  return getTestElement("input-email");
+  return getTestElement("input-signup-email");
 };
 
 export const getSignUpPasswordInput = () => {
-  return getTestElement("input-password");
+  return getTestElement("input-signup-password");
 };
 
 export const getSignUpPasswordConfirmInput = () => {
-  return getTestElement("input-password-confirm");
+  return getTestElement("input-signup-password-confirm");
 };
 
 export const getSignUpKindergartenNameInput = () => {
-  return getTestElement("input-kindergarten-name");
+  return getTestElement("input-signup-kindergarten-name");
 };
 
 export const getSignUpKindergartenDirectorNameInput = () => {
-  return getTestElement("input-kindergarten-director-name");
+  return getTestElement("input-signup-kindergarten-director-name");
 };
 
 export const getSignUpPhoneNumberInput = () => {
-  return getTestElement("input-phone-number");
+  return getTestElement("input-signup-phone-number");
 };
 
 export const getSignInEmailInput = () => {
@@ -61,7 +61,7 @@ export const clickAgreementButton = () => {
 };
 
 export const clickEmailDupChkButton = () => {
-  getTestElement("email-button-dup-chk").click();
+  getTestElement("button-email-dup-chk").click();
 };
 
 export const clickNextStepButton = () => {
@@ -81,7 +81,7 @@ export const clickLogoutButtonClick = () => {
 };
 
 export const clickSignUpText = () => {
-  getTestElement("text-goto-signup").click();
+  getTestElement("button-signup").click();
 };
 
 /**

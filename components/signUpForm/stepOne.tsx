@@ -135,14 +135,14 @@ export function StepOne() {
                     onChange(text);
                   }}
                   value={value}
-                  testID="input-email"
+                  testID="input-signup-email"
                 />
               )}
             />
             <FormDupChkButton
               isDupChk={emailDupChk}
               onPress={handleEmailDupChkButtonClick}
-              testID="email-button-dup-chk"
+              testID="button-email-dup-chk"
             />
           </View>
         </View>
@@ -176,7 +176,7 @@ export function StepOne() {
                 onChangeText={onChange}
                 value={value}
                 secureTextEntry={true}
-                testID="input-password"
+                testID="input-signup-password"
               />
             )}
           />
@@ -215,7 +215,7 @@ export function StepOne() {
                 onChangeText={onChange}
                 value={value}
                 secureTextEntry={true}
-                testID="input-password-confirm"
+                testID="input-signup-password-confirm"
               />
             )}
           />

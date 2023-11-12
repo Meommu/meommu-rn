@@ -173,10 +173,7 @@ export default function Home() {
 
           <View style={styles.splitBarView} />
 
-          <Pressable
-            onPress={signUpButtonClickHandler}
-            testID="text-goto-signup"
-          >
+          <Pressable onPress={signUpButtonClickHandler} testID="button-signup">
             <Text style={styles.navigationText}>회원가입</Text>
           </Pressable>
         </View>
