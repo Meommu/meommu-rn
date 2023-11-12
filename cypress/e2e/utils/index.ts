@@ -1,3 +1,5 @@
+type CypressElement = Cypress.Chainable<JQuery<HTMLElement>>;
+
 /**
  * core
  */
@@ -6,17 +8,53 @@ export const getTestElement = (testId: string) => {
 };
 
 /**
- * input
+ * mixin
  */
-export const clearAndWriteInputText = (testId: string, text: string) => {
-  const inputElement = getTestElement(testId);
-
-  inputElement.clear();
-  inputElement.type(text);
+export const clearAndWriteInputText = (
+  cypressElement: CypressElement,
+  text: string
+) => {
+  cypressElement.clear();
+  cypressElement.type(text);
 };
 
 /**
- * button
+ * get
+ */
+export const getSignUpEmailInput = () => {
+  return getTestElement("input-email");
+};
+
+export const getSignUpPasswordInput = () => {
+  return getTestElement("input-password");
+};
+
+export const getSignUpPasswordConfirmInput = () => {
+  return getTestElement("input-password-confirm");
+};
+
+export const getSignUpKindergartenNameInput = () => {
+  return getTestElement("input-kindergarten-name");
+};
+
+export const getSignUpKindergartenDirectorNameInput = () => {
+  return getTestElement("input-kindergarten-director-name");
+};
+
+export const getSignUpPhoneNumberInput = () => {
+  return getTestElement("input-phone-number");
+};
+
+export const getSignInEmailInput = () => {
+  return getTestElement("input-signin-email");
+};
+
+export const getSignInPasswordInput = () => {
+  return getTestElement("input-signin-password");
+};
+
+/**
+ * click
  */
 export const clickAgreementButton = () => {
   getTestElement("button-agreement").click();
@@ -42,9 +80,6 @@ export const clickLogoutButtonClick = () => {
   getTestElement("button-logout").click();
 };
 
-/**
- * text (button)
- */
 export const clickSignUpText = () => {
   getTestElement("text-goto-signup").click();
 };

@@ -3,6 +3,8 @@ import {
   clickLogoutButtonClick,
   clickSettingButtonClick,
   clickSignInButton,
+  getSignInEmailInput,
+  getSignInPasswordInput,
 } from "./utils";
 
 describe("로그인/비로그인 상태에서의 페이지 접근제어", () => {
@@ -20,8 +22,8 @@ describe("로그인/비로그인 상태에서의 페이지 접근제어", () => 
   });
 
   it("올바르게 로그인 할 경우 메인 페이지 접근 가능", () => {
-    clearAndWriteInputText("input-signin-email", "meommu@exam.com");
-    clearAndWriteInputText("input-signin-password", "Password1!");
+    clearAndWriteInputText(getSignInEmailInput(), "meommu@exam.com");
+    clearAndWriteInputText(getSignInPasswordInput(), "Password1!");
 
     clickSignInButton();
 
