@@ -5,6 +5,7 @@ import {
   clickAgreementButton,
   clickEmailDupChkButton,
   clickNextStepButton,
+  clickSignInButton,
 } from "./utils";
 
 let email = "";
@@ -188,27 +189,26 @@ describe("회원가입 페이지", () => {
 describe("로그인 페이지", () => {
   describe("아이디 Validation", () => {
     it('이메일을 입력하지 않을 경우, "이메일이 입력되지 않았습니다." Toast 형태의 오버레이가 등장', () => {
-      cy.get('[data-testid="button-signin"]').click();
+      clickSignInButton();
 
       cy.contains("이메일이 입력되지 않았습니다.");
     });
 
     it('올바르지 않은 형태의 이메일을 입력할 경우, "이메일 형식이 올바르지 않습니다." Toast 형태의 오버레이가 등장', () => {
       clearAndWriteInputText("input-signin-email", "wrong@email@form");
-
-      cy.get('[data-testid="button-signin"]').click();
+      clickSignInButton();
 
       cy.contains("이메일 형식이 올바르지 않습니다.");
-    });
-
-    after(() => {
-      clearAndWriteInputText("input-signin-email", email);
     });
   });
 
   describe("패스워드 Validation", () => {
+    before(() => {
+      clearAndWriteInputText("input-signin-email", email);
+    });
+
     it('패스워드를 입력하지 않을 경우, "패스워드가 입력되지 않았습니다." Toast 형태의 오버레이가 등장', () => {
-      cy.get('[data-testid="button-signin"]').click();
+      clickSignInButton();
 
       cy.contains("패스워드가 입력되지 않았습니다.");
     });
