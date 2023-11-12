@@ -8,7 +8,7 @@ import { router } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 
 // constants
-import { PATH } from "../constants";
+import { PATH } from "@/constants";
 
 // apis
 import { apiService } from "@/apis";
