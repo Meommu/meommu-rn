@@ -1,5 +1,5 @@
 // react
-import { useState, useRef } from "react";
+import { useState, useRef, useCallback } from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import Swiper from "react-native-web-swiper";
 import { useForm, FormProvider } from "react-hook-form";
@@ -18,7 +18,7 @@ import { KView } from "@/components/Layout/KView";
 import { Header } from "@/components/Layout/Header";
 
 // constants
-import { VIEW_NAME } from "@/constants";
+import { VIEW_NAME, color } from "@/constants";
 
 // apis
 import { apiService } from "@/apis";
@@ -26,7 +26,9 @@ import { apiService } from "@/apis";
 // hooks
 import { useThrowMainIfLogin } from "@/hooks/useAccessControl";
 
-const SLIDE_MAX_COUNT = 3;
+const FIRST_SLIDE_INDEX = 0;
+const SECOND_SLIDE_INDEX = 1;
+const LAST_SLIDE_INDEX = 2;
 
 export default function SignUp() {
   /**
@@ -57,16 +59,18 @@ export default function SignUp() {
     formState: { isSubmitting },
   } = methods;
 
+  const formState = watch();
+
   /**
    * swiper
    */
-  const [swiperIndex, setSwiperIndex] = useState(0);
+  const [swiperIndex, setSwiperIndex] = useState(FIRST_SLIDE_INDEX);
 
   const swiper = useRef<Swiper>(null);
 
-  const swiperIndexChangeHandler = (index: number) => {
+  const swiperIndexChangeHandler = useCallback((index: number) => {
     setSwiperIndex(index);
-  };
+  }, []);
 
   /**
    * useMutation
@@ -77,11 +81,7 @@ export default function SignUp() {
     },
     {
       onSuccess: () => {
-        if (!swiper.current) {
-          return;
-        }
-
-        swiper.current.goTo(2);
+        swiper.current?.goTo(LAST_SLIDE_INDEX);
       },
     }
   );
@@ -89,12 +89,8 @@ export default function SignUp() {
   /**
    * 버튼 핸들러
    */
-  const nextButtonClickHandler = async (): Promise<void> => {
+  const handleNextButtonClick = useCallback(async () => {
     if (!swiper.current) {
-      return;
-    }
-
-    if (!isNavigationButtonActive()) {
       return;
     }
 
@@ -103,74 +99,65 @@ export default function SignUp() {
     }
 
     switch (swiperIndex) {
-      case 0:
-        swiper.current.goTo(1);
+      case FIRST_SLIDE_INDEX:
+        swiper.current.goTo(SECOND_SLIDE_INDEX);
 
         break;
-      case 1:
+
+      case SECOND_SLIDE_INDEX:
         handleSubmit(async (formData) => {
           signUpMutation.mutate(formData);
         })();
 
         break;
-      case 2:
+
+      case LAST_SLIDE_INDEX:
         router.replace(VIEW_NAME.HOME);
 
         break;
+    }
+  }, [swiper, swiperIndex]);
+
+  const handleGoBackButtonClick = useCallback(() => {
+    switch (swiperIndex) {
+      case FIRST_SLIDE_INDEX:
+        router.replace(VIEW_NAME.HOME);
+
+        break;
+
+      case LAST_SLIDE_INDEX:
+        break;
+
       default:
-        break;
+        swiper.current?.goToPrev();
     }
-  };
-
-  const goBackButtonClickHandler = () => {
-    if (isLastSlide()) {
-      return;
-    }
-
-    if (isFirstSlide()) {
-      if (!router.canGoBack()) {
-        router.replace(VIEW_NAME.HOME);
-
-        return;
-      }
-
-      router.back();
-
-      return;
-    }
-
-    if (swiper.current) {
-      swiper.current.goToPrev();
-    }
-  };
+  }, [swiper, swiperIndex]);
 
   /**
    * util 함수
    */
-  const formState = watch();
+  const isCurrentStepFieldAvailable =
+    useCallback(async (): Promise<boolean> => {
+      switch (swiperIndex) {
+        case FIRST_SLIDE_INDEX:
+          return (
+            (await trigger("email")) &&
+            (await trigger("password")) &&
+            (await trigger("passwordConfirm"))
+          );
 
-  const isFirstSlide = () => {
-    return swiperIndex === 0;
-  };
+        /**
+         * 두번째 슬라이드는 handleSubmit 함수가 실행되므로 유효성 검사를 할 필요가 없고,
+         * 세번째 폼은 폼 요소가 없어 유효성검사를 할 필요가 없음.
+         */
+        case SECOND_SLIDE_INDEX:
+        case LAST_SLIDE_INDEX:
+        default:
+          return true;
+      }
+    }, [swiperIndex, trigger]);
 
-  const isLastSlide = () => {
-    return swiperIndex === SLIDE_MAX_COUNT - 1;
-  };
-
-  const isCurrentStepFieldAvailable = async (): Promise<boolean> => {
-    switch (swiperIndex) {
-      case 0:
-        return (
-          (await trigger("email")) &&
-          (await trigger("password")) &&
-          (await trigger("passwordConfirm"))
-        );
-      default:
-        return true;
-    }
-  };
-
-  const isNavigationButtonActive = (): boolean => {
+  const isNextButtonActive = useCallback((): boolean => {
     const {
       password,
       passwordConfirm,
@@ -182,30 +169,14 @@ export default function SignUp() {
     } = formState;
 
     switch (swiperIndex) {
-      case 0:
-        if (!emailDupChk) {
-          return false;
-        }
-
-        if (!agreement) {
-          return false;
-        }
-
-        if (!password || !passwordConfirm) {
+      case FIRST_SLIDE_INDEX:
+        if (!emailDupChk || !agreement || !password || !passwordConfirm) {
           return false;
         }
 
         return true;
-      case 1:
-        if (!kindergartenName) {
-          return false;
-        }
-
-        if (!kindergartenDirectorName) {
-          return false;
-        }
-
-        if (!phoneNumber) {
+      case SECOND_SLIDE_INDEX:
+        if (!kindergartenName || !kindergartenDirectorName || !phoneNumber) {
           return false;
         }
 
@@ -213,7 +184,7 @@ export default function SignUp() {
       default:
         return true;
     }
-  };
+  }, [formState, swiperIndex]);
 
   return (
     <FormProvider {...methods}>
@@ -221,10 +192,9 @@ export default function SignUp() {
         <View style={styles.headerWrapper}>
           <Header
             left={
-              <GoBackButton
-                onPress={goBackButtonClickHandler}
-                disable={isLastSlide()}
-              />
+              swiperIndex !== LAST_SLIDE_INDEX && (
+                <GoBackButton onPress={handleGoBackButtonClick} />
+              )
             }
           />
         </View>
@@ -267,17 +237,19 @@ export default function SignUp() {
             <StepTwo />
           </View>
 
-          <View style={[styles.SlideView]}>
+          <View style={styles.SlideView}>
             <Complete />
           </View>
         </Swiper>
 
         <View style={styles.navigationView}>
           <NavigationButton
-            backgroundColor={isNavigationButtonActive() ? "#8579F1" : "#B7B7CB"}
-            content={isLastSlide() ? "시작하기" : "다음"}
-            onPress={nextButtonClickHandler}
-            disabled={!isNavigationButtonActive() || isSubmitting}
+            backgroundColor={
+              isNextButtonActive() ? color.primary : color.inactive
+            }
+            content={swiperIndex === LAST_SLIDE_INDEX ? "시작하기" : "다음"}
+            onPress={handleNextButtonClick}
+            disabled={!isNextButtonActive() || isSubmitting}
             testID="button-next-step-of-signup"
           />
         </View>
