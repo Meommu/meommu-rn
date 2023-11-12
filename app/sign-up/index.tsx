@@ -19,7 +19,7 @@ import { Header } from "@/components/Layout/Header";
 import { SwiperIndexForTest } from "@/components/SwiperIndexForTest";
 
 // constants
-import { VIEW_NAME, color } from "@/constants";
+import { PATH, color } from "@/constants";
 
 // apis
 import { apiService } from "@/apis";
@@ -117,7 +117,7 @@ export default function SignUp() {
         break;
 
       case LAST_SLIDE_INDEX:
-        router.replace(VIEW_NAME.HOME);
+        router.replace(PATH.HOME);
 
         break;
     }
@@ -126,7 +126,7 @@ export default function SignUp() {
   const handleGoBackButtonClick = useCallback(() => {
     switch (swiperIndex) {
       case FIRST_SLIDE_INDEX:
-        router.replace(VIEW_NAME.HOME);
+        router.replace(PATH.HOME);
 
         break;
 

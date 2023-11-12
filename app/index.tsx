@@ -8,7 +8,7 @@ import { router } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 
 // constants
-import { VIEW_NAME } from "../constants";
+import { PATH } from "../constants";
 
 // apis
 import { apiService } from "@/apis";
@@ -41,7 +41,7 @@ export default function App() {
 
   const initial = async (): Promise<void> => {
     if (await chkLogin()) {
-      router.replace(VIEW_NAME.MAIN);
+      router.replace(PATH.MAIN);
 
       SplashScreen.hideAsync();
 
@@ -49,14 +49,14 @@ export default function App() {
     }
 
     if (await chkOnBoardingIsEnd()) {
-      router.replace(VIEW_NAME.HOME);
+      router.replace(PATH.HOME);
 
       SplashScreen.hideAsync();
 
       return;
     }
 
-    router.replace(VIEW_NAME.ON_BOARDING);
+    router.replace(PATH.ON_BOARDING);
 
     SplashScreen.hideAsync();
 

@@ -12,7 +12,7 @@ import { NavigationButton } from "@/components/Button/NavigationButton";
 import { BannerImage } from "@/components/Image/BannerImage";
 
 // constants
-import { VIEW_NAME } from "@/constants";
+import { PATH } from "@/constants";
 
 // other library
 import Swiper from "react-native-web-swiper";
@@ -46,7 +46,7 @@ export default function OnBoarding() {
         console.log(e);
       }
 
-      router.replace(VIEW_NAME.HOME);
+      router.replace(PATH.HOME);
     }
   };
 

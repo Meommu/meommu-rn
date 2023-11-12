@@ -6,7 +6,7 @@ import { View, Text, StyleSheet } from "react-native";
 import { router } from "expo-router";
 
 // constants
-import { VIEW_NAME } from "@/constants";
+import { PATH } from "@/constants";
 
 // components
 import { PlusButton } from "@/components/Button/PlusButton";
@@ -28,7 +28,7 @@ export default function Main() {
    * 컨트롤러(세팅, 글쓰기) 버튼 핸들러
    */
   const handleSettingButtonClick = () => {
-    router.push(VIEW_NAME.SETTING);
+    router.push(PATH.SETTING);
   };
 
   return (

@@ -14,7 +14,7 @@ import { FormInput } from "@/components/Input/FormInput";
 import { KView } from "@/components/Layout/KView";
 
 // constants
-import { VIEW_NAME } from "@/constants";
+import { PATH } from "@/constants";
 
 // api
 import { apiService } from "@/apis";
@@ -60,7 +60,7 @@ export default function Home() {
         /**
          * 로그인 성공 시 메인 페이지로 이동
          */
-        router.replace(VIEW_NAME.MAIN);
+        router.replace(PATH.MAIN);
       },
     }
   );
@@ -96,7 +96,7 @@ export default function Home() {
   };
 
   const signUpButtonClickHandler = () => {
-    router.push(VIEW_NAME.SIGN_UP);
+    router.push(PATH.SIGN_UP);
   };
 
   return (

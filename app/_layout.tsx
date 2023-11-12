@@ -31,7 +31,7 @@ import { fireToast } from "@/utils";
 import { Toast } from "@/components/Overlay/Toast";
 
 // constants
-import { CODE, VIEW_NAME, size } from "@/constants";
+import { CODE, PATH, size } from "@/constants";
 
 // axios
 import axios, { AxiosError } from "axios";
@@ -88,7 +88,7 @@ export const globalErrorHandler = async (error: unknown) => {
     case CODE.NO_AUTHORIZATION_HEADER:
       fireToast(store.dispatch, "잘못된 접근입니다.", 3000);
 
-      router.replace(VIEW_NAME.HOME);
+      router.replace(PATH.HOME);
 
       break;
   }

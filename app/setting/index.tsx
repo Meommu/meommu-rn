@@ -7,7 +7,7 @@ import { useQuery } from "react-query";
 import { router } from "expo-router";
 
 // constants
-import { VIEW_NAME } from "@/constants";
+import { PATH } from "@/constants";
 
 // components
 import { GoBackButton } from "@/components/Button/GoBackButton";
@@ -27,7 +27,7 @@ export default function Setting() {
 
     await AsyncStorage.removeItem("accessToken");
 
-    router.replace(VIEW_NAME.HOME);
+    router.replace(PATH.HOME);
   };
 
   return (

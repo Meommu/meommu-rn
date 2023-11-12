@@ -1,4 +1,4 @@
-export const enum VIEW_NAME {
+export const enum PATH {
   ROOT = "",
   ON_BOARDING = "on-boarding",
   HOME = "home",
