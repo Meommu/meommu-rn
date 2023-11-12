@@ -1,29 +1,15 @@
 import { faker } from "@faker-js/faker";
 import {
+  chkSwiperIndex,
   clearAndWriteInputText,
   clickAgreementButton,
   clickEmailDupChkButton,
   clickNextStepButton,
 } from "./utils";
 
-const utils = {
-  chkElementInTheScreen: (testId: string) => {
-    cy.get("body").then(($el) => {
-      const boundaryX = $el[0].getBoundingClientRect().right;
-
-      cy.get(`[data-testid="${testId}"]`).then(($el) => {
-        expect($el[0].getBoundingClientRect().right <= boundaryX).is.equal(
-          true
-        );
-      });
-    });
-  },
-};
-
 let email = "";
 
 const CORRECT_PASSWORD = "12345678a*!";
-
 const CORRECT_KINDERGARTEN_NAME = "유치원이름";
 const CORRECT_KINDERGARTEN_DIRECTOR_NAME = "김숙자";
 const CORRECT_PHONE_NUMBER = "010-1234-5678";
@@ -113,8 +99,8 @@ describe("회원가입 페이지", () => {
       clearAndWriteInputText("input-password-confirm", CORRECT_PASSWORD);
 
       clickNextStepButton();
-      cy.wait(1000);
-      utils.chkElementInTheScreen("text-guide-of-step-two");
+
+      chkSwiperIndex(1);
     });
   });
 
@@ -192,9 +178,7 @@ describe("회원가입 페이지", () => {
 
       clickNextStepButton();
 
-      cy.wait(2000);
-
-      utils.chkElementInTheScreen("text-guide-of-complete");
+      chkSwiperIndex(2);
 
       clickNextStepButton();
     });

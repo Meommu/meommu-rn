@@ -20,3 +20,7 @@ export const clickEmailDupChkButton = () => {
 export const clickNextStepButton = () => {
   getTestElement("button-next-step-of-signup").click();
 };
+
+export const chkSwiperIndex = (swiperIndex: number) => {
+  cy.contains(`swiperIndex ${swiperIndex}`);
+};
