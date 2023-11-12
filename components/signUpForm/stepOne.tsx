@@ -60,7 +60,7 @@ export function StepOne() {
    */
   const handleAgreementButtonClick = useCallback(() => {
     setValue("agreement", !agreement);
-  }, []);
+  }, [agreement, setValue]);
 
   const handleEmailDupChkButtonClick = useCallback(async () => {
     const emailIsValid = await trigger("email");
@@ -72,7 +72,7 @@ export function StepOne() {
     emailDupChkMutation.mutate();
 
     return;
-  }, []);
+  }, [trigger, emailDupChkMutation]);
 
   /**
    * 유틸 함수
