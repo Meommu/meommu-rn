@@ -176,15 +176,14 @@ export default function SignUp() {
         {/**
          * header
          */}
-        <View style={styles.headerWrapper}>
-          <Header
-            left={
-              swiperIndex !== LAST_SLIDE_INDEX && (
-                <GoBackButton onPress={handleGoBackButtonClick} />
-              )
-            }
-          />
-        </View>
+        <Header
+          style={styles.header}
+          left={
+            swiperIndex !== LAST_SLIDE_INDEX && (
+              <GoBackButton onPress={handleGoBackButtonClick} />
+            )
+          }
+        />
 
         {/**
          * content (swiper)
@@ -260,7 +259,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
 
-  headerWrapper: {
+  header: {
     padding: 20,
   },
 

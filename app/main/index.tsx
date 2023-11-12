@@ -32,23 +32,22 @@ export default function Main() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.headerWrapper}>
-        <Header
-          left={<Text style={styles.logoText}>meommu</Text>}
-          right={
-            <View style={styles.controllerBox}>
-              <SettingButton
-                onPress={handleSettingButtonClick}
-                testID="button-setting"
-              />
-              <PlusButton
-                onPress={handleWriteButtonClick}
-                testID="button-write"
-              />
-            </View>
-          }
-        />
-      </View>
+      <Header
+        style={styles.header}
+        left={<Text style={styles.logoText}>meommu</Text>}
+        right={
+          <View style={styles.controllerBox}>
+            <SettingButton
+              onPress={handleSettingButtonClick}
+              testID="button-setting"
+            />
+            <PlusButton
+              onPress={handleWriteButtonClick}
+              testID="button-write"
+            />
+          </View>
+        }
+      />
 
       <Suspense fallback={<MonthPickerOpenControllerSkeleton />}>
         <MonthPickerOpenController />
@@ -69,7 +68,7 @@ const styles = StyleSheet.create({
   /**
    * header
    */
-  headerWrapper: {
+  header: {
     padding: 20,
   },
 
