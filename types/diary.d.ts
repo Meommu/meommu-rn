@@ -14,3 +14,5 @@ type DiaryImage = {
   id: number;
   url: string;
 };
+
+type DiaryWriteFormFieldValues = Omit<Diary, "id" | "createdAt">;
