@@ -87,19 +87,23 @@ export default function SignUp() {
   );
 
   /**
-   * 버튼 핸들러
+   * button onPress handler
    */
   const handleNextButtonClick = useCallback(async () => {
     if (!swiper.current) {
       return;
     }
 
-    if (!(await isCurrentStepFieldAvailable())) {
-      return;
-    }
-
     switch (swiperIndex) {
       case FIRST_SLIDE_INDEX:
+        if (
+          !(await trigger("email")) ||
+          !(await trigger("password")) ||
+          !(await trigger("passwordConfirm"))
+        ) {
+          break;
+        }
+
         swiper.current.goTo(SECOND_SLIDE_INDEX);
 
         break;
@@ -131,32 +135,11 @@ export default function SignUp() {
       default:
         swiper.current?.goToPrev();
     }
-  }, [swiper, swiperIndex]);
+  }, [swiper, swiperIndex, trigger]);
 
   /**
    * util 함수
    */
-  const isCurrentStepFieldAvailable =
-    useCallback(async (): Promise<boolean> => {
-      switch (swiperIndex) {
-        case FIRST_SLIDE_INDEX:
-          return (
-            (await trigger("email")) &&
-            (await trigger("password")) &&
-            (await trigger("passwordConfirm"))
-          );
-
-        /**
-         * 두번째 슬라이드는 handleSubmit 함수가 실행되므로 유효성 검사를 할 필요가 없고,
-         * 세번째 폼은 폼 요소가 없어 유효성검사를 할 필요가 없음.
-         */
-        case SECOND_SLIDE_INDEX:
-        case LAST_SLIDE_INDEX:
-        default:
-          return true;
-      }
-    }, [swiperIndex, trigger]);
-
   const isNextButtonActive = useCallback((): boolean => {
     const {
       password,
