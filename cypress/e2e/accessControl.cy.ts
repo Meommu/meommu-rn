@@ -1,4 +1,9 @@
-import { clearAndWriteInputText } from "./utils";
+import {
+  clearAndWriteInputText,
+  clickLogoutButtonClick,
+  clickSettingButtonClick,
+  clickSignInButton,
+} from "./utils";
 
 describe("로그인/비로그인 상태에서의 페이지 접근제어", () => {
   before(() => {
@@ -18,7 +23,7 @@ describe("로그인/비로그인 상태에서의 페이지 접근제어", () => 
     clearAndWriteInputText("input-signin-email", "meommu@exam.com");
     clearAndWriteInputText("input-signin-password", "Password1!");
 
-    cy.get('[data-testid="button-signin"]').click();
+    clickSignInButton();
 
     cy.contains(/[0-9]{4}년 [0-9]{1,2}월/, { timeout: 1000 * 10 });
   });
@@ -40,11 +45,11 @@ describe("로그인/비로그인 상태에서의 페이지 접근제어", () => 
   });
 
   it("올바르게 로그아웃 할 경우 홈 페이지로 이동", () => {
-    cy.get('[data-testid="button-setting"]').click();
+    clickSettingButtonClick();
 
     cy.contains("로그아웃");
 
-    cy.get('[data-testid="button-logout"]').click();
+    clickLogoutButtonClick();
 
     cy.contains("로그인");
   });
