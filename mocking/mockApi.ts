@@ -242,6 +242,25 @@ export class MockApiService {
         });
 
         /**
+         * [POST] 이미지 업로드
+         */
+        this.post("/api/v1/images", (schema, request) => {
+          // TODO: 확장자에 대한 예외응답 생성
+
+          return new Response(
+            httpStatus.CREATED,
+            {},
+            resBodyTemplate({
+              code: CODE.OK,
+              message: "정상",
+              data: {
+                images: [{ id: Math.floor(Math.random() * 7) + 1, url: "" }],
+              },
+            })
+          );
+        });
+
+        /**
          * [POST] 이메일 패스워드로 로그인
          */
         this.post("/api/v1/kindergartens/signin", (schema, request) => {
