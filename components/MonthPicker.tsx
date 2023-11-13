@@ -75,6 +75,12 @@ class NextComponent extends Component {
       <Pressable
         // @ts-expect-error
         onPress={this.props.onPress}
+        style={{
+          width: 40,
+          height: 40,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
       >
         <CaretRight fill={"#B5BEC6"} />
       </Pressable>
@@ -88,6 +94,12 @@ class PrevComponent extends Component {
       <Pressable
         // @ts-expect-error
         onPress={this.props.onPress}
+        style={{
+          width: 40,
+          height: 40,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
       >
         <CaretLeft fill={"#B5BEC6"} />
       </Pressable>
