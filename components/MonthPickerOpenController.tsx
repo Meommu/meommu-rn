@@ -22,9 +22,9 @@ import {
 } from "@/store/modules/diaryDate";
 
 // components
-import { SText } from "./Text/SText";
 import { MonthPicker } from "@/components/MonthPicker";
 import { NavigationButton } from "@/components/Button/NavigationButton";
+import { SView } from "@/components/Layout/SView";
 
 // hooks
 import { useDyanmicStyle } from "@/hooks";
@@ -162,12 +162,14 @@ export function MonthPickerOpenController() {
 
   return (
     <BottomSheetModalProvider>
-      <Pressable style={styles.monthPicker} onPress={handleSheetOpen}>
-        <Text style={styles.monthPickerText}>
-          {currentYear}년 {currentMonth}월
-        </Text>
-        <ArrowDropDown />
-      </Pressable>
+      <View style={styles.container}>
+        <Pressable style={styles.content} onPress={handleSheetOpen}>
+          <Text style={styles.dateText}>
+            {currentYear}년 {currentMonth}월
+          </Text>
+          <ArrowDropDown />
+        </Pressable>
+      </View>
 
       <BottomSheetModal
         ref={bottomSheetRef}
@@ -194,22 +196,28 @@ export function MonthPickerOpenController() {
 
 export function MonthPickerOpenControllerSkeleton() {
   return (
-    <View style={styles.monthPicker}>
-      <SText style={styles.monthPickerText} textLength={7} />
+    <View style={styles.container}>
+      <SView style={[styles.content, { width: 100, height: 23 }]} />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  monthPicker: {
+  container: {
+    paddingVertical: 8,
+    paddingHorizontal: 21,
+    backgroundColor: "#ECECF2",
+    alignItems: "flex-start",
+  },
+
+  content: {
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: 20,
-    paddingBottom: 20,
     gap: 12,
   },
 
-  monthPickerText: {
+  dateText: {
+    fontSize: 18,
     fontFamily: "yeonTheLand",
     color: "#89899C",
   },
