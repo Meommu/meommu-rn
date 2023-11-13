@@ -21,6 +21,7 @@ import axios from "axios";
 import { useMutation } from "react-query";
 import { LoadImage } from "./Image/LoadImage";
 import { ImageRemoveButton } from "./Button/ImageRemoveButton";
+import { b64ToBlob } from "@/utils";
 
 const FIRST_SLIDE_INDEX = 0;
 const LAST_SLIDE_INDEX = 1;
@@ -212,30 +213,6 @@ const enum IMAGE_CATEGORY {
   "DIARY_IMAGE" = "DIARY_IMAGE",
 }
 
-const b64toBlob = (
-  b64Data: string | null | undefined,
-  contentType = "",
-  sliceSize = 512
-) => {
-  const byteCharacters = atob(b64Data || "");
-  const byteArrays = [];
-
-  for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-    const slice = byteCharacters.slice(offset, offset + sliceSize);
-
-    const byteNumbers = new Array(slice.length);
-    for (let i = 0; i < slice.length; i++) {
-      byteNumbers[i] = slice.charCodeAt(i);
-    }
-
-    const byteArray = new Uint8Array(byteNumbers);
-    byteArrays.push(byteArray);
-  }
-
-  const blob = new Blob(byteArrays, { type: contentType });
-  return blob;
-};
-
 function StepTwo() {
   const { control, formState, watch, setValue, getValues } =
     useFormContext<DiaryWriteFormFieldValues>();
@@ -313,7 +290,7 @@ function StepTwo() {
     const fileName = `imageName.${fileExtension}`;
     const contentType = `image/${fileExtension}`;
 
-    const blob = b64toBlob(base64, contentType);
+    const blob = b64ToBlob(base64, contentType);
     const file = new File([blob], fileName, { type: contentType });
 
     formData.append("category", IMAGE_CATEGORY.DIARY_IMAGE);
