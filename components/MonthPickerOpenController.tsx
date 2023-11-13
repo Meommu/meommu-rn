@@ -183,11 +183,12 @@ export function MonthPickerOpenController() {
       >
         <BottomSheetView onLayout={handleContentLayout}>
           <MonthPicker />
-          <NavigationButton
-            content="확인"
-            style={styles.chooseMonthButton}
-            onPress={handleDatePickButtonClick}
-          />
+          <View style={styles.chooseMonthButton}>
+            <NavigationButton
+              content="확인"
+              onPress={handleDatePickButtonClick}
+            />
+          </View>
         </BottomSheetView>
       </BottomSheetModal>
     </BottomSheetModalProvider>
