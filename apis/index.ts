@@ -1,9 +1,13 @@
+// react
+import { Platform } from "react-native";
+
+// axios
+import axios from "axios";
 import * as GET from "./methods/get";
 import * as POST from "./methods/post";
 
-import axios from "axios";
-
-import { Platform } from "react-native";
+// utils
+import { createRandomNumberInRange } from "@/utils";
 
 const devApiUrl =
   "https://port-0-meommu-api-jvvy2blm5wku9j.sel5.cloudtype.app/";
@@ -20,7 +24,7 @@ switch (process.env.EXPO_PUBLIC_MODE) {
      * 캐싱 여부를 확인하기 위해 0.5초에서 1초 사이의 시간으로 지연이 발생하게끔 함.
      */
     axios.interceptors.request.use((config) => {
-      const delay = Math.floor(Math.random() * 501) + 500;
+      const delay = createRandomNumberInRange(500, 1000);
 
       if (config.method === "get") {
         return new Promise((resolve) => {

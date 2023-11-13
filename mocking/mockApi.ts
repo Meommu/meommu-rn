@@ -7,7 +7,7 @@ import type { AnyModels, AnyFactories } from "miragejs/-types";
 import { CODE } from "@/constants";
 
 // utils
-import { resBodyTemplate, regExp } from "@/utils";
+import { resBodyTemplate, regExp, createRandomNumberInRange } from "@/utils";
 
 // other
 import httpStatus from "http-status";
@@ -254,7 +254,7 @@ export class MockApiService {
               code: CODE.OK,
               message: "정상",
               data: {
-                images: [{ id: Math.floor(Math.random() * 7) + 1, url: "" }],
+                images: [{ id: createRandomNumberInRange(1, 7), url: "" }],
               },
             })
           );
