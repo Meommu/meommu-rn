@@ -17,15 +17,18 @@ export function Header({ title, left, right, style, ...props }: HeaderProps) {
         {right || <View />}
       </View>
 
-      <Text style={styles.title}>{title}</Text>
+      <View style={styles.title}>
+        <Text style={styles.titleText}>{title}</Text>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    position: "relative",
     width: "100%",
+    position: "relative",
+    justifyContent: "center",
     alignItems: "center",
   },
 
@@ -36,9 +39,12 @@ const styles = StyleSheet.create({
   },
 
   title: {
+    position: "absolute",
+  },
+
+  titleText: {
     fontSize: 20,
     fontFamily: "Pretendard-SemiBold",
     color: "#2B2B32",
-    position: "absolute",
   },
 });
