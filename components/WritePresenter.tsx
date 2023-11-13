@@ -1,13 +1,26 @@
 // react
 import { useCallback, useRef, useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
-import { Pressable, View, Text, TextInput, Image } from "react-native";
+import {
+  Pressable,
+  View,
+  Text,
+  TextInput,
+  Image,
+  Platform,
+} from "react-native";
 import Swiper from "react-native-web-swiper";
 import { NavigationButton } from "@/components/Button/NavigationButton";
 import { Header } from "@/components/Layout/Header";
 import { GoBackButton } from "./Button/GoBackButton";
 import { PATH, color } from "@/constants";
 import { router } from "expo-router";
+import Camera from "@/assets/svgs/camera.svg";
+import * as ImagePicker from "expo-image-picker";
+import axios from "axios";
+import { useMutation } from "react-query";
+import { LoadImage } from "./Image/LoadImage";
+import { ImageRemoveButton } from "./Button/ImageRemoveButton";
 
 const FIRST_SLIDE_INDEX = 0;
 const LAST_SLIDE_INDEX = 1;
@@ -181,7 +194,7 @@ function StepOne() {
                   paddingBottom: 4,
                 }}
                 onBlur={onBlur}
-                onChange={onChange}
+                onChangeText={onChange}
                 value={value}
               />
             );
@@ -192,10 +205,202 @@ function StepOne() {
   );
 }
 
+const enum IMAGE_CATEGORY {
+  "PARENT_PROFILE" = "PARENT_PROFILE",
+  "KINDERGARTEN_PROFILE" = "KINDERGARTEN_PROFILE",
+  "DOG_PROFILE" = "DOG_PROFILE",
+  "DIARY_IMAGE" = "DIARY_IMAGE",
+}
+
+const b64toBlob = (
+  b64Data: string | null | undefined,
+  contentType = "",
+  sliceSize = 512
+) => {
+  const byteCharacters = atob(b64Data || "");
+  const byteArrays = [];
+
+  for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+    const slice = byteCharacters.slice(offset, offset + sliceSize);
+
+    const byteNumbers = new Array(slice.length);
+    for (let i = 0; i < slice.length; i++) {
+      byteNumbers[i] = slice.charCodeAt(i);
+    }
+
+    const byteArray = new Uint8Array(byteNumbers);
+    byteArrays.push(byteArray);
+  }
+
+  const blob = new Blob(byteArrays, { type: contentType });
+  return blob;
+};
+
 function StepTwo() {
+  const { control, formState, watch, setValue, getValues } =
+    useFormContext<DiaryWriteFormFieldValues>();
+
+  const imageIds = watch("imageIds");
+
+  const [status, requestPermission] = ImagePicker.useMediaLibraryPermissions();
+
+  const uploadImageMutation = useMutation(
+    async (formData: FormData) => {
+      const {
+        data: {
+          data: {
+            images: [{ id }],
+          },
+        },
+      } = await axios.post<
+        ResponseTemplate<{ images: { id: number; url: string }[] }>
+      >("/api/v1/images", formData);
+
+      return id;
+    },
+    {
+      onSuccess: (id: number) => {
+        setValue("imageIds", [...imageIds, id]);
+      },
+    }
+  );
+
+  const handleImageRemoveButtonClick = (index: number) => () => {
+    const newImageIds = [...imageIds];
+
+    newImageIds.splice(index, 1);
+
+    setValue("imageIds", newImageIds);
+  };
+
+  const handleImagePick = async () => {
+    /**
+     * 권한 확인 후 획득
+     */
+    if (!status?.granted) {
+      const permission = await requestPermission();
+
+      if (!permission.granted) {
+        return;
+      }
+    }
+
+    /**
+     * 이미지 선택 후 업로드
+     *
+     * 모바일, 웹 모두 같은 코드를 사용하게끔 base64 방식의 인코딩을 사용
+     */
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      allowsMultipleSelection: false,
+      base64: true,
+      quality: 1,
+    });
+
+    if (result.canceled) {
+      return;
+    }
+
+    const formData = new FormData();
+
+    const { base64, uri } = result.assets[0];
+
+    const fileExtension =
+      Platform.OS === "web"
+        ? uri.split(";")[0].split("/")[1]
+        : uri.slice(uri.lastIndexOf(".") + 1);
+    const fileName = `imageName.${fileExtension}`;
+    const contentType = `image/${fileExtension}`;
+
+    const blob = b64toBlob(base64, contentType);
+    const file = new File([blob], fileName, { type: contentType });
+
+    formData.append("category", IMAGE_CATEGORY.DIARY_IMAGE);
+    formData.append("images", file);
+
+    uploadImageMutation.mutate(formData);
+  };
+
   return (
-    <View>
-      <Text>두번째 폼</Text>
+    <View style={{ width: "100%", height: "100%" }}>
+      <View style={{ padding: 7, flexDirection: "row" }}>
+        {Array(5)
+          .fill(null)
+          .map((_, i) => {
+            return (
+              <View
+                key={imageIds[i] ? `imageId${imageIds[i]}` : i}
+                style={{
+                  width: "20%",
+                  aspectRatio: "1/1",
+                  padding: 7,
+                }}
+              >
+                <View
+                  style={{
+                    borderWidth: 2,
+                    borderColor: "#BFC4CE",
+                    borderRadius: 4,
+                    width: "100%",
+                    height: "100%",
+                  }}
+                >
+                  {imageIds.length === i ? (
+                    <Pressable
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        gap: 5,
+                      }}
+                      onPress={handleImagePick}
+                    >
+                      <Camera />
+                      <Text
+                        style={{
+                          fontSize: 12,
+                          fontFamily: "Pretendard-Regular",
+                          color: "#BFC4CE",
+                        }}
+                      >
+                        {imageIds.length} / 5
+                      </Text>
+                    </Pressable>
+                  ) : (
+                    imageIds[i] && (
+                      <View
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          position: "relative",
+                        }}
+                      >
+                        <LoadImage
+                          style={{
+                            position: "absolute",
+                          }}
+                          imageId={imageIds[i]}
+                        />
+                        <Pressable
+                          onPress={handleImageRemoveButtonClick(i)}
+                          style={{
+                            position: "absolute",
+                            right: -10,
+                            top: -10,
+                          }}
+                        >
+                          <ImageRemoveButton />
+                        </Pressable>
+                      </View>
+                    )
+                  )}
+                </View>
+              </View>
+            );
+          })}
+      </View>
     </View>
   );
 }
