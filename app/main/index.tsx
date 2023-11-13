@@ -69,7 +69,9 @@ const styles = StyleSheet.create({
    * header
    */
   header: {
-    padding: 20,
+    paddingVertical: 20,
+    paddingLeft: 20,
+    paddingRight: 12,
   },
 
   logoText: {
