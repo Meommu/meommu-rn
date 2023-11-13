@@ -21,9 +21,11 @@
     "@react-navigation/native": "^6.1.8",
     "@svgr/webpack": "^8.1.0",
     "axios": "^1.5.1",
+    "base-64": "^1.0.0",
     "expo": "~49.0.13",
     "expo-constants": "~14.4.2",
     "expo-font": "~11.4.0",
+    "expo-image-picker": "~14.3.2",
     "expo-linking": "~5.0.2",
     "expo-router": "^2.0.0",
     "expo-splash-screen": "~0.20.5",
@@ -44,11 +46,11 @@
     "react-native-web-swiper": "^2.2.4",
     "react-query": "^3.39.3",
     "react-redux": "^8.1.3",
-    "redux": "^4.2.1",
-    "expo-image-picker": "~14.3.2"
+    "redux": "^4.2.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
+    "@types/base-64": "^1.0.2",
     "@types/react": "~18.2.14",
     "@types/react-native": "^0.72.5",
     "cypress": "^13.3.3",
