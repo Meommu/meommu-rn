@@ -82,7 +82,5 @@ const styles = StyleSheet.create({
    */
   controllerBox: {
     flexDirection: "row",
-    paddingVertical: 8,
-    gap: 16,
   },
 });

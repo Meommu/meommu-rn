@@ -19,8 +19,8 @@ export function PlusButton({ ...props }: PlusButtonProps) {
 
 const styles = StyleSheet.create({
   container: {
-    width: 20,
-    height: 20,
+    width: 40,
+    height: 40,
   },
 
   hitBox: {
@@ -28,5 +28,6 @@ const styles = StyleSheet.create({
     height: "100%",
     justifyContent: "center",
     alignItems: "center",
+    padding: 8,
   },
 });
