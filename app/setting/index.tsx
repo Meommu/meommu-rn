@@ -16,6 +16,7 @@ import { Header } from "@/components/Layout/Header";
 // apis
 import { apiService } from "@/apis";
 import axios from "axios";
+import { useCallback } from "react";
 
 export default function Setting() {
   const { data, isLoading } = useQuery(["userInfo"], async () => {
@@ -30,10 +31,17 @@ export default function Setting() {
     router.replace(PATH.HOME);
   };
 
+  const handleGoBackButtonClick = useCallback(() => {
+    router.replace(PATH.MAIN);
+  }, []);
+
   return (
     <View style={styles.container}>
       <View style={styles.content}>
-        <Header title="설정" left={<GoBackButton />} />
+        <Header
+          title="설정"
+          left={<GoBackButton onPress={handleGoBackButtonClick} />}
+        />
 
         {!isLoading && data && (
           <View style={styles.profile}>
