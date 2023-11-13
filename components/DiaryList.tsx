@@ -184,7 +184,7 @@ export function DiaryList() {
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 20,
+    padding: 20,
   },
 
   listCountText: {
