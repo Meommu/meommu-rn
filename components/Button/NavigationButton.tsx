@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Pressable } from "react-native";
 import type { PressableProps } from "react-native";
 
 // constants
-import { size } from "@/constants";
+import { color, size } from "@/constants";
 
 interface NavigationButtonProps extends PressableProps {
   fontColor?: string;
@@ -12,17 +12,18 @@ interface NavigationButtonProps extends PressableProps {
 }
 
 export function NavigationButton({
-  backgroundColor = "#8579F1",
+  backgroundColor = color.primary,
   fontColor = "white",
   content,
+  style,
   ...props
 }: NavigationButtonProps) {
   return (
-    <Pressable {...props}>
-      <View style={[styles.container, { backgroundColor }]}>
+    <View style={styles.container}>
+      <Pressable style={[styles.content, { backgroundColor }]} {...props}>
         <Text style={[styles.buttonText, { color: fontColor }]}>{content}</Text>
-      </View>
-    </Pressable>
+      </Pressable>
+    </View>
   );
 }
 
@@ -31,9 +32,16 @@ const styles = StyleSheet.create({
     width: "100%",
     height: size.NAVIGATION_BUTTON_HEIGHT,
     borderRadius: 6,
+    overflow: "hidden",
+  },
+
+  content: {
+    width: "100%",
+    height: "100%",
     justifyContent: "center",
     alignItems: "center",
   },
+
   buttonText: {
     color: "white",
     fontSize: 16,
