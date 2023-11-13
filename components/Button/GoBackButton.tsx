@@ -18,7 +18,7 @@ export function GoBackButton({ style, onPress, ...props }: PressableProps) {
   return (
     <View style={styles.container}>
       <Pressable
-        style={styles.pressBox}
+        style={styles.hitBox}
         onPress={onPress || handleGoBackButtonClick}
         {...props}
       >
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     height: 20,
   },
 
-  pressBox: {
+  hitBox: {
     width: "100%",
     height: "100%",
     justifyContent: "center",

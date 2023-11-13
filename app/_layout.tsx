@@ -20,9 +20,8 @@ import rootReducer from "@/store";
 
 // expo
 import { useFonts } from "expo-font";
-import { Stack } from "expo-router";
+import { Stack, router } from "expo-router";
 import Constants from "expo-constants";
-import { router } from "expo-router";
 
 // utils
 import { fireToast } from "@/utils";
