@@ -126,7 +126,11 @@ export default function SignUp() {
   const handleGoBackButtonClick = useCallback(() => {
     switch (swiperIndex) {
       case FIRST_SLIDE_INDEX:
-        router.replace(PATH.HOME);
+        if (router.canGoBack()) {
+          router.back();
+        } else {
+          router.replace(PATH.HOME);
+        }
 
         break;
 
@@ -179,9 +183,11 @@ export default function SignUp() {
         <Header
           style={styles.header}
           left={
-            swiperIndex !== LAST_SLIDE_INDEX && (
-              <GoBackButton onPress={handleGoBackButtonClick} />
-            )
+            <GoBackButton
+              onPress={handleGoBackButtonClick}
+              isHidden={swiperIndex === LAST_SLIDE_INDEX}
+              disabled={swiperIndex === LAST_SLIDE_INDEX}
+            />
           }
         />
 
@@ -260,7 +266,7 @@ const styles = StyleSheet.create({
   },
 
   header: {
-    padding: 20,
+    padding: 12,
   },
 
   navigationView: {
