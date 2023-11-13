@@ -5,7 +5,7 @@ import type { PressableProps } from "react-native";
 // svgs
 import CaretLeft from "@/assets/svgs/caret-left.svg";
 
-export function GoBackButton({ style, onPress, ...props }: PressableProps) {
+export function GoBackButton({ style, ...props }: PressableProps) {
   return (
     <View style={styles.container}>
       <Pressable style={styles.content} {...props}>
