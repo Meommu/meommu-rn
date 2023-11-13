@@ -17,7 +17,11 @@ export function GoBackButton({ style, onPress, ...props }: PressableProps) {
 
   return (
     <View style={styles.container}>
-      <Pressable onPress={onPress || handleGoBackButtonClick} {...props}>
+      <Pressable
+        style={styles.pressBox}
+        onPress={onPress || handleGoBackButtonClick}
+        {...props}
+      >
         <CaretLeft />
       </Pressable>
     </View>
@@ -28,6 +32,11 @@ const styles = StyleSheet.create({
   container: {
     width: 20,
     height: 20,
+  },
+
+  pressBox: {
+    width: "100%",
+    height: "100%",
     justifyContent: "center",
     alignItems: "center",
   },
