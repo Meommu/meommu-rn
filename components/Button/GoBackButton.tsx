@@ -5,10 +5,21 @@ import type { PressableProps } from "react-native";
 // svgs
 import CaretLeft from "@/assets/svgs/caret-left.svg";
 
-export function GoBackButton({ style, ...props }: PressableProps) {
+interface GoBackButtonProps extends PressableProps {
+  isHidden?: boolean;
+}
+
+export function GoBackButton({
+  style,
+  isHidden = false,
+  ...props
+}: GoBackButtonProps) {
   return (
     <View style={styles.container}>
-      <Pressable style={styles.content} {...props}>
+      <Pressable
+        style={[styles.content, { opacity: isHidden ? 0 : 1 }]}
+        {...props}
+      >
         <CaretLeft />
       </Pressable>
     </View>
