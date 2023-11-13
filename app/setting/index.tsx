@@ -1,7 +1,7 @@
 // react
+import { Suspense, useCallback } from "react";
 import { View, Text, StyleSheet, Pressable } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useQuery } from "react-query";
 
 // expo
 import { router } from "expo-router";
@@ -12,17 +12,12 @@ import { PATH } from "@/constants";
 // components
 import { GoBackButton } from "@/components/Button/GoBackButton";
 import { Header } from "@/components/Layout/Header";
+import { Profile, ProfileSkeleton } from "@/components/Profile";
 
 // apis
-import { apiService } from "@/apis";
 import axios from "axios";
-import { useCallback } from "react";
 
 export default function Setting() {
-  const { data, isLoading } = useQuery(["userInfo"], async () => {
-    return await apiService.getLoginInfo();
-  });
-
   const handleLogoutButtonClick = async () => {
     delete axios.defaults.headers.common.Authorization;
 
@@ -32,7 +27,11 @@ export default function Setting() {
   };
 
   const handleGoBackButtonClick = useCallback(() => {
-    router.replace(PATH.MAIN);
+    if (router.canGoBack()) {
+      router.back();
+    } else {
+      router.replace(PATH.MAIN);
+    }
   }, []);
 
   return (
@@ -40,23 +39,15 @@ export default function Setting() {
       <View style={styles.content}>
         <Header
           title="설정"
+          style={styles.header}
           left={<GoBackButton onPress={handleGoBackButtonClick} />}
         />
 
-        {!isLoading && data && (
-          <View style={styles.profile}>
-            <View style={styles.profileImage}>
-              <View style={styles.profileImagePlaceholder}>
-                <Text style={styles.profileImagePlaceholderText}>me</Text>
-              </View>
-            </View>
-
-            <View style={styles.profileContent}>
-              <Text style={styles.profileContentName}>{data.name}</Text>
-              <Text style={styles.profileContentEmail}>{data.email}</Text>
-            </View>
-          </View>
-        )}
+        <View style={styles.profile}>
+          <Suspense fallback={<ProfileSkeleton />}>
+            <Profile />
+          </Suspense>
+        </View>
 
         <View style={styles.sign}>
           <Pressable
@@ -82,7 +73,6 @@ const styles = StyleSheet.create({
   container: {
     width: "100%",
     height: "100%",
-    padding: 20,
     backgroundColor: "white",
   },
 
@@ -92,52 +82,12 @@ const styles = StyleSheet.create({
     position: "relative",
   },
 
-  profile: {
-    marginTop: 20,
+  header: {
     padding: 12,
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 14,
   },
 
-  profileImage: {
-    width: 70,
-    height: 70,
-    borderRadius: 30,
-    position: "relative",
-    overflow: "hidden",
-  },
-
-  profileImagePlaceholder: {
-    position: "absolute",
-    width: "100%",
-    height: "100%",
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#8579F1",
-  },
-
-  profileImagePlaceholderText: {
-    fontSize: 26,
-    fontFamily: "yeonTheLand",
-    fontWeight: "normal",
-    color: "white",
-  },
-
-  profileContent: {
-    gap: 4,
-  },
-
-  profileContentName: {
-    color: "#1A1A1A",
-    fontSize: 18,
-    fontFamily: "Pretendard-SemiBold",
-  },
-
-  profileContentEmail: {
-    fontFamily: "Pretendard-Regular",
-    fontSize: 12,
-    color: "#808080",
+  profile: {
+    paddingHorizontal: 20,
   },
 
   sign: {
@@ -145,6 +95,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 0,
     flexDirection: "row",
+    padding: 20,
   },
 
   signButton: {
