@@ -1,9 +1,8 @@
 // react
 import { StyleSheet } from "react-native";
-import { FormProvider, useForm } from "react-hook-form";
 
 // components
-import { WritePresenter } from "@/components/WritePresenter";
+import { WritePage } from "@/pages/Write";
 import { KView } from "@/components/Layout/KView";
 
 // hooks
@@ -12,21 +11,9 @@ import { usePreventTabScrolling } from "@/hooks/usePreventTabScrolling";
 export default function Write() {
   usePreventTabScrolling();
 
-  const methods = useForm<DiaryWriteFormFieldValues>({
-    defaultValues: {
-      date: "",
-      title: "",
-      content: "",
-      dogName: "",
-      imageIds: [],
-    },
-  });
-
   return (
     <KView style={styles.container}>
-      <FormProvider {...methods}>
-        <WritePresenter />
-      </FormProvider>
+      <WritePage />
     </KView>
   );
 }
