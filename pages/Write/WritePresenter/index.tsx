@@ -24,7 +24,7 @@ interface WritePresenterProps {
   handleGoBackButtonClick: () => void;
   handleSwiperIndexChange: (index: number) => void;
   isBottomButtonActive: () => boolean;
-  isLastPage: () => boolean;
+  isLastSlide: () => boolean;
 }
 
 export function WritePresenter({
@@ -34,7 +34,7 @@ export function WritePresenter({
   handleGoBackButtonClick,
   handleSwiperIndexChange,
   isBottomButtonActive,
-  isLastPage,
+  isLastSlide,
 }: WritePresenterProps) {
   const {
     formState: { isSubmitting },
@@ -44,10 +44,10 @@ export function WritePresenter({
     <View style={styles.container}>
       <Header
         style={styles.header}
-        title={isLastPage() ? "일기쓰기" : "누구에게 보낼 건가요?"}
+        title={isLastSlide() ? "일기쓰기" : "누구에게 보낼 건가요?"}
         left={<GoBackButton onPress={handleGoBackButtonClick} />}
         right={
-          isLastPage() && (
+          isLastSlide() && (
             <Pressable
               style={styles.completeButton}
               onPress={handleFinishButtonClick}
@@ -78,7 +78,7 @@ export function WritePresenter({
             isBottomButtonActive() ? color.primary : color.inactive
           }
           disabled={!isBottomButtonActive() || isSubmitting}
-          content={isLastPage() ? "멈무일기 가이드" : "다음"}
+          content={isLastSlide() ? "멈무일기 가이드" : "다음"}
         />
       </View>
     </View>

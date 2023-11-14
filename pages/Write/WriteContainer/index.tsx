@@ -85,7 +85,7 @@ export function WriteContainer() {
     }
   }, [swiperIndex, formState]);
 
-  const isLastPage = useCallback(() => {
+  const isLastSlide = useCallback(() => {
     return swiperIndex === LAST_SLIDE_INDEX;
   }, [swiperIndex]);
 
@@ -98,7 +98,7 @@ export function WriteContainer() {
         handleGoBackButtonClick={handleGoBackButtonClick}
         handleSwiperIndexChange={handleSwiperIndexChange}
         isBottomButtonActive={isBottomButtonActive}
-        isLastPage={isLastPage}
+        isLastSlide={isLastSlide}
       />
     </FormProvider>
   );
