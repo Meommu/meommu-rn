@@ -2,8 +2,8 @@
 import { useState, useRef, useCallback } from "react";
 import Swiper from "react-native-web-swiper";
 
-export function useSwiper() {
-  const [swiperIndex, setSwiperIndex] = useState(0);
+export function useSwiper(initialSwiperIndex: number) {
+  const [swiperIndex, setSwiperIndex] = useState(initialSwiperIndex);
 
   const swiperRef = useRef<Swiper | null>(null);
 
