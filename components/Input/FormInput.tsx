@@ -1,27 +1,17 @@
 // react
-import { useRef } from "react";
-import { View, TextInput, Pressable, StyleSheet } from "react-native";
+import { View, TextInput, StyleSheet } from "react-native";
 import type { TextInputProps } from "react-native";
 
 interface FormInputProps extends TextInputProps {}
 
 export function FormInput({ ...props }: FormInputProps) {
-  const textInputRef = useRef<TextInput | null>(null);
-
   return (
     <View style={styles.container}>
-      <Pressable
-        onFocus={() => {
-          textInputRef.current?.focus();
-        }}
-      >
-        <TextInput
-          ref={textInputRef}
-          style={styles.input}
-          placeholderTextColor="#B7B7CB"
-          {...props}
-        />
-      </Pressable>
+      <TextInput
+        style={styles.input}
+        placeholderTextColor="#B7B7CB"
+        {...props}
+      />
     </View>
   );
 }

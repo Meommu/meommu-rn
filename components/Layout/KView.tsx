@@ -28,11 +28,15 @@ export function KView({ children, ...props }: KViewProps) {
     );
   }
 
-  return (
-    <Pressable style={styles.container} onPress={Keyboard.dismiss}>
-      <View {...props}>{children}</View>
-    </Pressable>
-  );
+  if (Platform.OS === "android") {
+    return (
+      <Pressable style={styles.container} onPress={Keyboard.dismiss}>
+        <View {...props}>{children}</View>
+      </Pressable>
+    );
+  }
+
+  return <View {...props}>{children}</View>;
 }
 
 const styles = StyleSheet.create({

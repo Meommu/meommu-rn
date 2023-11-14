@@ -1,27 +1,17 @@
 // react
-import { useRef } from "react";
-import { View, TextInput, Pressable, StyleSheet } from "react-native";
+import { View, TextInput, StyleSheet } from "react-native";
 import type { TextInputProps } from "react-native";
 
 interface UnderlineInput extends TextInputProps {}
 
 export function UnderlineInput({ ...props }: UnderlineInput) {
-  const textInputRef = useRef<TextInput | null>(null);
-
   return (
     <View style={styles.container}>
-      <Pressable
-        onFocus={() => {
-          textInputRef.current?.focus();
-        }}
-      >
-        <TextInput
-          ref={textInputRef}
-          style={styles.input}
-          placeholderTextColor="#69697A"
-          {...props}
-        />
-      </Pressable>
+      <TextInput
+        style={styles.input}
+        placeholderTextColor="#69697A"
+        {...props}
+      />
     </View>
   );
 }
