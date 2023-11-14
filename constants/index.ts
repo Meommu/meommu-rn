@@ -1,5 +1,6 @@
 export * from "./path";
 export * from "./code";
+export * from "./category";
 export * as size from "./size";
 export * as zIndex from "./zIndex";
 export * as color from "./color";
