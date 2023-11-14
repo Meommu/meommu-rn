@@ -26,16 +26,15 @@ import { apiService } from "@/apis";
 
 // hooks
 import { useThrowMainIfLogin } from "@/hooks/useAccessControl";
+import { usePreventTabScrolling } from "@/hooks/usePreventTabScrolling";
 
 const FIRST_SLIDE_INDEX = 0;
 const SECOND_SLIDE_INDEX = 1;
 const LAST_SLIDE_INDEX = 2;
 
 export default function SignUp() {
-  /**
-   * 접근제어
-   */
   useThrowMainIfLogin();
+  usePreventTabScrolling();
 
   /**
    * useForm

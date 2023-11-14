@@ -6,7 +6,12 @@ import { FormProvider, useForm } from "react-hook-form";
 import { WritePresenter } from "@/components/WritePresenter";
 import { KView } from "@/components/Layout/KView";
 
+// hooks
+import { usePreventTabScrolling } from "@/hooks/usePreventTabScrolling";
+
 export default function Write() {
+  usePreventTabScrolling();
+
   const methods = useForm<DiaryWriteFormFieldValues>({
     defaultValues: {
       date: "",
