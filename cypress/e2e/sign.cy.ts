@@ -98,6 +98,15 @@ describe("회원가입 페이지", () => {
       cy.contains("비밀번호 형식이 올바르지 않습니다.");
     });
 
+    it('영문자가 포함되지 않은 비밀번호가 입력되었을 경우 "비밀번호 형식이 올바르지 않습니다." 메세지 출력', () => {
+      clearAndWriteInputText(getSignUpPasswordInput(), "12345678!");
+      clearAndWriteInputText(getSignUpPasswordConfirmInput(), "12345678!");
+
+      clickSignUpNextStepButton();
+
+      cy.contains("비밀번호 형식이 올바르지 않습니다.");
+    });
+
     it("비밀번호가 일치하지 않을 경우 입력되었을 경우 `패스워드가 일치하지 않습니다.` 메세지 출력", () => {
       clearAndWriteInputText(getSignUpPasswordInput(), "12345678a!");
       clearAndWriteInputText(getSignUpPasswordConfirmInput(), "1234!");
