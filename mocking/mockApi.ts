@@ -4,10 +4,10 @@ import type { ServerConfig } from "miragejs/server";
 import type { AnyModels, AnyFactories } from "miragejs/-types";
 
 // constants
-import { CODE } from "@/constants";
+import { CODE, regExp } from "@/constants";
 
 // utils
-import { resBodyTemplate, regExp, createRandomNumberInRange } from "@/utils";
+import { resBodyTemplate, createRandomNumberInRange } from "@/utils";
 
 // other
 import httpStatus from "http-status";

@@ -15,7 +15,7 @@ import { FormInput } from "@/components/Input/FormInput";
 import { KView } from "@/components/Layout/KView";
 
 // constants
-import { PATH } from "@/constants";
+import { PATH, regExp } from "@/constants";
 
 // api
 import { apiService } from "@/apis";
@@ -24,9 +24,6 @@ import axios from "axios";
 // hooks
 import { useToast } from "@/hooks";
 import { useThrowMainIfLogin } from "@/hooks/useAccessControl";
-
-// utils
-import { regExp } from "@/utils";
 
 export default function Home() {
   useThrowMainIfLogin();

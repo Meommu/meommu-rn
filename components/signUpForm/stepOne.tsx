@@ -17,8 +17,10 @@ import CaretRight from "@/assets/svgs/caret-right.svg";
 import { apiService } from "@/apis";
 
 // utils
-import { regExp } from "@/utils";
 import { useCallback } from "react";
+
+// constants
+import { regExp } from "@/constants";
 
 export function StepOne() {
   /**

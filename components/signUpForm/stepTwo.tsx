@@ -7,8 +7,8 @@ import { FormInput } from "@/components/Input/FormInput";
 import { AlertText } from "@/components/Text/AlertText";
 import { NonIndicatorScrollView } from "@/components/ScrollView/NonIndicatorScrollView";
 
-// utils
-import { regExp } from "@/utils";
+// constants
+import { regExp } from "@/constants";
 
 interface StepTwoProps {}
 
