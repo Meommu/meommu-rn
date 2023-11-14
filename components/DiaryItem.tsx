@@ -10,9 +10,6 @@ import { KebabMenuButton } from "./Button/KebabMenuButton";
 import { SView } from "./Layout/SView";
 import { LoadImage } from "./Image/LoadImage";
 
-// utils
-import { createRandomNumberInRange } from "@/utils";
-
 interface DiaryItemProps {
   diary: Diary;
   handleKebabMenuButtonClick: (diaryId: number) => () => void;
@@ -82,23 +79,9 @@ export function DiaryItemSkeleton() {
       <SView style={styles.imageSwiperWrapper} />
 
       <View style={styles.diaryBody}>
-        <SView
-          style={{ width: `${createRandomNumberInRange(70, 80)}%`, height: 32 }}
-        />
-        <View style={{ width: "100%", gap: 2 }}>
-          {Array(createRandomNumberInRange(2, 3))
-            .fill(null)
-            .map((_, i) => (
-              <SView
-                key={i}
-                style={{
-                  width: `${createRandomNumberInRange(70, 95)}%`,
-                  height: 18,
-                }}
-              />
-            ))}
-        </View>
-        <SView style={{ width: 110, height: 16 }} />
+        <SView style={{ width: "60%", height: 32 }} />
+        <SView style={{ width: "100%", height: 50 }} />
+        <SView style={{ width: 110, height: 17 }} />
       </View>
     </View>
   );
