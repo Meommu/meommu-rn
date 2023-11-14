@@ -17,11 +17,12 @@ import { PATH, color } from "@/constants";
 import { router } from "expo-router";
 import Camera from "@/assets/svgs/camera.svg";
 import * as ImagePicker from "expo-image-picker";
-import axios from "axios";
-import { useMutation } from "react-query";
+import axios, { AxiosError } from "axios";
+import { focusManager, useMutation } from "react-query";
 import { LoadImage } from "./Image/LoadImage";
 import { ImageRemoveButton } from "./Button/ImageRemoveButton";
 import { b64ToBlob } from "@/utils";
+import { UnderlineInput } from "./Input/UnderlineInput";
 
 const FIRST_SLIDE_INDEX = 0;
 const LAST_SLIDE_INDEX = 1;
@@ -62,7 +63,11 @@ export function WritePresenter() {
   const handleGoBackButtonClick = useCallback(() => {
     switch (swiperIndex) {
       case FIRST_SLIDE_INDEX:
-        router.replace(PATH.MAIN);
+        if (router.canGoBack()) {
+          router.back();
+        } else {
+          router.replace(PATH.MAIN);
+        }
 
         break;
 
@@ -90,7 +95,7 @@ export function WritePresenter() {
   return (
     <View style={{ width: "100%", height: "100%", backgroundColor: "white" }}>
       <Header
-        style={{ padding: 20 }}
+        style={{ padding: 12 }}
         title={
           swiperIndex === FIRST_SLIDE_INDEX
             ? "누구에게 보낼 건가요?"
@@ -99,7 +104,10 @@ export function WritePresenter() {
         left={<GoBackButton onPress={handleGoBackButtonClick} />}
         right={
           swiperIndex === LAST_SLIDE_INDEX && (
-            <Pressable onPress={handleFinishButtonClick}>
+            <Pressable
+              style={{ justifyContent: "center" }}
+              onPress={handleFinishButtonClick}
+            >
               <Text
                 style={{
                   color: "#828282",
@@ -127,15 +135,18 @@ export function WritePresenter() {
         <StepTwo />
       </Swiper>
 
-      <NavigationButton
-        style={{ padding: 20 }}
-        onPress={handleBottomButtonClick}
-        backgroundColor={
-          isButtomButtonActive() ? color.primary : color.inactive
-        }
-        disabled={!isButtomButtonActive() || isSubmitting}
-        content={swiperIndex === LAST_SLIDE_INDEX ? "멈무일기 가이드" : "다음"}
-      />
+      <View style={{ padding: 20 }}>
+        <NavigationButton
+          onPress={handleBottomButtonClick}
+          backgroundColor={
+            isButtomButtonActive() ? color.primary : color.inactive
+          }
+          disabled={!isButtomButtonActive() || isSubmitting}
+          content={
+            swiperIndex === LAST_SLIDE_INDEX ? "멈무일기 가이드" : "다음"
+          }
+        />
+      </View>
     </View>
   );
 }
@@ -176,6 +187,7 @@ function StepOne() {
             source={require("@/assets/images/write/dummy-dog.png")}
           />
         </View>
+
         <Controller
           name="dogName"
           control={control}
@@ -184,20 +196,15 @@ function StepOne() {
           }}
           render={({ field: { onChange, onBlur, value } }) => {
             return (
-              <TextInput
-                maxLength={10}
-                placeholder="강아지 이름 (0/10)"
-                style={{
-                  fontFamily: "yeonTheLand",
-                  fontSize: 20,
-                  textAlign: "center",
-                  borderBottomWidth: 1,
-                  paddingBottom: 4,
-                }}
-                onBlur={onBlur}
-                onChangeText={onChange}
-                value={value}
-              />
+              <View style={{ width: 169 }}>
+                <UnderlineInput
+                  maxLength={10}
+                  placeholder="강아지 이름 (0/10)"
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                />
+              </View>
             );
           }}
         />
@@ -231,7 +238,7 @@ function StepTwo() {
         },
       } = await axios.post<
         ResponseTemplate<{ images: { id: number; url: string }[] }>
-      >("/api/v1/images", formData);
+      >("/api/v1/images", process.env.EXPO_PUBLIC_MODE !== "dev" && formData);
 
       return id;
     },
@@ -267,26 +274,35 @@ function StepTwo() {
      *
      * 모바일, 웹 모두 같은 코드를 사용하게끔 base64 방식의 인코딩을 사용
      */
+    const getImageFormData =
+      Platform.OS === "web" ? getImageFormDataOnWeb : getImageFormDataOnMobile;
+
+    const formData = await getImageFormData();
+
+    if (!formData) {
+      return;
+    }
+
+    uploadImageMutation.mutate(formData);
+  };
+
+  const getImageFormDataOnWeb = async (): Promise<FormData | null> => {
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
+      allowsEditing: false,
       allowsMultipleSelection: false,
       base64: true,
-      quality: 1,
     });
 
     if (result.canceled) {
-      return;
+      return null;
     }
 
     const formData = new FormData();
 
     const { base64, uri } = result.assets[0];
 
-    const fileExtension =
-      Platform.OS === "web"
-        ? uri.split(";")[0].split("/")[1]
-        : uri.slice(uri.lastIndexOf(".") + 1);
+    const fileExtension = uri.split(";")[0].split("/")[1];
     const fileName = `imageName.${fileExtension}`;
     const contentType = `image/${fileExtension}`;
 
@@ -296,7 +312,33 @@ function StepTwo() {
     formData.append("category", IMAGE_CATEGORY.DIARY_IMAGE);
     formData.append("images", file);
 
-    uploadImageMutation.mutate(formData);
+    return formData;
+  };
+
+  const getImageFormDataOnMobile = async (): Promise<FormData | null> => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: false,
+      allowsMultipleSelection: false,
+    });
+
+    if (result.canceled) {
+      return null;
+    }
+
+    const formData = new FormData();
+
+    const { uri } = result.assets[0];
+
+    const fileExtension = uri.slice(uri.lastIndexOf(".") + 1);
+    const fileName = `imageName.${fileExtension}`;
+    const contentType = `image/${fileExtension}`;
+
+    formData.append("category", IMAGE_CATEGORY.DIARY_IMAGE);
+    // @ts-ignore
+    formData.append("images", { uri, name: fileName, type: contentType });
+
+    return formData;
   };
 
   return (
@@ -355,9 +397,7 @@ function StepTwo() {
                         }}
                       >
                         <LoadImage
-                          style={{
-                            position: "absolute",
-                          }}
+                          style={{ position: "absolute" }}
                           imageId={imageIds[i]}
                         />
                         <Pressable
