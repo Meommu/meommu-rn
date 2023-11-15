@@ -5,8 +5,12 @@ export const styles = StyleSheet.create({
   container: {
     width: "100%",
     height: "100%",
+    backgroundColor: "#F5F6F8",
   },
 
+  /**
+   * 이미지 업로더
+   */
   imageUploader: {
     width: "100%",
     padding: 7,
@@ -55,5 +59,40 @@ export const styles = StyleSheet.create({
     position: "absolute",
     right: -10,
     top: -10,
+  },
+
+  /**
+   * 제목 본문 폼
+   */
+  writeForm: {
+    width: "100%",
+    height: "100%",
+    flexShrink: 1,
+  },
+
+  writeFormTitleInputWrapper: {
+    paddingTop: 20,
+    paddingHorizontal: 20,
+  },
+
+  writeFormTitleInput: {
+    fontSize: 20,
+    paddingBottom: 7,
+  },
+
+  writeFormContentInputWrapper: {
+    padding: 20,
+    width: "100%",
+    height: "100%",
+    flexShrink: 1,
+  },
+
+  writeFormContentInput: {
+    width: "100%",
+    height: "100%",
+    fontSize: 16,
+    fontFamily: "yeonTheLand",
+    textAlign: "center",
+    color: "#606077",
   },
 });

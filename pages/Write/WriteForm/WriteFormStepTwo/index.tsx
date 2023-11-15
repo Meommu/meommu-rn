@@ -1,8 +1,9 @@
 // react
-import { View, Pressable, Text } from "react-native";
+import { View, Pressable, Text, TextInput } from "react-native";
 import { useMutation } from "react-query";
 import { useFormContext } from "react-hook-form";
 import { Platform } from "react-native";
+import { Controller } from "react-hook-form";
 
 // expo
 import * as ImagePicker from "expo-image-picker";
@@ -13,9 +14,7 @@ import Camera from "@/assets/svgs/camera.svg";
 // components
 import { LoadImage } from "@/components/Image/LoadImage";
 import { ImageRemoveButton } from "@/components/Button/ImageRemoveButton";
-
-// axios
-import axios from "axios";
+import { UnderlineInput } from "@/components/Input/UnderlineInput";
 
 // utils
 import { b64ToBlob } from "@/utils";
@@ -23,15 +22,18 @@ import { b64ToBlob } from "@/utils";
 // constants
 import { IMAGE_CATEGORY } from "@/constants";
 
+// apis
+import { apiService } from "@/apis";
+
 // styles
 import { styles } from "./index.styles";
-import { apiService } from "@/apis";
 
 export function WriteFormStepTwo() {
   /**
    * useForm
    */
-  const { watch, setValue } = useFormContext<DiaryWriteFormFieldValues>();
+  const { control, watch, setValue, getValues } =
+    useFormContext<DiaryWriteFormFieldValues>();
 
   const imageIds = watch("imageIds");
 
@@ -188,6 +190,60 @@ export function WriteFormStepTwo() {
               </View>
             );
           })}
+      </View>
+
+      <View style={styles.writeForm}>
+        <View style={styles.writeFormTitleInputWrapper}>
+          <Controller
+            name="title"
+            control={control}
+            rules={{
+              required: true,
+              minLength: 1,
+              maxLength: 20,
+            }}
+            render={({ field: { onChange, onBlur, value } }) => {
+              return (
+                <UnderlineInput
+                  style={styles.writeFormTitleInput}
+                  maxLength={20}
+                  placeholder="글 제목 (0/20)"
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                />
+              );
+            }}
+          />
+        </View>
+
+        <View style={styles.writeFormContentInputWrapper}>
+          <Controller
+            name="content"
+            control={control}
+            rules={{
+              required: true,
+              minLength: 1,
+              maxLength: 1000,
+            }}
+            render={({ field: { onChange, onBlur, value } }) => {
+              return (
+                <TextInput
+                  style={styles.writeFormContentInput}
+                  textAlignVertical="top"
+                  multiline={true}
+                  maxLength={1000}
+                  placeholder={`${getValues(
+                    "dogName"
+                  )}의 일기를 작성해주세요. (0/1000)`}
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                />
+              );
+            }}
+          />
+        </View>
       </View>
     </View>
   );
