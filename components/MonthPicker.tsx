@@ -1,6 +1,6 @@
 // react
-import React, { Component, useRef, useState } from "react";
-import { View, Text, Pressable, StyleSheet } from "react-native";
+import React, { useCallback, useRef, useState } from "react";
+import { View, Pressable, StyleSheet } from "react-native";
 import Swiper from "react-native-web-swiper";
 
 // redux
@@ -14,6 +14,7 @@ import CaretLeft from "@/assets/svgs/caret-left.svg";
 
 // components
 import { MonthCalendar } from "./MonthCalendar";
+import { Header } from "@/components/Layout/Header";
 
 // utils
 import { getPastYearDate } from "@/utils";
@@ -37,25 +38,67 @@ export function MonthPicker() {
     setIndex(index);
   };
 
+  const handlerSwiperPrevButtonClick = useCallback(() => {
+    swiperRef.current?.goToPrev();
+  }, []);
+
+  const handlerSwiperNextButtonClick = useCallback(() => {
+    swiperRef.current?.goToNext();
+  }, []);
+
+  const isFirstSlide = useCallback(() => {
+    return index === 0;
+  }, [index]);
+
+  const isLastSlide = useCallback(() => {
+    return index === MAXIMUM_PAST_YEAR - 1;
+  }, [index]);
+
   return (
     <View style={styles.container}>
-      <View style={styles.yearView}>
-        <Text style={styles.yearText}>
-          {getPastYearDate(MAXIMUM_PAST_YEAR - index - 1).getFullYear()}년
-        </Text>
-      </View>
+      <Header
+        style={{ paddingHorizontal: 20, height: 40 }}
+        title={`${getPastYearDate(
+          MAXIMUM_PAST_YEAR - index - 1
+        ).getFullYear()}년`}
+        left={
+          !isFirstSlide() && (
+            <Pressable
+              onPress={handlerSwiperPrevButtonClick}
+              testID="button-month-calendar-prev"
+              style={{
+                width: 40,
+                height: 40,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <CaretLeft fill={"#B5BEC6"} />
+            </Pressable>
+          )
+        }
+        right={
+          !isLastSlide() && (
+            <Pressable
+              onPress={handlerSwiperNextButtonClick}
+              style={{
+                width: 40,
+                height: 40,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <CaretRight fill={"#B5BEC6"} />
+            </Pressable>
+          )
+        }
+      />
 
       <Swiper
         ref={swiperRef}
         from={initialSwiperIndex}
         onIndexChanged={swiperIndexChangeHandler}
-        controlsProps={{
-          dotsPos: false,
-          nextPos: "top-right",
-          prevPos: "top-left",
-          NextComponent,
-          PrevComponent,
-        }}
+        controlsEnabled={false}
       >
         {Array(MAXIMUM_PAST_YEAR)
           .fill(null)
@@ -67,44 +110,6 @@ export function MonthPicker() {
       </Swiper>
     </View>
   );
-}
-
-class NextComponent extends Component {
-  render(): React.ReactNode {
-    return (
-      <Pressable
-        // @ts-expect-error
-        onPress={this.props.onPress}
-        style={{
-          width: 40,
-          height: 40,
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <CaretRight fill={"#B5BEC6"} />
-      </Pressable>
-    );
-  }
-}
-
-class PrevComponent extends Component {
-  render(): React.ReactNode {
-    return (
-      <Pressable
-        // @ts-expect-error
-        onPress={this.props.onPress}
-        style={{
-          width: 40,
-          height: 40,
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <CaretLeft fill={"#B5BEC6"} />
-      </Pressable>
-    );
-  }
 }
 
 const styles = StyleSheet.create({

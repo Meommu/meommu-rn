@@ -163,7 +163,11 @@ export function MonthPickerOpenController() {
   return (
     <BottomSheetModalProvider>
       <View style={styles.container}>
-        <Pressable style={styles.content} onPress={handleSheetOpen}>
+        <Pressable
+          style={styles.content}
+          onPress={handleSheetOpen}
+          testID="button-month-picker"
+        >
           <Text style={styles.dateText}>
             {currentYear}년 {currentMonth}월
           </Text>
