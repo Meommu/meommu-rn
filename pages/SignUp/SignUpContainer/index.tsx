@@ -16,7 +16,7 @@ import { apiService } from "@/apis";
 import { PATH } from "@/constants";
 
 // hooks
-import { useSwiper } from "@/hooks/useSwiper";
+import { useSwiper } from "@/hooks";
 
 const FIRST_SLIDE_INDEX = 0;
 const SECOND_SLIDE_INDEX = 1;

@@ -22,8 +22,7 @@ import { apiService } from "@/apis";
 import axios from "axios";
 
 // hooks
-import { useToast } from "@/hooks";
-import { useThrowMainIfLogin } from "@/hooks/useAccessControl";
+import { useToast, useThrowMainIfLogin } from "@/hooks";
 
 export default function Home() {
   useThrowMainIfLogin();

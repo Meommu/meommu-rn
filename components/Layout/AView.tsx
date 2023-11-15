@@ -5,7 +5,7 @@ import Animated from "react-native-reanimated";
 import { ViewStyle } from "react-native";
 
 // hooks
-import { FadeIn, FadeOut } from "@/hooks/useReanimated";
+import { FadeIn, FadeOut } from "@/hooks";
 
 /**
  * AView : Animated View

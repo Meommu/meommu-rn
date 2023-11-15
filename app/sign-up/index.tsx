@@ -6,8 +6,7 @@ import { KView } from "@/components/Layout/KView";
 import { SignUpPage } from "@/pages/SignUp";
 
 // hooks
-import { useThrowMainIfLogin } from "@/hooks/useAccessControl";
-import { usePreventTabScrolling } from "@/hooks/usePreventTabScrolling";
+import { useThrowMainIfLogin, usePreventTabScrolling } from "@/hooks";
 
 export default function SignUp() {
   useThrowMainIfLogin();

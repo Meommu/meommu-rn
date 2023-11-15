@@ -16,7 +16,7 @@ import { NavigationButton } from "@/components/Button/NavigationButton";
 import { getPastYearDate } from "@/utils";
 
 // hooks
-import { useSwiper } from "@/hooks/useSwiper";
+import { useSwiper } from "@/hooks";
 
 // styles
 import { styles } from "./index.styles";

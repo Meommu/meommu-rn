@@ -9,7 +9,7 @@ import { router } from "expo-router";
 import { WritePresenter } from "../WritePresenter";
 
 // hooks
-import { useSwiper } from "@/hooks/useSwiper";
+import { useSwiper } from "@/hooks";
 
 // constants
 import { PATH } from "@/constants";

@@ -6,7 +6,7 @@ import { WritePage } from "@/pages/Write";
 import { KView } from "@/components/Layout/KView";
 
 // hooks
-import { usePreventTabScrolling } from "@/hooks/usePreventTabScrolling";
+import { usePreventTabScrolling } from "@/hooks";
 
 export default function Write() {
   usePreventTabScrolling();
