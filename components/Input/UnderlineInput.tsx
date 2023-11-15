@@ -4,11 +4,11 @@ import type { TextInputProps } from "react-native";
 
 interface UnderlineInput extends TextInputProps {}
 
-export function UnderlineInput({ ...props }: UnderlineInput) {
+export function UnderlineInput({ style, ...props }: UnderlineInput) {
   return (
     <View style={styles.container}>
       <TextInput
-        style={styles.input}
+        style={[styles.input, style]}
         placeholderTextColor="#69697A"
         {...props}
       />
