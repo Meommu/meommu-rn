@@ -27,6 +27,8 @@ export function WriteFormStepOne() {
           control={control}
           rules={{
             required: true,
+            minLength: 1,
+            maxLength: 10,
           }}
           render={({ field: { onChange, onBlur, value } }) => {
             return (
