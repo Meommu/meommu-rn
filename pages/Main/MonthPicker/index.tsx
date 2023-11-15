@@ -1,12 +1,6 @@
 // react
-import { useEffect, useMemo, useRef, useCallback, useState } from "react";
-import {
-  View,
-  Text,
-  Pressable,
-  Platform,
-  useWindowDimensions,
-} from "react-native";
+import { useEffect, useCallback, useState } from "react";
+import { View, Text, Pressable } from "react-native";
 import { useQuery } from "react-query";
 
 // redux
@@ -19,13 +13,10 @@ import { changeSelectedYearMonth } from "@/store/modules/diaryDate";
 import { MonthCalendar } from "@/components/Widget/MonthCalendar";
 
 // hooks
-import { useDyanmicStyle } from "@/hooks";
+import { useBottomSheetModal } from "@/hooks";
 
 // svgs
 import ArrowDropDown from "@/assets/svgs/arrow-drop-down.svg";
-
-// constants
-import { size } from "@/constants";
 
 // apis
 import { apiService } from "@/apis";
@@ -38,10 +29,9 @@ import {
   BottomSheetModal,
   BottomSheetModalProvider,
   BottomSheetView,
-  useBottomSheetDynamicSnapPoints,
   BottomSheetBackdrop,
-  BottomSheetBackdropProps,
 } from "@gorhom/bottom-sheet";
+import type { BottomSheetBackdropProps } from "@gorhom/bottom-sheet";
 
 // styles
 import { styles } from "./index.styles";
@@ -105,30 +95,14 @@ export function MonthPicker() {
   /**
    * bottom sheet
    */
-  const bottomSheetRef = useRef<BottomSheetModal>(null);
-
-  const initialSnapPoints = useMemo(() => ["CONTENT_HEIGHT"], []);
-
   const {
+    bottomSheetRef,
+    bottomSheetMaxWidthStyle,
+    animatedContentHeight,
     animatedHandleHeight,
     animatedSnapPoints,
-    animatedContentHeight,
     handleContentLayout,
-  } = useBottomSheetDynamicSnapPoints(initialSnapPoints);
-
-  /**
-   * bottom sheet의 반응형 너비 계산
-   */
-  const { width, height } = useWindowDimensions();
-
-  const bottomSheetMaxWidthStyle = useDyanmicStyle(() => {
-    const maxWidth =
-      Platform.OS === "web" && width >= size.LAPTOP_WIDTH
-        ? (9 * height) / 16
-        : "100%";
-
-    return { maxWidth };
-  }, [width, height]);
+  } = useBottomSheetModal();
 
   /**
    * bottom sheet의 dimmed
