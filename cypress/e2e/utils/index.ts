@@ -84,6 +84,18 @@ export const clickSignUpButton = () => {
   getTestElement("button-signup").click();
 };
 
+export const clickMonthPicker = () => {
+  getTestElement("button-month-picker").click();
+};
+
+export const clickMonthCalendarPrevButton = () => {
+  getTestElement("button-month-calendar-prev").click();
+};
+
+export const clickMonthCalendarApplyButton = () => {
+  getTestElement("button-month-calendar-apply-button").click();
+};
+
 /**
  * contains
  */
