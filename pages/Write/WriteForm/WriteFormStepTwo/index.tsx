@@ -25,6 +25,7 @@ import { IMAGE_CATEGORY } from "@/constants";
 
 // styles
 import { styles } from "./index.styles";
+import { apiService } from "@/apis";
 
 export function WriteFormStepTwo() {
   /**
@@ -44,17 +45,7 @@ export function WriteFormStepTwo() {
    */
   const uploadImageMutation = useMutation(
     async (formData: FormData) => {
-      const {
-        data: {
-          data: {
-            images: [{ id }],
-          },
-        },
-      } = await axios.post<
-        ResponseTemplate<{ images: { id: number; url: string }[] }>
-      >("/api/v1/images", process.env.EXPO_PUBLIC_MODE !== "dev" && formData);
-
-      return id;
+      return await apiService.uploadImage(formData);
     },
     {
       onSuccess: (id: number) => {
