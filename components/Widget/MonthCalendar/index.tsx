@@ -1,6 +1,6 @@
 // react
 import React, { createContext, useCallback, useMemo, useState } from "react";
-import { View, Pressable } from "react-native";
+import { View, Text, Pressable } from "react-native";
 import Swiper from "react-native-web-swiper";
 
 // svgs
@@ -90,21 +90,20 @@ export function MonthCalendar({
   return (
     <View style={styles.container}>
       <Header
-        style={{ paddingHorizontal: 20, height: 40 }}
-        title={`${getPastYearDate(
-          CALENDAR_PAGE_SIZE - swiperIndex - 1
-        ).getFullYear()}년`}
+        style={styles.header}
+        title={
+          <Text style={styles.yearText}>
+            {`${getPastYearDate(
+              CALENDAR_PAGE_SIZE - swiperIndex - 1
+            ).getFullYear()}년`}
+          </Text>
+        }
         left={
           !isFirstSlide() && (
             <Pressable
               onPress={handlerSwiperPrevButtonClick}
               testID="button-month-calendar-prev"
-              style={{
-                width: 40,
-                height: 40,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
+              style={styles.swiperController}
             >
               <CaretLeft fill={"#B5BEC6"} />
             </Pressable>
@@ -114,12 +113,7 @@ export function MonthCalendar({
           !isLastSlide() && (
             <Pressable
               onPress={handlerSwiperNextButtonClick}
-              style={{
-                width: 40,
-                height: 40,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
+              style={styles.swiperController}
             >
               <CaretRight fill={"#B5BEC6"} />
             </Pressable>

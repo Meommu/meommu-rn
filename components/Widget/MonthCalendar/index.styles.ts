@@ -9,13 +9,23 @@ export const styles = StyleSheet.create({
     height: size.MONTH_CALENDAR_HEIGHT,
   },
 
-  yearView: { position: "absolute", width: "100%", top: 10 },
+  header: {
+    paddingHorizontal: 20,
+    height: 40,
+  },
 
   yearText: {
     fontSize: 18,
     fontFamily: "Pretendard-SemiBold",
     textAlign: "center",
     color: "#4A5660",
+  },
+
+  swiperController: {
+    width: 40,
+    height: 40,
+    justifyContent: "center",
+    alignItems: "center",
   },
 
   chooseMonthButton: {
