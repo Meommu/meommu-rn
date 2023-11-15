@@ -196,15 +196,17 @@ export class MockApiService {
             resBodyTemplate({
               code: CODE.OK,
               message: "정상",
-              data: diaries.map((diary) => {
-                const { id, date, imageIds, createdAt } = diary;
-                return {
-                  id,
-                  date,
-                  createdAt,
-                  imageIds,
-                };
-              }),
+              data: {
+                diaries: diaries.map((diary) => {
+                  const { id, date, imageIds, createdAt } = diary;
+                  return {
+                    id,
+                    date,
+                    createdAt,
+                    imageIds,
+                  };
+                }),
+              },
             })
           );
         });

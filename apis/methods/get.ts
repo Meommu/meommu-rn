@@ -47,12 +47,14 @@ export const getLoginInfo = async (): Promise<User> => {
 
 export const getDiariesSummary = async (): Promise<DiarySummary[]> => {
   const {
-    data: { data },
-  } = await axios.get<ResponseTemplate<DiarySummary[]>>(
+    data: {
+      data: { diaries },
+    },
+  } = await axios.get<ResponseTemplate<{ diaries: DiarySummary[] }>>(
     "/api/v1/diaries/summary"
   );
 
-  return data;
+  return diaries;
 };
 
 export const getImageUrl = async (imageId: number): Promise<DiaryImage> => {
