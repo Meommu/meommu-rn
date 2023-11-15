@@ -17,8 +17,8 @@ export const styles = StyleSheet.create({
 
   menu: {
     position: "absolute",
-    top: 10,
-    right: 10,
+    top: 0,
+    right: 0,
   },
 
   order: {

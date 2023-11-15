@@ -12,10 +12,11 @@ export function KebabMenuButton({ ...props }: KebabMenuButtonProps) {
     <Pressable {...props}>
       <View
         style={{
-          width: 20,
-          height: 20,
+          width: 40,
+          height: 40,
           justifyContent: "center",
           alignItems: "center",
+          padding: 10,
         }}
       >
         <ThreeDotsVertical />
