@@ -48,7 +48,11 @@ export function MonthCalendar({ year }: MonthCalendarProps) {
           const diaryImageId = yearMonthToImageId.get(yearMonthKey);
 
           return (
-            <View style={styles.monthElementLayout} key={yearMonthKey}>
+            <View
+              style={styles.monthElementLayout}
+              key={yearMonthKey}
+              testID={`button-month-calendar-element-${year}-${month}`}
+            >
               <View style={styles.monthElement}>
                 <Pressable
                   style={[

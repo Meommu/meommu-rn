@@ -189,6 +189,7 @@ export function MonthPickerOpenController() {
           <MonthPicker />
           <View style={styles.chooseMonthButton}>
             <NavigationButton
+              testID="button-month-calendar-apply-button"
               content="확인"
               onPress={handleDatePickButtonClick}
             />
