@@ -13,7 +13,7 @@ import { changeSelectedYearMonth } from "@/store/modules/diaryDate";
 import { MonthCalendar } from "@/components/Widget/MonthCalendar";
 
 // hooks
-import { useBottomSheetModal } from "@/hooks";
+import { useResponsiveBottomSheet } from "@/hooks";
 
 // svgs
 import ArrowDropDown from "@/assets/svgs/arrow-drop-down.svg";
@@ -102,7 +102,7 @@ export function MonthPicker() {
     animatedHandleHeight,
     animatedSnapPoints,
     handleContentLayout,
-  } = useBottomSheetModal();
+  } = useResponsiveBottomSheet();
 
   /**
    * bottom sheet의 dimmed

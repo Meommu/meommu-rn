@@ -14,7 +14,7 @@ import {
   useBottomSheetDynamicSnapPoints,
 } from "@gorhom/bottom-sheet";
 
-export const useBottomSheetModal = () => {
+export const useResponsiveBottomSheet = () => {
   const bottomSheetRef = useRef<BottomSheetModal>(null);
 
   const initialSnapPoints = useMemo(() => ["CONTENT_HEIGHT"], []);
