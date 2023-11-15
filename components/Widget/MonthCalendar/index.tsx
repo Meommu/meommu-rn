@@ -26,22 +26,26 @@ const CALENDAR_PAGE_SIZE = 10;
 export const CurrentYearMonthContext = createContext<{
   currentYear: number;
   currentMonth: number;
+  yearMonthToImageId: Map<string, number>;
   setCurrentYearMonth: (year: number, month: number) => void;
 }>({
   currentYear: new Date().getFullYear(),
   currentMonth: new Date().getMonth() + 1,
+  yearMonthToImageId: new Map(),
   setCurrentYearMonth: (year: number, month: number) => {},
 });
 
 interface MonthCalendarProps {
   selectedYear: number;
   selectedMonth: number;
+  yearMonthToImageId: Map<string, number>;
   handleDatePickButtonClick: (year: number, month: number) => () => void;
 }
 
 export function MonthCalendar({
   selectedYear,
   selectedMonth,
+  yearMonthToImageId,
   handleDatePickButtonClick,
 }: MonthCalendarProps) {
   const now = useMemo(() => new Date(), []);
@@ -136,6 +140,7 @@ export function MonthCalendar({
         value={{
           currentYear,
           currentMonth,
+          yearMonthToImageId,
           setCurrentYearMonth,
         }}
       >

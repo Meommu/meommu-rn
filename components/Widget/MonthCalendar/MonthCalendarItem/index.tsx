@@ -2,11 +2,6 @@
 import { useContext, useMemo } from "react";
 import { View, Text, Pressable } from "react-native";
 
-// redux
-import { useSelector } from "react-redux";
-import type { RootState } from "@/store";
-import type { DiaryDateState } from "@/store/modules/diaryDate";
-
 // components
 import { LoadImage } from "@/components/Image/LoadImage";
 
@@ -27,15 +22,10 @@ export function MonthCalendarItem({
   selectedYear,
   selectedMonth,
 }: MonthCalendarProps) {
-  const { currentYear, currentMonth, setCurrentYearMonth } = useContext(
-    CurrentYearMonthContext
-  );
+  const { currentYear, currentMonth, yearMonthToImageId, setCurrentYearMonth } =
+    useContext(CurrentYearMonthContext);
 
   const now = useMemo(() => new Date(), []);
-
-  const { yearMonthToImageId } = useSelector<RootState, DiaryDateState>(
-    (state) => state.diaryDate
-  );
 
   const handleMonthSelect = (month: number) => () => {
     setCurrentYearMonth(calendarYear, month);
