@@ -4,7 +4,7 @@ import { View, Text, StyleSheet } from "react-native";
 import type { ViewProps } from "react-native";
 
 interface HeaderProps extends ViewProps {
-  title?: string;
+  title?: string | React.ReactNode;
   left?: React.ReactNode;
   right?: React.ReactNode;
 }
@@ -18,7 +18,11 @@ export function Header({ title, left, right, style, ...props }: HeaderProps) {
       </View>
 
       <View style={styles.title}>
-        <Text style={styles.titleText}>{title}</Text>
+        {typeof title === "string" ? (
+          <Text style={styles.titleText}>{title}</Text>
+        ) : (
+          title
+        )}
       </View>
     </View>
   );
