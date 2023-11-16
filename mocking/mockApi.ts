@@ -243,6 +243,20 @@ export class MockApiService {
           );
         });
 
+        this.post("/api/v1/diaries", () => {
+          return new Response(
+            httpStatus.CREATED,
+            {},
+            resBodyTemplate({
+              code: CODE.OK,
+              message: "정상",
+              data: {
+                savedId: 1,
+              },
+            })
+          );
+        });
+
         /**
          * [POST] 이미지 업로드
          */
