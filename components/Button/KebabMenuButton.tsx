@@ -5,9 +5,14 @@ import type { PressableProps } from "react-native";
 // svgs
 import ThreeDotsVertical from "@/assets/svgs/three-dots-vertical.svg";
 
-interface KebabMenuButtonProps extends PressableProps {}
+interface KebabMenuButtonProps extends PressableProps {
+  fill?: string;
+}
 
-export function KebabMenuButton({ ...props }: KebabMenuButtonProps) {
+export function KebabMenuButton({
+  fill = "#DEE2E6",
+  ...props
+}: KebabMenuButtonProps) {
   return (
     <Pressable {...props}>
       <View
@@ -19,7 +24,7 @@ export function KebabMenuButton({ ...props }: KebabMenuButtonProps) {
           padding: 10,
         }}
       >
-        <ThreeDotsVertical />
+        <ThreeDotsVertical fill={fill} />
       </View>
     </Pressable>
   );
