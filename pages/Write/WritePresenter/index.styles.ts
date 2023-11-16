@@ -13,7 +13,10 @@ export const styles = StyleSheet.create({
   },
 
   completeButton: {
+    width: 40,
+    height: 40,
     justifyContent: "center",
+    alignItems: "center",
   },
 
   completeButtonText: {
