@@ -7,11 +7,8 @@ export const styles = StyleSheet.create({
     gap: 16,
   },
 
-  imageSwiperWrapper: {
+  imageSliderWrapper: {
     width: "100%",
-    aspectRatio: "1/1",
-    borderRadius: 3,
-    overflow: "hidden",
     position: "relative",
   },
 
@@ -19,22 +16,6 @@ export const styles = StyleSheet.create({
     position: "absolute",
     top: 0,
     right: 0,
-  },
-
-  order: {
-    position: "absolute",
-    bottom: 10,
-    right: 10,
-    backgroundColor: "rgba(13, 61, 70, 0.8)",
-    borderRadius: 400,
-    paddingHorizontal: 11,
-    paddingTop: 1,
-    paddingBottom: 3,
-  },
-
-  orderText: {
-    fontSize: 14,
-    color: "white",
   },
 
   diaryBody: {

@@ -10,7 +10,7 @@ import { styles } from "./index.styles";
 export function DiaryItemSkeleton() {
   return (
     <View style={styles.container}>
-      <SView style={styles.imageSwiperWrapper} />
+      <SView style={[styles.imageSliderWrapper, { aspectRatio: "1/1" }]} />
 
       <View style={styles.diaryBody}>
         <SView style={{ width: "60%", height: 32 }} />

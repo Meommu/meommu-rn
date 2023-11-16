@@ -1,15 +1,9 @@
 // react
 import { View, Text } from "react-native";
 
-// swiper
-import Swiper from "react-native-web-swiper";
-
 // components
 import { KebabMenuButton } from "@/components/Button/KebabMenuButton";
-import { LoadImage } from "@/components/Image/LoadImage";
-
-// hooks
-import { useSwiper } from "@/hooks";
+import { ImageSlider } from "@/components/Widget/ImageSlider";
 
 // styles
 import { styles } from "./index.styles";
@@ -23,33 +17,17 @@ export function DiaryItem({
   diary,
   handleKebabMenuButtonClick,
 }: DiaryItemProps) {
-  const { id, date, dogName, title, content, imageIds } = diary;
-
-  const { swiperRef, swiperIndex, handleSwiperIndexChange } = useSwiper(0);
+  const { date, dogName, title, content, imageIds } = diary;
 
   return (
     <View style={styles.container}>
-      <View style={styles.imageSwiperWrapper}>
-        <Swiper
-          ref={swiperRef}
-          onIndexChanged={handleSwiperIndexChange}
-          controlsEnabled={false}
-        >
-          {imageIds.map((imageId) => (
-            <LoadImage imageId={imageId} key={`imageId${imageId}`} />
-          ))}
-        </Swiper>
+      <View style={styles.imageSliderWrapper}>
+        <ImageSlider imageIds={imageIds} aspectRatio="1/1" />
 
         <KebabMenuButton
           style={styles.menu}
           onPress={handleKebabMenuButtonClick}
         />
-
-        <View style={styles.order}>
-          <Text style={styles.orderText}>
-            {swiperIndex + 1}/{imageIds.length}
-          </Text>
-        </View>
       </View>
 
       <View style={styles.diaryBody}>
