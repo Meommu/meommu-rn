@@ -29,7 +29,7 @@ export function DiaryPresenter({
       <Header
         style={{ padding: 12 }}
         left={<GoBackButton onPress={handleGoBackButtonClick} />}
-        right={<KebabMenuButton onPress={handleEditButtonClick} />}
+        right={<KebabMenuButton onPress={handleEditButtonClick} fill="black" />}
       />
 
       <NonIndicatorScrollView>
@@ -58,6 +58,17 @@ export function DiaryPresenter({
             }}
           >
             {diary.content}
+          </Text>
+
+          <Text
+            style={{
+              color: "#8F8F8F",
+              fontSize: 14,
+
+              fontFamily: "Pretendard-Regular",
+            }}
+          >
+            {diary.date.replaceAll("-", ".")} {diary.dogName} 일기
           </Text>
 
           <NavigationButton onPress={handleShareButtonClick} content="보내기" />
