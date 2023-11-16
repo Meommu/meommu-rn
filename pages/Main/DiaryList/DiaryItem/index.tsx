@@ -1,5 +1,5 @@
 // react
-import { View, Text } from "react-native";
+import { View, Text, Pressable } from "react-native";
 
 // components
 import { KebabMenuButton } from "@/components/Button/KebabMenuButton";
@@ -7,6 +7,8 @@ import { ImageSlider } from "@/components/Widget/ImageSlider";
 
 // styles
 import { styles } from "./index.styles";
+import { router } from "expo-router";
+import { useCallback } from "react";
 
 interface DiaryItemProps {
   diary: Diary;
@@ -17,7 +19,11 @@ export function DiaryItem({
   diary,
   handleKebabMenuButtonClick,
 }: DiaryItemProps) {
-  const { date, dogName, title, content, imageIds } = diary;
+  const { id, date, dogName, title, content, imageIds } = diary;
+
+  const handleDiaryBodyClick = useCallback(() => {
+    router.push(`diary/${id}`);
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -30,7 +36,7 @@ export function DiaryItem({
         />
       </View>
 
-      <View style={styles.diaryBody}>
+      <Pressable style={styles.diaryBody} onPress={handleDiaryBodyClick}>
         <Text style={styles.diaryTitle} numberOfLines={1} ellipsizeMode="tail">
           {title}
         </Text>
@@ -44,7 +50,7 @@ export function DiaryItem({
         <Text style={styles.diaryInfo}>
           {date.replaceAll("-", ".")} {dogName} 일기
         </Text>
-      </View>
+      </Pressable>
     </View>
   );
 }
