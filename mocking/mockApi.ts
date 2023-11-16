@@ -24,6 +24,23 @@ export class MockApiService {
     const serverConfig: ServerConfig<AnyModels, AnyFactories> = {
       routes() {
         /**
+         * [GET] 일기 조회
+         */
+        this.get("/api/v1/diaries/:id", (schema, request) => {
+          const {
+            params: { id },
+          } = request;
+
+          const diary = schema.db.diaries.findBy({ id });
+
+          return new Response(
+            httpStatus.OK,
+            {},
+            resBodyTemplate({ code: CODE.OK, message: "정상", data: diary })
+          );
+        });
+
+        /**
          * [GET] 로그인 여부 확인
          */
         this.get("/api/v1/kindergartens/me", (schema, request) => {
