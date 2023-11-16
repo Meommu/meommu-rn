@@ -1,47 +1,27 @@
 import { DiaryPresenter } from "../DiaryPresenter";
-import { useMutation, useQuery } from "react-query";
+import { useQuery } from "react-query";
 import { useCallback } from "react";
 import { PATH } from "@/constants";
 import axios from "axios";
-import * as Sharing from "expo-sharing";
 
 import { router, useLocalSearchParams } from "expo-router";
 
-export function DiaryContainer() {
-  const { diaryId } = useLocalSearchParams();
+export function SharedDiaryContainer() {
+  const { uuid } = useLocalSearchParams();
 
   const { data } = useQuery(
-    ["diaryDetail", diaryId],
+    ["sharedDiaryDetail", uuid],
     async () => {
       const {
         data: { data },
       } = await axios.get<ResponseTemplate<Diary>>(
-        `/api/v1/diaries/${diaryId}`
+        `/api/v1/diaries/shared/${uuid}`
       );
 
       return data;
     },
     {
       suspense: true,
-    }
-  );
-
-  const shareMutation = useMutation(
-    async () => {
-      const {
-        data: {
-          data: { uuid },
-        },
-      } = await axios.get<ResponseTemplate<{ uuid: string }>>(
-        `/api/v1/diaries/${diaryId}/shared-uuid`
-      );
-
-      return uuid;
-    },
-    {
-      onSuccess: (uuid) => {
-        Sharing.shareAsync(`shared/${uuid}`);
-      },
     }
   );
 
@@ -61,8 +41,6 @@ export function DiaryContainer() {
 
   const handleShareButtonClick = useCallback(() => {
     console.log("share mutation mutate");
-
-    shareMutation.mutate();
   }, []);
 
   if (!data) {
