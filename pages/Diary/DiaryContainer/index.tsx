@@ -33,7 +33,7 @@ export function DiaryContainer() {
           data: { uuid },
         },
       } = await axios.get<ResponseTemplate<{ uuid: string }>>(
-        `/api/v1/diaries/${diaryId}/shared-uuid`
+        `/api/v1/diaries/${diaryId}/share-uuid`
       );
 
       return uuid;
