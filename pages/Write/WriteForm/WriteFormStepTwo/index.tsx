@@ -170,21 +170,21 @@ export function WriteFormStepTwo() {
                         {imageIds.length} / 5
                       </Text>
                     </Pressable>
+                  ) : imageIds[i] ? (
+                    <View style={styles.imageUploadedItem}>
+                      <LoadImage
+                        style={styles.imageUploadedItemImage}
+                        imageId={imageIds[i]}
+                      />
+                      <Pressable
+                        onPress={handleImageRemoveButtonClick(i)}
+                        style={styles.imageUploadedItemRemoveButton}
+                      >
+                        <ImageRemoveButton />
+                      </Pressable>
+                    </View>
                   ) : (
-                    imageIds[i] && (
-                      <View style={styles.imageUploadedItem}>
-                        <LoadImage
-                          style={styles.imageUploadedItemImage}
-                          imageId={imageIds[i]}
-                        />
-                        <Pressable
-                          onPress={handleImageRemoveButtonClick(i)}
-                          style={styles.imageUploadedItemRemoveButton}
-                        >
-                          <ImageRemoveButton />
-                        </Pressable>
-                      </View>
-                    )
+                    <View style={styles.imageUploaderEmptyItem} />
                   )}
                 </View>
               </View>

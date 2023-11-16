@@ -61,6 +61,11 @@ export const styles = StyleSheet.create({
     top: -10,
   },
 
+  imageUploaderEmptyItem: {
+    width: "100%",
+    height: "100%",
+  },
+
   /**
    * 제목 본문 폼
    */
