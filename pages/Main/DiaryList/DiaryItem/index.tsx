@@ -6,7 +6,6 @@ import Swiper from "react-native-web-swiper";
 
 // components
 import { KebabMenuButton } from "@/components/Button/KebabMenuButton";
-import { SView } from "@/components/Layout/SView";
 import { LoadImage } from "@/components/Image/LoadImage";
 
 // hooks
@@ -17,7 +16,7 @@ import { styles } from "./index.styles";
 
 interface DiaryItemProps {
   diary: Diary;
-  handleKebabMenuButtonClick: (diaryId: number) => () => void;
+  handleKebabMenuButtonClick: () => void;
 }
 
 export function DiaryItem({
@@ -43,7 +42,7 @@ export function DiaryItem({
 
         <KebabMenuButton
           style={styles.menu}
-          onPress={handleKebabMenuButtonClick(id)}
+          onPress={handleKebabMenuButtonClick}
         />
 
         <View style={styles.order}>

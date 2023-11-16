@@ -1,5 +1,5 @@
 // react
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { Text, Pressable } from "react-native";
 import { useQuery } from "react-query";
 
@@ -34,6 +34,8 @@ import type { BottomSheetBackdropProps } from "@gorhom/bottom-sheet";
 import { styles } from "./index.styles";
 
 export function DiaryList() {
+  const [menuPressedDiaryId, setMenuPressedDiaryId] = useState(-1);
+
   const { selectedYear, selectedMonth } = useSelector<
     RootState,
     DiaryDateState
@@ -64,11 +66,7 @@ export function DiaryList() {
    * event handlers
    */
   const handleKebabMenuButtonClick = (diaryId: number) => () => {
-    /**
-     * TODO: 현재 선택된 다이어리 아이디로 라우팅
-     */
-
-    console.log("[diary id]", diaryId);
+    setMenuPressedDiaryId(diaryId);
 
     bottomSheetRef.current?.present();
   };
@@ -79,6 +77,7 @@ export function DiaryList() {
      *
      * 이후, 현재 선택된 다이어리 아이디 값을 통해 데이터를 불러와 초기화
      */
+    console.log("[메뉴 버튼이 눌린 다이어리 아이디]", menuPressedDiaryId);
   };
 
   const handleDiaryDeleteButtonClick = () => {
@@ -115,7 +114,7 @@ export function DiaryList() {
             <DiaryItem
               diary={diary}
               key={diary.id}
-              handleKebabMenuButtonClick={handleKebabMenuButtonClick}
+              handleKebabMenuButtonClick={handleKebabMenuButtonClick(diary.id)}
             />
           );
         })}
