@@ -1,7 +1,7 @@
 // react
 import { useCallback } from "react";
 import { useForm, FormProvider } from "react-hook-form";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 
 // expo
 import { router } from "expo-router";
@@ -24,6 +24,8 @@ const LAST_SLIDE_INDEX = 1;
 export function WriteContainer() {
   const { fireToast } = useToast();
 
+  const queryClient = useQueryClient();
+
   /**
    * useForm
    */
@@ -42,7 +44,7 @@ export function WriteContainer() {
     },
   });
 
-  const { handleSubmit, watch } = methods;
+  const { handleSubmit, watch, getValues } = methods;
 
   const formState = watch();
 
@@ -63,11 +65,18 @@ export function WriteContainer() {
       return savedId;
     },
     {
-      onSuccess: (savedId: number) => {
+      onSuccess: async (savedId: number) => {
         /**
          * TODO: /detail/{savedId} 페이지로 라우트
          */
         console.log(savedId);
+
+        const diaryWriteDate = getValues("date");
+
+        const [year, month] = diaryWriteDate.split("-").map(Number);
+
+        await queryClient.invalidateQueries(["diaryList", year, month]);
+
         router.replace(PATH.MAIN);
       },
     }
