@@ -24,6 +24,44 @@ export class MockApiService {
     const serverConfig: ServerConfig<AnyModels, AnyFactories> = {
       routes() {
         /**
+         * [GET] 공유용 일기 uuid 조회
+         */
+        this.get("/api/v1/diaries/:id/shared-uuid", (schema, request) => {
+          const {
+            params: { id },
+          } = request;
+
+          const diary = schema.db.diaries.findBy({ id });
+
+          return new Response(
+            httpStatus.OK,
+            {},
+            resBodyTemplate({
+              code: CODE.OK,
+              message: "정상",
+              data: { uuid: diary.uuid },
+            })
+          );
+        });
+
+        /**
+         * [GET] 공유 일기 조회
+         */
+        this.get("/api/v1/diaries/shared/:id", (schema, request) => {
+          const {
+            params: { id },
+          } = request;
+
+          const diary = schema.db.diaries.findBy({ id });
+
+          return new Response(
+            httpStatus.OK,
+            {},
+            resBodyTemplate({ code: CODE.OK, message: "정상", data: diary })
+          );
+        });
+
+        /**
          * [GET] 일기 조회
          */
         this.get("/api/v1/diaries/:id", (schema, request) => {
@@ -410,6 +448,7 @@ export class MockApiService {
           imageIds: [6, 7],
           title: "일기 3 제목",
           content: "일기 3 내용",
+          uuid: 3,
         },
         {
           id: 2,
@@ -421,6 +460,7 @@ export class MockApiService {
             "일기 2 제목 일기 2 제목 일기 2 제목 일기 2 제목 일기 2 제목 일기 2 제목 일기 2 제목 일기 2 제목 일기 2 제목 일기 2 제목 일기 2 제목 일기 2 제목 일기 2 제목 일기 2 제목 일기 2 제목 일기 2 제목 일기 2 제목 일기 2 제목 일기 2 제목 일기 2 제목 일기 2 제목 일기 2 제목 일기 2 제목 일기 2 제목 일기 2 제목 일기 2 제목 일기 2 제목 ",
           content:
             "일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 ",
+          uuid: 2,
         },
         {
           id: 1,
@@ -430,6 +470,7 @@ export class MockApiService {
           imageIds: [1, 2, 3, 4, 5],
           title: "일기 1 제목",
           content: "일기 1 내용",
+          uuid: 1,
         },
         {
           id: 4,
@@ -439,6 +480,7 @@ export class MockApiService {
           imageIds: [4, 5],
           title: "일기 4 제목",
           content: "일기 4 내용",
+          uuid: 4,
         },
       ],
     });
