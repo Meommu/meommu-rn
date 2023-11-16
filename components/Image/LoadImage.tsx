@@ -11,15 +11,9 @@ interface LoadImageProps extends ViewProps {
 }
 
 export function LoadImage({ imageId, style }: LoadImageProps) {
-  const { data, isLoading } = useQuery(
-    ["diaryImage", imageId],
-    async () => {
-      return await apiService.getImageUrl(imageId);
-    },
-    {
-      staleTime: 1000 * 60 * 60,
-    }
-  );
+  const { data, isLoading } = useQuery(["diaryImage", imageId], async () => {
+    return await apiService.getImageUrl(imageId);
+  });
 
   if (isLoading) {
     return null;

@@ -107,6 +107,7 @@ const queryClient = new QueryClient({
       onError: globalErrorHandler,
       refetchOnWindowFocus: false,
       retry: 0,
+      staleTime: Infinity,
     },
     mutations: {
       onError: globalErrorHandler,
