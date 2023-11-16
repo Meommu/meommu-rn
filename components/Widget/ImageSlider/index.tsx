@@ -12,15 +12,20 @@ import { useSwiper } from "@/hooks";
 import { styles } from "./index.styles";
 
 interface ImageSliderProps {
-  aspectRatio: "1/1" | "3/4";
   imageIds: number[];
+  aspectRatio?: "1/1" | "3/4";
+  borderRadius?: number;
 }
 
-export function ImageSlider({ aspectRatio, imageIds }: ImageSliderProps) {
+export function ImageSlider({
+  imageIds,
+  aspectRatio = "1/1",
+  borderRadius = 3,
+}: ImageSliderProps) {
   const { swiperRef, swiperIndex, handleSwiperIndexChange } = useSwiper(0);
 
   return (
-    <View style={[styles.container, { aspectRatio }]}>
+    <View style={[styles.container, { aspectRatio, borderRadius }]}>
       <Swiper
         ref={swiperRef}
         onIndexChanged={handleSwiperIndexChange}
