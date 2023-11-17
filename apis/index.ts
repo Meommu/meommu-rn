@@ -9,14 +9,7 @@ import * as POST from "./methods/post";
 // utils
 import { createRandomNumberInRange } from "@/utils";
 
-const devApiUrl =
-  "https://port-0-meommu-api-jvvy2blm5wku9j.sel5.cloudtype.app/";
-
-/**
- * 운영용 API가 현재 존재하지 않기 때문에 개발용 API와 주소가 같은 상태
- */
-const prodApiUrl =
-  "https://port-0-meommu-api-jvvy2blm5wku9j.sel5.cloudtype.app/";
+export let baseUrl = "";
 
 switch (process.env.EXPO_PUBLIC_MODE) {
   case "dev":
@@ -38,14 +31,27 @@ switch (process.env.EXPO_PUBLIC_MODE) {
     });
 
     break;
+
   case "qa":
-    axios.defaults.baseURL = devApiUrl;
+    baseUrl = "https://port-0-meommu-api-jvvy2blm5wku9j.sel5.cloudtype.app";
+
+    axios.defaults.baseURL = baseUrl;
 
     break;
+
   case "prod":
   default:
+    /**
+     * 웹 환경 프론트엔드는 vercel를 이용함.
+     *
+     * `/vercel.json`에 설정해 둔 운영용 url 주소로 프록시되기 때문에 웹이 아닌 환경에서만 baseUrl를 설정함.
+     *
+     * 운영용 API가 현재 존재하지 않기 때문에 개발용 API와 주소가 같은 상태
+     */
     if (Platform.OS !== "web") {
-      axios.defaults.baseURL = prodApiUrl;
+      baseUrl = "https://port-0-meommu-api-jvvy2blm5wku9j.sel5.cloudtype.app";
+
+      axios.defaults.baseURL = baseUrl;
     }
 
     break;
