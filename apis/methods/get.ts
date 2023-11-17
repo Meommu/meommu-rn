@@ -61,6 +61,24 @@ export const getDiariesSummary = async (): Promise<DiarySummary[]> => {
   return diaries;
 };
 
+export const getDiaryDetail = async (diaryId: string): Promise<Diary> => {
+  const {
+    data: { data },
+  } = await axios.get<ResponseTemplate<Diary>>(`/api/v1/diaries/${diaryId}`);
+
+  return data;
+};
+
+export const getSharedDiaryDetail = async (uuid: string): Promise<Diary> => {
+  const {
+    data: { data },
+  } = await axios.get<ResponseTemplate<Diary>>(
+    `/api/v1/diaries/shared/${uuid}`
+  );
+
+  return data;
+};
+
 export const getImageUrl = async (imageId: number): Promise<DiaryImage> => {
   const {
     data: { data },
