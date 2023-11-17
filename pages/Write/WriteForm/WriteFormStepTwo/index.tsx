@@ -1,9 +1,7 @@
 // react
-import { View, Pressable, Text, TextInput } from "react-native";
+import { View, Pressable, Text, TextInput, Platform } from "react-native";
 import { useMutation } from "react-query";
-import { useFormContext } from "react-hook-form";
-import { Platform } from "react-native";
-import { Controller } from "react-hook-form";
+import { useFormContext, Controller } from "react-hook-form";
 
 // expo
 import * as ImagePicker from "expo-image-picker";
