@@ -8,7 +8,7 @@ import { useState } from "react";
 import { apiService } from "@/apis";
 
 // hooks
-import { useDyanmicStyle } from "@/hooks";
+import { useDynamicStyle } from "@/hooks";
 
 interface LoadImageProps extends ViewProps {
   imageId: number;
@@ -34,7 +34,7 @@ export function LoadImage({
 
   const [imageRatio, setImageRatio] = useState("1/1");
 
-  const aspectRatioStyle = useDyanmicStyle(() => {
+  const aspectRatioStyle = useDynamicStyle(() => {
     return {
       width: "100%",
       aspectRatio: imageRatio,

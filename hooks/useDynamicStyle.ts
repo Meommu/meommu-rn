@@ -7,7 +7,7 @@ const createStyle = (style: ViewStyle | ImageStyle | TextStyle) => {
   return StyleSheet.create({ _style: style })._style;
 };
 
-export const useDyanmicStyle = (
+export const useDynamicStyle = (
   dynamicStyle: () => ViewStyle | ImageStyle | TextStyle,
   deps?: React.DependencyList
 ) => {

@@ -3,7 +3,7 @@ import { useRef, useMemo } from "react";
 import { useWindowDimensions, Platform } from "react-native";
 
 // hooks
-import { useDyanmicStyle } from "./useDynamicStyle";
+import { useDynamicStyle } from "./useDynamicStyle";
 
 // constants
 import { size } from "@/constants";
@@ -31,7 +31,7 @@ export const useResponsiveBottomSheet = () => {
    */
   const { width, height } = useWindowDimensions();
 
-  const bottomSheetMaxWidthStyle = useDyanmicStyle(() => {
+  const bottomSheetMaxWidthStyle = useDynamicStyle(() => {
     const maxWidth =
       Platform.OS === "web" && width >= size.LAPTOP_WIDTH
         ? (9 * height) / 16
