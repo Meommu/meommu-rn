@@ -55,6 +55,7 @@ export function DiaryPresenter({
             imageIds={diary.imageIds}
             aspectRatio="3/4"
             borderRadius={0}
+            base64={isShared}
           />
 
           <View style={styles.body}>
