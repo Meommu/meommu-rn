@@ -14,6 +14,7 @@ import React from "react";
 
 interface DiaryPresenterProps {
   diary: Diary;
+  isShared?: boolean;
   imageRef?: React.MutableRefObject<View | null>;
   handleGoBackButtonClick: () => void;
   handleEditButtonClick: () => void;
@@ -23,20 +24,41 @@ interface DiaryPresenterProps {
 export function DiaryPresenter({
   diary,
   imageRef,
+  isShared = false,
   handleEditButtonClick,
   handleGoBackButtonClick,
   handleShareButtonClick,
 }: DiaryPresenterProps) {
   return (
     <View style={{ width: "100%", height: "100%", backgroundColor: "white" }}>
-      <Header
-        style={{ padding: 12 }}
-        left={<GoBackButton onPress={handleGoBackButtonClick} />}
-        right={<KebabMenuButton onPress={handleEditButtonClick} fill="black" />}
-      />
+      {!isShared && (
+        <Header
+          style={{ padding: 12 }}
+          left={<GoBackButton onPress={handleGoBackButtonClick} />}
+          right={
+            <KebabMenuButton onPress={handleEditButtonClick} fill="black" />
+          }
+        />
+      )}
 
       <NonIndicatorScrollView>
         <View style={{ backgroundColor: "white" }} ref={imageRef}>
+          {isShared && (
+            <Header
+              style={{ padding: 12, height: 64 }}
+              title={
+                <Text
+                  style={{
+                    fontSize: 30,
+                    fontFamily: "yeonTheLand",
+                  }}
+                >
+                  meommu
+                </Text>
+              }
+            />
+          )}
+
           <ImageSlider
             imageIds={diary.imageIds}
             aspectRatio="3/4"
@@ -78,7 +100,10 @@ export function DiaryPresenter({
         </View>
 
         <View style={{ padding: 20 }}>
-          <NavigationButton onPress={handleShareButtonClick} content="보내기" />
+          <NavigationButton
+            onPress={handleShareButtonClick}
+            content={isShared ? "저장하기" : "보내기"}
+          />
         </View>
       </NonIndicatorScrollView>
     </View>
