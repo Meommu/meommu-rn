@@ -15,12 +15,14 @@ interface ImageSliderProps {
   imageIds: number[];
   aspectRatio?: "1/1" | "3/4";
   borderRadius?: number;
+  base64?: boolean;
 }
 
 export function ImageSlider({
   imageIds,
   aspectRatio = "1/1",
   borderRadius = 3,
+  base64 = false,
 }: ImageSliderProps) {
   const { swiperRef, swiperIndex, handleSwiperIndexChange } = useSwiper(0);
 
@@ -32,7 +34,11 @@ export function ImageSlider({
         controlsEnabled={false}
       >
         {imageIds.map((imageId) => (
-          <LoadImage imageId={imageId} key={`imageId${imageId}`} />
+          <LoadImage
+            imageId={imageId}
+            key={`imageId${imageId}`}
+            base64={base64}
+          />
         ))}
       </Swiper>
 
