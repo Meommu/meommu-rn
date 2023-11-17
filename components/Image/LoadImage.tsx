@@ -6,9 +6,12 @@ import { useState } from "react";
 
 // apis
 import { apiService } from "@/apis";
+import axios from "axios";
 
 // hooks
 import { useDynamicStyle } from "@/hooks";
+
+global.Buffer = global.Buffer || require("buffer").Buffer;
 
 interface LoadImageProps extends ViewProps {
   imageId: number;
@@ -19,15 +22,36 @@ interface LoadImageProps extends ViewProps {
    * default: false
    */
   originRatio?: boolean;
+
+  base64?: boolean;
 }
 
 export function LoadImage({
   imageId,
   style,
   originRatio = false,
+  base64 = false,
 }: LoadImageProps) {
   const { data } = useQuery(["diaryImage", imageId], async () => {
     const { url } = await apiService.getImageUrl(imageId);
+
+    if (base64) {
+      try {
+        const { data } = await axios.get<string>("/api/v1/proxy", {
+          params: { url },
+          responseType: "arraybuffer",
+        });
+
+        const b64Image = Buffer.from(data, "binary").toString("base64");
+
+        /**
+         * TODO: 이미지 타입을 항상 jpeg로 설정하면 안될 것 같다.
+         */
+        return `data:image/jpeg;base64,${b64Image}`;
+      } catch (e) {
+        console.log("[error]", e);
+      }
+    }
 
     return url;
   });
