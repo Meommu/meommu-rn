@@ -1,19 +1,14 @@
+// react
 import { Suspense } from "react";
-import { View } from "react-native";
+
+// components
 import { DiaryContainer } from "./DiaryContainer";
 import { SharedDiaryContainer } from "./SharedDiaryContainer";
+import { DiaryPresenterSkeleton } from "./DiaryPresenter/index.skeleton";
 
 export function DiaryPage() {
   return (
-    <Suspense
-      fallback={
-        /**
-         * TODO: DiaryPresenter의 스켈레톤 ui 로 교체
-         */
-
-        <View />
-      }
-    >
+    <Suspense fallback={<DiaryPresenterSkeleton />}>
       <DiaryContainer />
     </Suspense>
   );
@@ -21,15 +16,7 @@ export function DiaryPage() {
 
 export function SharedDiaryPage() {
   return (
-    <Suspense
-      fallback={
-        /**
-         * TODO: DiaryPresenter의 스켈레톤 ui 로 교체
-         */
-
-        <View />
-      }
-    >
+    <Suspense fallback={<DiaryPresenterSkeleton isShared={true} />}>
       <SharedDiaryContainer />
     </Suspense>
   );
