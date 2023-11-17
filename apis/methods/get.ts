@@ -109,7 +109,7 @@ export const getCanvasWithHtmlWithImage = async (
   element: HTMLElement
 ): Promise<HTMLCanvasElement> => {
   const canvas = await html2canvas(element, {
-    proxy: `${baseUrl}/html2canvas/proxy.json`,
+    proxy: `${baseUrl}/api/v1/proxy`,
   });
 
   return canvas;
