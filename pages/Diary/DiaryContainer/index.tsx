@@ -6,20 +6,17 @@ import axios from "axios";
 import * as Sharing from "expo-sharing";
 
 import { router, useLocalSearchParams } from "expo-router";
+import { apiService } from "@/apis";
 
 export function DiaryContainer() {
-  const { diaryId } = useLocalSearchParams();
+  const { diaryId } = useLocalSearchParams<{ diaryId: string }>();
 
   const { data } = useQuery(
     ["diaryDetail", diaryId],
     async () => {
-      const {
-        data: { data },
-      } = await axios.get<ResponseTemplate<Diary>>(
-        `/api/v1/diaries/${diaryId}`
-      );
+      const diary = await apiService.getDiaryDetail(diaryId || "");
 
-      return data;
+      return diary;
     },
     {
       suspense: true,
@@ -28,13 +25,7 @@ export function DiaryContainer() {
 
   const shareMutation = useMutation(
     async () => {
-      const {
-        data: {
-          data: { uuid },
-        },
-      } = await axios.get<ResponseTemplate<{ uuid: string }>>(
-        `/api/v1/diaries/${diaryId}/share-uuid`
-      );
+      const uuid = await apiService.getDiaryShareUUID(diaryId || "");
 
       return uuid;
     },

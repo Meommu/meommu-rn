@@ -17,20 +17,16 @@ import { apiService } from "@/apis";
 import axios from "axios";
 
 export function SharedDiaryContainer() {
-  const { uuid } = useLocalSearchParams();
+  const { uuid } = useLocalSearchParams<{ uuid: string }>();
 
   const imageRef = useRef<View | null>(null);
 
   const { data } = useQuery(
     ["sharedDiaryDetail", uuid],
     async () => {
-      const {
-        data: { data },
-      } = await axios.get<ResponseTemplate<Diary>>(
-        `/api/v1/diaries/shared/${uuid}`
-      );
+      const diary = await apiService.getSharedDiaryDetail(uuid || "");
 
-      return data;
+      return diary;
     },
     {
       suspense: true,
