@@ -11,11 +11,13 @@ interface LoadImageProps extends ViewProps {
 }
 
 export function LoadImage({ imageId, style }: LoadImageProps) {
-  const { data, isLoading } = useQuery(["diaryImage", imageId], async () => {
-    return await apiService.getImageUrl(imageId);
+  const { data } = useQuery(["diaryImage", imageId], async () => {
+    const { url } = await apiService.getImageUrl(imageId);
+
+    return url;
   });
 
-  if (isLoading) {
+  if (!data) {
     return null;
   }
 
@@ -24,7 +26,7 @@ export function LoadImage({ imageId, style }: LoadImageProps) {
       <Image
         resizeMode="cover"
         style={{ width: "100%", height: "100%" }}
-        source={{ uri: data?.url }}
+        source={{ uri: data }}
       />
     </View>
   );
