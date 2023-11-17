@@ -79,6 +79,18 @@ export const getSharedDiaryDetail = async (uuid: string): Promise<Diary> => {
   return data;
 };
 
+export const getDiaryShareUUID = async (diaryId: string): Promise<string> => {
+  const {
+    data: {
+      data: { uuid },
+    },
+  } = await axios.get<ResponseTemplate<{ uuid: string }>>(
+    `/api/v1/diaries/${diaryId}/share-uuid`
+  );
+
+  return uuid;
+};
+
 export const getImageUrl = async (imageId: number): Promise<DiaryImage> => {
   const {
     data: { data },
