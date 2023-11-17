@@ -47,8 +47,8 @@ export function SView({ style, duration = 1000 }: SViewProps) {
     <Animated.View
       style={[
         animatedStyle,
-        style,
         { backgroundColor: "lightgray", borderRadius: 4 },
+        style,
       ]}
     />
   );
