@@ -14,7 +14,8 @@ import { PATH } from "@/constants";
 
 // apis
 import { apiService } from "@/apis";
-import axios from "axios";
+
+import * as htmlToImage from "html-to-image";
 
 export function SharedDiaryContainer() {
   const { uuid } = useLocalSearchParams<{ uuid: string }>();
@@ -57,11 +58,13 @@ export function SharedDiaryContainer() {
      */
     const $divElement = imageRef.current as unknown as HTMLDivElement;
 
-    const canvas = await apiService.getCanvasWithHtmlWithImage($divElement);
+    const dataUrl = await htmlToImage.toJpeg($divElement, {
+      quality: 1,
+    });
 
     let link = document.createElement("a");
     link.download = `${uuid}.jpeg`;
-    link.href = canvas.toDataURL("image/jpeg");
+    link.href = dataUrl;
     link.click();
   }, []);
 
