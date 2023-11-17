@@ -26,7 +26,7 @@ export class MockApiService {
         /**
          * [GET] 공유용 일기 uuid 조회
          */
-        this.get("/api/v1/diaries/:id/shared-uuid", (schema, request) => {
+        this.get("/api/v1/diaries/:id/share-uuid", (schema, request) => {
           const {
             params: { id },
           } = request;
