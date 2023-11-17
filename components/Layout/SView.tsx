@@ -18,7 +18,7 @@ interface SViewProps extends ViewProps {
 /**
  * SView: Skeleton View (스켈레톤 뷰)
  */
-export function SView({ style, duration = 1000 }: SViewProps) {
+export function SView({ style, duration = 750 }: SViewProps) {
   const interval = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const opacity = useSharedValue(DARK);
