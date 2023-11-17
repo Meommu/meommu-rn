@@ -15,7 +15,8 @@ import { PATH } from "@/constants";
 // apis
 import { apiService } from "@/apis";
 
-import * as htmlToImage from "html-to-image";
+//import * as htmlToImage from "html-to-image";
+import domToImage from "dom-to-image";
 
 export function SharedDiaryContainer() {
   const { uuid } = useLocalSearchParams<{ uuid: string }>();
@@ -58,7 +59,7 @@ export function SharedDiaryContainer() {
      */
     const $divElement = imageRef.current as unknown as HTMLDivElement;
 
-    const dataUrl = await htmlToImage.toJpeg($divElement, {
+    const dataUrl = await domToImage.toJpeg($divElement, {
       quality: 1,
     });
 
