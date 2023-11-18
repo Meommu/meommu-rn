@@ -1,5 +1,5 @@
 // react
-import { View, Text } from "react-native";
+import { View, Text, Pressable } from "react-native";
 import type { MutableRefObject } from "react";
 
 // components
@@ -9,29 +9,39 @@ import { KebabMenuButton } from "@/components/Button/KebabMenuButton";
 import { ImageSlider } from "@/components/Widget/ImageSlider";
 import { NonIndicatorScrollView } from "@/components/ScrollView/NonIndicatorScrollView";
 import { NavigationButton } from "@/components/Button/NavigationButton";
+import { OriginRatioImage } from "@/components/Image/OriginRatioImage";
 
 // styles
 import { styles } from "./index.styles";
 
+// svgs
+import XBig from "@/assets/svgs/x-big.svg";
+
 interface DiaryPresenterProps {
   diary: Diary;
-  isShared?: boolean;
-  imageRef?: MutableRefObject<View | null>;
   handleGoBackButtonClick: () => void;
   handleEditButtonClick: () => void;
   handleShareButtonClick: () => void;
+
+  isShared?: boolean;
+  imageRef?: MutableRefObject<View | null>;
+  captureImageB64?: string | null;
+  handleCloseModalButtonClick?: () => void;
 }
 
 export function DiaryPresenter({
   diary,
-  imageRef,
-  isShared = false,
   handleEditButtonClick,
   handleGoBackButtonClick,
   handleShareButtonClick,
+
+  isShared = false,
+  imageRef,
+  captureImageB64 = null,
+  handleCloseModalButtonClick,
 }: DiaryPresenterProps) {
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { position: "relative" }]}>
       {!isShared && (
         <Header
           style={styles.header}
@@ -78,6 +88,40 @@ export function DiaryPresenter({
           />
         </View>
       </NonIndicatorScrollView>
+
+      {isShared && captureImageB64 !== null && (
+        <View
+          style={{
+            position: "absolute",
+            width: "100%",
+            height: "100%",
+            padding: 15,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Pressable
+            style={{
+              position: "absolute",
+              width: "100%",
+              height: "100%",
+              backgroundColor: "rgba(0, 0, 0, 0.7)",
+            }}
+            onPress={handleCloseModalButtonClick}
+          />
+          <OriginRatioImage
+            source={{ uri: captureImageB64 }}
+            imageUriForCalculateRatio={captureImageB64}
+            expansion="height"
+          />
+          <Pressable
+            style={{ position: "absolute", top: 15, right: 15 }}
+            onPress={handleCloseModalButtonClick}
+          >
+            <XBig />
+          </Pressable>
+        </View>
+      )}
     </View>
   );
 }

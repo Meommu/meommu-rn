@@ -1,7 +1,7 @@
 // react
 import { View, Platform } from "react-native";
 import { useQuery } from "react-query";
-import { useCallback, useRef } from "react";
+import { useCallback, useRef, useState } from "react";
 
 // expo
 import { router, useLocalSearchParams } from "expo-router";
@@ -21,6 +21,8 @@ export function SharedDiaryContainer() {
   const { uuid } = useLocalSearchParams<{ uuid: string }>();
 
   const imageRef = useRef<View | null>(null);
+
+  const [captureImageB64, setCaptureImageB64] = useState<string | null>(null);
 
   const { data } = useQuery(
     ["sharedDiaryDetail", uuid],
@@ -74,9 +76,11 @@ export function SharedDiaryContainer() {
       proxy: `${baseUrl}/api/v1/proxy`,
     });
 
-    canvas.toBlob((blob: Blob) => {
-      FileSaver.saveAs(blob, "download.jpeg");
-    });
+    setCaptureImageB64(canvas.toDataURL());
+  }, []);
+
+  const handleCloseModalButtonClick = useCallback(() => {
+    setCaptureImageB64(null);
   }, []);
 
   if (!data) {
@@ -88,6 +92,8 @@ export function SharedDiaryContainer() {
       diary={data}
       imageRef={imageRef}
       isShared={true}
+      captureImageB64={captureImageB64}
+      handleCloseModalButtonClick={handleCloseModalButtonClick}
       handleEditButtonClick={handleEditButtonClick}
       handleGoBackButtonClick={handleGoBackButtonClick}
       handleShareButtonClick={handleShareButtonClick}
