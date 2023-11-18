@@ -5,11 +5,11 @@
   "scripts": {
     "start": "EXPO_PUBLIC_MODE=dev expo start --tunnel",
     "start:qa": "EXPO_PUBLIC_MODE=qa expo start --tunnel",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
     "web": "EXPO_PUBLIC_MODE=dev expo start --web",
     "web:qa": "EXPO_PUBLIC_MODE=qa expo start --web",
-    "build:web": "EXPO_PUBLIC_MODE=prod npx expo export -c -p web --output-dir web-build",
+    "build:web": "EXPO_PUBLIC_MODE=dev npx expo export -p web --output-dir web-build",
+    "build:web:qa": "EXPO_PUBLIC_MODE=qa npx expo export -p web --output-dir web-build",
+    "build:web:prod": "EXPO_PUBLIC_MODE=prod npx expo export -p web --output-dir web-build",
     "cypress:open": "cypress open",
     "postinstall": "patch-package"
   },
