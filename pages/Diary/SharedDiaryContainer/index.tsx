@@ -49,7 +49,7 @@ export function SharedDiaryContainer() {
      */
   }, []);
 
-  const handleShareButtonClick = useCallback(async () => {
+  const handleShareButtonClick = useCallback(() => {
     if (Platform.OS !== "web" || !imageRef.current) {
       return;
     }
@@ -59,14 +59,25 @@ export function SharedDiaryContainer() {
      */
     const $divElement = imageRef.current as unknown as HTMLDivElement;
 
-    const dataUrl = await domToImage.toJpeg($divElement, {
-      quality: 1,
-    });
-
-    let link = document.createElement("a");
-    link.download = `${uuid}.jpeg`;
-    link.href = dataUrl;
-    link.click();
+    /**
+     * https://github.com/tsayen/dom-to-image/issues/343#issuecomment-685428224
+     */
+    domToImage
+      .toJpeg($divElement, {
+        quality: 1,
+      })
+      .then((_) => {
+        domToImage
+          .toJpeg($divElement, {
+            quality: 1,
+          })
+          .then((dataUrl) => {
+            let link = document.createElement("a");
+            link.download = `${uuid}.jpeg`;
+            link.href = dataUrl;
+            link.click();
+          });
+      });
   }, []);
 
   if (!data) {
