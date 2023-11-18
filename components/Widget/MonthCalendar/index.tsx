@@ -1,5 +1,5 @@
 // react
-import React, { createContext, useCallback, useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { View, Text, Pressable } from "react-native";
 import Swiper from "react-native-web-swiper";
 
@@ -11,6 +11,7 @@ import CaretLeft from "@/assets/svgs/caret-left.svg";
 import { MonthCalendarItem } from "./MonthCalendarItem";
 import { Header } from "@/components/Layout/Header";
 import { NavigationButton } from "@/components/Button/NavigationButton";
+import { MonthCalendarProvider } from "./index.context";
 
 // utils
 import { getPastYearDate } from "@/utils";
@@ -22,18 +23,6 @@ import { useSwiper } from "@/hooks";
 import { styles } from "./index.styles";
 
 const CALENDAR_PAGE_SIZE = 10;
-
-export const CurrentYearMonthContext = createContext<{
-  currentYear: number;
-  currentMonth: number;
-  yearMonthToImageId: Map<string, number>;
-  setCurrentYearMonth: (year: number, month: number) => void;
-}>({
-  currentYear: new Date().getFullYear(),
-  currentMonth: new Date().getMonth() + 1,
-  yearMonthToImageId: new Map(),
-  setCurrentYearMonth: (year: number, month: number) => {},
-});
 
 interface MonthCalendarProps {
   selectedYear: number;
@@ -130,7 +119,7 @@ export function MonthCalendar({
        *
        * https://github.com/reactrondev/react-native-web-swiper/issues/65#issuecomment-781552692
        */}
-      <CurrentYearMonthContext.Provider
+      <MonthCalendarProvider
         value={{
           currentYear,
           currentMonth,
@@ -159,7 +148,7 @@ export function MonthCalendar({
               );
             })}
         </Swiper>
-      </CurrentYearMonthContext.Provider>
+      </MonthCalendarProvider>
 
       <View style={styles.chooseMonthButton}>
         <NavigationButton
