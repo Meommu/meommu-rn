@@ -52,7 +52,7 @@ export function DiaryPresenter({
           {isShared && (
             <Header
               style={{ ...styles.header, height: 64 }}
-              title={<Text style={styles.headerTitle}>meommu</Text>}
+              title={<Text style={{ ...styles.headerTitle }}>meommu</Text>}
             />
           )}
 
