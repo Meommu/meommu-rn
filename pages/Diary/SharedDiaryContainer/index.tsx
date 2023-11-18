@@ -13,10 +13,9 @@ import { DiaryPresenter } from "../DiaryPresenter";
 import { PATH } from "@/constants";
 
 // apis
-import { apiService } from "@/apis";
+import { apiService, baseUrl } from "@/apis";
 
-//import * as htmlToImage from "html-to-image";
-import domToImage from "dom-to-image";
+import FileSaver from "file-saver";
 
 export function SharedDiaryContainer() {
   const { uuid } = useLocalSearchParams<{ uuid: string }>();
@@ -49,8 +48,15 @@ export function SharedDiaryContainer() {
      */
   }, []);
 
-  const handleShareButtonClick = useCallback(() => {
-    if (Platform.OS !== "web" || !imageRef.current) {
+  const handleShareButtonClick = useCallback(async () => {
+    if (
+      Platform.OS !== "web" ||
+      !imageRef.current ||
+      /**
+       * proxy 서버가 필요한 이슈가 있어 개발 환경에서는 해당 기능을 차단
+       */
+      process.env.EXPO_PUBLIC_MODE === "dev"
+    ) {
       return;
     }
 
@@ -60,24 +66,17 @@ export function SharedDiaryContainer() {
     const $divElement = imageRef.current as unknown as HTMLDivElement;
 
     /**
-     * https://github.com/tsayen/dom-to-image/issues/343#issuecomment-685428224
+     * 웹 환경에서만 동작하는 라이브러리이므로, 동적으로 불러와 사용
      */
-    domToImage
-      .toJpeg($divElement, {
-        quality: 1,
-      })
-      .then((_) => {
-        domToImage
-          .toJpeg($divElement, {
-            quality: 1,
-          })
-          .then((dataUrl) => {
-            let link = document.createElement("a");
-            link.download = `${uuid}.jpeg`;
-            link.href = dataUrl;
-            link.click();
-          });
-      });
+    const html2canvas = require("html2canvas");
+
+    const canvas = await html2canvas($divElement, {
+      proxy: `${baseUrl}/api/v1/proxy`,
+    });
+
+    canvas.toBlob((blob: Blob) => {
+      FileSaver.saveAs(blob, "download.jpeg");
+    });
   }, []);
 
   if (!data) {
