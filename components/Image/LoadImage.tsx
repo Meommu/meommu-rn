@@ -1,6 +1,6 @@
 // react
 import { View, Image } from "react-native";
-import type { ViewProps } from "react-native";
+import type { ImageStyle, ViewProps } from "react-native";
 import { useQuery } from "react-query";
 import { useState } from "react";
 
@@ -58,7 +58,7 @@ export function LoadImage({
 
   const [imageRatio, setImageRatio] = useState("1/1");
 
-  const aspectRatioStyle = useDynamicStyle(() => {
+  const aspectRatioStyle = useDynamicStyle<ImageStyle>(() => {
     return {
       width: "100%",
       aspectRatio: imageRatio,
@@ -72,10 +72,6 @@ export function LoadImage({
   if (originRatio) {
     return (
       <Image
-        /**
-         * TODO: ImageView 스타일이 아닐 수 있기 때문에 타입검사에서 오류가 발생하는 문제 해결할 것.
-         */
-        // @ts-ignore
         style={aspectRatioStyle}
         source={{ uri: data }}
         onLoad={() => {
