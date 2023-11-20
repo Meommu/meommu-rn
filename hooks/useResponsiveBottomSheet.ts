@@ -6,7 +6,7 @@ import { useWindowDimensions, Platform, ViewStyle } from "react-native";
 import { useDynamicStyle } from "./useDynamicStyle";
 
 // constants
-import { size } from "@/constants";
+import { size, zIndex } from "@/constants";
 
 // bottom sheet
 import {
@@ -14,10 +14,15 @@ import {
   useBottomSheetDynamicSnapPoints,
 } from "@gorhom/bottom-sheet";
 
-export const useResponsiveBottomSheet = () => {
+export const useResponsiveBottomSheet = (
+  /**
+   * snapPoints 배열 내에 "CONTENT_HEIGHT" 상수가 들어가지 않으면 반응형으로 높이가 조절되지 않음에 유의
+   */
+  snapPoints?: (string | number)[]
+) => {
   const bottomSheetRef = useRef<BottomSheetModal>(null);
 
-  const initialSnapPoints = useMemo(() => ["CONTENT_HEIGHT"], []);
+  const initialSnapPoints = useMemo(() => snapPoints || ["CONTENT_HEIGHT"], []);
 
   const {
     animatedHandleHeight,
@@ -37,7 +42,11 @@ export const useResponsiveBottomSheet = () => {
         ? (9 * height) / 16
         : "100%";
 
-    return { maxWidth };
+    return {
+      maxWidth,
+      marginHorizontal: "auto",
+      zIndex: zIndex.bottomSheetContainer,
+    };
   }, [width, height]);
 
   return {
