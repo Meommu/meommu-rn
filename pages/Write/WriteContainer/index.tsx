@@ -1,5 +1,5 @@
 // react
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
 
@@ -10,10 +10,10 @@ import { router } from "expo-router";
 import { WritePresenter } from "../WritePresenter";
 
 // hooks
-import { useSwiper, useToast } from "@/hooks";
+import { useSwiper, useToast, useResponsiveBottomSheet } from "@/hooks";
 
 // constants
-import { PATH, regExp } from "@/constants";
+import { PATH, regExp, size } from "@/constants";
 
 // apis
 import axios from "axios";
@@ -89,6 +89,28 @@ export function WriteContainer() {
     useSwiper(FIRST_SLIDE_INDEX);
 
   /**
+   * bottom sheet
+   */
+  const {
+    bottomSheetRef,
+    bottomSheetMaxWidthStyle,
+    animatedContentHeight,
+    animatedHandleHeight,
+    animatedSnapPoints,
+    handleContentLayout,
+  } = useResponsiveBottomSheet([
+    size.BOTTOM_SHEET_INDICATOR_HEIGHT + size.AI_BOTTOM_SHEET_HEADER_HEIGHT,
+    "CONTENT_HEIGHT",
+    "100%",
+  ]);
+
+  useEffect(() => {
+    if (swiperIndex === 0) {
+      bottomSheetRef.current?.close();
+    }
+  }, [swiperIndex]);
+
+  /**
    * event handlers
    */
   const handleBottomButtonClick = useCallback(() => {
@@ -98,6 +120,8 @@ export function WriteContainer() {
 
         break;
       case LAST_SLIDE_INDEX:
+        bottomSheetRef.current?.snapToIndex(0);
+
         break;
     }
   }, [swiperIndex]);
@@ -198,6 +222,12 @@ export function WriteContainer() {
         handleSwiperIndexChange={handleSwiperIndexChange}
         isBottomButtonActive={isBottomButtonActive}
         isLastSlide={isLastSlide}
+        bottomSheetRef={bottomSheetRef}
+        bottomSheetMaxWidthStyle={bottomSheetMaxWidthStyle}
+        animatedContentHeight={animatedContentHeight}
+        animatedHandleHeight={animatedHandleHeight}
+        animatedSnapPoints={animatedSnapPoints}
+        handleContentLayout={handleContentLayout}
       />
     </FormProvider>
   );
