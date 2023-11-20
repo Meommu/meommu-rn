@@ -10,7 +10,7 @@ import * as ImagePicker from "expo-image-picker";
 import Camera from "@/assets/svgs/camera.svg";
 
 // components
-import { LoadImage } from "@/components/Image/LoadImage";
+import { LoadImage } from "@/components/Widget/LoadImage";
 import { ImageRemoveButton } from "@/components/Button/ImageRemoveButton";
 import { UnderlineInput } from "@/components/Input/UnderlineInput";
 

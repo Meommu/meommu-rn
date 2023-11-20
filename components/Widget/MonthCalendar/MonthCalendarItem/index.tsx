@@ -3,7 +3,7 @@ import { useContext, useMemo } from "react";
 import { View, Text, Pressable } from "react-native";
 
 // components
-import { LoadImage } from "@/components/Image/LoadImage";
+import { LoadImage } from "@/components/Widget/LoadImage";
 
 // context
 import { MonthCalendarContext } from "../index.context";

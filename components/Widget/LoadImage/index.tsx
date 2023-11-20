@@ -7,7 +7,10 @@ import { useQuery } from "react-query";
 import { apiService } from "@/apis";
 
 // components
-import { OriginRatioImage } from "./OriginRatioImage";
+import { OriginRatioImage } from "@/components/Image/OriginRatioImage";
+
+// styles
+import { styles } from "./index.styles";
 
 interface LoadImageProps extends ViewProps {
   imageId: number;
@@ -61,12 +64,8 @@ export function LoadImage({
   }
 
   return (
-    <View style={[style, { width: "100%", height: "100%" }]}>
-      <Image
-        resizeMode="cover"
-        style={{ width: "100%", height: "100%" }}
-        source={{ uri: data }}
-      />
+    <View style={[style, styles.container]}>
+      <Image resizeMode="cover" style={styles.image} source={{ uri: data }} />
     </View>
   );
 }

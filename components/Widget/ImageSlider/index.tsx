@@ -3,7 +3,7 @@ import { View, Text } from "react-native";
 import Swiper from "react-native-web-swiper";
 
 // components
-import { LoadImage } from "@/components/Image/LoadImage";
+import { LoadImage } from "@/components/Widget/LoadImage";
 
 // hooks
 import { useSwiper } from "@/hooks";
