@@ -1,52 +1,50 @@
 // react
 import type { MutableRefObject } from "react";
-import { useFormContext } from "react-hook-form";
-import { Pressable, View, Text, ViewStyle } from "react-native";
+import { Pressable, View, Text } from "react-native";
 import Swiper from "react-native-web-swiper";
 
 // components
-import { NavigationButton } from "@/components/Button/NavigationButton";
 import { Header } from "@/components/Layout/Header";
 import { GoBackButton } from "@/components/Button/GoBackButton";
-import { WriteFormStepOne } from "@/pages/Write/WriteForm/WriteFormStepOne";
-import { WriteFormStepTwo } from "@/pages/Write/WriteForm/WriteFormStepTwo";
+import { WriteFormStepOne } from "@/pages/Write/WritePresenter/WriteForm/WriteFormStepOne";
+import { WriteFormStepTwo } from "@/pages/Write/WritePresenter/WriteForm/WriteFormStepTwo";
+import { NavigationButton } from "@/components/Button/NavigationButton";
 
 // constants
-import { color, size } from "@/constants";
+import { color } from "@/constants";
 
 // styles
 import { styles } from "./index.styles";
-
-// hooks
-import { useResponsiveBottomSheet } from "@/hooks";
-
-import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
-import React from "react";
-import type { SharedValue } from "react-native-reanimated";
-import type { LayoutChangeEvent } from "react-native";
+import { WriteGuide } from "./WriteGuide";
 
 interface WritePresenterProps {
   swiperRef: MutableRefObject<Swiper | null>;
-  handleBottomButtonClick: () => void;
-  handleFinishButtonClick: () => void;
-  handleGoBackButtonClick: () => void;
   handleSwiperIndexChange: (index: number) => void;
-  isBottomButtonActive: () => boolean;
-  isLastSlide: () => boolean;
 
   /**
-   * bottom sheet 관련 props
+   * 하단의 버튼을 클릭했을 때 실행될 함수
    */
-  bottomSheetRef: React.MutableRefObject<BottomSheet | null>;
-  bottomSheetMaxWidthStyle: ViewStyle;
-  animatedContentHeight: SharedValue<number>;
-  animatedHandleHeight: SharedValue<number>;
-  animatedSnapPoints: Readonly<{ value: (string | number)[] }>;
-  handleContentLayout: ({
-    nativeEvent: {
-      layout: { height },
-    },
-  }: LayoutChangeEvent) => void;
+  handleBottomButtonClick: () => void;
+
+  /**
+   * 완료 버튼을 클릭했을 때 실행될 함수
+   */
+  handleFinishButtonClick: () => void;
+
+  /**
+   * 뒤로가기 버튼 클릭 시 실행될 함수
+   */
+  handleGoBackButtonClick: () => void;
+
+  /**
+   * 바텀 버튼을 누를 수 있는지 여부를 반환하는 함수
+   */
+  isBottomButtonActive: () => boolean;
+
+  /**
+   * 현재 swiper가 첫 단계의 슬라이드인지 반환하는 함수
+   */
+  isStepOneSlide: () => boolean;
 }
 
 export function WritePresenter({
@@ -56,27 +54,16 @@ export function WritePresenter({
   handleGoBackButtonClick,
   handleSwiperIndexChange,
   isBottomButtonActive,
-  isLastSlide,
-
-  bottomSheetRef,
-  bottomSheetMaxWidthStyle,
-  animatedContentHeight,
-  animatedHandleHeight,
-  animatedSnapPoints,
-  handleContentLayout,
+  isStepOneSlide,
 }: WritePresenterProps) {
-  const {
-    formState: { isSubmitting },
-  } = useFormContext<DiaryWriteFormFieldValues>();
-
   return (
     <View style={styles.container}>
       <Header
         style={styles.header}
-        title={isLastSlide() ? "일기쓰기" : "누구에게 보낼 건가요?"}
+        title={isStepOneSlide() ? "누구에게 보낼 건가요?" : "일기쓰기"}
         left={<GoBackButton onPress={handleGoBackButtonClick} />}
         right={
-          isLastSlide() && (
+          isStepOneSlide() && (
             <Pressable
               style={styles.completeButton}
               onPress={handleFinishButtonClick}
@@ -106,57 +93,12 @@ export function WritePresenter({
           backgroundColor={
             isBottomButtonActive() ? color.primary : color.inactive
           }
-          disabled={!isBottomButtonActive() || isSubmitting}
-          content={isLastSlide() ? "멈무일기 가이드" : "다음"}
+          disabled={!isBottomButtonActive()}
+          content={isStepOneSlide() ? "다음" : "멈무일기 가이드"}
         />
       </View>
 
-      <BottomSheet
-        ref={bottomSheetRef}
-        snapPoints={animatedSnapPoints}
-        handleHeight={animatedHandleHeight}
-        contentHeight={animatedContentHeight}
-        containerStyle={[bottomSheetMaxWidthStyle, {}]}
-        backgroundStyle={{
-          backgroundColor: "#1B1E26",
-        }}
-        handleIndicatorStyle={{
-          backgroundColor: "rgba(235, 235, 245, 0.3)",
-          width: "10%",
-        }}
-        enablePanDownToClose={true}
-        index={-1}
-      >
-        <BottomSheetView onLayout={handleContentLayout}>
-          <View
-            style={{
-              height: size.AI_BOTTOM_SHEET_HEADER_HEIGHT,
-              justifyContent: "center",
-              alignItems: "center",
-              paddingBottom: size.BOTTOM_SHEET_INDICATOR_HEIGHT,
-              gap: 4,
-            }}
-          >
-            <Text
-              style={{
-                fontSize: 20,
-                fontFamily: "Pretendard-SemiBold",
-                color: "white",
-              }}
-            >
-              멈무일기 가이드
-            </Text>
-            <Text
-              style={{
-                color: "#6F7682",
-                fontSize: 14,
-              }}
-            >
-              오늘은 어떤 낮잠 이었나요?
-            </Text>
-          </View>
-        </BottomSheetView>
-      </BottomSheet>
+      <WriteGuide />
     </View>
   );
 }

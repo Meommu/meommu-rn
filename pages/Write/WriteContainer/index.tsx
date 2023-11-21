@@ -3,6 +3,11 @@ import { useCallback, useEffect } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
 
+// redux
+import { useSelector } from "react-redux";
+import type { RootState } from "@/store";
+import type { BottomSheetRefState } from "@/store/modules/bottomSheetRef";
+
 // expo
 import { router } from "expo-router";
 
@@ -10,21 +15,24 @@ import { router } from "expo-router";
 import { WritePresenter } from "../WritePresenter";
 
 // hooks
-import { useSwiper, useToast, useResponsiveBottomSheet } from "@/hooks";
+import { useSwiper, useToast } from "@/hooks";
 
 // constants
-import { PATH, regExp, size } from "@/constants";
+import { PATH, regExp } from "@/constants";
 
 // apis
 import axios from "axios";
 
-const FIRST_SLIDE_INDEX = 0;
-const LAST_SLIDE_INDEX = 1;
+const STEP_ONE_SLIDE_INDEX = 0;
+const STEP_TWO_SLIDE_INDEX = 1;
 
 export function WriteContainer() {
   const { fireToast } = useToast();
 
-  const queryClient = useQueryClient();
+  const { writeGuideBottomSheetRef } = useSelector<
+    RootState,
+    BottomSheetRefState
+  >((state) => state.bottomSheetRef);
 
   /**
    * useForm
@@ -49,8 +57,10 @@ export function WriteContainer() {
   const formState = watch();
 
   /**
-   * useMutation
+   * useQuery & useMutation
    */
+  const queryClient = useQueryClient();
+
   const writeDiaryMutation = useMutation(
     async (data: DiaryWriteFormFieldValues) => {
       const {
@@ -86,41 +96,20 @@ export function WriteContainer() {
    * swiper
    */
   const { swiperIndex, swiperRef, handleSwiperIndexChange } =
-    useSwiper(FIRST_SLIDE_INDEX);
-
-  /**
-   * bottom sheet
-   */
-  const {
-    bottomSheetRef,
-    bottomSheetMaxWidthStyle,
-    animatedContentHeight,
-    animatedHandleHeight,
-    animatedSnapPoints,
-    handleContentLayout,
-  } = useResponsiveBottomSheet([
-    size.BOTTOM_SHEET_INDICATOR_HEIGHT + size.AI_BOTTOM_SHEET_HEADER_HEIGHT,
-    "CONTENT_HEIGHT",
-    "100%",
-  ]);
-
-  useEffect(() => {
-    if (swiperIndex === 0) {
-      bottomSheetRef.current?.close();
-    }
-  }, [swiperIndex]);
+    useSwiper(STEP_ONE_SLIDE_INDEX);
 
   /**
    * event handlers
    */
   const handleBottomButtonClick = useCallback(() => {
     switch (swiperIndex) {
-      case FIRST_SLIDE_INDEX:
-        swiperRef.current?.goTo(LAST_SLIDE_INDEX);
+      case STEP_ONE_SLIDE_INDEX:
+        swiperRef.current?.goTo(STEP_TWO_SLIDE_INDEX);
 
         break;
-      case LAST_SLIDE_INDEX:
-        bottomSheetRef.current?.snapToIndex(0);
+
+      case STEP_TWO_SLIDE_INDEX:
+        writeGuideBottomSheetRef?.current?.snapToIndex(0);
 
         break;
     }
@@ -130,7 +119,6 @@ export function WriteContainer() {
     const { date, imageIds } = formState;
 
     if (!regExp.date.test(date)) {
-      console.log("1");
       fireToast("올바른 날짜를 입력하세요.", 2000);
 
       return;
@@ -176,7 +164,7 @@ export function WriteContainer() {
 
   const handleGoBackButtonClick = useCallback(() => {
     switch (swiperIndex) {
-      case FIRST_SLIDE_INDEX:
+      case STEP_ONE_SLIDE_INDEX:
         if (router.canGoBack()) {
           router.back();
         } else {
@@ -185,8 +173,9 @@ export function WriteContainer() {
 
         break;
 
-      case LAST_SLIDE_INDEX:
+      case STEP_TWO_SLIDE_INDEX:
         swiperRef.current?.goToPrev();
+
         break;
     }
   }, [swiperIndex, swiperRef]);
@@ -194,23 +183,32 @@ export function WriteContainer() {
   /**
    * util functions
    */
-
   const isBottomButtonActive = useCallback(() => {
+    if (swiperIndex === STEP_TWO_SLIDE_INDEX) {
+      return true;
+    }
+
     const { dogName } = formState;
 
-    switch (swiperIndex) {
-      case FIRST_SLIDE_INDEX:
-        return dogName.length >= 1;
+    return dogName.length >= 1;
+  }, [formState, swiperIndex]);
 
-      case LAST_SLIDE_INDEX:
-      default:
-        return true;
-    }
-  }, [swiperIndex, formState]);
-
-  const isLastSlide = useCallback(() => {
-    return swiperIndex === LAST_SLIDE_INDEX;
+  const isStepOneSlide = useCallback(() => {
+    return swiperIndex === STEP_ONE_SLIDE_INDEX;
   }, [swiperIndex]);
+
+  /**
+   * 첫단계에서는 AI 글쓰기 가이드가 나타나지 않도록 함.
+   */
+  useEffect(() => {
+    if (!writeGuideBottomSheetRef) {
+      return;
+    }
+
+    if (swiperIndex === STEP_ONE_SLIDE_INDEX) {
+      writeGuideBottomSheetRef.current?.close();
+    }
+  }, [writeGuideBottomSheetRef, swiperIndex]);
 
   return (
     <FormProvider {...methods}>
@@ -221,13 +219,7 @@ export function WriteContainer() {
         handleGoBackButtonClick={handleGoBackButtonClick}
         handleSwiperIndexChange={handleSwiperIndexChange}
         isBottomButtonActive={isBottomButtonActive}
-        isLastSlide={isLastSlide}
-        bottomSheetRef={bottomSheetRef}
-        bottomSheetMaxWidthStyle={bottomSheetMaxWidthStyle}
-        animatedContentHeight={animatedContentHeight}
-        animatedHandleHeight={animatedHandleHeight}
-        animatedSnapPoints={animatedSnapPoints}
-        handleContentLayout={handleContentLayout}
+        isStepOneSlide={isStepOneSlide}
       />
     </FormProvider>
   );
