@@ -23,6 +23,42 @@ export class MockApiService {
 
     const serverConfig: ServerConfig<AnyModels, AnyFactories> = {
       routes() {
+        this.get("/api/v1/guides", (schema, request) => {
+          const guides = schema.db.guides;
+
+          return new Response(
+            httpStatus.OK,
+            {},
+            resBodyTemplate({
+              code: CODE.OK,
+              message: "정상",
+              data: {
+                guides,
+              },
+            })
+          );
+        });
+
+        this.get("/api/v1/guides/:id/details", (schema, request) => {
+          const {
+            params: { id },
+          } = request;
+
+          const details = schema.db.details;
+
+          return new Response(
+            httpStatus.OK,
+            {},
+            resBodyTemplate({
+              code: CODE.OK,
+              message: "정상",
+              data: {
+                details,
+              },
+            })
+          );
+        });
+
         /**
          * [GET] 공유용 일기 uuid 조회
          */
@@ -481,6 +517,30 @@ export class MockApiService {
           title: "일기 4 제목",
           content: "일기 4 내용",
           uuid: 4,
+        },
+      ],
+      guides: [
+        {
+          id: 1,
+          guide: "🌿 산책에 관한 일상",
+        },
+        {
+          id: 2,
+          guide: "😴 낮잠에 관한 일상",
+        },
+      ],
+      details: [
+        {
+          id: 1,
+          detail: "산책을 오래 했어요.",
+        },
+        {
+          id: 2,
+          detail: "산책을 조금 했어요.",
+        },
+        {
+          id: 3,
+          detail: "산책 중 친한 강아지를 만나 대화 했어요",
         },
       ],
     });
