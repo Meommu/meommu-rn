@@ -11,7 +11,7 @@ import { useResponsiveBottomSheet } from "@/hooks";
 import { useDerivedValue } from "react-native-reanimated";
 import { useCallback, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { shareWriteGuideButtonSheetRef } from "@/store/modules/bottomSheetRef";
+import { shareAiBottomSheetRef } from "@/store/modules/aiBottomSheet";
 
 interface WriteGuideProps {}
 
@@ -25,7 +25,7 @@ export function WriteGuide({}: WriteGuideProps) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(shareWriteGuideButtonSheetRef(bottomSheetRef));
+    dispatch(shareAiBottomSheetRef(bottomSheetRef));
   }, []);
 
   const { data } = useQuery(["writeGuide"], async () => {

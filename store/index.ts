@@ -2,12 +2,12 @@ import { combineReducers } from "redux";
 
 import toast from "./modules/toast";
 import diaryDate from "./modules/diaryDate";
-import bottomSheetRef from "./modules/bottomSheetRef";
+import aiBottomSheet from "./modules/aiBottomSheet";
 
 const rootReducer = combineReducers({
   toast,
   diaryDate,
-  bottomSheetRef,
+  aiBottomSheet,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
