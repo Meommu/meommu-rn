@@ -10,7 +10,6 @@ import { Stack } from "expo-router";
 import { QueryProvider } from "./QueryProvider";
 import { ReduxStore } from "./ReduxStore";
 import { ResponsiveLayoutView } from "./ResponsiveLayoutView";
-import { ColorfulSafeAreaView } from "./ColorfulSafeAreaView";
 import { Toast } from "@/components/Overlay/Toast";
 
 // apis
@@ -56,19 +55,17 @@ export function RootLayout() {
     <ReduxStore>
       <QueryProvider>
         {fontsLoaded && ready && (
-          <ColorfulSafeAreaView>
-            <ResponsiveLayoutView>
-              <GlobalErrorBoundary>
-                <Stack
-                  screenOptions={{
-                    headerShown: false,
-                  }}
-                />
-              </GlobalErrorBoundary>
+          <ResponsiveLayoutView>
+            <GlobalErrorBoundary>
+              <Stack
+                screenOptions={{
+                  headerShown: false,
+                }}
+              />
+            </GlobalErrorBoundary>
 
-              <Toast />
-            </ResponsiveLayoutView>
-          </ColorfulSafeAreaView>
+            <Toast />
+          </ResponsiveLayoutView>
         )}
       </QueryProvider>
     </ReduxStore>
