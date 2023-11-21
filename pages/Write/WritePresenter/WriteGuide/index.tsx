@@ -1,18 +1,31 @@
-import { View, Text } from "react-native";
-import { size } from "@/constants";
-import { useQuery } from "react-query";
-import axios from "axios";
-import BottomSheet, {
-  type BottomSheetFooterProps,
-  BottomSheetFooter,
-  BottomSheetView,
-} from "@gorhom/bottom-sheet";
-import { useResponsiveBottomSheet } from "@/hooks";
-import { useDerivedValue } from "react-native-reanimated";
+// react
 import { useCallback, useEffect } from "react";
+import { useQuery } from "react-query";
+import { View, Text } from "react-native";
+import { useDerivedValue } from "react-native-reanimated";
+
+// redux
 import { useDispatch } from "react-redux";
 import { shareAiBottomSheetRef } from "@/store/modules/aiBottomSheet";
 import { changeAiBottomSheetIsOpen } from "@/store/modules/aiBottomSheet";
+
+// apis
+import axios from "axios";
+
+// bottom sheet
+import BottomSheet, {
+  BottomSheetBackdrop,
+  BottomSheetFooter,
+  BottomSheetView,
+  type BottomSheetFooterProps,
+  type BottomSheetBackdropProps,
+} from "@gorhom/bottom-sheet";
+
+// constants
+import { size, zIndex } from "@/constants";
+
+// hooks
+import { useResponsiveBottomSheet } from "@/hooks";
 
 interface WriteGuideProps {}
 
@@ -55,7 +68,7 @@ export function WriteGuide({}: WriteGuideProps) {
       snapPoints={[
         size.BOTTOM_SHEET_INDICATOR_HEIGHT + size.AI_BOTTOM_SHEET_HEADER_HEIGHT,
         "60%",
-        "100%",
+        "99%",
       ]}
       containerStyle={bottomSheetMaxWidthStyle}
       backgroundStyle={{
@@ -67,6 +80,7 @@ export function WriteGuide({}: WriteGuideProps) {
       }}
       onChange={handleBottomSheetChange}
       footerComponent={renderFooter}
+      backdropComponent={renderBackdrop}
       enablePanDownToClose={true}
       index={-1}
     >
@@ -122,6 +136,17 @@ export function WriteGuide({}: WriteGuideProps) {
         </View>
       </BottomSheetView>
     </BottomSheet>
+  );
+}
+
+function renderBackdrop(props: BottomSheetBackdropProps) {
+  return (
+    <BottomSheetBackdrop
+      {...props}
+      style={[props.style, { zIndex: zIndex.bottomSheetBackdrop }]}
+      appearsOnIndex={1}
+      disappearsOnIndex={0}
+    />
   );
 }
 
