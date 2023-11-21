@@ -21,6 +21,9 @@ export const changeAiBottomSheetIsOpen = (isOpen: boolean) => ({
   isOpen,
 });
 
+/**
+ * ※ 현재 isOpen 상태는 사용되고 있지 않음. (추후 삭제 될 예정)
+ */
 export interface AiBottomSheetState {
   isOpen: boolean;
   bottomSheetRef: MutableRefObject<BottomSheet | null> | null;

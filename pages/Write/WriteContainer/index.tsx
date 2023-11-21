@@ -4,12 +4,9 @@ import { useForm, FormProvider } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
 
 // redux
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import type { RootState } from "@/store";
-import {
-  changeAiBottomSheetIsOpen,
-  type AiBottomSheetState,
-} from "@/store/modules/aiBottomSheet";
+import { type AiBottomSheetState } from "@/store/modules/aiBottomSheet";
 
 // expo
 import { router } from "expo-router";
@@ -35,8 +32,6 @@ export function WriteContainer() {
   const { bottomSheetRef } = useSelector<RootState, AiBottomSheetState>(
     (state) => state.aiBottomSheet
   );
-
-  const dispatch = useDispatch();
 
   /**
    * useForm
@@ -113,8 +108,6 @@ export function WriteContainer() {
         break;
 
       case STEP_TWO_SLIDE_INDEX:
-        dispatch(changeAiBottomSheetIsOpen(true));
-
         bottomSheetRef?.current?.snapToIndex(0);
 
         break;
