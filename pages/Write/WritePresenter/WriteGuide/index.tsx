@@ -1,22 +1,27 @@
 // react
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { useQuery } from "react-query";
-import { View, Text, TextInput, PressableProps, Pressable } from "react-native";
+import { View } from "react-native";
+import { useDerivedValue } from "react-native-reanimated";
 
 // redux
 import { useDispatch } from "react-redux";
 import { shareAiBottomSheetRef } from "@/store/modules/aiBottomSheet";
 
 // components
-import { AIBottomSheetFooter } from "./AIBottomSheetFooter";
 import { AIBottomSheetHeader } from "./AIBottomSheetHeader";
 import { AIBottomSheetBackdrop } from "./AIBottomSheetBackdrop";
+import { NavigationButton } from "@/components/Button/NavigationButton";
 
 // apis
 import { apiService } from "@/apis";
 
 // bottom sheet
-import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
+import BottomSheet, {
+  BottomSheetView,
+  BottomSheetFooter,
+  type BottomSheetFooterProps,
+} from "@gorhom/bottom-sheet";
 
 // constants
 import { size } from "@/constants";
@@ -110,6 +115,55 @@ export function WriteGuide({}: WriteGuideProps) {
     dispatch(shareAiBottomSheetRef(bottomSheetRef));
   }, []);
 
+  /**
+   * - swiper
+   * - guideElement
+   *
+   * 와 같이 상태에 접근할 일이 많은 컴포넌트이므로 따로 컴포넌트로 분리하지 않고 내부에 선언하여 사용
+   *
+   * (+) JSX 형태로 사용할 수 없고, BottomSheet 컴포넌트에 함수 형태로 전달해주어야 하므로 Props를 전달하는데에도 문제가 있음.
+   */
+  const AIBottomSheetFooter = useCallback(
+    ({ animatedFooterPosition }: BottomSheetFooterProps) => {
+      const footerPosition = useDerivedValue(() => {
+        /**
+         * 바텀시트 푸터 컴포넌트에는, 푸터 컴포넌트가 항상 시트의 하단에 위치할 수 있도록하기 위한 계산값 `animatedFooterPosition`이 props로 넘겨진다.
+         *
+         * `animatedFooterPosition`은 바텀시트의 최상단 position과의 거리값이므로, 바텀시트가 위로 올라올수록 값은 더 커진다.
+         *
+         * 만약 푸터 컴포넌트의 등장을 지연시키고 싶다면, 이러한 특징을 이용하여 `animatedFooterPosition`의 최소값을 늘려주면 된다.
+         *
+         * 1) `animatedFooterPosition`의 값
+         * 2) 바텀시트가 등장하기를 원하는 적절한 높이
+         *
+         * 두 값을 비교하여 항상 최대값을 반환하면 된다.
+         */
+        return Math.max(
+          animatedFooterPosition.value,
+          size.AI_BOTTOM_SHEET_HEADER_HEIGHT
+        );
+      }, []);
+
+      return (
+        <BottomSheetFooter
+          bottomInset={0}
+          animatedFooterPosition={footerPosition}
+        >
+          <View style={styles.bottomSheetFooter}>
+            <NavigationButton content="이전" backgroundColor="#373840" />
+            <NavigationButton
+              content="다음"
+              onPress={() => {
+                console.log("[test]", data);
+              }}
+            />
+          </View>
+        </BottomSheetFooter>
+      );
+    },
+    [data]
+  );
+
   return (
     <BottomSheet
       ref={bottomSheetRef}
@@ -117,7 +171,7 @@ export function WriteGuide({}: WriteGuideProps) {
       containerStyle={bottomSheetMaxWidthStyle}
       backgroundStyle={styles.bottomSheetBackground}
       handleIndicatorStyle={styles.bottomSheetIndicator}
-      footerComponent={AIBottomSheetFooter({ guideElements: data })}
+      footerComponent={AIBottomSheetFooter}
       backdropComponent={AIBottomSheetBackdrop}
       enablePanDownToClose={true}
       index={-1}
