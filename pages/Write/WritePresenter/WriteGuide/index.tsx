@@ -12,6 +12,7 @@ import { useDerivedValue } from "react-native-reanimated";
 import { useCallback, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { shareAiBottomSheetRef } from "@/store/modules/aiBottomSheet";
+import { changeAiBottomSheetIsOpen } from "@/store/modules/aiBottomSheet";
 
 interface WriteGuideProps {}
 
@@ -24,8 +25,16 @@ export function WriteGuide({}: WriteGuideProps) {
 
   const dispatch = useDispatch();
 
+  const handleBottomSheetChange = useCallback((index: number) => {
+    dispatch(changeAiBottomSheetIsOpen(index !== -1));
+  }, []);
+
   useEffect(() => {
     dispatch(shareAiBottomSheetRef(bottomSheetRef));
+
+    return () => {
+      dispatch(changeAiBottomSheetIsOpen(false));
+    };
   }, []);
 
   const { data } = useQuery(["writeGuide"], async () => {
@@ -39,10 +48,6 @@ export function WriteGuide({}: WriteGuideProps) {
 
     return guides;
   });
-
-  const handleBottomSheetOpenButtonClick = useCallback(() => {
-    bottomSheetRef.current?.snapToIndex(0);
-  }, []);
 
   return (
     <BottomSheet
@@ -60,6 +65,7 @@ export function WriteGuide({}: WriteGuideProps) {
         backgroundColor: "rgba(235, 235, 245, 0.3)",
         width: "10%",
       }}
+      onChange={handleBottomSheetChange}
       footerComponent={renderFooter}
       enablePanDownToClose={true}
       index={-1}
