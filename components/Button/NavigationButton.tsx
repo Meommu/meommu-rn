@@ -30,6 +30,7 @@ export function NavigationButton({
 const styles = StyleSheet.create({
   container: {
     width: "100%",
+    flexShrink: 1,
     height: size.NAVIGATION_BUTTON_HEIGHT,
     borderRadius: 6,
     overflow: "hidden",
