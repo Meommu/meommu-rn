@@ -63,7 +63,7 @@ export function WritePresenter({
         title={isStepOneSlide() ? "누구에게 보낼 건가요?" : "일기쓰기"}
         left={<GoBackButton onPress={handleGoBackButtonClick} />}
         right={
-          isStepOneSlide() && (
+          !isStepOneSlide() && (
             <Pressable
               style={styles.completeButton}
               onPress={handleFinishButtonClick}
