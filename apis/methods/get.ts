@@ -96,3 +96,29 @@ export const getImageUrl = async (imageId: number): Promise<DiaryImage> => {
 
   return data;
 };
+
+export const getGuideGuides = async (): Promise<GuideGuide[]> => {
+  const {
+    data: {
+      data: { guides },
+    },
+  } = await axios.get<ResponseTemplate<{ guides: GuideGuide[] }>>(
+    "/api/v1/guides"
+  );
+
+  return guides;
+};
+
+export const getGuideDetails = async (
+  guideId: number
+): Promise<GuideDetail[]> => {
+  const {
+    data: {
+      data: { details },
+    },
+  } = await axios.get<ResponseTemplate<{ details: GuideDetail[] }>>(
+    `/api/v1/guides/${guideId}/details`
+  );
+
+  return details;
+};
