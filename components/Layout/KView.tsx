@@ -18,10 +18,7 @@ export function KView({ children, ...props }: KViewProps) {
   if (Platform.OS === "ios") {
     return (
       <Pressable style={styles.container} onPress={Keyboard.dismiss}>
-        <KeyboardAvoidingView
-          behavior={Platform.OS === "ios" ? "padding" : "position"}
-          {...props}
-        >
+        <KeyboardAvoidingView behavior="padding" {...props}>
           {children}
         </KeyboardAvoidingView>
       </Pressable>
