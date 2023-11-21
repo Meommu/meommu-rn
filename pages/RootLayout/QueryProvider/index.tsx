@@ -25,24 +25,6 @@ interface QueryProviderProps {
 }
 
 export function QueryProvider({ children }: QueryProviderProps) {
-  const queryClient = useMemo(
-    () =>
-      new QueryClient({
-        defaultOptions: {
-          queries: {
-            onError: errorHandler,
-            refetchOnWindowFocus: false,
-            retry: 0,
-            staleTime: Infinity,
-          },
-          mutations: {
-            onError: errorHandler,
-          },
-        },
-      }),
-    []
-  );
-
   const errorHandler = useCallback(async (error: unknown) => {
     const axiosError = error as AxiosError;
 
@@ -97,6 +79,24 @@ export function QueryProvider({ children }: QueryProviderProps) {
         break;
     }
   }, []);
+
+  const queryClient = useMemo(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            onError: errorHandler,
+            refetchOnWindowFocus: false,
+            retry: 0,
+            staleTime: Infinity,
+          },
+          mutations: {
+            onError: errorHandler,
+          },
+        },
+      }),
+    []
+  );
 
   return (
     <QueryClientProvider client={queryClient}>
