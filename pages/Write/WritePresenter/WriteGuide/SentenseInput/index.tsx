@@ -16,6 +16,7 @@ export function SentenseInput({ guideElementItems }: SentenseInputProps) {
       return;
     }
 
+    guideElementItems[m - 1].isSelect = true;
     guideElementItems[m - 1].sentence = text;
   };
 

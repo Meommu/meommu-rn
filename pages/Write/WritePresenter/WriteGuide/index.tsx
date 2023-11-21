@@ -27,7 +27,7 @@ import BottomSheet, {
 import { size } from "@/constants";
 
 // hooks
-import { useResponsiveBottomSheet, useSwiper } from "@/hooks";
+import { useResponsiveBottomSheet, useSwiper, useToast } from "@/hooks";
 import Swiper from "react-native-web-swiper";
 
 // styles
@@ -89,7 +89,7 @@ export function WriteGuide({}: WriteGuideProps) {
   /**
    * swiper
    */
-  const { swiperRef, handleSwiperIndexChange } = useSwiper(0);
+  const { swiperIndex, swiperRef, handleSwiperIndexChange } = useSwiper(0);
 
   /**
    * bottom Sheets
@@ -116,12 +116,8 @@ export function WriteGuide({}: WriteGuideProps) {
   }, []);
 
   /**
-   * - swiper
-   * - guideElement
-   *
-   * 와 같이 상태에 접근할 일이 많은 컴포넌트이므로 따로 컴포넌트로 분리하지 않고 내부에 선언하여 사용
-   *
-   * (+) JSX 형태로 사용할 수 없고, BottomSheet 컴포넌트에 함수 형태로 전달해주어야 하므로 Props를 전달하는데에도 문제가 있음.
+   * BottomSheetFooter는 JSX 형태로 사용할 수 없고 BottomSheet 컴포넌트에 함수 형태로 전달해주어야 하므로
+   * Props를 전달하는데 문제가 있어, 컴포넌트로 분리하지 않고 내부에 선언하여 사용함.
    */
   const AIBottomSheetFooter = useCallback(
     ({ animatedFooterPosition }: BottomSheetFooterProps) => {
@@ -144,6 +140,115 @@ export function WriteGuide({}: WriteGuideProps) {
         );
       }, []);
 
+      const { fireToast } = useToast();
+
+      const handleNextButtonClick = useCallback(() => {
+        if (!data || !swiperRef.current) {
+          fireToast("예상치 못한 오류가 발생했습니다.", 3000);
+
+          return;
+        }
+
+        const selectedIndexes: number[] = [];
+
+        data[0].items.forEach(({ isSelect }, i) => {
+          if (isSelect) {
+            selectedIndexes.push(i);
+          }
+        });
+
+        if (!selectedIndexes.length) {
+          fireToast("최소 하나 이상의 가이드를 선택해주세요.", 3000);
+
+          return;
+        }
+
+        const swiperIndex = swiperRef.current.getActiveIndex();
+
+        console.log("current swiper index", swiperIndex);
+
+        switch (swiperIndex) {
+          /**
+           * 1단계
+           */
+          case 0:
+            const nextIndex = selectedIndexes[0] * 2 + 1;
+
+            swiperRef.current.goTo(nextIndex);
+            break;
+
+          /**
+           * 3단계
+           */
+          case data.length - 1:
+            const sentenses: string[] = [];
+
+            data.forEach(({ items }, i) => {
+              if (!i) {
+                return;
+              }
+
+              items.forEach(({ isSelect, sentence }, i) => {
+                if (i === items.length - 1) {
+                  return;
+                }
+
+                if (isSelect) {
+                  sentenses.push(sentence);
+                }
+              });
+            });
+
+            console.log(
+              "end!",
+              sentenses.join(", "),
+              JSON.stringify(data, null, 2)
+            );
+
+            break;
+
+          /**
+           * 2단계
+           */
+          default:
+            if (data[swiperIndex].type === "list") {
+              const currentItems = data[swiperIndex].items;
+
+              const customSentense = currentItems[currentItems.length - 1];
+
+              if (customSentense.isSelect) {
+                swiperRef.current.goToNext();
+              } else {
+                const nextIndex =
+                  selectedIndexes[
+                    selectedIndexes.indexOf((swiperIndex - 1) / 2) + 1
+                  ];
+
+                if (!nextIndex) {
+                  swiperRef.current.goTo(data.length - 1);
+                } else {
+                  swiperRef.current.goTo(nextIndex * 2 + 1);
+                }
+              }
+            }
+
+            if (data[swiperIndex].type === "input") {
+              const nextIndex =
+                selectedIndexes[
+                  selectedIndexes.indexOf((swiperIndex - 2) / 2) + 1
+                ];
+
+              if (!nextIndex) {
+                swiperRef.current.goTo(data.length - 1);
+              } else {
+                swiperRef.current.goTo(nextIndex * 2 + 1);
+              }
+            }
+
+            break;
+        }
+      }, []);
+
       return (
         <BottomSheetFooter
           bottomInset={0}
@@ -151,18 +256,21 @@ export function WriteGuide({}: WriteGuideProps) {
         >
           <View style={styles.bottomSheetFooter}>
             <NavigationButton content="이전" backgroundColor="#373840" />
-            <NavigationButton
-              content="다음"
-              onPress={() => {
-                console.log("[test]", data);
-              }}
-            />
+            <NavigationButton content="다음" onPress={handleNextButtonClick} />
           </View>
         </BottomSheetFooter>
       );
     },
     [data]
   );
+
+  const headerTitle = data
+    ? swiperIndex === 0
+      ? "멈무일기 가이드"
+      : swiperIndex === data.length - 1
+      ? "다른 일상"
+      : data[0].items[Math.floor((swiperIndex - 1) / 2)].sentence
+    : "멈무일기 가이드";
 
   return (
     <BottomSheet
@@ -177,7 +285,7 @@ export function WriteGuide({}: WriteGuideProps) {
       index={-1}
     >
       <BottomSheetView style={styles.bottomSheetContent}>
-        <AIBottomSheetHeader />
+        <AIBottomSheetHeader title={headerTitle} />
 
         {data && (
           <Swiper
@@ -186,6 +294,7 @@ export function WriteGuide({}: WriteGuideProps) {
             containerStyle={styles.swiperContainer}
             gesturesEnabled={() => false}
             controlsEnabled={false}
+            springConfig={{ speed: 20000 }}
           >
             {data.map(({ type, items }, i) => {
               return type === "list" ? (
