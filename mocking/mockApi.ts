@@ -543,18 +543,22 @@ export class MockApiService {
         {
           id: 1,
           guide: "🌿 산책에 관한 일상",
+          description: "산책할 때 어떤 일이 있었나요?",
         },
         {
           id: 2,
           guide: "😴 낮잠에 관한 일상",
+          description: "낮잠을 잘 때 어떤 일이 있었나요?",
         },
         {
           id: 3,
           guide: "⚽︎ 놀이에 관한 일상",
+          description: "놀 때 어떤 일이 있었나요?",
         },
         {
           id: 4,
           guide: "🍫 간식에 관한 일상",
+          description: "간식을 먹을 때 어떤 일이 있었나요?",
         },
       ],
       details: [

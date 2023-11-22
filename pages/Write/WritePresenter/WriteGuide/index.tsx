@@ -102,8 +102,12 @@ export function WriteGuide({}: WriteGuideProps) {
        */
       const guideElement: GuideElement = { type: "list", items: [] };
 
-      for (const { guide } of guideGuides) {
-        guideElement.items.push({ isSelect: false, sentence: guide });
+      for (const { guide, description } of guideGuides) {
+        guideElement.items.push({
+          isSelect: false,
+          sentence: guide,
+          description,
+        });
       }
 
       /**
@@ -153,13 +157,21 @@ export function WriteGuide({}: WriteGuideProps) {
     ? "3단계"
     : "2단계";
 
-  const headerTitle = guideElements
-    ? swiperIndex === 0
-      ? "멈무일기 가이드"
-      : swiperIndex === guideElements.length - 1
-      ? "다른 일상"
-      : guideElements[0].items[Math.floor((swiperIndex - 1) / 2)].sentence
-    : "멈무일기 가이드";
+  const headerTitle = !guideElements
+    ? "멈무일기 가이드"
+    : swiperIndex === 0
+    ? "멈무일기 가이드"
+    : swiperIndex === guideElements.length - 1
+    ? "다른 일상"
+    : guideElements[0].items[Math.floor((swiperIndex - 1) / 2)].sentence;
+
+  const headerSubTitle = !guideElements
+    ? "오늘 강아지에게 어떤 일상이 있었나요?"
+    : swiperIndex === 0
+    ? "오늘 강아지에게 어떤 일상이 있었나요?"
+    : swiperIndex === guideElements.length - 1
+    ? "이외의 다른 일상이 있다면 얘기해주세요"
+    : guideElements[0].items[Math.floor((swiperIndex - 1) / 2)].description;
 
   const handleNextButtonClick = () => {
     if (!guideElements || !swiperRef.current) {
@@ -415,7 +427,7 @@ export function WriteGuide({}: WriteGuideProps) {
       index={-1}
     >
       <BottomSheetView style={styles.bottomSheetContent}>
-        <AIBottomSheetHeader title={headerTitle} />
+        <AIBottomSheetHeader title={headerTitle} subTitle={headerSubTitle} />
 
         {isLoading && <MultiSelectListSkeleton />}
 

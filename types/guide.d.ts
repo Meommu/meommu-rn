@@ -1,6 +1,7 @@
 type GuideGuide = {
   id: number;
   guide: string;
+  description: string;
 };
 
 type GuideDetail = {
@@ -20,4 +21,9 @@ type GuideElement = {
 type GuideElementItem = {
   isSelect: boolean;
   sentence: string;
+
+  /**
+   * 1단계일 경우 존재
+   */
+  description?: string;
 };
