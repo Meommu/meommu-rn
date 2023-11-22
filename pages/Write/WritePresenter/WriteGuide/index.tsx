@@ -3,6 +3,7 @@ import { useEffect, useMemo } from "react";
 import { useMutation, useQuery } from "react-query";
 import { View, Text } from "react-native";
 import { useDerivedValue } from "react-native-reanimated";
+import { useFormContext } from "react-hook-form";
 
 // redux
 import { useDispatch } from "react-redux";
@@ -48,6 +49,8 @@ export function WriteGuide({}: WriteGuideProps) {
   const { bottomSheetRef, bottomSheetMaxWidthStyle } =
     useResponsiveBottomSheet();
 
+  const { setValue, getValues } = useFormContext<DiaryWriteFormFieldValues>();
+
   const snapPoints = useMemo(
     () => [
       size.BOTTOM_SHEET_INDICATOR_HEIGHT + size.AI_BOTTOM_SHEET_HEADER_HEIGHT,
@@ -78,6 +81,8 @@ export function WriteGuide({}: WriteGuideProps) {
         bottomSheetRef.current?.snapToIndex(0);
 
         console.log("[gpt가 생성한 일기]", content);
+
+        setValue("content", getValues("content") + content);
       },
     }
   );
