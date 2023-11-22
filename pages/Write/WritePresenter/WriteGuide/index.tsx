@@ -14,6 +14,7 @@ import { AIBottomSheetBackdrop } from "./AIBottomSheetBackdrop";
 import { NavigationButton } from "@/components/Button/NavigationButton";
 import { MultiSelectList } from "./MultiSelectList";
 import { SentenseInput } from "./SentenseInput";
+import { MultiSelectListSkeleton } from "./MultiSelectList/index.skeleton";
 
 // apis
 import { apiService } from "@/apis";
@@ -34,7 +35,6 @@ import Swiper from "react-native-web-swiper";
 
 // styles
 import { styles } from "./index.styles";
-import { MultiSelectListSkeleton } from "./MultiSelectList/index.skeleton";
 
 interface WriteGuideProps {}
 
@@ -200,6 +200,10 @@ export function WriteGuide({}: WriteGuideProps) {
           const { type, items } = guideElements[i];
 
           if (type === "list") {
+            if (!guideElements[0].items[Math.floor((i - 1) / 2)].isSelect) {
+              continue;
+            }
+
             for (let j = 0; j < items.length - 1; j++) {
               const item = items[j];
 
@@ -211,7 +215,16 @@ export function WriteGuide({}: WriteGuideProps) {
             if (!items[items.length - 1].isSelect) {
               i++;
             }
-          } else if (type === "input") {
+          }
+
+          if (type === "input") {
+            if (
+              i !== guideElements.length - 1 &&
+              !guideElements[0].items[Math.floor((i - 1) / 2)].isSelect
+            ) {
+              continue;
+            }
+
             const item = items[items.length - 1];
 
             if (item.isSelect) {
