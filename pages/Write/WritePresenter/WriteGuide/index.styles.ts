@@ -2,6 +2,9 @@
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
+  /**
+   * bottom sheet
+   */
   bottomSheetBackground: {
     backgroundColor: "#1B1E26",
   },
@@ -11,19 +14,36 @@ export const styles = StyleSheet.create({
     width: "15%",
   },
 
-  bottomSheetFooter: {
-    width: "100%",
-    paddingVertical: 20,
-    paddingHorizontal: 26,
-    flexDirection: "row",
-    gap: 12,
-    backgroundColor: "#1B1E26",
-  },
-
   bottomSheetContent: {
     height: "100%",
   },
 
+  /**
+   * bottom sheet footer
+   */
+  bottomSheetFooter: {
+    width: "100%",
+    paddingVertical: 20,
+    paddingHorizontal: 26,
+    backgroundColor: "#1B1E26",
+    gap: 16,
+  },
+
+  bottomSheetFooterTitle: {
+    fontSize: 14,
+    fontFamily: "Pretendard-Regular",
+    color: "#43464E",
+    textAlign: "center",
+  },
+
+  bottomSheetFooterButtonWrapper: {
+    flexDirection: "row",
+    gap: 12,
+  },
+
+  /**
+   * swiper
+   */
   swiperContainer: {
     height: "100%",
   },

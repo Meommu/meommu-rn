@@ -1,7 +1,7 @@
 // react
 import { useCallback, useEffect, useMemo } from "react";
 import { useQuery } from "react-query";
-import { View } from "react-native";
+import { View, Text } from "react-native";
 import { useDerivedValue } from "react-native-reanimated";
 
 // redux
@@ -270,14 +270,34 @@ export function WriteGuide({}: WriteGuideProps) {
         }
       }, [swiperIndex]);
 
+      const handlePrevButtonClick = useCallback(() => {}, [swiperIndex]);
+
+      const step = !data
+        ? ""
+        : swiperIndex === 0
+        ? "1단계"
+        : swiperIndex === data.length - 1
+        ? "3단계"
+        : "2단계";
+
       return (
         <BottomSheetFooter
           bottomInset={0}
           animatedFooterPosition={footerPosition}
         >
           <View style={styles.bottomSheetFooter}>
-            <NavigationButton content="이전" backgroundColor="#373840" />
-            <NavigationButton content="다음" onPress={handleNextButtonClick} />
+            <Text style={styles.bottomSheetFooterTitle}>{step}</Text>
+            <View style={styles.bottomSheetFooterButtonWrapper}>
+              <NavigationButton
+                content="이전"
+                onPress={handlePrevButtonClick}
+                backgroundColor="#373840"
+              />
+              <NavigationButton
+                content="다음"
+                onPress={handleNextButtonClick}
+              />
+            </View>
           </View>
         </BottomSheetFooter>
       );
