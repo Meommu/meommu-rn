@@ -306,8 +306,6 @@ export function WriteGuide({}: WriteGuideProps) {
     });
 
     if (!selectedIndexes.length) {
-      fireToast("에러가 발생했습니다.", 3000);
-
       return;
     }
 
