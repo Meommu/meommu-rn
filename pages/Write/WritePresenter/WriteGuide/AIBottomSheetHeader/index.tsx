@@ -11,7 +11,7 @@ interface AIBottomSheetHeaderProps {
 
 export function AIBottomSheetHeader({
   title = "멈무일기 가이드",
-  subTitle = "오늘은 어떤 낮잠 이었나요?",
+  subTitle = "오늘 강아지에게 어떤 일상이 있었나요?",
 }: AIBottomSheetHeaderProps) {
   return (
     <View style={styles.container}>

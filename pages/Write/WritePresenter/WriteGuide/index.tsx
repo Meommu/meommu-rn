@@ -46,12 +46,18 @@ export function WriteGuide({}: WriteGuideProps) {
 
     const guideGuides = await apiService.getGuideGuides();
 
+    /**
+     * 1단계 요소 추가
+     */
     const guideElement: GuideElement = { type: "list", items: [] };
 
     for (const { guide } of guideGuides) {
       guideElement.items.push({ isSelect: false, sentence: guide });
     }
 
+    /**
+     * 2단계 요소 추가
+     */
     guideElements.push(guideElement);
 
     for (const { id } of guideGuides) {
@@ -63,7 +69,10 @@ export function WriteGuide({}: WriteGuideProps) {
         guideElement.items.push({ isSelect: false, sentence: detail });
       }
 
-      guideElement.items.push({ isSelect: false, sentence: "" });
+      guideElement.items.push({
+        isSelect: false,
+        sentence: "나만의 문장 추가하기",
+      });
 
       guideElements.push(guideElement);
 
@@ -73,6 +82,9 @@ export function WriteGuide({}: WriteGuideProps) {
       });
     }
 
+    /**
+     * 3단계 요소 추가
+     */
     guideElements.push({
       type: "input",
       items: [{ isSelect: false, sentence: "" }],
@@ -102,7 +114,7 @@ export function WriteGuide({}: WriteGuideProps) {
   const snapPoints = useMemo(
     () => [
       size.BOTTOM_SHEET_INDICATOR_HEIGHT + size.AI_BOTTOM_SHEET_HEADER_HEIGHT,
-      "60%",
+      "65%",
       "99%",
     ],
     []
@@ -163,10 +175,6 @@ export function WriteGuide({}: WriteGuideProps) {
           return;
         }
 
-        const swiperIndex = swiperRef.current.getActiveIndex();
-
-        console.log("current swiper index", swiperIndex);
-
         switch (swiperIndex) {
           /**
            * 1단계
@@ -175,6 +183,7 @@ export function WriteGuide({}: WriteGuideProps) {
             const nextIndex = selectedIndexes[0] * 2 + 1;
 
             swiperRef.current.goTo(nextIndex);
+
             break;
 
           /**
@@ -183,13 +192,30 @@ export function WriteGuide({}: WriteGuideProps) {
           case data.length - 1:
             const sentenses: string[] = [];
 
-            data.forEach(({ items }, i) => {
+            data.forEach(({ type, items }, i) => {
               if (!i) {
                 return;
               }
 
-              items.forEach(({ isSelect, sentence }, i) => {
-                if (i === items.length - 1) {
+              if (
+                i !== data.length - 1 &&
+                !data[0].items[Math.floor((i - 1) / 2)].isSelect
+              ) {
+                return;
+              }
+
+              if (type === "input") {
+                const item = items[items.length - 1];
+
+                if (item.isSelect) {
+                  sentenses.push(item.sentence);
+                }
+
+                return;
+              }
+
+              items.forEach(({ isSelect, sentence }, j) => {
+                if (j === items.length - 1) {
                   return;
                 }
 
@@ -199,11 +225,7 @@ export function WriteGuide({}: WriteGuideProps) {
               });
             });
 
-            console.log(
-              "end!",
-              sentenses.join(", "),
-              JSON.stringify(data, null, 2)
-            );
+            console.log(sentenses.join(", "), JSON.stringify(data, null, 2));
 
             break;
 
@@ -221,7 +243,8 @@ export function WriteGuide({}: WriteGuideProps) {
               } else {
                 const nextIndex =
                   selectedIndexes[
-                    selectedIndexes.indexOf((swiperIndex - 1) / 2) + 1
+                    selectedIndexes.indexOf(Math.floor((swiperIndex - 1) / 2)) +
+                      1
                   ];
 
                 if (!nextIndex) {
@@ -230,12 +253,10 @@ export function WriteGuide({}: WriteGuideProps) {
                   swiperRef.current.goTo(nextIndex * 2 + 1);
                 }
               }
-            }
-
-            if (data[swiperIndex].type === "input") {
+            } else if (data[swiperIndex].type === "input") {
               const nextIndex =
                 selectedIndexes[
-                  selectedIndexes.indexOf((swiperIndex - 2) / 2) + 1
+                  selectedIndexes.indexOf(Math.floor((swiperIndex - 1) / 2)) + 1
                 ];
 
               if (!nextIndex) {
@@ -247,7 +268,7 @@ export function WriteGuide({}: WriteGuideProps) {
 
             break;
         }
-      }, []);
+      }, [swiperIndex]);
 
       return (
         <BottomSheetFooter
@@ -261,7 +282,7 @@ export function WriteGuide({}: WriteGuideProps) {
         </BottomSheetFooter>
       );
     },
-    [data]
+    [data, swiperIndex]
   );
 
   const headerTitle = data

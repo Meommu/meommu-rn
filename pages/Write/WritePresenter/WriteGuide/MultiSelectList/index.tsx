@@ -53,9 +53,7 @@ export function MultiSelectList({ guideElementItems }: MultiSelectListProps) {
                 },
               ]}
             >
-              {sentence === "" && i === m - 1
-                ? "나만의 문장 추가하기"
-                : sentence}
+              {sentence}
             </Text>
           </Pressable>
         );
