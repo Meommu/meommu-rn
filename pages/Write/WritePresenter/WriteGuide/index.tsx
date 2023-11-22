@@ -155,7 +155,11 @@ export function WriteGuide({}: WriteGuideProps) {
       const { fireToast } = useToast();
 
       const handleNextButtonClick = useCallback(() => {
-        if (!data || !swiperRef.current) {
+        if (!data) {
+          return;
+        }
+
+        if (!swiperRef.current) {
           fireToast("예상치 못한 오류가 발생했습니다.", 3000);
 
           return;
@@ -192,38 +196,33 @@ export function WriteGuide({}: WriteGuideProps) {
           case data.length - 1:
             const sentenses: string[] = [];
 
-            data.forEach(({ type, items }, i) => {
-              if (!i) {
-                return;
+            for (let i = 0; i < data.length; i++) {
+              if (i === 0) {
+                continue;
               }
 
-              if (
-                i !== data.length - 1 &&
-                !data[0].items[Math.floor((i - 1) / 2)].isSelect
-              ) {
-                return;
+              const { type } = data[i];
+
+              if (type === "list") {
+                for (let j = 0; j < data[i].items.length - 1; j++) {
+                  if (data[i].items[j].isSelect) {
+                    sentenses.push(data[i].items[j].sentence);
+                  }
+                }
+
+                if (!data[i].items[data[i].items.length - 1].isSelect) {
+                  i++;
+
+                  continue;
+                }
+              } else if (type === "input") {
+                if (data[i].items[data[i].items.length - 1].isSelect) {
+                  sentenses.push(
+                    data[i].items[data[i].items.length - 1].sentence
+                  );
+                }
               }
-
-              if (type === "input") {
-                const item = items[items.length - 1];
-
-                if (item.isSelect) {
-                  sentenses.push(item.sentence);
-                }
-
-                return;
-              }
-
-              items.forEach(({ isSelect, sentence }, j) => {
-                if (j === items.length - 1) {
-                  return;
-                }
-
-                if (isSelect) {
-                  sentenses.push(sentence);
-                }
-              });
-            });
+            }
 
             console.log(sentenses.join(", "), JSON.stringify(data, null, 2));
 
@@ -247,7 +246,7 @@ export function WriteGuide({}: WriteGuideProps) {
                       1
                   ];
 
-                if (!nextIndex) {
+                if (nextIndex === undefined) {
                   swiperRef.current.goTo(data.length - 1);
                 } else {
                   swiperRef.current.goTo(nextIndex * 2 + 1);
@@ -259,7 +258,7 @@ export function WriteGuide({}: WriteGuideProps) {
                   selectedIndexes.indexOf(Math.floor((swiperIndex - 1) / 2)) + 1
                 ];
 
-              if (!nextIndex) {
+              if (nextIndex === undefined) {
                 swiperRef.current.goTo(data.length - 1);
               } else {
                 swiperRef.current.goTo(nextIndex * 2 + 1);
@@ -270,7 +269,84 @@ export function WriteGuide({}: WriteGuideProps) {
         }
       }, [swiperIndex]);
 
-      const handlePrevButtonClick = useCallback(() => {}, [swiperIndex]);
+      const handlePrevButtonClick = useCallback(() => {
+        if (!data) {
+          return;
+        }
+
+        if (!swiperRef.current) {
+          fireToast("예상치 못한 오류가 발생했습니다.", 3000);
+
+          return;
+        }
+
+        const selectedIndexes: number[] = [];
+
+        data[0].items.forEach(({ isSelect }, i) => {
+          if (isSelect) {
+            selectedIndexes.push(i);
+          }
+        });
+
+        if (!selectedIndexes.length) {
+          fireToast("잘못된 접근입니다.", 3000);
+
+          return;
+        }
+
+        switch (swiperIndex) {
+          /**
+           * 1단계
+           */
+          case 0:
+            // do nothing
+
+            break;
+
+          /**
+           * 3단계
+           */
+          case data.length - 1:
+            const prevIndex = selectedIndexes[selectedIndexes.length - 1];
+
+            const prevItems = data[prevIndex * 2 + 1].items;
+
+            if (prevItems[prevItems.length - 1].isSelect) {
+              swiperRef.current.goTo(prevIndex * 2 + 2);
+            } else {
+              swiperRef.current.goTo(prevIndex * 2 + 1);
+            }
+
+            break;
+
+          /**
+           * 2단계
+           */
+          default:
+            if (data[swiperIndex].type === "input") {
+              swiperRef.current.goToPrev();
+            } else if (data[swiperIndex].type === "list") {
+              const prevIndex =
+                selectedIndexes[
+                  selectedIndexes.indexOf(Math.floor((swiperIndex - 1) / 2)) - 1
+                ];
+
+              if (prevIndex === undefined) {
+                swiperRef.current.goTo(0);
+              } else {
+                const prevItems = data[prevIndex * 2 + 1].items;
+
+                if (prevItems[prevItems.length - 1].isSelect) {
+                  swiperRef.current.goTo(prevIndex * 2 + 2);
+                } else {
+                  swiperRef.current.goTo(prevIndex * 2 + 1);
+                }
+              }
+            }
+
+            break;
+        }
+      }, [swiperIndex]);
 
       const step = !data
         ? ""
