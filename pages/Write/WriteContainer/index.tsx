@@ -108,7 +108,7 @@ export function WriteContainer() {
         break;
 
       case STEP_TWO_SLIDE_INDEX:
-        bottomSheetRef?.current?.snapToIndex(0);
+        bottomSheetRef?.current?.snapToIndex(1);
 
         break;
     }
