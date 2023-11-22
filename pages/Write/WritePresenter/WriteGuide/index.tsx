@@ -438,7 +438,6 @@ export function WriteGuide({}: WriteGuideProps) {
             containerStyle={styles.swiperContainer}
             gesturesEnabled={() => false}
             controlsEnabled={false}
-            springConfig={{ speed: 20000 }}
           >
             {guideElements.map(({ type, items }, i) => {
               return type === "list" ? (
