@@ -34,6 +34,7 @@ import Swiper from "react-native-web-swiper";
 
 // styles
 import { styles } from "./index.styles";
+import { MultiSelectListSkeleton } from "./MultiSelectList/index.skeleton";
 
 interface WriteGuideProps {}
 
@@ -84,57 +85,60 @@ export function WriteGuide({}: WriteGuideProps) {
   /**
    * 가이드에 사용할 데이터
    */
-  const { data: guideElements } = useQuery(["writeGuide"], async () => {
-    const guideElements: GuideElement[] = [];
+  const { data: guideElements, isLoading } = useQuery(
+    ["writeGuide"],
+    async () => {
+      const guideElements: GuideElement[] = [];
 
-    const guideGuides = await apiService.getGuideGuides();
+      const guideGuides = await apiService.getGuideGuides();
 
-    /**
-     * 1단계 요소 추가
-     */
-    const guideElement: GuideElement = { type: "list", items: [] };
-
-    for (const { guide } of guideGuides) {
-      guideElement.items.push({ isSelect: false, sentence: guide });
-    }
-
-    /**
-     * 2단계 요소 추가
-     */
-    guideElements.push(guideElement);
-
-    for (const { id } of guideGuides) {
-      const guideDetails = await apiService.getGuideDetails(id);
-
+      /**
+       * 1단계 요소 추가
+       */
       const guideElement: GuideElement = { type: "list", items: [] };
 
-      for (const { detail } of guideDetails) {
-        guideElement.items.push({ isSelect: false, sentence: detail });
+      for (const { guide } of guideGuides) {
+        guideElement.items.push({ isSelect: false, sentence: guide });
       }
 
-      guideElement.items.push({
-        isSelect: false,
-        sentence: "나만의 문장 추가하기",
-      });
-
+      /**
+       * 2단계 요소 추가
+       */
       guideElements.push(guideElement);
 
+      for (const { id } of guideGuides) {
+        const guideDetails = await apiService.getGuideDetails(id);
+
+        const guideElement: GuideElement = { type: "list", items: [] };
+
+        for (const { detail } of guideDetails) {
+          guideElement.items.push({ isSelect: false, sentence: detail });
+        }
+
+        guideElement.items.push({
+          isSelect: false,
+          sentence: "나만의 문장 추가하기",
+        });
+
+        guideElements.push(guideElement);
+
+        guideElements.push({
+          type: "input",
+          items: [{ isSelect: false, sentence: "" }],
+        });
+      }
+
+      /**
+       * 3단계 요소 추가
+       */
       guideElements.push({
         type: "input",
         items: [{ isSelect: false, sentence: "" }],
       });
+
+      return guideElements;
     }
-
-    /**
-     * 3단계 요소 추가
-     */
-    guideElements.push({
-      type: "input",
-      items: [{ isSelect: false, sentence: "" }],
-    });
-
-    return guideElements;
-  });
+  );
 
   const footerTitle = !guideElements
     ? ""
@@ -396,6 +400,8 @@ export function WriteGuide({}: WriteGuideProps) {
     >
       <BottomSheetView style={styles.bottomSheetContent}>
         <AIBottomSheetHeader title={headerTitle} />
+
+        {isLoading && <MultiSelectListSkeleton />}
 
         {guideElements && (
           <Swiper
