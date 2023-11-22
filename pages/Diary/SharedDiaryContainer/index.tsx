@@ -15,8 +15,6 @@ import { PATH } from "@/constants";
 // apis
 import { apiService, baseUrl } from "@/apis";
 
-import FileSaver from "file-saver";
-
 export function SharedDiaryContainer() {
   const { uuid } = useLocalSearchParams<{ uuid: string }>();
 
