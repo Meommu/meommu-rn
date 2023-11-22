@@ -1,6 +1,6 @@
 // react
 import { useEffect, useMemo } from "react";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { View, Text } from "react-native";
 import { useDerivedValue } from "react-native-reanimated";
 
@@ -62,6 +62,24 @@ export function WriteGuide({}: WriteGuideProps) {
   useEffect(() => {
     dispatch(shareAiBottomSheetRef(bottomSheetRef));
   }, []);
+
+  /**
+   * gpt
+   */
+  const createGptDiaryMutation = useMutation(
+    async (details: string) => {
+      const content = await apiService.createGptDiary(details);
+
+      return content;
+    },
+    {
+      onSuccess: (content: string) => {
+        bottomSheetRef.current?.snapToIndex(0);
+
+        console.log("[gpt가 생성한 일기]", content);
+      },
+    }
+  );
 
   /**
    * 가이드에 사용할 데이터
@@ -197,6 +215,8 @@ export function WriteGuide({}: WriteGuideProps) {
             }
           }
         }
+
+        createGptDiaryMutation.mutate(sentenses.join("|"));
 
         break;
 
