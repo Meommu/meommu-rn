@@ -68,7 +68,7 @@ export function WriteGuide({}: WriteGuideProps) {
   }, []);
 
   /**
-   * gpt
+   * gpt 일기 생성
    */
   const createGptDiaryMutation = useMutation(
     async (details: string) => {
@@ -78,8 +78,6 @@ export function WriteGuide({}: WriteGuideProps) {
     },
     {
       onSuccess: (content: string) => {
-        bottomSheetRef.current?.snapToIndex(0);
-
         console.log("[gpt가 생성한 일기]", content);
 
         setValue("content", getValues("content") + content);
@@ -249,6 +247,8 @@ export function WriteGuide({}: WriteGuideProps) {
             }
           }
         }
+
+        bottomSheetRef.current?.snapToIndex(0);
 
         createGptDiaryMutation.mutate(sentenses.join("|"));
 
