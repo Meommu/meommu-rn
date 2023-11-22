@@ -3,12 +3,17 @@ import { View, TextInput } from "react-native";
 
 // styles
 import { styles } from "./index.styles";
+import { useState } from "react";
 
 interface SentenseInputProps {
   guideElementItems: GuideElementItem[];
 }
 
 export function SentenseInput({ guideElementItems }: SentenseInputProps) {
+  const [inputValue, setInputValue] = useState<string>(
+    guideElementItems[guideElementItems.length - 1].sentence
+  );
+
   const handleTextChange = (text: string) => {
     const m = guideElementItems.length;
 
@@ -18,6 +23,7 @@ export function SentenseInput({ guideElementItems }: SentenseInputProps) {
 
     guideElementItems[m - 1].isSelect = true;
     guideElementItems[m - 1].sentence = text;
+    setInputValue(text);
   };
 
   return (
@@ -29,6 +35,7 @@ export function SentenseInput({ guideElementItems }: SentenseInputProps) {
         textAlignVertical="top"
         style={styles.input}
         onChangeText={handleTextChange}
+        value={inputValue}
       />
     </View>
   );
