@@ -75,18 +75,13 @@ export function WriteContainer() {
     },
     {
       onSuccess: async (savedId: number) => {
-        /**
-         * TODO: /detail/{savedId} 페이지로 라우트
-         */
-        console.log(savedId);
-
         const diaryWriteDate = getValues("date");
 
         const [year, month] = diaryWriteDate.split("-").map(Number);
 
         await queryClient.invalidateQueries(["diaryList", year, month]);
 
-        router.replace(PATH.MAIN);
+        router.replace(`/diary/${savedId}`);
       },
     }
   );
