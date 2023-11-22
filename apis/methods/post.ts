@@ -56,3 +56,19 @@ export const uploadImage = async (formData: FormData): Promise<number> => {
 
   return id;
 };
+
+/**
+ * @param details 파이프 `|`로 구분된 문자열
+ * @returns
+ */
+export const createGptDiary = async (details: string): Promise<string> => {
+  const {
+    data: {
+      data: { content },
+    },
+  } = await axios.post<ResponseTemplate<{ content: string }>>("/api/v1/gpt", {
+    details,
+  });
+
+  return content;
+};
