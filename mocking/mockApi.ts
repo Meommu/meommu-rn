@@ -23,6 +23,24 @@ export class MockApiService {
 
     const serverConfig: ServerConfig<AnyModels, AnyFactories> = {
       routes() {
+        this.post("/api/v1/gpt", (schema, request) => {
+          const { requestBody } = request;
+
+          const { details } = JSON.parse(requestBody);
+
+          return new Response(
+            httpStatus.CREATED,
+            {},
+            resBodyTemplate({
+              code: CODE.OK,
+              message: "정상",
+              data: {
+                content: `${details}로 부터 생성된 일기 내용`,
+              },
+            })
+          );
+        });
+
         this.get("/api/v1/guides", (schema, request) => {
           const guides = schema.db.guides;
 
@@ -39,12 +57,14 @@ export class MockApiService {
           );
         });
 
-        this.get("/api/v1/guides/:id/details", (schema, request) => {
+        this.get("/api/v1/guides/:guideId/details", (schema, request) => {
           const {
-            params: { id },
+            params: { guideId: findGuideId },
           } = request;
 
-          const details = schema.db.details;
+          const details = schema.db.details.filter(
+            ({ guideId }) => guideId === +findGuideId
+          );
 
           return new Response(
             httpStatus.OK,
@@ -528,19 +548,55 @@ export class MockApiService {
           id: 2,
           guide: "😴 낮잠에 관한 일상",
         },
+        {
+          id: 3,
+          guide: "⚽︎ 놀이에 관한 일상",
+        },
+        {
+          id: 4,
+          guide: "🍫 간식에 관한 일상",
+        },
       ],
       details: [
         {
           id: 1,
+          guideId: 1,
           detail: "산책을 오래 했어요.",
         },
         {
           id: 2,
+          guideId: 1,
           detail: "산책을 조금 했어요.",
         },
         {
           id: 3,
-          detail: "산책 중 친한 강아지를 만나 대화 했어요",
+          guideId: 1,
+          detail: "산책 중 친한 강아지를 만나 대화 했어요.",
+        },
+        {
+          id: 4,
+          guideId: 1,
+          detail: "걸음을 아주 아주 천천히 걸었어요.",
+        },
+        {
+          id: 5,
+          guideId: 2,
+          detail: "낮잠을 오래 잤어요.",
+        },
+        {
+          id: 6,
+          guideId: 2,
+          detail: "선생님의 품에 안겨잤어요.",
+        },
+        {
+          id: 7,
+          guideId: 3,
+          detail: "놀이 중 친한 강아지를 만나 대화 했어요.",
+        },
+        {
+          id: 8,
+          guideId: 4,
+          detail: "맛있는 간식을 많이 먹었어요.",
         },
       ],
     });
