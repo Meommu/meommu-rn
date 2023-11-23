@@ -23,6 +23,23 @@ export class MockApiService {
 
     const serverConfig: ServerConfig<AnyModels, AnyFactories> = {
       routes() {
+        this.put("/api/v1/diaries/:diaryId", (schema, request) => {
+          const {
+            params: { diaryId },
+            requestBody,
+          } = request;
+
+          const diary: DiaryWriteFormFieldValues = JSON.parse(requestBody);
+
+          schema.db.diaries.update(+diaryId, diary);
+
+          return new Response(
+            httpStatus.OK,
+            {},
+            resBodyTemplate({ code: CODE.OK, message: "정상" })
+          );
+        });
+
         this.post("/api/v1/gpt", (schema, request) => {
           const { requestBody } = request;
 
@@ -523,8 +540,7 @@ export class MockApiService {
           dogName: "똘이",
           createdAt: "2023-10-26T17:42:18.744742",
           imageIds: [1, 2, 3, 4, 5],
-          title:
-            "일기 2 제목 일기 2 제목 일기 2 제목 일기 2 제목 일기 2 제목 일기 2 제목 일기 2 제목 일기 2 제목 일기 2 제목 일기 2 제목 일기 2 제목 일기 2 제목 일기 2 제목 일기 2 제목 일기 2 제목 일기 2 제목 일기 2 제목 일기 2 제목 일기 2 제목 일기 2 제목 일기 2 제목 일기 2 제목 일기 2 제목 일기 2 제목 일기 2 제목 일기 2 제목 일기 2 제목 ",
+          title: "일기 2 제목 일기 2 제목 일기 2",
           content:
             "일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 일기 2 내용 ",
           uuid: 2,
