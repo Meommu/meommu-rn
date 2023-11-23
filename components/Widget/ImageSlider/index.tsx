@@ -30,6 +30,7 @@ export function ImageSlider({
         ref={swiperRef}
         onIndexChanged={handleSwiperIndexChange}
         controlsEnabled={false}
+        key={imageIds.join("|")}
       >
         {imageIds.map((imageId) => (
           <LoadImage imageId={imageId} key={`imageId${imageId}`} />
