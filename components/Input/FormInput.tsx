@@ -1,30 +1,25 @@
 // react
-import { View, TextInput, StyleSheet } from "react-native";
+import { TextInput, StyleSheet } from "react-native";
 import type { TextInputProps } from "react-native";
 
-interface FormInputProps extends TextInputProps {}
+// constants
+import { color } from "@/constants";
 
-export function FormInput({ ...props }: FormInputProps) {
+export function FormInput({ style, ...props }: TextInputProps) {
   return (
-    <View style={styles.container}>
-      <TextInput
-        style={styles.input}
-        placeholderTextColor="#B7B7CB"
-        {...props}
-      />
-    </View>
+    <TextInput
+      style={styles.input}
+      placeholderTextColor={color.g2}
+      {...props}
+    />
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flexShrink: 1,
-    flexGrow: 1,
-  },
-
   input: {
     width: "100%",
-    backgroundColor: "#EBEBF0",
+    flexShrink: 1,
+    backgroundColor: color.g1,
     borderRadius: 4,
     fontSize: 16,
     fontFamily: "Pretendard-SemiBold",
