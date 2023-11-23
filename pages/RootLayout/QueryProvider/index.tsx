@@ -77,6 +77,11 @@ export function QueryProvider({ children }: QueryProviderProps) {
         router.replace(PATH.HOME);
 
         break;
+
+      case CODE.DIARY_NOT_FOUND:
+        fireToast(store.dispatch, message, 3000);
+
+        router.replace(PATH.MAIN);
     }
   }, []);
 

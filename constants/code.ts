@@ -69,4 +69,9 @@ export const enum CODE {
    * id로 이미지를 찾을 수 없음
    */
   "IMAGE_NOT_FOUND" = "I001",
+
+  /**
+   * 해당하는 일기를 찾을 수 없는 경우
+   */
+  "DIARY_NOT_FOUND" = "D004",
 }
