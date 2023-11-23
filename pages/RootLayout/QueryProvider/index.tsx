@@ -59,12 +59,12 @@ export function QueryProvider({ children }: QueryProviderProps) {
       case CODE.MALFORMED_JWT:
       case CODE.INVALID_SIGNATURE:
       case CODE.INVALID_HEADER_FORMAT:
+      case CODE.NO_AUTHORIZATION_HEADER:
+        fireToast(store.dispatch, "잘못된 접근입니다.", 3000);
+
         delete axios.defaults.headers.common.Authorization;
 
         await AsyncStorage.removeItem("accessToken");
-
-      case CODE.NO_AUTHORIZATION_HEADER:
-        fireToast(store.dispatch, "잘못된 접근입니다.", 3000);
 
         queryClient.removeQueries({
           predicate: ({ queryKey }) => {
