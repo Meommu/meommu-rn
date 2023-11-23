@@ -1,6 +1,9 @@
 // react
 import { StyleSheet } from "react-native";
 
+// constants
+import { color } from "@/constants";
+
 export const styles = StyleSheet.create({
   container: {
     width: "100%",
@@ -44,12 +47,12 @@ export const styles = StyleSheet.create({
 
   navigationText: {
     fontSize: 16,
-    color: "#B7B7CB",
+    color: color.g2,
     fontFamily: "Pretendard-SemiBold",
   },
 
   splitBarView: {
-    borderLeftColor: "#B7B7CB",
+    borderLeftColor: color.g2,
     borderLeftWidth: 2,
     marginHorizontal: 10,
     marginVertical: 3,

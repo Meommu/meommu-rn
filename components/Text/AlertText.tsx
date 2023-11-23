@@ -1,6 +1,9 @@
 // react
 import { Text, TextProps } from "react-native";
 
+// constants
+import { color } from "@/constants";
+
 interface AlertTextProps extends TextProps {
   condition: boolean;
 }
@@ -11,7 +14,7 @@ export function AlertText({ condition, children }: AlertTextProps) {
       style={{
         fontSize: 14,
         fontFamily: "Pretendard-SemiBold",
-        color: condition ? "#63BCA9" : "#FF8585",
+        color: condition ? color.success : color.error,
       }}
     >
       {children}
