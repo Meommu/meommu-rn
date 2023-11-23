@@ -8,6 +8,9 @@ import { useSelector } from "react-redux";
 import type { RootState } from "@/store";
 import type { DiaryDateState } from "@/store/modules/diaryDate";
 
+// expo
+import { router } from "expo-router";
+
 // apis
 import { apiService } from "@/apis";
 
@@ -72,12 +75,7 @@ export function DiaryList() {
   };
 
   const handleDiaryEditButtonClick = () => {
-    /**
-     * TODO: 글쓰기 페이지 이동
-     *
-     * 이후, 현재 선택된 다이어리 아이디 값을 통해 데이터를 불러와 초기화
-     */
-    console.log("[메뉴 버튼이 눌린 다이어리 아이디]", menuPressedDiaryId);
+    router.push(`/modify/${menuPressedDiaryId}`);
   };
 
   const handleDiaryDeleteButtonClick = () => {
