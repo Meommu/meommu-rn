@@ -2,12 +2,13 @@
 import { StyleSheet } from "react-native";
 
 // constants
-import { color } from "@/constants";
+import { color, size } from "@/constants";
 
 export const styles = StyleSheet.create({
   container: {
     width: "100%",
     height: "100%",
+    paddingBottom: size.NAVIGATION_BUTTON_HEIGHT + 40,
   },
 
   contentWrapper: {

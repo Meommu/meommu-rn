@@ -6,6 +6,7 @@ export const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     backgroundColor: "white",
+    position: "relative",
   },
 
   header: {
@@ -26,6 +27,10 @@ export const styles = StyleSheet.create({
   },
 
   bottomButtonWrapper: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    bottom: 0,
     padding: 20,
   },
 });
