@@ -14,6 +14,7 @@ import { useLocalSearchParams } from "expo-router";
 
 // components
 import { WritePresenter } from "../WritePresenter";
+import { WritePresenterSkeleton } from "../WritePresenter/index.skeleton";
 
 // hooks
 import { useSwiper, useToast } from "@/hooks";
@@ -220,15 +221,19 @@ export function ModifyContainer() {
 
   return (
     <FormProvider {...methods}>
-      <WritePresenter
-        swiperRef={swiperRef}
-        handleBottomButtonClick={handleBottomButtonClick}
-        handleFinishButtonClick={handleFinishButtonClick}
-        handleGoBackButtonClick={handleGoBackButtonClick}
-        handleSwiperIndexChange={handleSwiperIndexChange}
-        isBottomButtonActive={isBottomButtonActive}
-        isStepOneSlide={isStepOneSlide}
-      />
+      {isLoading ? (
+        <WritePresenterSkeleton />
+      ) : (
+        <WritePresenter
+          swiperRef={swiperRef}
+          handleBottomButtonClick={handleBottomButtonClick}
+          handleFinishButtonClick={handleFinishButtonClick}
+          handleGoBackButtonClick={handleGoBackButtonClick}
+          handleSwiperIndexChange={handleSwiperIndexChange}
+          isBottomButtonActive={isBottomButtonActive}
+          isStepOneSlide={isStepOneSlide}
+        />
+      )}
     </FormProvider>
   );
 }
