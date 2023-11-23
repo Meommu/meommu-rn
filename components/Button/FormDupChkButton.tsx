@@ -1,7 +1,10 @@
 // react
 import React from "react";
-import { View, Text, Pressable } from "react-native";
+import { View, Text, Pressable, StyleSheet } from "react-native";
 import type { PressableProps } from "react-native";
+
+// constants
+import { color } from "@/constants";
 
 interface FormDupChkButtonProps extends PressableProps {
   isDupChk: boolean | null;
@@ -9,60 +12,56 @@ interface FormDupChkButtonProps extends PressableProps {
 
 export function FormDupChkButton({
   isDupChk,
+  style,
   ...props
 }: FormDupChkButtonProps) {
-  const getFontColor = (): string => {
-    if (isDupChk === null) {
-      return "#B7B7CB";
-    }
+  const fontColor =
+    isDupChk === null
+      ? color.g2
+      : isDupChk === false
+      ? color.error
+      : color.success;
 
-    if (isDupChk === false) {
-      return "#FF8585";
-    }
-
-    return "#63BCA9";
-  };
-
-  const getBorderColor = (): string => {
-    if (isDupChk === null) {
-      return "transparent";
-    }
-
-    if (isDupChk === false) {
-      return "#FF8585";
-    }
-
-    return "#63BCA9";
-  };
-
-  const BORDER_WIDTH = 2;
+  const borderColor =
+    isDupChk === null
+      ? "transparent"
+      : isDupChk === false
+      ? color.error
+      : color.success;
 
   return (
-    <Pressable {...props}>
-      <View
-        style={{
-          /**
-           * native는 box-sizing 속성이 border-box 처럼 동작하지만 고정 height를 주지 않았기 때문에
-           * 테두리 두께에 따라 크기가 달라지므로 테두리 두께 값을 적절히 빼 줌
-           */
-          paddingHorizontal: 18 - BORDER_WIDTH,
-          paddingVertical: 10 - BORDER_WIDTH,
-          backgroundColor: "#EBEBF0",
-          borderRadius: 4,
-          borderWidth: BORDER_WIDTH,
-          borderColor: getBorderColor(),
-        }}
-      >
-        <Text
-          style={{
-            fontSize: 16,
-            fontFamily: "Pretendard-SemiBold",
-            color: getFontColor(),
-          }}
-        >
-          중복확인
-        </Text>
+    <Pressable style={styles.container} {...props}>
+      <View style={[styles.border, { borderColor }]} />
+
+      <View style={styles.content}>
+        <Text style={[styles.contentText, { color: fontColor }]}>중복확인</Text>
       </View>
     </Pressable>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: color.g1,
+    borderRadius: 4,
+    position: "relative",
+  },
+
+  border: {
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    borderWidth: 2,
+    borderRadius: 4,
+  },
+
+  content: {
+    paddingHorizontal: 18,
+    paddingVertical: 10,
+  },
+
+  contentText: {
+    fontSize: 16,
+    fontFamily: "Pretendard-SemiBold",
+  },
+});
