@@ -31,7 +31,6 @@
     "expo-router": "^2.0.0",
     "expo-splash-screen": "~0.20.5",
     "expo-status-bar": "~1.6.0",
-    "file-saver": "^2.0.5",
     "html2canvas": "^1.4.1",
     "http-status": "^1.7.3",
     "patch-package": "^8.0.0",
