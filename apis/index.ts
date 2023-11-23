@@ -5,6 +5,7 @@ import { Platform } from "react-native";
 import axios from "axios";
 import * as GET from "./methods/get";
 import * as POST from "./methods/post";
+import * as PUT from "./methods/put";
 
 // utils
 import { createRandomNumberInRange } from "@/utils";
@@ -73,4 +74,5 @@ switch (process.env.EXPO_PUBLIC_MODE) {
 export const apiService = {
   ...GET,
   ...POST,
+  ...PUT,
 };
