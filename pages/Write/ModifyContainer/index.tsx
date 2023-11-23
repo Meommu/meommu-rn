@@ -28,13 +28,16 @@ const STEP_ONE_SLIDE_INDEX = 0;
 const STEP_TWO_SLIDE_INDEX = 1;
 
 export function ModifyContainer() {
-  const { diaryId } = useLocalSearchParams<{ diaryId: string }>();
-
   const { fireToast } = useToast();
+
+  const queryClient = useQueryClient();
 
   const { bottomSheetRef } = useSelector<RootState, AiBottomSheetState>(
     (state) => state.aiBottomSheet
   );
+
+  const { swiperIndex, swiperRef, handleSwiperIndexChange } =
+    useSwiper(STEP_ONE_SLIDE_INDEX);
 
   /**
    * useForm
@@ -54,30 +57,36 @@ export function ModifyContainer() {
   const formState = watch();
 
   /**
-   * useQuery & useMutation
+   * 게시글 수정 페이지 로드 시 게시물의 상세정보를 읽어와 데이터를 초기화
    */
-  const queryClient = useQueryClient();
+  const { diaryId } = useLocalSearchParams<{ diaryId: string }>();
 
-  const { isLoading } = useQuery(
-    [],
+  const { data: diary, isLoading } = useQuery(
+    ["diaryDetail", diaryId],
     async () => {
       const diary = await apiService.getDiaryDetail(diaryId || "");
 
       return diary;
-    },
-    {
-      onSuccess: (diary: Diary) => {
-        const { date, title, content, dogName, imageIds } = diary;
-
-        setValue("date", date);
-        setValue("title", title);
-        setValue("content", content);
-        setValue("dogName", dogName);
-        setValue("imageIds", imageIds);
-      },
     }
   );
 
+  useEffect(() => {
+    if (!diary) {
+      return;
+    }
+
+    const { date, title, content, dogName, imageIds } = diary;
+
+    setValue("date", date);
+    setValue("title", title);
+    setValue("content", content);
+    setValue("dogName", dogName);
+    setValue("imageIds", imageIds);
+  }, [diary]);
+
+  /**
+   * 글쓰기 완료 버튼 클릭 시 동작할 mutation
+   */
   const writeDiaryMutation = useMutation(
     async (data: DiaryWriteFormFieldValues) => {
       await apiService.modifyDiary(diaryId || "", data);
@@ -90,16 +99,12 @@ export function ModifyContainer() {
 
         await queryClient.invalidateQueries(["diaryList", year, month]);
 
+        await queryClient.invalidateQueries(["diaryDetail", diaryId]);
+
         router.replace(`/diary/${diaryId}`);
       },
     }
   );
-
-  /**
-   * swiper
-   */
-  const { swiperIndex, swiperRef, handleSwiperIndexChange } =
-    useSwiper(STEP_ONE_SLIDE_INDEX);
 
   /**
    * event handlers
@@ -201,7 +206,7 @@ export function ModifyContainer() {
   }, [swiperIndex]);
 
   /**
-   * 첫단계에서는 AI 글쓰기 가이드가 나타나지 않도록 함.
+   * 첫 단계에서는 AI 글쓰기 가이드가 나타나지 않도록 함.
    */
   useEffect(() => {
     if (!bottomSheetRef) {
