@@ -382,7 +382,13 @@ export class MockApiService {
           );
         });
 
-        this.post("/api/v1/diaries", () => {
+        this.post("/api/v1/diaries", (schema, request) => {
+          const { requestBody } = request;
+
+          const diary = JSON.parse(requestBody);
+
+          const newDiary = schema.db.diaries.insert(diary);
+
           return new Response(
             httpStatus.CREATED,
             {},
@@ -390,7 +396,7 @@ export class MockApiService {
               code: CODE.OK,
               message: "정상",
               data: {
-                savedId: 1,
+                savedId: newDiary.id,
               },
             })
           );
