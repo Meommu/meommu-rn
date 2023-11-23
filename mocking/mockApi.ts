@@ -127,6 +127,17 @@ export class MockApiService {
 
           const diary = schema.db.diaries.findBy({ id });
 
+          if (!diary) {
+            return new Response(
+              httpStatus.BAD_REQUEST,
+              {},
+              resBodyTemplate({
+                code: CODE.DIARY_NOT_FOUND,
+                message: "해당하는 일기를 찾을 수 없습니다.",
+              })
+            );
+          }
+
           return new Response(
             httpStatus.OK,
             {},
