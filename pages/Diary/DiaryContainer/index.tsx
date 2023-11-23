@@ -1,12 +1,19 @@
-import { DiaryPresenter } from "../DiaryPresenter";
-import { useMutation, useQuery } from "react-query";
+// react
 import { useCallback } from "react";
-import { PATH } from "@/constants";
-import axios from "axios";
-import * as Sharing from "expo-sharing";
+import { useMutation, useQuery } from "react-query";
 
+// expo
 import { router, useLocalSearchParams } from "expo-router";
-import { apiService } from "@/apis";
+
+// components
+import { DiaryPresenter } from "../DiaryPresenter";
+
+// constants
+import { PATH } from "@/constants";
+
+// apis
+import { apiService, baseURL } from "@/apis";
+import { Share } from "react-native";
 
 export function DiaryContainer() {
   const { diaryId } = useLocalSearchParams<{ diaryId: string }>();
@@ -31,7 +38,14 @@ export function DiaryContainer() {
     },
     {
       onSuccess: (uuid) => {
-        Sharing.shareAsync(`shared/${uuid}`);
+        Share.share({
+          title: "Meommu Diary",
+          message: [
+            `${data?.dogName}의 일기 공유`,
+            "",
+            `${baseURL}/diary/shared/${uuid}`,
+          ].join("\n"),
+        });
       },
     }
   );
