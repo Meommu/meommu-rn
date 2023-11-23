@@ -21,7 +21,7 @@ import { useSwiper, useToast } from "@/hooks";
 import { PATH, regExp } from "@/constants";
 
 // apis
-import axios from "axios";
+import { apiService } from "@/apis";
 
 const STEP_ONE_SLIDE_INDEX = 0;
 const STEP_TWO_SLIDE_INDEX = 1;
@@ -62,14 +62,7 @@ export function WriteContainer() {
 
   const writeDiaryMutation = useMutation(
     async (data: DiaryWriteFormFieldValues) => {
-      const {
-        data: {
-          data: { savedId },
-        },
-      } = await axios.post<ResponseTemplate<{ savedId: number }>>(
-        "/api/v1/diaries",
-        data
-      );
+      const savedId = apiService.createDiary(data);
 
       return savedId;
     },

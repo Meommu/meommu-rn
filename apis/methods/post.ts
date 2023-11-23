@@ -72,3 +72,18 @@ export const createGptDiary = async (details: string): Promise<string> => {
 
   return content;
 };
+
+export const createDiary = async (
+  diary: DiaryWriteFormFieldValues
+): Promise<number> => {
+  const {
+    data: {
+      data: { savedId },
+    },
+  } = await axios.post<ResponseTemplate<{ savedId: number }>>(
+    "/api/v1/diaries",
+    diary
+  );
+
+  return savedId;
+};
