@@ -2,6 +2,7 @@
 import { Suspense, useCallback } from "react";
 import { View, Text, Pressable } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useQueryClient } from "react-query";
 
 // expo
 import { router } from "expo-router";
@@ -22,10 +23,14 @@ import axios from "axios";
 import { styles } from "./index.styles";
 
 export function SettingPage() {
+  const queryClient = useQueryClient();
+
   const handleLogoutButtonClick = async () => {
     delete axios.defaults.headers.common.Authorization;
 
     await AsyncStorage.removeItem("accessToken");
+
+    queryClient.removeQueries();
 
     router.replace(PATH.HOME);
   };
