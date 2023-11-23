@@ -13,7 +13,7 @@ import { DiaryPresenter } from "../DiaryPresenter";
 import { PATH } from "@/constants";
 
 // apis
-import { apiService, baseUrl } from "@/apis";
+import { apiService, baseURL } from "@/apis";
 
 export function SharedDiaryContainer() {
   const { uuid } = useLocalSearchParams<{ uuid: string }>();
@@ -71,7 +71,7 @@ export function SharedDiaryContainer() {
     const html2canvas = require("html2canvas");
 
     const canvas = await html2canvas($divElement, {
-      proxy: `${baseUrl}/api/v1/proxy`,
+      proxy: `${baseURL}/api/v1/proxy`,
     });
 
     setCaptureImageB64(canvas.toDataURL());

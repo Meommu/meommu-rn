@@ -9,7 +9,16 @@ import * as POST from "./methods/post";
 // utils
 import { createRandomNumberInRange } from "@/utils";
 
-export let baseUrl = "";
+/**
+ * 운영용 API가 현재 존재하지 않기 때문에 API와 주소가 같은 상태
+ */
+export const qaApiUrl =
+  "https://port-0-meommu-api-jvvy2blm5wku9j.sel5.cloudtype.app";
+
+export const prodApiUrl =
+  "https://port-0-meommu-api-jvvy2blm5wku9j.sel5.cloudtype.app";
+
+export let baseURL = "";
 
 switch (process.env.EXPO_PUBLIC_MODE) {
   case "dev":
@@ -33,26 +42,30 @@ switch (process.env.EXPO_PUBLIC_MODE) {
     break;
 
   case "qa":
-    baseUrl = "https://port-0-meommu-api-jvvy2blm5wku9j.sel5.cloudtype.app";
+    /**
+     * Metro bundler를 사용하고 있어 Webpack의 DevServerProxy와 같은 기능을 이용할 수 없기 때문에
+     * 웹 환경에서도 baseURL를 설정해서 사용하되, CORS 에러가 발생하지 않도록 처리한 개발용 API 서버를 사용함.
+     */
+    baseURL = qaApiUrl;
 
-    axios.defaults.baseURL = baseUrl;
+    axios.defaults.baseURL = baseURL;
 
     break;
 
   case "prod":
   default:
-    /**
-     * 웹 환경 프론트엔드는 vercel를 이용함.
-     *
-     * `/vercel.json`에 설정해 둔 운영용 url 주소로 프록시되기 때문에 웹이 아닌 환경에서만 baseUrl를 설정함.
-     *
-     * 운영용 API가 현재 존재하지 않기 때문에 개발용 API와 주소가 같은 상태
-     */
-    if (Platform.OS !== "web") {
-      baseUrl = "https://port-0-meommu-api-jvvy2blm5wku9j.sel5.cloudtype.app";
+    baseURL = prodApiUrl;
 
-      axios.defaults.baseURL = baseUrl;
+    /**
+     * 웹 환경에서는 외부 서버로 요청을 보낼 시 CORS 에러가 발생하기 때문에
+     * 따로 baseURL를 지정하지 않고, 배포 환경(vercel)의 proxy 기능을 이용함.
+     * `/vercel.json` 파일을 보면 운영용 url로 proxy되도록 하기 위한 설정이 되어있음.
+     */
+    if (Platform.OS === "web") {
+      break;
     }
+
+    axios.defaults.baseURL = baseURL;
 
     break;
 }
