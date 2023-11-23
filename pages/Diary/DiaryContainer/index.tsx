@@ -1,6 +1,7 @@
 // react
 import { useCallback } from "react";
 import { useMutation, useQuery } from "react-query";
+import { Platform, Share } from "react-native";
 
 // expo
 import { router, useLocalSearchParams } from "expo-router";
@@ -12,8 +13,7 @@ import { DiaryPresenter } from "../DiaryPresenter";
 import { PATH } from "@/constants";
 
 // apis
-import { apiService, baseURL } from "@/apis";
-import { Share } from "react-native";
+import { apiService } from "@/apis";
 
 export function DiaryContainer() {
   const { diaryId } = useLocalSearchParams<{ diaryId: string }>();
@@ -38,12 +38,19 @@ export function DiaryContainer() {
     },
     {
       onSuccess: (uuid) => {
+        const origin =
+          Platform.OS === "web"
+            ? process.env.EXPO_PUBLIC_MODE === "dev"
+              ? window.location.origin
+              : "https://meommu-rn.vercel.app"
+            : "https://meommu-rn.vercel.app";
+
         Share.share({
           title: "Meommu Diary",
           message: [
             `${data?.dogName}의 일기 공유`,
             "",
-            `${baseURL}/diary/shared/${uuid}`,
+            `${origin}/diary/shared/${uuid}`,
           ].join("\n"),
         });
       },
@@ -65,8 +72,6 @@ export function DiaryContainer() {
   }, []);
 
   const handleShareButtonClick = useCallback(() => {
-    console.log("share mutation mutate");
-
     shareMutation.mutate();
   }, []);
 
