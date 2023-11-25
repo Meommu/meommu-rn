@@ -1,6 +1,6 @@
 // react
+import React from "react";
 import { View, Text, Pressable } from "react-native";
-import type { MutableRefObject } from "react";
 
 // components
 import { Header } from "@/components/Layout/Header";
@@ -16,6 +16,8 @@ import { styles } from "./index.styles";
 
 // svgs
 import XBig from "@/assets/svgs/x-big.svg";
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
+import { DiaryMenuButtonSheetModal } from "@/components/Widget/DiaryMenuBottomSheetModal";
 
 interface DiaryPresenterProps {
   diary: Diary;
@@ -24,9 +26,14 @@ interface DiaryPresenterProps {
   handleShareButtonClick: () => void;
 
   isShared?: boolean;
-  imageRef?: MutableRefObject<View | null>;
+  imageRef?: React.MutableRefObject<View | null>;
   captureImageB64?: string | null;
   handleCloseModalButtonClick?: () => void;
+
+  bottomSheetIsOpen: boolean;
+  setBottomSheetIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  handleDiaryEditButtonClick: () => void;
+  handleDiaryDeleteButtonClick: () => void;
 }
 
 export function DiaryPresenter({
@@ -39,89 +46,103 @@ export function DiaryPresenter({
   imageRef,
   captureImageB64 = null,
   handleCloseModalButtonClick,
+
+  bottomSheetIsOpen,
+  setBottomSheetIsOpen,
+  handleDiaryEditButtonClick,
+  handleDiaryDeleteButtonClick,
 }: DiaryPresenterProps) {
   return (
-    <View style={[styles.container, { position: "relative" }]}>
-      {!isShared && (
-        <Header
-          style={styles.header}
-          left={<GoBackButton onPress={handleGoBackButtonClick} />}
-          right={
-            <KebabMenuButton onPress={handleEditButtonClick} fill="black" />
-          }
-        />
-      )}
+    <BottomSheetModalProvider>
+      <View style={styles.container}>
+        {!isShared && (
+          <Header
+            style={styles.header}
+            left={<GoBackButton onPress={handleGoBackButtonClick} />}
+            right={
+              <KebabMenuButton onPress={handleEditButtonClick} fill="black" />
+            }
+          />
+        )}
 
-      <NonIndicatorScrollView>
-        {/**
-         * 스타일을 전개 연산자로 풀어 인라인 스타일로 적용한 이유
-         *
-         * : html2canvas 에서 동적으로 생성된 스타일을 찾을 수 없어 올바르게 내보내기 되지 않는 이슈를 해결하기 위함.
-         */}
-        <View style={{ ...styles.captureArea }} ref={imageRef}>
-          {isShared && (
-            <Header
-              style={{ ...styles.header, height: 64 }}
-              title={<Text style={{ ...styles.headerTitle }}>meommu</Text>}
+        <NonIndicatorScrollView>
+          {/**
+           * 스타일을 전개 연산자로 풀어 인라인 스타일로 적용한 이유
+           *
+           * : html2canvas 에서 동적으로 생성된 스타일을 찾을 수 없어 올바르게 내보내기 되지 않는 이슈를 해결하기 위함.
+           */}
+          <View style={{ ...styles.captureArea }} ref={imageRef}>
+            {isShared && (
+              <Header
+                style={{ ...styles.header, height: 64 }}
+                title={<Text style={{ ...styles.headerTitle }}>meommu</Text>}
+              />
+            )}
+
+            <ImageSlider
+              imageIds={diary.imageIds}
+              aspectRatio="3/4"
+              borderRadius={0}
             />
-          )}
 
-          <ImageSlider
-            imageIds={diary.imageIds}
-            aspectRatio="3/4"
-            borderRadius={0}
-          />
-
-          <View style={{ ...styles.body }}>
-            <Text style={{ ...styles.bodyTitle }}>{diary.title}</Text>
-            <Text style={{ ...styles.bodyContent }}>{diary.content}</Text>
-            <Text style={{ ...styles.bodyDate }}>
-              {diary.date.replaceAll("-", ".")} {diary.dogName} 일기
-            </Text>
+            <View style={{ ...styles.body }}>
+              <Text style={{ ...styles.bodyTitle }}>{diary.title}</Text>
+              <Text style={{ ...styles.bodyContent }}>{diary.content}</Text>
+              <Text style={{ ...styles.bodyDate }}>
+                {diary.date.replaceAll("-", ".")} {diary.dogName} 일기
+              </Text>
+            </View>
           </View>
-        </View>
 
-        <View style={styles.bottomButtonWrapper}>
-          <NavigationButton
-            onPress={handleShareButtonClick}
-            content={isShared ? "저장하기" : "보내기"}
-          />
-        </View>
-      </NonIndicatorScrollView>
+          <View style={styles.bottomButtonWrapper}>
+            <NavigationButton
+              onPress={handleShareButtonClick}
+              content={isShared ? "저장하기" : "보내기"}
+            />
+          </View>
+        </NonIndicatorScrollView>
 
-      {isShared && captureImageB64 !== null && (
-        <View
-          style={{
-            position: "absolute",
-            width: "100%",
-            height: "100%",
-            padding: 15,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Pressable
+        {isShared && captureImageB64 !== null && (
+          <View
             style={{
               position: "absolute",
               width: "100%",
               height: "100%",
-              backgroundColor: "rgba(0, 0, 0, 0.7)",
+              padding: 15,
+              justifyContent: "center",
+              alignItems: "center",
             }}
-            onPress={handleCloseModalButtonClick}
-          />
-          <OriginRatioImage
-            source={{ uri: captureImageB64 }}
-            imageUriForCalculateRatio={captureImageB64}
-            expansion="height"
-          />
-          <Pressable
-            style={{ position: "absolute", top: 15, right: 15 }}
-            onPress={handleCloseModalButtonClick}
           >
-            <XBig />
-          </Pressable>
-        </View>
-      )}
-    </View>
+            <Pressable
+              style={{
+                position: "absolute",
+                width: "100%",
+                height: "100%",
+                backgroundColor: "rgba(0, 0, 0, 0.7)",
+              }}
+              onPress={handleCloseModalButtonClick}
+            />
+            <OriginRatioImage
+              source={{ uri: captureImageB64 }}
+              imageUriForCalculateRatio={captureImageB64}
+              expansion="height"
+            />
+            <Pressable
+              style={{ position: "absolute", top: 15, right: 15 }}
+              onPress={handleCloseModalButtonClick}
+            >
+              <XBig />
+            </Pressable>
+          </View>
+        )}
+
+        <DiaryMenuButtonSheetModal
+          isOpen={bottomSheetIsOpen}
+          setIsOpen={setBottomSheetIsOpen}
+          handleDiaryDeleteButtonClick={handleDiaryDeleteButtonClick}
+          handleDiaryEditButtonClick={handleDiaryEditButtonClick}
+        />
+      </View>
+    </BottomSheetModalProvider>
   );
 }
