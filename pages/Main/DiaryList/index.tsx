@@ -23,6 +23,7 @@ import { DiaryItem } from "./DiaryItem";
 
 // hooks
 import { useResponsiveBottomSheet } from "@/hooks";
+import { useConfirm } from "@/hooks/useConfirm";
 
 // bottom sheet
 import {
@@ -35,6 +36,7 @@ import type { BottomSheetBackdropProps } from "@gorhom/bottom-sheet";
 
 // styles
 import { styles } from "./index.styles";
+import axios from "axios";
 
 export function DiaryList() {
   const [menuPressedDiaryId, setMenuPressedDiaryId] = useState(-1);
@@ -44,12 +46,14 @@ export function DiaryList() {
     DiaryDateState
   >((state) => state.diaryDate);
 
-  const { data, isLoading } = useQuery(
+  const { data, isLoading, refetch } = useQuery(
     ["diaryList", selectedYear, selectedMonth],
     async () => {
       return await apiService.getDiaries(selectedYear, selectedMonth);
     }
   );
+
+  const { openConfirm } = useConfirm();
 
   const diaries = data || [];
 
@@ -78,12 +82,23 @@ export function DiaryList() {
     router.push(`/modify/${menuPressedDiaryId}`);
   };
 
-  const handleDiaryDeleteButtonClick = () => {
-    /**
-     * TODO: 정말 삭제할 것인지 확인 후 다이어리 아이디 삭제 요청 전송 후 리스트 새로고침
-     */
-
+  const handleDiaryDeleteButtonClick = async () => {
     bottomSheetRef.current?.dismiss();
+
+    openConfirm(
+      "일기 삭제",
+      "삭제시, 해당 일기를 영구적으로 열람할 수 없게 됩니다.",
+      async () => {
+        /**
+         * TODO: 다이어리 아이디 삭제 요청 전송 후 리스트 새로고침
+         */
+        await axios.delete(`/api/v1/diaries/${menuPressedDiaryId}`);
+
+        refetch();
+      },
+      "삭제하기",
+      "취소"
+    );
   };
 
   /**
