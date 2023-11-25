@@ -11,11 +11,12 @@ import { QueryProvider } from "./QueryProvider";
 import { ReduxStore } from "./ReduxStore";
 import { ResponsiveLayoutView } from "./ResponsiveLayoutView";
 import { Toast } from "@/components/Overlay/Toast";
+import { Confirm } from "@/components/Overlay/Confirm";
+import { GlobalErrorBoundary } from "./GlobalErrorBoundary";
 
 // apis
 import axios from "axios";
 import { MockApiService } from "@/mocking/mockApi";
-import { GlobalErrorBoundary } from "./GlobalErrorBoundary";
 
 export function RootLayout() {
   /**
@@ -65,6 +66,7 @@ export function RootLayout() {
             </GlobalErrorBoundary>
 
             <Toast />
+            <Confirm />
           </ResponsiveLayoutView>
         )}
       </QueryProvider>
