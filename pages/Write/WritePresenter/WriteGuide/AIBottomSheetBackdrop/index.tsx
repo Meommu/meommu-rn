@@ -4,14 +4,14 @@ import {
   type BottomSheetBackdropProps,
 } from "@gorhom/bottom-sheet";
 
-// constants
-import { zIndex } from "@/constants";
+// style
+import { styles } from "./index.styles";
 
 export function AIBottomSheetBackdrop(props: BottomSheetBackdropProps) {
   return (
     <BottomSheetBackdrop
       {...props}
-      style={[props.style, { zIndex: zIndex.bottomSheetBackdrop }]}
+      style={[props.style, styles.bottomSheetBackdrop]}
       appearsOnIndex={1}
       disappearsOnIndex={0}
     />

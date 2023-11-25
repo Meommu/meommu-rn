@@ -6,6 +6,7 @@ import { zIndex, size } from "@/constants";
 
 export const styles = StyleSheet.create({
   bottomSheetBackdrop: {
+    width: "100%",
     zIndex: zIndex.bottomSheetBackdrop,
   },
 

@@ -28,6 +28,7 @@ export const styles = StyleSheet.create({
    * bottom sheet
    */
   bottomSheetBackdrop: {
+    width: "100%",
     zIndex: zIndex.bottomSheetBackdrop,
   },
 
