@@ -6,6 +6,7 @@ import axios from "axios";
 import * as GET from "./methods/get";
 import * as POST from "./methods/post";
 import * as PUT from "./methods/put";
+import * as DELETE from "./methods/delete";
 
 // utils
 import { createRandomNumberInRange } from "@/utils";
@@ -75,4 +76,5 @@ export const apiService = {
   ...GET,
   ...POST,
   ...PUT,
+  ...DELETE,
 };
