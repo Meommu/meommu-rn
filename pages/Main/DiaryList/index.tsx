@@ -1,6 +1,6 @@
 // react
-import { useCallback, useState } from "react";
-import { Text, Pressable } from "react-native";
+import { useState } from "react";
+import { Text } from "react-native";
 import { useQuery } from "react-query";
 
 // redux
@@ -16,23 +16,16 @@ import { apiService } from "@/apis";
 
 // components
 import { NonIndicatorScrollView } from "@/components/ScrollView/NonIndicatorScrollView";
-import { NavigationButton } from "@/components/Button/NavigationButton";
 import { DiaryListPlaceholder } from "./DiaryListPlaceholder";
 import { DiaryItemSkeleton } from "./DiaryItem/index.skeleton";
 import { DiaryItem } from "./DiaryItem";
+import { DiaryMenuButtonSheetModal } from "@/components/Widget/DiaryMenuBottomSheetModal";
 
 // hooks
-import { useResponsiveBottomSheet } from "@/hooks";
 import { useConfirm } from "@/hooks/useConfirm";
 
 // bottom sheet
-import {
-  BottomSheetModal,
-  BottomSheetModalProvider,
-  BottomSheetBackdrop,
-  BottomSheetView,
-} from "@gorhom/bottom-sheet";
-import type { BottomSheetBackdropProps } from "@gorhom/bottom-sheet";
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 
 // styles
 import { styles } from "./index.styles";
@@ -40,12 +33,18 @@ import axios from "axios";
 
 export function DiaryList() {
   const [menuPressedDiaryId, setMenuPressedDiaryId] = useState(-1);
+  const [bottomSheetIsOpen, setBottomSheetIsOpen] = useState(false);
 
   const { selectedYear, selectedMonth } = useSelector<
     RootState,
     DiaryDateState
   >((state) => state.diaryDate);
 
+  const { openConfirm } = useConfirm();
+
+  /**
+   * 다이어리 일기정보 불러오기
+   */
   const { data, isLoading, refetch } = useQuery(
     ["diaryList", selectedYear, selectedMonth],
     async () => {
@@ -53,29 +52,14 @@ export function DiaryList() {
     }
   );
 
-  const { openConfirm } = useConfirm();
-
   const diaries = data || [];
-
-  /**
-   * bottom sheet
-   */
-  const {
-    bottomSheetRef,
-    bottomSheetMaxWidthStyle,
-    animatedContentHeight,
-    animatedHandleHeight,
-    animatedSnapPoints,
-    handleContentLayout,
-  } = useResponsiveBottomSheet();
 
   /**
    * event handlers
    */
   const handleKebabMenuButtonClick = (diaryId: number) => () => {
     setMenuPressedDiaryId(diaryId);
-
-    bottomSheetRef.current?.present();
+    setBottomSheetIsOpen(true);
   };
 
   const handleDiaryEditButtonClick = () => {
@@ -83,7 +67,7 @@ export function DiaryList() {
   };
 
   const handleDiaryDeleteButtonClick = async () => {
-    bottomSheetRef.current?.dismiss();
+    setBottomSheetIsOpen(false);
 
     openConfirm(
       "일기 삭제",
@@ -100,24 +84,6 @@ export function DiaryList() {
       "취소"
     );
   };
-
-  /**
-   * bottom sheet의 dimmed
-   *
-   * ※ Web 환경에서는 뒷 배경 클릭시 바텀시트 모달이 닫히지 않음.
-   * ※ v5 버전에서 업데이트를 기다려야 할 것 같음.
-   */
-  const renderBackdrop = useCallback(
-    (props: BottomSheetBackdropProps) => (
-      <BottomSheetBackdrop
-        {...props}
-        style={[props.style, styles.bottomSheetBackdrop]}
-        appearsOnIndex={0}
-        disappearsOnIndex={-1}
-      />
-    ),
-    []
-  );
 
   return (
     <BottomSheetModalProvider>
@@ -145,35 +111,12 @@ export function DiaryList() {
           <DiaryListPlaceholder />
         )}
 
-        <BottomSheetModal
-          ref={bottomSheetRef}
-          snapPoints={animatedSnapPoints}
-          contentHeight={animatedContentHeight}
-          handleHeight={animatedHandleHeight}
-          enableContentPanningGesture={false}
-          containerStyle={[
-            bottomSheetMaxWidthStyle,
-            styles.bottomSheetContainer,
-          ]}
-          handleIndicatorStyle={styles.handleIndicator}
-          backdropComponent={renderBackdrop}
-        >
-          <BottomSheetView
-            onLayout={handleContentLayout}
-            style={styles.bottomSheetContent}
-          >
-            <NavigationButton
-              content="일기 수정하기"
-              onPress={handleDiaryEditButtonClick}
-            />
-            <Pressable
-              style={styles.deleteDiaryButton}
-              onPress={handleDiaryDeleteButtonClick}
-            >
-              <Text style={styles.deleteDiaryButtonText}>삭제하기</Text>
-            </Pressable>
-          </BottomSheetView>
-        </BottomSheetModal>
+        <DiaryMenuButtonSheetModal
+          isOpen={bottomSheetIsOpen}
+          setIsOpen={setBottomSheetIsOpen}
+          handleDiaryDeleteButtonClick={handleDiaryDeleteButtonClick}
+          handleDiaryEditButtonClick={handleDiaryEditButtonClick}
+        />
       </NonIndicatorScrollView>
     </BottomSheetModalProvider>
   );
