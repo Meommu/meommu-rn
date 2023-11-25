@@ -17,8 +17,7 @@ import { apiService } from "@/apis";
 import axios from "axios";
 
 // hooks
-import { useConfirm } from "@/hooks/useConfirm";
-import { useToast } from "@/hooks";
+import { useToast, useConfirm } from "@/hooks";
 
 export function DiaryContainer() {
   const [bottomSheetIsOpen, setBottomSheetIsOpen] = useState(false);

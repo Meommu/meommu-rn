@@ -22,7 +22,7 @@ import { DiaryItem } from "./DiaryItem";
 import { DiaryMenuButtonSheetModal } from "@/components/Widget/DiaryMenuBottomSheetModal";
 
 // hooks
-import { useConfirm } from "@/hooks/useConfirm";
+import { useConfirm } from "@/hooks";
 
 // bottom sheet
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
