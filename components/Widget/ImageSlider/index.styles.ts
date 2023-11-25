@@ -22,5 +22,6 @@ export const styles = StyleSheet.create({
   orderText: {
     fontSize: 14,
     color: "white",
+    fontFamily: "Pretendard-Regular",
   },
 });
