@@ -17,3 +17,5 @@ export const g2 = "#B7B7CB";
 
 export const error = "#FF8585";
 export const success = "#63BCA9";
+
+export const w = "#ffffff";
