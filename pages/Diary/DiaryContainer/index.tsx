@@ -14,7 +14,6 @@ import { PATH } from "@/constants";
 
 // apis
 import { apiService } from "@/apis";
-import axios from "axios";
 
 // hooks
 import { useToast, useConfirm } from "@/hooks";
@@ -90,7 +89,7 @@ export function DiaryContainer() {
   }, [diaryId]);
 
   const handleDiaryDeleteButtonClick = useCallback(() => {
-    if (!diary) {
+    if (!diary || !diaryId) {
       fireToast("알 수 없는 오류가 발생했습니다.", 3000);
 
       return;
@@ -102,10 +101,7 @@ export function DiaryContainer() {
       "일기 삭제",
       "삭제시, 해당 일기를 영구적으로 열람할 수 없게 됩니다.",
       async () => {
-        /**
-         * TODO: 다이어리 아이디 삭제 요청 전송 후 리스트 새로고침
-         */
-        await axios.delete(`/api/v1/diaries/${diaryId}`);
+        await apiService.deleteDiary(diaryId);
 
         const [year, month] = diary.date.split("-").map(Number);
 

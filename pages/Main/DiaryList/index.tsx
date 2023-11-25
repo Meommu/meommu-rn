@@ -29,7 +29,6 @@ import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 
 // styles
 import { styles } from "./index.styles";
-import axios from "axios";
 
 export function DiaryList() {
   const [menuPressedDiaryId, setMenuPressedDiaryId] = useState(-1);
@@ -73,10 +72,7 @@ export function DiaryList() {
       "일기 삭제",
       "삭제시, 해당 일기를 영구적으로 열람할 수 없게 됩니다.",
       async () => {
-        /**
-         * TODO: 다이어리 아이디 삭제 요청 전송 후 리스트 새로고침
-         */
-        await axios.delete(`/api/v1/diaries/${menuPressedDiaryId}`);
+        await apiService.deleteDiary(menuPressedDiaryId.toString());
 
         refetch();
       },
