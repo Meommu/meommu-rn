@@ -14,9 +14,8 @@ export const styles = StyleSheet.create({
     right: 10,
     backgroundColor: "rgba(13, 61, 70, 0.8)",
     borderRadius: 400,
+    paddingVertical: 3,
     paddingHorizontal: 11,
-    paddingTop: 1,
-    paddingBottom: 3,
   },
 
   orderText: {
