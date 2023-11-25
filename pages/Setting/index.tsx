@@ -21,18 +21,29 @@ import axios from "axios";
 
 // styles
 import { styles } from "./index.styles";
+import { useConfirm } from "@/hooks";
 
 export function SettingPage() {
   const queryClient = useQueryClient();
 
+  const { openConfirm } = useConfirm();
+
   const handleLogoutButtonClick = async () => {
-    delete axios.defaults.headers.common.Authorization;
+    openConfirm(
+      "로그아웃",
+      "로그아웃 후 알림을 받을 수 없습니다.",
+      async () => {
+        delete axios.defaults.headers.common.Authorization;
 
-    await AsyncStorage.removeItem("accessToken");
+        await AsyncStorage.removeItem("accessToken");
 
-    queryClient.removeQueries();
+        queryClient.removeQueries();
 
-    router.replace(PATH.HOME);
+        router.replace(PATH.HOME);
+      },
+      "로그아웃",
+      "이전"
+    );
   };
 
   const handleGoBackButtonClick = useCallback(() => {
