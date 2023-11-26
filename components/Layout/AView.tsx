@@ -1,6 +1,5 @@
 // react
-import { useState, useEffect, useRef } from "react";
-import type { ReactNode } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Animated from "react-native-reanimated";
 import { ViewStyle } from "react-native";
 
@@ -11,7 +10,7 @@ interface AViewProps {
   isMount: boolean;
   duration: number;
   style?: ViewStyle;
-  children?: ReactNode;
+  children?: React.ReactNode;
   entering?: AnimatedHook;
   exiting?: AnimatedHook;
 }
@@ -29,10 +28,10 @@ export function AView({
   entering = FadeIn,
   exiting = FadeOut,
 }: AViewProps) {
-  const [realMount, setRealMount] = useState(isMount);
+  const [isRealMount, setRealMount] = useState(isMount);
 
-  const enteringStyle = entering(isMount, duration);
-  const exitingStyle = exiting(isMount, duration);
+  const enteringStyle = entering(isMount, isRealMount, duration);
+  const exitingStyle = exiting(isMount, isRealMount, duration);
 
   /**
    * debouncing을 적용하지 않으면 setTimeout 함수가 여러번 호출되어 문제가 생길 수 있음.
@@ -55,7 +54,7 @@ export function AView({
     }
   }, [isMount]);
 
-  if (!realMount) {
+  if (!isRealMount) {
     return null;
   }
 
