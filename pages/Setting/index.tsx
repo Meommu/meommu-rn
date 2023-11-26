@@ -28,7 +28,7 @@ export function SettingPage() {
 
   const { openConfirm } = useConfirm();
 
-  const handleLogoutButtonClick = async () => {
+  const handleLogoutButtonClick = useCallback(async () => {
     openConfirm(
       "로그아웃",
       "로그아웃 후 알림을 받을 수 없습니다.",
@@ -37,6 +37,9 @@ export function SettingPage() {
 
         await AsyncStorage.removeItem("accessToken");
 
+        /**
+         * TODO: 종종 로그아웃 시 쿼리 데이터 삭제로 인해 무한으로 api 요청이 반복되는 이슈 해결
+         */
         queryClient.removeQueries();
 
         router.replace(PATH.HOME);
@@ -44,7 +47,35 @@ export function SettingPage() {
       "로그아웃",
       "이전"
     );
-  };
+  }, []);
+
+  const handleResignButtonClick = useCallback(async () => {
+    openConfirm(
+      "회원탈퇴",
+      "그 동안 작성했던 모든 일기와 입력했던 정보들이 삭제됩니다.",
+      async () => {
+        openConfirm(
+          "정말 탈퇴하시겠어요?",
+          "이 작업은 돌이킬 수 없습니다.",
+          async () => {
+            delete axios.defaults.headers.common.Authorization;
+
+            await AsyncStorage.removeItem("accessToken");
+
+            /**
+             * TODO: 회원탈퇴 api 구현
+             */
+
+            router.replace(PATH.HOME);
+          },
+          "탈퇴하기",
+          "취소"
+        );
+      },
+      "회원탈퇴",
+      "이전"
+    );
+  }, []);
 
   const handleGoBackButtonClick = useCallback(() => {
     if (router.canGoBack()) {
@@ -80,7 +111,10 @@ export function SettingPage() {
 
           <View style={styles.splitBar} />
 
-          <Pressable style={styles.signButton}>
+          <Pressable
+            style={styles.signButton}
+            onPress={handleResignButtonClick}
+          >
             <Text style={styles.signButtonText}>회원 탈퇴</Text>
           </Pressable>
         </View>
