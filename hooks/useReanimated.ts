@@ -4,7 +4,6 @@ import {
   useSharedValue,
   useAnimatedStyle,
   withTiming,
-  useDerivedValue,
 } from "react-native-reanimated";
 
 declare global {
@@ -15,127 +14,41 @@ declare global {
     isMount: boolean,
 
     /**
-     * 컴포넌트 마운트/언마운트 시 애니메이션을 위한 지연 상태
-     */
-    isRealMount: boolean,
-
-    /**
      * 애니메이션 지속시간 (ms)
      */
     duration: number
   ) => ReturnType<typeof useAnimatedStyle>;
 }
 
-const useSharedValueDuringMount = (
-  disableValue: number,
-  enableValue: number,
-  isMount: boolean,
-  isRealMount: boolean
-): ReturnType<typeof useSharedValue<number>> => {
-  const sharedValue = useSharedValue(disableValue);
+export const ZoomAndFadeInOut: AnimatedHook = (isMount, duration) => {
+  const sv = useSharedValue(0);
 
-  const sharedValueOnMount = useDerivedValue(() => {
-    /**
-     * 2. 컴포넌트가 다시 마운트 되기 이전에는 비활성화 된 상태값을 가져야 하므로,
-     * 실제로 컴포넌트가 언마운트 되어있을 경우 비활성화 상태값을 반환
-     */
-    if (!isRealMount) {
-      return disableValue;
-    }
-
-    /**
-     * 1. 컴포넌트가 언마운트되는 시점부터는 활성화 되어있을 경우의 값`enableValue`만을 반환.
-     */
-    if (!isMount) {
-      return enableValue;
-    }
-
-    return sharedValue.value;
-  }, [isMount, isRealMount]);
+  const style = useAnimatedStyle(() => {
+    return {
+      transform: [{ scale: withTiming(sv.value, { duration }) }],
+      opacity: withTiming(sv.value, { duration }),
+    };
+  });
 
   useEffect(() => {
-    sharedValue.value = isMount ? enableValue : disableValue;
+    sv.value = isMount ? 1 : 0;
   }, [isMount]);
 
-  return sharedValueOnMount;
+  return style;
 };
 
-const useSharedValueDuringUnmount = (
-  disableValue: number,
-  enableValue: number,
-  isMount: boolean,
-  isRealMount: boolean
-): ReturnType<typeof useSharedValue<number>> => {
-  const sharedValue = useSharedValue(disableValue);
+export const FadeInOut: AnimatedHook = (isMount, duration) => {
+  const sv = useSharedValue(0);
 
-  const sharedValueOnUnmount = useDerivedValue(() => {
-    if (!isRealMount) {
-      return disableValue;
-    }
-
-    return sharedValue.value;
-  }, [isMount, isRealMount]);
+  const style = useAnimatedStyle(() => {
+    return {
+      opacity: withTiming(sv.value, { duration }),
+    };
+  });
 
   useEffect(() => {
-    sharedValue.value = !isMount ? enableValue : disableValue;
+    sv.value = isMount ? 1 : 0;
   }, [isMount]);
-
-  return sharedValueOnUnmount;
-};
-
-export const ZoomIn: AnimatedHook = (isMount, isRealMount, duration) => {
-  const transformScale = useSharedValueDuringMount(0, 1, isMount, isRealMount);
-  const opacity = useSharedValueDuringMount(0, 1, isMount, isRealMount);
-
-  const style = useAnimatedStyle(() => {
-    return {
-      transform: [{ scale: withTiming(transformScale.value, { duration }) }],
-      opacity: withTiming(opacity.value, { duration }),
-    };
-  });
-
-  return style;
-};
-
-export const ZoomOut: AnimatedHook = (isMount, isRealMount, duration) => {
-  const transformScale = useSharedValueDuringUnmount(
-    1,
-    0,
-    isMount,
-    isRealMount
-  );
-  const opacity = useSharedValueDuringUnmount(1, 0, isMount, isRealMount);
-
-  const style = useAnimatedStyle(() => {
-    return {
-      transform: [{ scale: withTiming(transformScale.value, { duration }) }],
-      opacity: withTiming(opacity.value, { duration }),
-    };
-  });
-
-  return style;
-};
-
-export const FadeIn: AnimatedHook = (isMount, isRealMount, duration) => {
-  const opacity = useSharedValueDuringMount(0, 1, isMount, isRealMount);
-
-  const style = useAnimatedStyle(() => {
-    return {
-      opacity: withTiming(opacity.value, { duration }),
-    };
-  });
-
-  return style;
-};
-
-export const FadeOut: AnimatedHook = (isMount, isRealMount, duration) => {
-  const opacity = useSharedValueDuringUnmount(1, 0, isMount, isRealMount);
-
-  const style = useAnimatedStyle(() => {
-    return {
-      opacity: withTiming(opacity.value, { duration }),
-    };
-  });
 
   return style;
 };

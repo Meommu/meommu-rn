@@ -14,7 +14,7 @@ import { color, size } from "@/constants";
 import { AView } from "@/components/Layout/AView";
 
 // hooks
-import { ZoomIn, ZoomOut } from "@/hooks";
+import { ZoomAndFadeInOut } from "@/hooks";
 
 export function Confirm() {
   const {
@@ -52,8 +52,7 @@ export function Confirm() {
         isMount={isConfirmOpen}
         duration={300}
         style={styles.content}
-        entering={ZoomIn}
-        exiting={ZoomOut}
+        enterExitAnimation={ZoomAndFadeInOut}
       >
         <View style={styles.message}>
           <Text style={styles.titleText}>{title}</Text>
