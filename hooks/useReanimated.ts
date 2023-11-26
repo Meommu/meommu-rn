@@ -54,13 +54,7 @@ const useSharedValueDuringMount = (
   }, [isMount, isRealMount]);
 
   useEffect(() => {
-    if (isMount) {
-      sharedValue.value = enableValue;
-    }
-
-    return () => {
-      sharedValue.value = disableValue;
-    };
+    sharedValue.value = isMount ? enableValue : disableValue;
   }, [isMount]);
 
   return sharedValueOnMount;
@@ -69,21 +63,24 @@ const useSharedValueDuringMount = (
 const useSharedValueDuringUnmount = (
   disableValue: number,
   enableValue: number,
-  isMount: boolean
+  isMount: boolean,
+  isRealMount: boolean
 ): ReturnType<typeof useSharedValue<number>> => {
   const sharedValue = useSharedValue(disableValue);
 
-  useEffect(() => {
-    if (!isMount) {
-      sharedValue.value = enableValue;
+  const sharedValueOnUnmount = useDerivedValue(() => {
+    if (!isRealMount) {
+      return disableValue;
     }
 
-    return () => {
-      sharedValue.value = disableValue;
-    };
+    return sharedValue.value;
+  }, [isMount, isRealMount]);
+
+  useEffect(() => {
+    sharedValue.value = !isMount ? enableValue : disableValue;
   }, [isMount]);
 
-  return sharedValue;
+  return sharedValueOnUnmount;
 };
 
 export const ZoomIn: AnimatedHook = (isMount, isRealMount, duration) => {
@@ -101,8 +98,13 @@ export const ZoomIn: AnimatedHook = (isMount, isRealMount, duration) => {
 };
 
 export const ZoomOut: AnimatedHook = (isMount, isRealMount, duration) => {
-  const transformScale = useSharedValueDuringUnmount(1, 0, isMount);
-  const opacity = useSharedValueDuringUnmount(1, 0, isMount);
+  const transformScale = useSharedValueDuringUnmount(
+    1,
+    0,
+    isMount,
+    isRealMount
+  );
+  const opacity = useSharedValueDuringUnmount(1, 0, isMount, isRealMount);
 
   const style = useAnimatedStyle(() => {
     return {
@@ -127,7 +129,7 @@ export const FadeIn: AnimatedHook = (isMount, isRealMount, duration) => {
 };
 
 export const FadeOut: AnimatedHook = (isMount, isRealMount, duration) => {
-  const opacity = useSharedValueDuringUnmount(1, 0, isMount);
+  const opacity = useSharedValueDuringUnmount(1, 0, isMount, isRealMount);
 
   const style = useAnimatedStyle(() => {
     return {
