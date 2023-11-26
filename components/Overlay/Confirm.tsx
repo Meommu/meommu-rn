@@ -10,6 +10,12 @@ import { changeVisible, type ConfirmState } from "@/store/modules/confirm";
 // constants
 import { color, size } from "@/constants";
 
+// components
+import { AView } from "@/components/Layout/AView";
+
+// hooks
+import { ZoomIn, ZoomOut } from "@/hooks";
+
 export function Confirm() {
   const {
     isConfirmOpen,
@@ -24,24 +30,31 @@ export function Confirm() {
   const dispatch = useDispatch();
 
   const handleOkButtonClick = useCallback(() => {
-    callback();
-
     dispatch(changeVisible(false));
+
+    callback();
   }, [callback]);
 
   const handleCancelButtonClick = useCallback(() => {
     dispatch(changeVisible(false));
   }, []);
 
-  if (!isConfirmOpen) {
-    return null;
-  }
-
   return (
-    <View style={styles.container}>
-      <View style={styles.dimmed} />
+    <View
+      style={[
+        styles.container,
+        { pointerEvents: isConfirmOpen ? "auto" : "none" },
+      ]}
+    >
+      <AView isMount={isConfirmOpen} duration={300} style={styles.dimmed} />
 
-      <View style={styles.content}>
+      <AView
+        isMount={isConfirmOpen}
+        duration={300}
+        style={styles.content}
+        entering={ZoomIn}
+        exiting={ZoomOut}
+      >
         <View style={styles.message}>
           <Text style={styles.titleText}>{title}</Text>
           <Text style={styles.bodyText}>{body}</Text>
@@ -59,7 +72,7 @@ export function Confirm() {
             <Text style={styles.cancelButtonText}>{cancelMessage}</Text>
           </Pressable>
         </View>
-      </View>
+      </AView>
     </View>
   );
 }
@@ -82,6 +95,7 @@ const styles = StyleSheet.create({
 
   content: {
     width: "80%",
+    maxWidth: size.MOBILE_WIDTH,
     borderRadius: 20,
     backgroundColor: "#1B1E26",
     padding: 16,
