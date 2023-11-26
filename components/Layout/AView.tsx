@@ -7,6 +7,15 @@ import { ViewStyle } from "react-native";
 // hooks
 import { FadeIn, FadeOut } from "@/hooks";
 
+interface AViewProps {
+  isMount: boolean;
+  duration: number;
+  style?: ViewStyle;
+  children?: ReactNode;
+  entering?: AnimatedHook;
+  exiting?: AnimatedHook;
+}
+
 /**
  * AView : Animated View
  *
@@ -19,14 +28,7 @@ export function AView({
   style,
   entering = FadeIn,
   exiting = FadeOut,
-}: {
-  isMount: boolean;
-  children: ReactNode;
-  duration: number;
-  style?: ViewStyle;
-  entering?: AnimatedHook;
-  exiting?: AnimatedHook;
-}) {
+}: AViewProps) {
   const [realMount, setRealMount] = useState(isMount);
 
   const enteringStyle = entering(isMount, duration);
