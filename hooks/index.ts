@@ -4,5 +4,5 @@ export * from "./useAccessControl";
 export * from "./usePreventTabScrolling";
 export * from "./useSwiper";
 export * from "./useReanimated";
-export * from "./useResponsiveBottomSheet";
 export * from "./useConfirm";
+export * from "./useResponsiveMobileWidth";

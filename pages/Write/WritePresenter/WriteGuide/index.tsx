@@ -1,9 +1,10 @@
 // react
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { useMutation, useQuery } from "react-query";
 import { View, Text } from "react-native";
 import { useDerivedValue } from "react-native-reanimated";
 import { useFormContext } from "react-hook-form";
+import Swiper from "react-native-web-swiper";
 
 // redux
 import { useDispatch } from "react-redux";
@@ -31,8 +32,10 @@ import BottomSheet, {
 import { size } from "@/constants";
 
 // hooks
-import { useResponsiveBottomSheet, useSwiper, useToast } from "@/hooks";
-import Swiper from "react-native-web-swiper";
+import { useResponsiveMobileWidth, useSwiper, useToast } from "@/hooks";
+
+// bottom sheet modal
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
 
 // styles
 import { styles } from "./index.styles";
@@ -46,8 +49,9 @@ export function WriteGuide({}: WriteGuideProps) {
 
   const { swiperIndex, swiperRef, handleSwiperIndexChange } = useSwiper(0);
 
-  const { bottomSheetRef, bottomSheetMaxWidthStyle } =
-    useResponsiveBottomSheet();
+  const bottomSheetRef = useRef<BottomSheetModal>(null);
+
+  const { responsiveWidthStyle } = useResponsiveMobileWidth();
 
   const { setValue, getValues } = useFormContext<DiaryWriteFormFieldValues>();
 
@@ -418,7 +422,7 @@ export function WriteGuide({}: WriteGuideProps) {
     <BottomSheet
       ref={bottomSheetRef}
       snapPoints={snapPoints}
-      containerStyle={bottomSheetMaxWidthStyle}
+      containerStyle={[styles.bottomSheetContainer, responsiveWidthStyle]}
       backgroundStyle={styles.bottomSheetBackground}
       handleIndicatorStyle={styles.bottomSheetIndicator}
       footerComponent={AIBottomSheetFooter}

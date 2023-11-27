@@ -3,7 +3,7 @@ import React, { useRef, useMemo, useCallback, useEffect } from "react";
 import { useWindowDimensions, Platform, type ViewStyle } from "react-native";
 
 // hooks
-import { useDynamicStyle } from "@/hooks";
+import { useDynamicStyle, useResponsiveMobileWidth } from "@/hooks";
 
 // bottom sheet
 import {
@@ -42,18 +42,7 @@ export function ResponsiveButtonSheetModal({
     handleContentLayout,
   } = useBottomSheetDynamicSnapPoints(initialSnapPoints);
 
-  const { width, height } = useWindowDimensions();
-
-  const bottomSheetMaxWidthStyle = useDynamicStyle<ViewStyle>(() => {
-    const maxWidth =
-      Platform.OS === "web" && width >= size.LAPTOP_WIDTH
-        ? (9 * height) / 16
-        : "100%";
-
-    return {
-      maxWidth,
-    };
-  }, [width, height]);
+  const { responsiveWidthStyle } = useResponsiveMobileWidth();
 
   useEffect(() => {
     if (isOpen) {
@@ -95,7 +84,7 @@ export function ResponsiveButtonSheetModal({
       contentHeight={animatedContentHeight}
       handleHeight={animatedHandleHeight}
       enableContentPanningGesture={false}
-      containerStyle={[styles.bottomSheetContainer, bottomSheetMaxWidthStyle]}
+      containerStyle={[styles.bottomSheetContainer, responsiveWidthStyle]}
       handleIndicatorStyle={styles.handleIndicator}
       backdropComponent={renderBackdrop}
       enablePanDownToClose={true}
