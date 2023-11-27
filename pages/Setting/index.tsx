@@ -21,6 +21,8 @@ import axios from "axios";
 
 // styles
 import { styles } from "./index.styles";
+
+// hooks
 import { useConfirm } from "@/hooks";
 
 export function SettingPage() {
