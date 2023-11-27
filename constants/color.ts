@@ -15,6 +15,10 @@ export const g1 = "#EBEBF0";
  */
 export const g2 = "#B7B7CB";
 
+export const g400 = "#89899C";
+
+export const g900 = "#1C1D22";
+
 export const error = "#FF8585";
 export const success = "#63BCA9";
 
