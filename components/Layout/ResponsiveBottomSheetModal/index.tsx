@@ -15,7 +15,7 @@ import {
 } from "@gorhom/bottom-sheet";
 
 // constants
-import { size, zIndex } from "@/constants";
+import { size } from "@/constants";
 
 // style
 import { styles } from "./index.styles";
@@ -52,8 +52,6 @@ export function ResponsiveButtonSheetModal({
 
     return {
       maxWidth,
-      marginHorizontal: "auto",
-      zIndex: zIndex.bottomSheetContainer,
     };
   }, [width, height]);
 
