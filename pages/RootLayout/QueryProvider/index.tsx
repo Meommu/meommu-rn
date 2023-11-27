@@ -107,7 +107,7 @@ export function QueryProvider({ children }: QueryProviderProps) {
     <QueryClientProvider client={queryClient}>
       {children}
 
-      {Platform.OS === "web" && process.env.EXPO_PUBLIC_MODE === "dev" && (
+      {Platform.OS === "web" && process.env.EXPO_PUBLIC_MODE !== "prod" && (
         <View style={{ position: "absolute" }}>
           <ReactQueryDevtools />
         </View>
