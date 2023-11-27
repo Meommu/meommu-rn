@@ -54,7 +54,7 @@ export function NotFound() {
         <NavigationButton
           content="홈으로"
           onPress={() => {
-            router.replace(PATH.HOME);
+            router.replace(PATH.ROOT);
           }}
         />
       </View>
