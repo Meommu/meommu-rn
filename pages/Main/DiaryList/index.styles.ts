@@ -14,4 +14,9 @@ export const styles = StyleSheet.create({
     color: "#7D8899",
     fontFamily: "Pretendard-SemiBold",
   },
+
+  bottomSheetContent: {
+    paddingHorizontal: 20,
+    paddingBottom: 20,
+  },
 });

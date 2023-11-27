@@ -10,14 +10,16 @@ import { ImageSlider } from "@/components/Widget/ImageSlider";
 import { NonIndicatorScrollView } from "@/components/ScrollView/NonIndicatorScrollView";
 import { NavigationButton } from "@/components/Button/NavigationButton";
 import { OriginRatioImage } from "@/components/Image/OriginRatioImage";
+import { ResponsiveButtonSheetModal } from "@/components/Layout/ResponsiveBottomSheetModal";
 
 // styles
 import { styles } from "./index.styles";
 
 // svgs
 import XBig from "@/assets/svgs/x-big.svg";
+
+// bottom sheets
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
-import { DiaryMenuButtonSheetModal } from "@/components/Widget/DiaryMenuBottomSheetModal";
 
 interface DiaryPresenterProps {
   diary: Diary;
@@ -136,12 +138,23 @@ export function DiaryPresenter({
           </View>
         )}
 
-        <DiaryMenuButtonSheetModal
+        <ResponsiveButtonSheetModal
           isOpen={bottomSheetIsOpen}
           setIsOpen={setBottomSheetIsOpen}
-          handleDiaryDeleteButtonClick={handleDiaryDeleteButtonClick}
-          handleDiaryEditButtonClick={handleDiaryEditButtonClick}
-        />
+        >
+          <View style={styles.bottomSheetContent}>
+            <NavigationButton
+              content="일기 수정하기"
+              onPress={handleDiaryEditButtonClick}
+            />
+            <NavigationButton
+              fontColor="#6F7682"
+              content="일기 삭제하기"
+              backgroundColor="transparent"
+              onPress={handleDiaryDeleteButtonClick}
+            />
+          </View>
+        </ResponsiveButtonSheetModal>
       </View>
     </BottomSheetModalProvider>
   );

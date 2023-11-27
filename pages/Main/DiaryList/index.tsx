@@ -1,6 +1,6 @@
 // react
 import { useState } from "react";
-import { Text } from "react-native";
+import { View, Text } from "react-native";
 import { useQuery } from "react-query";
 
 // redux
@@ -19,7 +19,8 @@ import { NonIndicatorScrollView } from "@/components/ScrollView/NonIndicatorScro
 import { DiaryListPlaceholder } from "./DiaryListPlaceholder";
 import { DiaryItemSkeleton } from "./DiaryItem/index.skeleton";
 import { DiaryItem } from "./DiaryItem";
-import { DiaryMenuButtonSheetModal } from "@/components/Widget/DiaryMenuBottomSheetModal";
+import { NavigationButton } from "@/components/Button/NavigationButton";
+import { ResponsiveButtonSheetModal } from "@/components/Layout/ResponsiveBottomSheetModal";
 
 // hooks
 import { useConfirm } from "@/hooks";
@@ -107,12 +108,23 @@ export function DiaryList() {
           <DiaryListPlaceholder />
         )}
 
-        <DiaryMenuButtonSheetModal
+        <ResponsiveButtonSheetModal
           isOpen={bottomSheetIsOpen}
           setIsOpen={setBottomSheetIsOpen}
-          handleDiaryDeleteButtonClick={handleDiaryDeleteButtonClick}
-          handleDiaryEditButtonClick={handleDiaryEditButtonClick}
-        />
+        >
+          <View style={styles.bottomSheetContent}>
+            <NavigationButton
+              content="일기 수정하기"
+              onPress={handleDiaryEditButtonClick}
+            />
+            <NavigationButton
+              fontColor="#6F7682"
+              content="일기 삭제하기"
+              backgroundColor="transparent"
+              onPress={handleDiaryDeleteButtonClick}
+            />
+          </View>
+        </ResponsiveButtonSheetModal>
       </NonIndicatorScrollView>
     </BottomSheetModalProvider>
   );

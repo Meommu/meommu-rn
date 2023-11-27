@@ -11,9 +11,7 @@ import { changeSelectedYearMonth } from "@/store/modules/diaryDate";
 
 // components
 import { MonthCalendar } from "@/components/Widget/MonthCalendar";
-
-// hooks
-import { useResponsiveBottomSheet } from "@/hooks";
+import { ResponsiveButtonSheetModal } from "@/components/Layout/ResponsiveBottomSheetModal";
 
 // svgs
 import ArrowDropDown from "@/assets/svgs/arrow-drop-down.svg";
@@ -25,19 +23,15 @@ import { apiService } from "@/apis";
 import { createYearMonthKey } from "@/utils";
 
 // bottom sheets
-import {
-  BottomSheetModal,
-  BottomSheetModalProvider,
-  BottomSheetView,
-  BottomSheetBackdrop,
-} from "@gorhom/bottom-sheet";
-import type { BottomSheetBackdropProps } from "@gorhom/bottom-sheet";
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 
 // styles
 import { styles } from "./index.styles";
 
 export function MonthPicker() {
+  const [bottomSheetIsOpen, setBottomSheetIsOpen] = useState(false);
   const [yearMonthToImageId, setYearMonthToImageId] = useState(new Map());
+
   /**
    * redux
    */
@@ -93,46 +87,16 @@ export function MonthPicker() {
   }, [data]);
 
   /**
-   * bottom sheet
-   */
-  const {
-    bottomSheetRef,
-    bottomSheetMaxWidthStyle,
-    animatedContentHeight,
-    animatedHandleHeight,
-    animatedSnapPoints,
-    handleContentLayout,
-  } = useResponsiveBottomSheet();
-
-  /**
-   * bottom sheet의 dimmed
-   *
-   * ※ Web 환경에서는 뒷 배경 클릭시 바텀시트 모달이 닫히지 않음.
-   * ※ v5 버전에서 업데이트를 기다려야 할 것 같음.
-   */
-  const renderBackdrop = useCallback(
-    (props: BottomSheetBackdropProps) => (
-      <BottomSheetBackdrop
-        {...props}
-        style={[props.style, styles.bottomSheetBackdrop]}
-        appearsOnIndex={0}
-        disappearsOnIndex={-1}
-      />
-    ),
-    []
-  );
-
-  /**
    * event handlers
    */
   const handleDatePickButtonClick = (year: number, month: number) => () => {
     dispatch(changeSelectedYearMonth(year, month));
 
-    bottomSheetRef.current?.dismiss();
+    setBottomSheetIsOpen(false);
   };
 
   const handleSheetOpen = useCallback(() => {
-    bottomSheetRef.current?.present();
+    setBottomSheetIsOpen(true);
   }, []);
 
   return (
@@ -150,25 +114,17 @@ export function MonthPicker() {
         </Pressable>
       </View>
 
-      <BottomSheetModal
-        ref={bottomSheetRef}
-        snapPoints={animatedSnapPoints}
-        contentHeight={animatedContentHeight}
-        handleHeight={animatedHandleHeight}
-        enableContentPanningGesture={false}
-        containerStyle={[bottomSheetMaxWidthStyle, styles.bottomSheetContainer]}
-        handleIndicatorStyle={styles.handleIndicator}
-        backdropComponent={renderBackdrop}
+      <ResponsiveButtonSheetModal
+        isOpen={bottomSheetIsOpen}
+        setIsOpen={setBottomSheetIsOpen}
       >
-        <BottomSheetView onLayout={handleContentLayout}>
-          <MonthCalendar
-            selectedYear={selectedYear}
-            selectedMonth={selectedMonth}
-            yearMonthToImageId={yearMonthToImageId}
-            handleDatePickButtonClick={handleDatePickButtonClick}
-          />
-        </BottomSheetView>
-      </BottomSheetModal>
+        <MonthCalendar
+          selectedYear={selectedYear}
+          selectedMonth={selectedMonth}
+          yearMonthToImageId={yearMonthToImageId}
+          handleDatePickButtonClick={handleDatePickButtonClick}
+        />
+      </ResponsiveButtonSheetModal>
     </BottomSheetModalProvider>
   );
 }

@@ -50,4 +50,9 @@ export const styles = StyleSheet.create({
   bottomButtonWrapper: {
     padding: 20,
   },
+
+  bottomSheetContent: {
+    paddingHorizontal: 20,
+    paddingBottom: 20,
+  },
 });
