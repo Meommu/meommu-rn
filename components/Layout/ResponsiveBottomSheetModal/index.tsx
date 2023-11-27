@@ -1,9 +1,8 @@
 // react
 import React, { useRef, useMemo, useCallback, useEffect } from "react";
-import { useWindowDimensions, Platform, type ViewStyle } from "react-native";
 
 // hooks
-import { useDynamicStyle, useResponsiveMobileWidth } from "@/hooks";
+import { useResponsiveMobileWidth } from "@/hooks";
 
 // bottom sheet
 import {
@@ -13,9 +12,6 @@ import {
   useBottomSheetDynamicSnapPoints,
   type BottomSheetBackdropProps,
 } from "@gorhom/bottom-sheet";
-
-// constants
-import { size } from "@/constants";
 
 // style
 import { styles } from "./index.styles";
