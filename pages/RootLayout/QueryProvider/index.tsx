@@ -79,9 +79,9 @@ export function QueryProvider({ children }: QueryProviderProps) {
         break;
 
       case CODE.DIARY_NOT_FOUND:
-        fireToast(store.dispatch, message, 3000);
+        router.replace(PATH.NOT_FOUND);
 
-        router.replace(PATH.MAIN);
+        break;
     }
   }, []);
 

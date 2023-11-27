@@ -7,4 +7,5 @@ export const enum PATH {
   SIGN_UP = "sign-up",
   SETTING = "setting",
   WRITE = "write",
+  NOT_FOUND = "404",
 }
