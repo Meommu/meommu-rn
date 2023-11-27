@@ -22,14 +22,12 @@ import { apiService } from "@/apis";
 import axios from "axios";
 
 // hooks
-import { useToast, useThrowMainIfLogin } from "@/hooks";
+import { useToast } from "@/hooks";
 
 // styles
 import { styles } from "./index.styles";
 
 export function HomePage() {
-  useThrowMainIfLogin();
-
   const {
     control,
     handleSubmit,
