@@ -5,6 +5,7 @@ import { View, Text } from "react-native";
 import { useDerivedValue } from "react-native-reanimated";
 import { useFormContext } from "react-hook-form";
 import Swiper from "react-native-web-swiper";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // redux
 import { useDispatch } from "react-redux";
@@ -19,7 +20,7 @@ import { SentenseInput } from "./SentenseInput";
 import { MultiSelectListSkeleton } from "./MultiSelectList/index.skeleton";
 
 // apis
-import { apiService } from "@/apis";
+import { apiService, baseURL } from "@/apis";
 
 // bottom sheet
 import BottomSheet, {
@@ -39,6 +40,8 @@ import { BottomSheetModal } from "@gorhom/bottom-sheet";
 
 // styles
 import { styles } from "./index.styles";
+
+import * as _ from "lodash";
 
 interface WriteGuideProps {}
 
@@ -76,15 +79,72 @@ export function WriteGuide({}: WriteGuideProps) {
    */
   const createGptDiaryMutation = useMutation(
     async (details: string) => {
-      const content = await apiService.createGptDiary(details);
+      const accessToken = await AsyncStorage.getItem("accessToken");
 
-      return content;
+      /**
+       * axios는 브라우저에서 XMLHttpRequest API를 사용하는데,
+       * XMLHttpRequest는 `stream` 응답 형식을 지원하지 않는 문제가 있어 fetch를 이용하여 요청하도록 구현하였다.
+       * 
+       * ※ 현재 axios 사용하지 않기 때문에 공통 에러처리 핸들러에서 에러를 잡지 못하고 있다.
+       */
+      const reader = await fetch(`${baseURL}/api/v1/gpt/stream`, {
+        method: "POST",
+        body: JSON.stringify({
+          details,
+        }),
+        headers: {
+          Authorization: `${accessToken}`,
+          "Content-Type": "application/json",
+        },
+      }).then((res) => res.body?.getReader());
+
+      return reader;
     },
     {
-      onSuccess: (content: string) => {
-        console.log("[gpt가 생성한 일기]", content);
+      onSuccess: async (
+        reader: ReadableStreamDefaultReader<Uint8Array> | undefined
+      ) => {
+        if (!reader) {
+          fireToast("GPT 일기생성 중 오류가 발생했습니다.", 3000);
 
-        setValue("content", getValues("content") + content);
+          return;
+        }
+
+        const decorder = new TextDecoder();
+
+        for (
+          let readerResult: ReadableStreamReadResult<Uint8Array> | undefined;
+          !readerResult || !readerResult.done;
+
+        ) {
+          readerResult = await reader.read();
+
+          const chunk = decorder.decode(
+            readerResult.value || new Uint8Array(),
+            { stream: !readerResult.done }
+          );
+
+          const word = chunk
+            .split("\n")
+            .filter((v) => v)
+            .map((text) => {
+              return text.startsWith("data:") ? text.slice(5) : text;
+            })
+            .map((text) => {
+              try {
+                const obj = JSON.parse(text);
+
+                const content = _.get(obj, "choices[0].delta.content");
+
+                return content;
+              } catch (e) {
+                return "";
+              }
+            })
+            .join("");
+
+          setValue("content", getValues("content") + word);
+        }
       },
     }
   );
