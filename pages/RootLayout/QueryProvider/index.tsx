@@ -20,6 +20,9 @@ import axios, { AxiosError } from "axios";
 // utils
 import { fireToast } from "@/utils";
 
+// lodash
+import * as _ from "lodash";
+
 interface QueryProviderProps {
   children: React.ReactNode;
 }
@@ -94,9 +97,13 @@ export function QueryProvider({ children }: QueryProviderProps) {
             refetchOnWindowFocus: false,
             retry: 0,
             staleTime: Infinity,
+            useErrorBoundary: (error) =>
+              _.get(error, "response.status", -1) >= 500,
           },
           mutations: {
             onError: errorHandler,
+            useErrorBoundary: (error) =>
+              _.get(error, "response.status", -1) >= 500,
           },
         },
       }),
