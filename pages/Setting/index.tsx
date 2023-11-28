@@ -39,9 +39,6 @@ export function SettingPage() {
 
         await AsyncStorage.removeItem("accessToken");
 
-        /**
-         * TODO: 종종 로그아웃 시 쿼리 데이터 삭제로 인해 무한으로 api 요청이 반복되는 이슈 해결
-         */
         queryClient.removeQueries();
 
         router.replace(PATH.HOME);
