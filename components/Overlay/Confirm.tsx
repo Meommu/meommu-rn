@@ -40,12 +40,7 @@ export function Confirm() {
   }, []);
 
   return (
-    <View
-      style={[
-        styles.container,
-        { pointerEvents: isConfirmOpen ? "auto" : "none" },
-      ]}
-    >
+    <View style={styles.container}>
       <AView isMount={isConfirmOpen} duration={300} style={styles.dimmed} />
 
       <AView
@@ -83,6 +78,12 @@ const styles = StyleSheet.create({
     height: "100%",
     justifyContent: "center",
     alignItems: "center",
+    /**
+     * 확인 모달의 레이아웃을 위해 항상 맨 위에 화면 가득 존재하는 요소로,
+     *
+     * 사용을 방해하지 않도록 pointerEvents를 'none'으로 설정함.
+     */
+    pointerEvents: "none",
   },
 
   dimmed: {
@@ -90,6 +91,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     backgroundColor: "rgba(0, 0, 0, 0.5)",
+    pointerEvents: "auto",
   },
 
   content: {
@@ -99,6 +101,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#1B1E26",
     padding: 16,
     gap: 24,
+    pointerEvents: "auto",
   },
 
   message: {
