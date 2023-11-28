@@ -111,6 +111,9 @@ export function WriteGuide({}: WriteGuideProps) {
       onSuccess: async (
         reader: ReadableStreamDefaultReader<Uint8Array> | undefined
       ) => {
+        /**
+         * TODO: 모바일에서 reader를 사용할 수 없는 문제 해결하기
+         */
         if (!reader) {
           fireToast("GPT 일기생성 중 오류가 발생했습니다.", 3000);
 
@@ -512,15 +515,15 @@ export function WriteGuide({}: WriteGuideProps) {
                 top: -(14 + 40),
                 width: "100%",
                 alignItems: "center",
+                pointerEvents: "none",
               }}
             >
               <Pressable
                 onPress={() => {
-                  console.log("stop!!");
                   interrupt.current = true;
                 }}
                 style={{
-                  width: "fit-content",
+                  pointerEvents: "auto",
                   paddingVertical: 10,
                   paddingHorizontal: 20,
                   backgroundColor: "white",
