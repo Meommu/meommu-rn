@@ -17,11 +17,6 @@ export const styles = StyleSheet.create({
     backgroundColor: "#1B1E26",
   },
 
-  bottomSheetIndicator: {
-    backgroundColor: "rgba(235, 235, 245, 0.3)",
-    width: "15%",
-  },
-
   bottomSheetContent: {
     height: "100%",
   },

@@ -1,7 +1,7 @@
 // react
-import { useEffect, useMemo, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 import { useMutation, useQuery } from "react-query";
-import { View, Text } from "react-native";
+import { View, Text, Pressable } from "react-native";
 import { useDerivedValue } from "react-native-reanimated";
 import { useFormContext } from "react-hook-form";
 import Swiper from "react-native-web-swiper";
@@ -41,6 +41,9 @@ import { BottomSheetModal } from "@gorhom/bottom-sheet";
 // styles
 import { styles } from "./index.styles";
 
+// svgs
+import Stop from "@/assets/svgs/stop.svg";
+
 import * as _ from "lodash";
 
 interface WriteGuideProps {}
@@ -77,6 +80,8 @@ export function WriteGuide({}: WriteGuideProps) {
   /**
    * gpt 일기 생성
    */
+  const interrupt = useRef(false);
+
   const createGptDiaryMutation = useMutation(
     async (details: string) => {
       const accessToken = await AsyncStorage.getItem("accessToken");
@@ -84,7 +89,9 @@ export function WriteGuide({}: WriteGuideProps) {
       /**
        * axios는 브라우저에서 XMLHttpRequest API를 사용하는데,
        * XMLHttpRequest는 `stream` 응답 형식을 지원하지 않는 문제가 있어 fetch를 이용하여 요청하도록 구현하였다.
-       * 
+       *
+       * https://stackoverflow.com/questions/60048180/is-it-possible-to-post-a-responsetype-stream-in-axios
+       *
        * ※ 현재 axios 사용하지 않기 때문에 공통 에러처리 핸들러에서 에러를 잡지 못하고 있다.
        */
       const reader = await fetch(`${baseURL}/api/v1/gpt/stream`, {
@@ -117,6 +124,12 @@ export function WriteGuide({}: WriteGuideProps) {
           !readerResult || !readerResult.done;
 
         ) {
+          if (interrupt.current) {
+            await reader.cancel();
+
+            break;
+          }
+
           readerResult = await reader.read();
 
           const chunk = decorder.decode(
@@ -314,6 +327,8 @@ export function WriteGuide({}: WriteGuideProps) {
 
         bottomSheetRef.current?.snapToIndex(0);
 
+        interrupt.current = false;
+
         createGptDiaryMutation.mutate(sentenses.join("|"));
 
         break;
@@ -478,15 +493,79 @@ export function WriteGuide({}: WriteGuideProps) {
     );
   };
 
+  const AIBottomSheetHandle = useCallback(() => {
+    return (
+      <View
+        style={{
+          position: "relative",
+          width: "100%",
+          height: size.BOTTOM_SHEET_INDICATOR_HEIGHT,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        {createGptDiaryMutation.isLoading &&
+          !createGptDiaryMutation.isSuccess && (
+            <View
+              style={{
+                position: "absolute",
+                top: -(14 + 40),
+                width: "100%",
+                alignItems: "center",
+              }}
+            >
+              <Pressable
+                onPress={() => {
+                  console.log("stop!!");
+                  interrupt.current = true;
+                }}
+                style={{
+                  width: "fit-content",
+                  paddingVertical: 10,
+                  paddingHorizontal: 20,
+                  backgroundColor: "white",
+                  borderRadius: 6,
+                  borderColor: "#D0D0D0",
+                  borderWidth: 2,
+                  flexDirection: "row",
+                  gap: 7,
+                }}
+              >
+                <Stop />
+                <Text
+                  style={{
+                    color: "#B0B0B0",
+                    fontSize: 16,
+                    fontFamily: "Pretendard-SemiBold",
+                  }}
+                >
+                  생성 멈추기
+                </Text>
+              </Pressable>
+            </View>
+          )}
+
+        <View
+          style={{
+            backgroundColor: "rgba(235, 235, 245, 0.3)",
+            borderRadius: 2.5,
+            width: 48,
+            height: 4,
+          }}
+        />
+      </View>
+    );
+  }, [createGptDiaryMutation.isLoading, createGptDiaryMutation.isSuccess]);
+
   return (
     <BottomSheet
       ref={bottomSheetRef}
       snapPoints={snapPoints}
       containerStyle={[styles.bottomSheetContainer, responsiveWidthStyle]}
       backgroundStyle={styles.bottomSheetBackground}
-      handleIndicatorStyle={styles.bottomSheetIndicator}
       footerComponent={AIBottomSheetFooter}
       backdropComponent={AIBottomSheetBackdrop}
+      handleComponent={AIBottomSheetHandle}
       enablePanDownToClose={true}
       index={-1}
     >
