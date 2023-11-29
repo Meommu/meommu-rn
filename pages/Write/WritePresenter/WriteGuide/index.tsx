@@ -113,9 +113,6 @@ const WriteGuide = ({ setValue, getValues }: WriteGuideProps) => {
     },
     {
       onSuccess: async (stream: ReadableStream<Uint8Array> | null) => {
-        /**
-         * TODO: 모바일에서 reader를 사용할 수 없는 문제 해결하기
-         */
         if (!stream) {
           fireToast("GPT 일기생성 중 오류가 발생했습니다.", 3000);
 
@@ -145,12 +142,12 @@ const WriteGuide = ({ setValue, getValues }: WriteGuideProps) => {
           );
 
           /**
-           * react-native의 느린 폼 요소 업데이트 문제로, 받아온 값이 input에 반영되지 않는 문제를
-           * 일시적으로 해결하기 위해 지연 추가
+           * 1. `setValue`로 폼의 상태가 업데이트되고, 리렌더링이 발생해 ui가 업데이트 되는데 걸리는 시간
+           * 2. `setValue`함수 호출을 마치고 stream으로부터 다음 값을 읽어와 처리하는데 걸리는 시간
            *
-           * TODO: 추후 지연을 제거하고도 정상적으로 동작하게 할 수 있는 방법을 찾아 코드를 개선할 예정
+           * react-native 환경에서는 작업에 걸리는 시간이 1 > 2 가 되면서 마치 값이 유실되는 듯한 문제가 있어 50ms의 지연을 추가함.
            */
-          await sleep(100);
+          await sleep(50);
 
           const word = chunk
             .split("\n")
