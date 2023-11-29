@@ -44,7 +44,9 @@ import { styles } from "./index.styles";
 // svgs
 import Stop from "@/assets/svgs/stop.svg";
 
+// utils
 import * as _ from "lodash";
+import { sleep } from "@/utils";
 
 interface WriteGuideProps {}
 
@@ -94,7 +96,7 @@ export function WriteGuide({}: WriteGuideProps) {
        *
        * ※ 현재 axios 사용하지 않기 때문에 공통 에러처리 핸들러에서 에러를 잡지 못하고 있다.
        */
-      const reader = await fetch(`${baseURL}/api/v1/gpt/stream`, {
+      const stream = await fetch(`${baseURL}/api/v1/gpt/stream`, {
         method: "POST",
         body: JSON.stringify({
           details,
@@ -103,24 +105,31 @@ export function WriteGuide({}: WriteGuideProps) {
           Authorization: `${accessToken}`,
           "Content-Type": "application/json",
         },
-      }).then((res) => res.body?.getReader());
+        /**
+         * react-native에서 text stream 방식의 요청을 활성화하기 위한 비표준 옵션
+         */
+        // @ts-expect-error
+        reactNative: { textStreaming: true },
+      }).then((res) => {
+        return res.body;
+      });
 
-      return reader;
+      return stream;
     },
     {
-      onSuccess: async (
-        reader: ReadableStreamDefaultReader<Uint8Array> | undefined
-      ) => {
+      onSuccess: async (stream: ReadableStream<Uint8Array> | null) => {
         /**
          * TODO: 모바일에서 reader를 사용할 수 없는 문제 해결하기
          */
-        if (!reader) {
+        if (!stream) {
           fireToast("GPT 일기생성 중 오류가 발생했습니다.", 3000);
 
           return;
         }
 
         const decorder = new TextDecoder();
+
+        const reader = stream.getReader();
 
         for (
           let readerResult: ReadableStreamReadResult<Uint8Array> | undefined;
@@ -139,6 +148,14 @@ export function WriteGuide({}: WriteGuideProps) {
             readerResult.value || new Uint8Array(),
             { stream: !readerResult.done }
           );
+
+          /**
+           * react-native의 느린 폼 요소 업데이트 문제로, 받아온 값이 input에 반영되지 않는 문제를
+           * 일시적으로 해결하기 위해 지연 추가
+           *
+           * TODO: 추후 지연을 제거하고도 정상적으로 동작하게 할 수 있는 방법을 찾아 코드를 개선할 예정
+           */
+          await sleep(100);
 
           const word = chunk
             .split("\n")
