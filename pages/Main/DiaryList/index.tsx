@@ -102,6 +102,9 @@ export function DiaryList() {
               return <DiaryItemSkeleton key={i} />;
             })}
 
+        {/**
+         * TODO: 일기가 없을 때 보여주는 PlaceHolder를 로딩 스켈레톤 UI와 같이보여지지 않도록 처리하기
+         */}
         {diaries.length > 0 ? (
           <Text style={styles.listCountText}>{diaries.length}개의 일기</Text>
         ) : (
