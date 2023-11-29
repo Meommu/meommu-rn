@@ -1,9 +1,11 @@
+// react
 import { View, Pressable, Text } from "react-native";
-
-import { size } from "@/constants";
 
 // svgs
 import Stop from "@/assets/svgs/stop.svg";
+
+// style
+import { styles } from "./index.styles";
 
 interface WriteGuideHandleProps {
   isGptDiaryMutationLoading: boolean;
@@ -19,61 +21,20 @@ function WriteGuideHandle({
   handleGptDiaryStopButtonClick,
 }: WriteGuideHandleProps) {
   return (
-    <View
-      style={{
-        position: "relative",
-        width: "100%",
-        height: size.BOTTOM_SHEET_INDICATOR_HEIGHT,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
+    <View style={styles.container}>
       {isGptDiaryMutationLoading && !isGptDirayMutationSuccess && (
-        <View
-          style={{
-            position: "absolute",
-            top: -(14 + 40),
-            width: "100%",
-            alignItems: "center",
-            pointerEvents: "none",
-          }}
-        >
+        <View style={styles.stopButtonLayout}>
           <Pressable
             onPress={handleGptDiaryStopButtonClick}
-            style={{
-              pointerEvents: "auto",
-              paddingVertical: 10,
-              paddingHorizontal: 20,
-              backgroundColor: "white",
-              borderRadius: 6,
-              borderColor: "#D0D0D0",
-              borderWidth: 2,
-              flexDirection: "row",
-              gap: 7,
-            }}
+            style={styles.stopButton}
           >
             <Stop />
-            <Text
-              style={{
-                color: "#B0B0B0",
-                fontSize: 16,
-                fontFamily: "Pretendard-SemiBold",
-              }}
-            >
-              생성 멈추기
-            </Text>
+            <Text style={styles.stopButtonText}>생성 멈추기</Text>
           </Pressable>
         </View>
       )}
 
-      <View
-        style={{
-          backgroundColor: "rgba(235, 235, 245, 0.3)",
-          borderRadius: 2.5,
-          width: 48,
-          height: 4,
-        }}
-      />
+      <View style={styles.grabber} />
     </View>
   );
 }
