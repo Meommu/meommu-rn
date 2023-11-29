@@ -7,7 +7,7 @@ import {
 // style
 import { styles } from "./index.styles";
 
-export function AIBottomSheetBackdrop(props: BottomSheetBackdropProps) {
+function WriteGuideBackdrop(props: BottomSheetBackdropProps) {
   return (
     <BottomSheetBackdrop
       {...props}
@@ -17,3 +17,9 @@ export function AIBottomSheetBackdrop(props: BottomSheetBackdropProps) {
     />
   );
 }
+
+export const renderBackdrop = () => {
+  return (props: BottomSheetBackdropProps) => {
+    return <WriteGuideBackdrop {...props} />;
+  };
+};

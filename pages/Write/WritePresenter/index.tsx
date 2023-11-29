@@ -2,6 +2,7 @@
 import type { MutableRefObject } from "react";
 import { Pressable, View, Text } from "react-native";
 import Swiper from "react-native-web-swiper";
+import { useFormContext } from "react-hook-form";
 
 // components
 import { Header } from "@/components/Layout/Header";
@@ -15,7 +16,7 @@ import { color } from "@/constants";
 
 // styles
 import { styles } from "./index.styles";
-import { WriteGuide } from "./WriteGuide";
+import { MemoizedWriteGuide } from "./WriteGuide";
 
 interface WritePresenterProps {
   swiperRef: MutableRefObject<Swiper | null>;
@@ -56,6 +57,8 @@ export function WritePresenter({
   isBottomButtonActive,
   isStepOneSlide,
 }: WritePresenterProps) {
+  const { setValue, getValues } = useFormContext<DiaryWriteFormFieldValues>();
+
   return (
     <View style={styles.container}>
       <Header
@@ -98,7 +101,7 @@ export function WritePresenter({
         />
       </View>
 
-      <WriteGuide />
+      <MemoizedWriteGuide setValue={setValue} getValues={getValues} />
     </View>
   );
 }
