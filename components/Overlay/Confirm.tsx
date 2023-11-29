@@ -40,7 +40,12 @@ export function Confirm() {
   }, []);
 
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        { pointerEvents: isConfirmOpen ? "auto" : "none" },
+      ]}
+    >
       <AView isMount={isConfirmOpen} duration={300} style={styles.dimmed} />
 
       <AView
@@ -83,7 +88,6 @@ const styles = StyleSheet.create({
      *
      * 사용을 방해하지 않도록 pointerEvents를 'none'으로 설정함.
      */
-    pointerEvents: "none",
   },
 
   dimmed: {
