@@ -85,50 +85,49 @@ export function DiaryList() {
   return (
     <BottomSheetModalProvider>
       <NonIndicatorScrollView style={styles.container}>
-        {diaries.map((diary) => {
-          return (
-            <DiaryItem
-              diary={diary}
-              key={diary.id}
-              handleKebabMenuButtonClick={handleKebabMenuButtonClick(diary.id)}
-            />
-          );
-        })}
-
-        {isLoading &&
+        {isLoading ? (
           Array(3)
             .fill(null)
             .map((_, i) => {
               return <DiaryItemSkeleton key={i} />;
+            })
+        ) : diaries.length > 0 ? (
+          <>
+            {diaries.map((diary) => {
+              return (
+                <DiaryItem
+                  diary={diary}
+                  key={diary.id}
+                  handleKebabMenuButtonClick={handleKebabMenuButtonClick(
+                    diary.id
+                  )}
+                />
+              );
             })}
-
-        {/**
-         * TODO: 일기가 없을 때 보여주는 PlaceHolder를 로딩 스켈레톤 UI와 같이보여지지 않도록 처리하기
-         */}
-        {diaries.length > 0 ? (
-          <Text style={styles.listCountText}>{diaries.length}개의 일기</Text>
+            <Text style={styles.listCountText}>{diaries.length}개의 일기</Text>
+          </>
         ) : (
           <DiaryListPlaceholder />
         )}
-
-        <ResponsiveButtonSheetModal
-          isOpen={bottomSheetIsOpen}
-          setIsOpen={setBottomSheetIsOpen}
-        >
-          <View style={styles.bottomSheetContent}>
-            <NavigationButton
-              content="일기 수정하기"
-              onPress={handleDiaryEditButtonClick}
-            />
-            <NavigationButton
-              fontColor="#6F7682"
-              content="일기 삭제하기"
-              backgroundColor="transparent"
-              onPress={handleDiaryDeleteButtonClick}
-            />
-          </View>
-        </ResponsiveButtonSheetModal>
       </NonIndicatorScrollView>
+
+      <ResponsiveButtonSheetModal
+        isOpen={bottomSheetIsOpen}
+        setIsOpen={setBottomSheetIsOpen}
+      >
+        <View style={styles.bottomSheetContent}>
+          <NavigationButton
+            content="일기 수정하기"
+            onPress={handleDiaryEditButtonClick}
+          />
+          <NavigationButton
+            fontColor="#6F7682"
+            content="일기 삭제하기"
+            backgroundColor="transparent"
+            onPress={handleDiaryDeleteButtonClick}
+          />
+        </View>
+      </ResponsiveButtonSheetModal>
     </BottomSheetModalProvider>
   );
 }
