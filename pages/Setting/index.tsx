@@ -25,6 +25,9 @@ import { styles } from "./index.styles";
 // hooks
 import { useConfirm } from "@/hooks";
 
+// svgs
+import CaretRight from "@/assets/svgs/caret-right.svg";
+
 export function SettingPage() {
   const queryClient = useQueryClient();
 
@@ -84,6 +87,14 @@ export function SettingPage() {
     }
   }, []);
 
+  const handleProfileManageButtonClick = useCallback(() => {
+    router.push(PATH.SETTING_PROFILE);
+  }, []);
+
+  const handleNoticeButtonClick = useCallback(() => {
+    router.push(PATH.SETTING_NOTICE);
+  }, []);
+
   return (
     <View style={styles.container}>
       <View style={styles.content}>
@@ -93,10 +104,28 @@ export function SettingPage() {
           left={<GoBackButton onPress={handleGoBackButtonClick} />}
         />
 
-        <View style={styles.profile}>
+        <View style={styles.profileCardLayout}>
           <Suspense fallback={<ProfileCardSkeleton />}>
             <ProfileCard />
           </Suspense>
+        </View>
+
+        <View style={styles.navigationButtonLayout}>
+          <Pressable
+            style={styles.navigationButton}
+            onPress={handleProfileManageButtonClick}
+          >
+            <Text style={styles.navigationButtonText}>계정 관리</Text>
+            <CaretRight />
+          </Pressable>
+
+          <Pressable
+            style={styles.navigationButton}
+            onPress={handleNoticeButtonClick}
+          >
+            <Text style={styles.navigationButtonText}>공지</Text>
+            <CaretRight />
+          </Pressable>
         </View>
 
         <View style={styles.sign}>

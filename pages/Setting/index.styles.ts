@@ -1,6 +1,9 @@
 // react
 import { StyleSheet } from "react-native";
 
+// constants
+import { color } from "@/constants";
+
 export const styles = StyleSheet.create({
   container: {
     width: "100%",
@@ -18,8 +21,27 @@ export const styles = StyleSheet.create({
     padding: 12,
   },
 
-  profile: {
+  profileCardLayout: {
     paddingHorizontal: 20,
+  },
+
+  navigationButtonLayout: {
+    width: "100%",
+    paddingTop: 27,
+  },
+
+  navigationButton: {
+    width: "100%",
+    paddingHorizontal: 18,
+    paddingVertical: 14,
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+
+  navigationButtonText: {
+    fontFamily: "Pretendard-Regular",
+    fontSize: 16,
+    color: color.g400,
   },
 
   sign: {
