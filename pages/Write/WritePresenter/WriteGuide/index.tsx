@@ -47,7 +47,6 @@ interface WriteGuideProps {
 }
 
 const WriteGuide = ({ setValue, getValues }: WriteGuideProps) => {
-  console.log("[Write Guide]");
   const { fireToast } = useToast();
 
   const dispatch = useDispatch();
@@ -129,7 +128,7 @@ const WriteGuide = ({ setValue, getValues }: WriteGuideProps) => {
 
         ) {
           if (interrupt.current) {
-            await reader.cancel();
+            await reader.cancel("사용자의 일기 생성 중지");
 
             break;
           }
