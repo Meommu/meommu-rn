@@ -7,7 +7,7 @@ import { SView } from "@/components/Layout/SView";
 // styles
 import { styles } from "./index.styles";
 
-export function ProfileSkeleton() {
+export function ProfileCardSkeleton() {
   return (
     <View style={styles.container}>
       <View style={styles.profileImage}>

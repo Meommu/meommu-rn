@@ -13,8 +13,8 @@ import { PATH } from "@/constants";
 // components
 import { GoBackButton } from "@/components/Button/GoBackButton";
 import { Header } from "@/components/Layout/Header";
-import { Profile } from "./Profile";
-import { ProfileSkeleton } from "./Profile/index.skeleton";
+import { ProfileCard } from "./ProfileCard";
+import { ProfileCardSkeleton } from "./ProfileCard/index.skeleton";
 
 // apis
 import axios from "axios";
@@ -94,8 +94,8 @@ export function SettingPage() {
         />
 
         <View style={styles.profile}>
-          <Suspense fallback={<ProfileSkeleton />}>
-            <Profile />
+          <Suspense fallback={<ProfileCardSkeleton />}>
+            <ProfileCard />
           </Suspense>
         </View>
 

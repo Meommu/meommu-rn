@@ -8,7 +8,7 @@ import { apiService } from "@/apis";
 // styles
 import { styles } from "./index.styles";
 
-export function Profile() {
+export function ProfileCard() {
   const { data } = useQuery(
     ["userInfo"],
     async () => {
