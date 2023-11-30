@@ -6,6 +6,8 @@ export const enum PATH {
   SIGN_IN = "sign-in",
   SIGN_UP = "sign-up",
   SETTING = "setting",
+  SETTING_PROFILE = "setting/profile",
+  SETTING_NOTICE = "setting/notice",
   WRITE = "write",
   NOT_FOUND = "404",
 }
