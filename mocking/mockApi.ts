@@ -23,6 +23,96 @@ export class MockApiService {
 
     const serverConfig: ServerConfig<AnyModels, AnyFactories> = {
       routes() {
+        this.patch("/api/v1/kindergartens/info", (schema, request) => {
+          const {
+            requestHeaders: { Authorization },
+            requestBody,
+          } = request;
+
+          /**
+           * TODO: body 내용이 올바르지 않을 경우 잘못된 요청 응답 반환 구현
+           */
+          const { name, ownerName, phone } = JSON.parse(requestBody);
+
+          if (!Authorization) {
+            return new Response(
+              httpStatus.UNAUTHORIZED,
+              {},
+              resBodyTemplate({
+                code: CODE.NO_AUTHORIZATION_HEADER,
+                message: "인증 헤더를 찾을 수 없음",
+              })
+            );
+          }
+
+          if (Authorization.split(" ")[1] !== "<ACCESS_TOKEN>") {
+            return new Response(
+              httpStatus.UNAUTHORIZED,
+              {},
+              resBodyTemplate({
+                code: CODE.INVALID_HEADER_FORMAT,
+                message: "인증 실패",
+                data: null,
+              })
+            );
+          }
+
+          schema.db.users.update({ id: 1 }, { name, ownerName, phone });
+
+          return new Response(
+            httpStatus.OK,
+            {},
+            resBodyTemplate({ code: CODE.OK, message: "정상" })
+          );
+        });
+
+        this.get("/api/v1/kindergartens/info", (schema, request) => {
+          const {
+            requestHeaders: { Authorization },
+          } = request;
+
+          if (!Authorization) {
+            return new Response(
+              httpStatus.UNAUTHORIZED,
+              {},
+              resBodyTemplate({
+                code: CODE.NO_AUTHORIZATION_HEADER,
+                message: "인증 헤더를 찾을 수 없음",
+              })
+            );
+          }
+
+          if (Authorization.split(" ")[1] !== "<ACCESS_TOKEN>") {
+            return new Response(
+              httpStatus.UNAUTHORIZED,
+              {},
+              resBodyTemplate({
+                code: CODE.INVALID_HEADER_FORMAT,
+                message: "인증 실패",
+                data: null,
+              })
+            );
+          }
+
+          const user = schema.db.users.findBy({ id: 1 });
+
+          return new Response(
+            httpStatus.OK,
+            {},
+            resBodyTemplate({
+              code: CODE.OK,
+              message: "정상",
+              data: {
+                id: user.id,
+                name: user.name,
+                ownerName: user.ownerName,
+                phone: user.phone,
+                email: user.email,
+              },
+            })
+          );
+        });
+
         this.put("/api/v1/diaries/:diaryId", (schema, request) => {
           const {
             params: { diaryId },
@@ -525,6 +615,8 @@ export class MockApiService {
           id: 1,
           name: "유치원이름",
           email: "meommu@exam.com",
+          ownerName: "김숙자",
+          phone: "010-1234-5678",
           password: "Password1!",
           createdAt: "2023-10-26T17:42:18.744742",
         },
