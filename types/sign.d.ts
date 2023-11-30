@@ -13,3 +13,8 @@ type SignInFormFieldValues = {
   id: string;
   password: string;
 };
+
+type ProfileFormFieldValues = Pick<
+  SignUpFormFieldValues,
+  "kindergartenName" | "kindergartenDirectorName" | "phoneNumber"
+>;
