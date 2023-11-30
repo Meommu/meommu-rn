@@ -13,23 +13,29 @@ import { regExp } from "@/constants";
 // styles
 import { styles } from "./index.styles";
 
-export function SignUpFormStepTwo() {
+interface SignUpFormStepTwo {
+  showGuideText?: boolean;
+}
+
+export function SignUpFormStepTwo({ showGuideText = true }: SignUpFormStepTwo) {
   const {
     control,
     formState: { errors },
-  } = useFormContext<SignUpFormFieldValues>();
+  } = useFormContext<ProfileFormFieldValues>();
 
   return (
     <View style={styles.container}>
-      <View style={styles.GuideText}>
-        <Text style={styles.GreetingText}>
-          이제 곧 끝나요!{"\n"}
-          유치원 정보를 입력해주세요
-        </Text>
-        <Text style={styles.IntroductionText}>
-          반려동물과의 건강한 추억을 기록해드리겠습니다.
-        </Text>
-      </View>
+      {showGuideText && (
+        <View style={styles.GuideText}>
+          <Text style={styles.GreetingText}>
+            이제 곧 끝나요!{"\n"}
+            유치원 정보를 입력해주세요
+          </Text>
+          <Text style={styles.IntroductionText}>
+            반려동물과의 건강한 추억을 기록해드리겠습니다.
+          </Text>
+        </View>
+      )}
 
       <NonIndicatorScrollView>
         <View style={styles.fieldLayout}>
