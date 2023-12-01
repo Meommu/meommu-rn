@@ -14,7 +14,7 @@ export default function Profile() {
         </View>
       }
     >
-      <ProfilePage />;
+      <ProfilePage />
     </Suspense>
   );
 }
