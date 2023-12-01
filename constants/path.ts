@@ -10,4 +10,5 @@ export const enum PATH {
   SETTING_NOTICE = "setting/notice",
   WRITE = "write",
   NOT_FOUND = "404",
+  RECOVERY = "recovery",
 }
