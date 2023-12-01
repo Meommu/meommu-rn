@@ -23,6 +23,30 @@ export class MockApiService {
 
     const serverConfig: ServerConfig<AnyModels, AnyFactories> = {
       routes() {
+        this.delete("/api/v1/kindergartens", (schema, request) => {
+          schema.db.users.remove({ id: 1 });
+
+          return new Response(
+            httpStatus.OK,
+            {},
+            resBodyTemplate({ code: CODE.OK, message: "정상" })
+          );
+        });
+
+        this.delete("/api/v1/diaries/:id", (schema, request) => {
+          const {
+            params: { id },
+          } = request;
+
+          schema.db.diaries.remove({ id });
+
+          return new Response(
+            httpStatus.OK,
+            {},
+            resBodyTemplate({ code: CODE.OK, message: "정상" })
+          );
+        });
+
         this.get("/api/v1/notices", (schema, request) => {
           return new Response(
             httpStatus.OK,
