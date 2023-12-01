@@ -18,6 +18,7 @@ import { ProfileCardSkeleton } from "./ProfileCard/index.skeleton";
 
 // apis
 import axios from "axios";
+import { apiService } from "@/apis";
 
 // styles
 import { styles } from "./index.styles";
@@ -64,9 +65,7 @@ export function SettingPage() {
 
             await AsyncStorage.removeItem("accessToken");
 
-            /**
-             * TODO: 회원탈퇴 api 구현
-             */
+            await apiService.resignUser();
 
             router.replace(PATH.HOME);
           },
