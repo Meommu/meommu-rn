@@ -97,55 +97,50 @@ export function SettingPage() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.content}>
-        <Header
-          title="설정"
-          style={styles.header}
-          left={<GoBackButton onPress={handleGoBackButtonClick} />}
-        />
+      <Header
+        title="설정"
+        style={styles.header}
+        left={<GoBackButton onPress={handleGoBackButtonClick} />}
+      />
 
-        <View style={styles.profileCardLayout}>
-          <Suspense fallback={<ProfileCardSkeleton />}>
-            <ProfileCard />
-          </Suspense>
-        </View>
+      <View style={styles.profileCardLayout}>
+        <Suspense fallback={<ProfileCardSkeleton />}>
+          <ProfileCard />
+        </Suspense>
+      </View>
 
-        <View style={styles.navigationButtonLayout}>
-          <Pressable
-            style={styles.navigationButton}
-            onPress={handleProfileManageButtonClick}
-          >
-            <Text style={styles.navigationButtonText}>계정 관리</Text>
-            <CaretRight />
-          </Pressable>
+      <View style={styles.navigationButtonLayout}>
+        <Pressable
+          style={styles.navigationButton}
+          onPress={handleProfileManageButtonClick}
+        >
+          <Text style={styles.navigationButtonText}>계정 관리</Text>
+          <CaretRight />
+        </Pressable>
 
-          <Pressable
-            style={styles.navigationButton}
-            onPress={handleNoticeButtonClick}
-          >
-            <Text style={styles.navigationButtonText}>공지</Text>
-            <CaretRight />
-          </Pressable>
-        </View>
+        <Pressable
+          style={styles.navigationButton}
+          onPress={handleNoticeButtonClick}
+        >
+          <Text style={styles.navigationButtonText}>공지</Text>
+          <CaretRight />
+        </Pressable>
+      </View>
 
-        <View style={styles.sign}>
-          <Pressable
-            style={styles.signButton}
-            onPress={handleLogoutButtonClick}
-            testID="button-logout"
-          >
-            <Text style={styles.signButtonText}>로그아웃</Text>
-          </Pressable>
+      <View style={styles.sign}>
+        <Pressable
+          style={styles.signButton}
+          onPress={handleLogoutButtonClick}
+          testID="button-logout"
+        >
+          <Text style={styles.signButtonText}>로그아웃</Text>
+        </Pressable>
 
-          <View style={styles.splitBar} />
+        <View style={styles.splitBar} />
 
-          <Pressable
-            style={styles.signButton}
-            onPress={handleResignButtonClick}
-          >
-            <Text style={styles.signButtonText}>회원 탈퇴</Text>
-          </Pressable>
-        </View>
+        <Pressable style={styles.signButton} onPress={handleResignButtonClick}>
+          <Text style={styles.signButtonText}>회원 탈퇴</Text>
+        </Pressable>
       </View>
     </View>
   );
