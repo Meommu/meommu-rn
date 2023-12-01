@@ -10,7 +10,7 @@ import { ImageSlider } from "@/components/Widget/ImageSlider";
 import { NonIndicatorScrollView } from "@/components/ScrollView/NonIndicatorScrollView";
 import { NavigationButton } from "@/components/Button/NavigationButton";
 import { OriginRatioImage } from "@/components/Image/OriginRatioImage";
-import { ResponsiveButtonSheetModal } from "@/components/Layout/ResponsiveBottomSheetModal";
+import { ResponsiveBottomSheetModal } from "@/components/Layout/ResponsiveBottomSheetModal";
 
 // styles
 import { styles } from "./index.styles";
@@ -32,8 +32,10 @@ interface DiaryPresenterProps {
   captureImageB64?: string | null;
   handleCloseModalButtonClick?: () => void;
 
-  bottomSheetIsOpen: boolean;
-  setBottomSheetIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  bottomSheetIsOpen: { value: boolean };
+  setBottomSheetIsOpen: React.Dispatch<
+    React.SetStateAction<{ value: boolean }>
+  >;
   handleDiaryEditButtonClick: () => void;
   handleDiaryDeleteButtonClick: () => void;
 }
@@ -138,7 +140,7 @@ export function DiaryPresenter({
           </View>
         )}
 
-        <ResponsiveButtonSheetModal
+        <ResponsiveBottomSheetModal
           isOpen={bottomSheetIsOpen}
           setIsOpen={setBottomSheetIsOpen}
         >
@@ -154,7 +156,7 @@ export function DiaryPresenter({
               onPress={handleDiaryDeleteButtonClick}
             />
           </View>
-        </ResponsiveButtonSheetModal>
+        </ResponsiveBottomSheetModal>
       </View>
     </BottomSheetModalProvider>
   );

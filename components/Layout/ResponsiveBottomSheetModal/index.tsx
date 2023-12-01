@@ -16,17 +16,21 @@ import {
 // style
 import { styles } from "./index.styles";
 
-interface ResponsiveButtonSheetModalProps {
-  isOpen: boolean;
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+interface ResponsiveBottomSheetModalProps {
+  /**
+   * isOpen 값이 원시값일 경우, useEffect가 값 변화를 감지하지 못하는 경우가 있어
+   * 객체 형태로 값을 관리하여 항상 useEffetc가 동작하도록 구현함.
+   */
+  isOpen: { value: boolean };
+  setIsOpen: React.Dispatch<React.SetStateAction<{ value: boolean }>>;
   children: React.ReactNode;
 }
 
-export function ResponsiveButtonSheetModal({
+export function ResponsiveBottomSheetModal({
   isOpen,
   setIsOpen,
   children,
-}: ResponsiveButtonSheetModalProps) {
+}: ResponsiveBottomSheetModalProps) {
   const bottomSheetRef = useRef<BottomSheetModal>(null);
 
   const initialSnapPoints = useMemo(() => ["CONTENT_HEIGHT"], []);
@@ -41,7 +45,7 @@ export function ResponsiveButtonSheetModal({
   const { responsiveWidthStyle } = useResponsiveMobileWidth();
 
   useEffect(() => {
-    if (isOpen) {
+    if (isOpen.value) {
       bottomSheetRef.current?.present();
     } else {
       bottomSheetRef.current?.dismiss();
@@ -50,7 +54,7 @@ export function ResponsiveButtonSheetModal({
 
   const handleBottomSheetIndexChange = useCallback(
     (index: number) => {
-      setIsOpen(index === -1 ? false : true);
+      setIsOpen({ value: index === -1 ? false : true });
     },
     [setIsOpen]
   );

@@ -11,7 +11,7 @@ import { changeSelectedYearMonth } from "@/store/modules/diaryDate";
 
 // components
 import { MonthCalendar } from "@/components/Widget/MonthCalendar";
-import { ResponsiveButtonSheetModal } from "@/components/Layout/ResponsiveBottomSheetModal";
+import { ResponsiveBottomSheetModal } from "@/components/Layout/ResponsiveBottomSheetModal";
 
 // svgs
 import ArrowDropDown from "@/assets/svgs/arrow-drop-down.svg";
@@ -29,7 +29,7 @@ import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { styles } from "./index.styles";
 
 export function MonthPicker() {
-  const [bottomSheetIsOpen, setBottomSheetIsOpen] = useState(false);
+  const [bottomSheetIsOpen, setBottomSheetIsOpen] = useState({ value: false });
   const [yearMonthToImageId, setYearMonthToImageId] = useState(new Map());
 
   /**
@@ -92,11 +92,11 @@ export function MonthPicker() {
   const handleDatePickButtonClick = (year: number, month: number) => () => {
     dispatch(changeSelectedYearMonth(year, month));
 
-    setBottomSheetIsOpen(false);
+    setBottomSheetIsOpen({ value: false });
   };
 
   const handleSheetOpen = useCallback(() => {
-    setBottomSheetIsOpen(true);
+    setBottomSheetIsOpen({ value: true });
   }, []);
 
   return (
@@ -114,7 +114,7 @@ export function MonthPicker() {
         </Pressable>
       </View>
 
-      <ResponsiveButtonSheetModal
+      <ResponsiveBottomSheetModal
         isOpen={bottomSheetIsOpen}
         setIsOpen={setBottomSheetIsOpen}
       >
@@ -124,7 +124,7 @@ export function MonthPicker() {
           yearMonthToImageId={yearMonthToImageId}
           handleDatePickButtonClick={handleDatePickButtonClick}
         />
-      </ResponsiveButtonSheetModal>
+      </ResponsiveBottomSheetModal>
     </BottomSheetModalProvider>
   );
 }

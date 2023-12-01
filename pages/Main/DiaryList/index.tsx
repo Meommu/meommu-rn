@@ -20,7 +20,7 @@ import { DiaryListPlaceholder } from "./DiaryListPlaceholder";
 import { DiaryItemSkeleton } from "./DiaryItem/index.skeleton";
 import { DiaryItem } from "./DiaryItem";
 import { NavigationButton } from "@/components/Button/NavigationButton";
-import { ResponsiveButtonSheetModal } from "@/components/Layout/ResponsiveBottomSheetModal";
+import { ResponsiveBottomSheetModal } from "@/components/Layout/ResponsiveBottomSheetModal";
 
 // hooks
 import { useConfirm } from "@/hooks";
@@ -33,7 +33,7 @@ import { styles } from "./index.styles";
 
 export function DiaryList() {
   const [menuPressedDiaryId, setMenuPressedDiaryId] = useState(-1);
-  const [bottomSheetIsOpen, setBottomSheetIsOpen] = useState(false);
+  const [bottomSheetIsOpen, setBottomSheetIsOpen] = useState({ value: false });
 
   const { selectedYear, selectedMonth } = useSelector<
     RootState,
@@ -59,7 +59,7 @@ export function DiaryList() {
    */
   const handleKebabMenuButtonClick = (diaryId: number) => () => {
     setMenuPressedDiaryId(diaryId);
-    setBottomSheetIsOpen(true);
+    setBottomSheetIsOpen({ value: true });
   };
 
   const handleDiaryEditButtonClick = () => {
@@ -67,7 +67,7 @@ export function DiaryList() {
   };
 
   const handleDiaryDeleteButtonClick = async () => {
-    setBottomSheetIsOpen(false);
+    setBottomSheetIsOpen({ value: false });
 
     openConfirm(
       "일기 삭제",
@@ -111,7 +111,7 @@ export function DiaryList() {
         )}
       </NonIndicatorScrollView>
 
-      <ResponsiveButtonSheetModal
+      <ResponsiveBottomSheetModal
         isOpen={bottomSheetIsOpen}
         setIsOpen={setBottomSheetIsOpen}
       >
@@ -127,7 +127,7 @@ export function DiaryList() {
             onPress={handleDiaryDeleteButtonClick}
           />
         </View>
-      </ResponsiveButtonSheetModal>
+      </ResponsiveBottomSheetModal>
     </BottomSheetModalProvider>
   );
 }

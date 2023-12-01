@@ -19,7 +19,7 @@ import { apiService } from "@/apis";
 import { useToast, useConfirm } from "@/hooks";
 
 export function DiaryContainer() {
-  const [bottomSheetIsOpen, setBottomSheetIsOpen] = useState(false);
+  const [bottomSheetIsOpen, setBottomSheetIsOpen] = useState({ value: false });
 
   const queryClient = useQueryClient();
 
@@ -77,7 +77,7 @@ export function DiaryContainer() {
   }, []);
 
   const handleEditButtonClick = useCallback(() => {
-    setBottomSheetIsOpen(true);
+    setBottomSheetIsOpen({ value: true });
   }, []);
 
   const handleShareButtonClick = useCallback(() => {
@@ -95,7 +95,7 @@ export function DiaryContainer() {
       return;
     }
 
-    setBottomSheetIsOpen(false);
+    setBottomSheetIsOpen({ value: false });
 
     openConfirm(
       "일기 삭제",
