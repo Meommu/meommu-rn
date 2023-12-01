@@ -105,22 +105,33 @@ export function ProfilePage() {
 
         <View
           style={{
-            backgroundColor: color.primary,
-            width: 90,
-            height: 90,
-            borderRadius: 36,
-            justifyContent: "center",
-            alignItems: "center",
+            width: "100%",
             marginTop: 21,
             marginBottom: 45,
-            marginHorizontal: "auto",
+            justifyContent: "center",
+            alignItems: "center",
           }}
         >
-          <Text
-            style={{ fontFamily: "yeonTheLand", fontSize: 26, color: color.w }}
+          <View
+            style={{
+              width: 90,
+              height: 90,
+              backgroundColor: color.primary,
+              borderRadius: 36,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
           >
-            me
-          </Text>
+            <Text
+              style={{
+                fontFamily: "yeonTheLand",
+                fontSize: 26,
+                color: color.w,
+              }}
+            >
+              me
+            </Text>
+          </View>
         </View>
 
         <SignUpFormStepTwo showGuideText={false} />
