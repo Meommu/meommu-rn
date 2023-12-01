@@ -75,17 +75,9 @@ export function ProfileForm() {
   );
 
   const handleProfileModifyButtonClick = useCallback(() => {
-    methods.handleSubmit(
-      (data) => {
-        updateProfileMutation.mutate(data);
-      },
-      () => {
-        /**
-         * TODO: toast 메세지 폼 에러 메세지로 변경
-         */
-        fireToast("폼 요소 충족 못함", 3000);
-      }
-    )();
+    methods.handleSubmit((data) => {
+      updateProfileMutation.mutate(data);
+    })();
   }, []);
 
   return (
