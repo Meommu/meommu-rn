@@ -85,6 +85,11 @@ export function QueryProvider({ children }: QueryProviderProps) {
         router.replace(PATH.NOT_FOUND);
 
         break;
+
+      case CODE.EMAIL_KINDERGARTEN_NOT_FOUND:
+        fireToast(store.dispatch, "해당 이메일이 존재하지 않습니다.", 3000);
+
+        break;
     }
   }, []);
 
