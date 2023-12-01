@@ -410,6 +410,9 @@ export function RecoveryPage() {
           backgroundColor={isNextButtonClickable() ? color.primary : color.g300}
           content="다음"
           onPress={handleNextButtonClick}
+          disabled={
+            !isNextButtonClickable() || recoveryEmailChkMutation.isLoading
+          }
         />
       </View>
     </View>
