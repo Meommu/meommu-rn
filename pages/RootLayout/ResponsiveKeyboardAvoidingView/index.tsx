@@ -1,4 +1,5 @@
 // react
+import React from "react";
 import {
   KeyboardAvoidingView,
   Keyboard,
@@ -7,18 +8,21 @@ import {
   View,
   StyleSheet,
 } from "react-native";
-import type { KeyboardAvoidingViewProps } from "react-native";
 
-interface KViewProps extends KeyboardAvoidingViewProps {}
+interface ResponsiveKeyboardAvoidingViewProps {
+  children: React.ReactNode;
+}
 
 /**
  * input이 내부에 존재하는 화면을 구현할 때 사용하는 뷰
  */
-export function KView({ children, ...props }: KViewProps) {
+export function ResponsiveKeyboardAvoidingView({
+  children,
+}: ResponsiveKeyboardAvoidingViewProps) {
   if (Platform.OS === "ios") {
     return (
-      <Pressable style={styles.container} onPress={Keyboard.dismiss}>
-        <KeyboardAvoidingView behavior="padding" {...props}>
+      <Pressable style={styles.fillScreen} onPress={Keyboard.dismiss}>
+        <KeyboardAvoidingView style={styles.fillScreen} behavior="padding">
           {children}
         </KeyboardAvoidingView>
       </Pressable>
@@ -27,17 +31,17 @@ export function KView({ children, ...props }: KViewProps) {
 
   if (Platform.OS === "android") {
     return (
-      <Pressable style={styles.container} onPress={Keyboard.dismiss}>
-        <View {...props}>{children}</View>
+      <Pressable style={styles.fillScreen} onPress={Keyboard.dismiss}>
+        {children}
       </Pressable>
     );
   }
 
-  return <View {...props}>{children}</View>;
+  return <View style={styles.fillScreen}>{children}</View>;
 }
 
 const styles = StyleSheet.create({
-  container: {
+  fillScreen: {
     width: "100%",
     height: "100%",
     ...Platform.select({

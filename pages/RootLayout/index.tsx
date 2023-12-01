@@ -1,4 +1,5 @@
 // react
+import { Platform } from "react-native";
 import React, { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -13,16 +14,16 @@ import { ResponsiveLayoutView } from "./ResponsiveLayoutView";
 import { Toast } from "@/components/Overlay/Toast";
 import { Confirm } from "@/components/Overlay/Confirm";
 import { GlobalErrorBoundary } from "./GlobalErrorBoundary";
+import { ResponsiveKeyboardAvoidingView } from "./ResponsiveKeyboardAvoidingView";
 
 // apis
 import axios from "axios";
 import { MockApiService } from "@/mocking/mockApi";
 
+// polyfills
 import { polyfill as polyfillReadableStream } from "react-native-polyfill-globals/src/readable-stream";
 import { polyfill as polyfillFetch } from "react-native-polyfill-globals/src/fetch";
 import { polyfill as polyfillEncoding } from "react-native-polyfill-globals/src/encoding";
-
-import { Platform } from "react-native";
 
 /**
  * rn이 아닌 웹 환경에서 polyfill를 실행 할 경우
@@ -73,16 +74,18 @@ export function RootLayout() {
       <QueryProvider>
         {fontsLoaded && ready && (
           <ResponsiveLayoutView>
-            <GlobalErrorBoundary>
-              <Stack
-                screenOptions={{
-                  headerShown: false,
-                }}
-              />
-            </GlobalErrorBoundary>
+            <ResponsiveKeyboardAvoidingView>
+              <GlobalErrorBoundary>
+                <Stack
+                  screenOptions={{
+                    headerShown: false,
+                  }}
+                />
+              </GlobalErrorBoundary>
 
-            <Toast />
-            <Confirm />
+              <Toast />
+              <Confirm />
+            </ResponsiveKeyboardAvoidingView>
           </ResponsiveLayoutView>
         )}
       </QueryProvider>

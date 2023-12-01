@@ -12,7 +12,6 @@ import { router } from "expo-router";
 import { NavigationButton } from "@/components/Button/NavigationButton";
 import { BannerImage } from "@/components/Image/BannerImage";
 import { FormInput } from "@/components/Input/FormInput";
-import { KView } from "@/components/Layout/KView";
 
 // constants
 import { PATH, regExp } from "@/constants";
@@ -86,7 +85,7 @@ export function HomePage() {
   }, []);
 
   return (
-    <KView style={styles.container}>
+    <View style={styles.container}>
       <View style={styles.contentView}>
         <View style={styles.titleView}>
           <Text style={styles.titleText}>meommu</Text>
@@ -171,6 +170,6 @@ export function HomePage() {
           testID="button-signin"
         />
       </View>
-    </KView>
+    </View>
   );
 }
