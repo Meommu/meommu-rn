@@ -193,11 +193,60 @@ export function RecoveryPage() {
     }
   }, [swiperIndex, formState]);
 
-  const handleGoBackButtonClick = useCallback(() => {}, [swiperIndex]);
+  const handleGoBackButtonClick = useCallback(() => {
+    switch (swiperIndex) {
+      case EMAIL_SLIDE:
+        if (router.canGoBack()) {
+          router.back();
+        } else {
+          router.replace(PATH.HOME);
+        }
 
-  const isNextButtonClickable = (): boolean => {
-    return true;
-  };
+        break;
+
+      default:
+        swiperRef.current?.goToPrev();
+
+        break;
+    }
+  }, [swiperIndex]);
+
+  const isNextButtonClickable = useCallback((): boolean => {
+    const { email, recoveryCode, password, passwordConfirm } = formState;
+
+    switch (swiperIndex) {
+      case EMAIL_SLIDE:
+        if (!email) {
+          return false;
+        }
+
+        return true;
+
+      case CODE_VERIFY_SLIDE:
+        if (!recoveryCode) {
+          return false;
+        }
+
+        return true;
+
+      case NEW_PASSWORD_SLIDE:
+        if (!password) {
+          return false;
+        }
+
+        return true;
+
+      case NEW_PASSWORD_CONFIRM_SLIDE:
+        if (!passwordConfirm) {
+          return false;
+        }
+
+        return true;
+
+      default:
+        return true;
+    }
+  }, [swiperIndex, formState]);
 
   return (
     <View style={styles.container}>
@@ -245,7 +294,11 @@ export function RecoveryPage() {
                   placeholderTextColor={color.g300}
                   style={styles.inputContent}
                   onBlur={onBlur}
-                  onChangeText={onChange}
+                  onChangeText={(text) => {
+                    setValue("recoveryCodeIsCorrect", false);
+
+                    onChange(text);
+                  }}
                   value={value}
                 />
               </View>
