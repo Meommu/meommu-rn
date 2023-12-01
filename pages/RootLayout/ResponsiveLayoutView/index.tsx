@@ -61,16 +61,8 @@ export function ResponsiveLayoutView({ children }: ResponsiveLayoutViewProps) {
 
   return (
     <View style={[styles.container, responsiveStyle]}>
-      <View
-        style={{
-          width: "100%",
-          height: "100%",
-          paddingTop: top,
-          backgroundColor: "white",
-        }}
-      >
-        {children}
-      </View>
+      <View style={{ width: "100%", height: top, backgroundColor: "white" }} />
+      {children}
     </View>
   );
 }
