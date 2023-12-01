@@ -84,6 +84,10 @@ export function HomePage() {
     router.push(PATH.SIGN_UP);
   }, []);
 
+  const handlePasswordRecoveryButtoncClick = useCallback(() => {
+    router.push(PATH.RECOVERY);
+  }, []);
+
   return (
     <View style={styles.container}>
       <View style={styles.contentView}>
@@ -146,13 +150,7 @@ export function HomePage() {
         />
 
         <View style={styles.navigationLayoutView}>
-          <Pressable>
-            <Text style={styles.navigationText}>아이디 찾기</Text>
-          </Pressable>
-
-          <View style={styles.splitBarView} />
-
-          <Pressable>
+          <Pressable onPress={handlePasswordRecoveryButtoncClick}>
             <Text style={styles.navigationText}>비밀번호 찾기</Text>
           </Pressable>
 
