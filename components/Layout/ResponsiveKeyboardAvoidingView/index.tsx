@@ -8,6 +8,7 @@ import {
   View,
   StyleSheet,
 } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 interface ResponsiveKeyboardAvoidingViewProps {
   children: React.ReactNode;
@@ -19,10 +20,16 @@ interface ResponsiveKeyboardAvoidingViewProps {
 export function ResponsiveKeyboardAvoidingView({
   children,
 }: ResponsiveKeyboardAvoidingViewProps) {
+  const { top } = useSafeAreaInsets();
+
   if (Platform.OS === "ios") {
     return (
       <Pressable style={styles.fillScreen} onPress={Keyboard.dismiss}>
-        <KeyboardAvoidingView style={styles.fillScreen} behavior="padding">
+        <KeyboardAvoidingView
+          style={styles.fillScreen}
+          behavior="padding"
+          keyboardVerticalOffset={top}
+        >
           {children}
         </KeyboardAvoidingView>
       </Pressable>
