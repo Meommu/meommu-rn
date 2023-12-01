@@ -23,6 +23,67 @@ export class MockApiService {
 
     const serverConfig: ServerConfig<AnyModels, AnyFactories> = {
       routes() {
+        this.post(
+          "/api/v1/kindergartens/email/verification-request",
+          (schema, request) => {
+            const {
+              queryParams: { email },
+            } = request;
+
+            const user = schema.db.users.findBy({ email });
+
+            if (!user) {
+              return new Response(
+                httpStatus.BAD_REQUEST,
+                {},
+                resBodyTemplate({ code: CODE.EMAIL_KINDERGARTEN_NOT_FOUND })
+              );
+            }
+
+            return new Response(
+              httpStatus.OK,
+              {},
+              resBodyTemplate({ code: CODE.OK, message: "정상" })
+            );
+          }
+        );
+
+        this.get(
+          "/api/v1/kindergartens/email/verification",
+          (schema, request) => {
+            const {
+              queryParams: { email, code },
+            } = request;
+
+            return new Response(
+              httpStatus.OK,
+              {},
+              resBodyTemplate({
+                code: CODE.OK,
+                message: "정상",
+                data: code === "123456",
+              })
+            );
+          }
+        );
+
+        this.patch("/api/v1/kindergartens/password", (schema, request) => {
+          const {
+            queryParams: { email },
+            requestBody,
+          } = request;
+
+          const { password, passwordConfirmation } = JSON.parse(requestBody);
+
+          schema.db.users.update({ email }, { password });
+
+          return new Response(
+            httpStatus.OK,
+            {},
+            resBodyTemplate({ code: CODE.OK, message: "정상" })
+          );
+        });
+
         this.delete("/api/v1/kindergartens", (schema, request) => {
           schema.db.users.remove({ id: 1 });
 
