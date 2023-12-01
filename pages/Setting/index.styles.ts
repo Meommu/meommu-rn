@@ -2,7 +2,7 @@
 import { StyleSheet } from "react-native";
 
 // constants
-import { color } from "@/constants";
+import { color, size } from "@/constants";
 
 export const styles = StyleSheet.create({
   container: {
@@ -39,12 +39,18 @@ export const styles = StyleSheet.create({
     color: color.g400,
   },
 
-  sign: {
-    width: "100%",
+  signLayout: {
     position: "absolute",
     bottom: 0,
-    flexDirection: "row",
+    width: "100%",
     padding: 20,
+  },
+
+  sign: {
+    width: "100%",
+    height: size.NAVIGATION_BUTTON_HEIGHT,
+    flexDirection: "row",
+    alignItems: "center",
   },
 
   signButton: {
@@ -61,5 +67,6 @@ export const styles = StyleSheet.create({
   splitBar: {
     borderWidth: 1,
     borderColor: "#ABB0BA",
+    height: 12,
   },
 });

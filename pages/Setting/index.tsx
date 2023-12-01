@@ -126,20 +126,25 @@ export function SettingPage() {
         </Pressable>
       </View>
 
-      <View style={styles.sign}>
-        <Pressable
-          style={styles.signButton}
-          onPress={handleLogoutButtonClick}
-          testID="button-logout"
-        >
-          <Text style={styles.signButtonText}>로그아웃</Text>
-        </Pressable>
+      <View style={styles.signLayout}>
+        <View style={styles.sign}>
+          <Pressable
+            style={styles.signButton}
+            onPress={handleLogoutButtonClick}
+            testID="button-logout"
+          >
+            <Text style={styles.signButtonText}>로그아웃</Text>
+          </Pressable>
 
-        <View style={styles.splitBar} />
+          <View style={styles.splitBar} />
 
-        <Pressable style={styles.signButton} onPress={handleResignButtonClick}>
-          <Text style={styles.signButtonText}>회원 탈퇴</Text>
-        </Pressable>
+          <Pressable
+            style={styles.signButton}
+            onPress={handleResignButtonClick}
+          >
+            <Text style={styles.signButtonText}>회원 탈퇴</Text>
+          </Pressable>
+        </View>
       </View>
     </View>
   );
