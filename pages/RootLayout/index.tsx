@@ -14,7 +14,6 @@ import { ResponsiveLayoutView } from "./ResponsiveLayoutView";
 import { Toast } from "@/components/Overlay/Toast";
 import { Confirm } from "@/components/Overlay/Confirm";
 import { GlobalErrorBoundary } from "./GlobalErrorBoundary";
-import { ResponsiveKeyboardAvoidingView } from "./ResponsiveKeyboardAvoidingView";
 
 // apis
 import axios from "axios";
@@ -74,18 +73,16 @@ export function RootLayout() {
       <QueryProvider>
         {fontsLoaded && ready && (
           <ResponsiveLayoutView>
-            <ResponsiveKeyboardAvoidingView>
-              <GlobalErrorBoundary>
-                <Stack
-                  screenOptions={{
-                    headerShown: false,
-                  }}
-                />
-              </GlobalErrorBoundary>
+            <GlobalErrorBoundary>
+              <Stack
+                screenOptions={{
+                  headerShown: false,
+                }}
+              />
+            </GlobalErrorBoundary>
 
-              <Toast />
-              <Confirm />
-            </ResponsiveKeyboardAvoidingView>
+            <Toast />
+            <Confirm />
           </ResponsiveLayoutView>
         )}
       </QueryProvider>

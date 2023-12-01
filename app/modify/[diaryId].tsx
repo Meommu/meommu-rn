@@ -1,5 +1,6 @@
 // components
 import { ModifyPage } from "@/pages/Write";
+import { ResponsiveKeyboardAvoidingView } from "@/components/Layout/ResponsiveKeyboardAvoidingView";
 
 // hooks
 import { usePreventTabScrolling } from "@/hooks";
@@ -7,5 +8,9 @@ import { usePreventTabScrolling } from "@/hooks";
 export default function Modify() {
   usePreventTabScrolling();
 
-  return <ModifyPage />;
+  return (
+    <ResponsiveKeyboardAvoidingView>
+      <ModifyPage />
+    </ResponsiveKeyboardAvoidingView>
+  );
 }
