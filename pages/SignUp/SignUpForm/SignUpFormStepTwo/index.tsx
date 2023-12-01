@@ -13,11 +13,13 @@ import { regExp } from "@/constants";
 // styles
 import { styles } from "./index.styles";
 
-interface SignUpFormStepTwo {
+interface SignUpFormStepTwoProps {
   showGuideText?: boolean;
 }
 
-export function SignUpFormStepTwo({ showGuideText = true }: SignUpFormStepTwo) {
+export function SignUpFormStepTwo({
+  showGuideText = true,
+}: SignUpFormStepTwoProps) {
   const {
     control,
     formState: { errors },
