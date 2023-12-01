@@ -15,6 +15,11 @@ export const enum CODE {
   "BAD_EMAIL" = "K002",
 
   /**
+   *
+   */
+  "EMAIL_KINDERGARTEN_NOT_FOUND" = "K009",
+
+  /**
    * 잘못된 요청일 경우 코드
    */
   "BAD_REQUEST" = "C400",
