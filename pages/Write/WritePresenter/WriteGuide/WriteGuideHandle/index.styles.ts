@@ -13,24 +13,26 @@ export const styles = StyleSheet.create({
     alignItems: "center",
   },
 
-  stopButtonLayout: {
+  stopButton: {
+    width: 140,
+
     position: "absolute",
     top: -(14 + 40),
-    width: "100%",
-    alignItems: "center",
-    pointerEvents: "none",
-  },
 
-  stopButton: {
-    pointerEvents: "auto",
+    marginHorizontal: "auto",
     paddingVertical: 10,
-    paddingHorizontal: 20,
+
     backgroundColor: "white",
+
     borderRadius: 6,
     borderColor: "#D0D0D0",
     borderWidth: 2,
-    flexDirection: "row",
+
     gap: 7,
+
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
   },
 
   stopButtonText: {

@@ -23,15 +23,13 @@ function WriteGuideHandle({
   return (
     <View style={styles.container}>
       {isGptDiaryMutationLoading && !isGptDirayMutationSuccess && (
-        <View style={styles.stopButtonLayout}>
-          <Pressable
-            onPress={handleGptDiaryStopButtonClick}
-            style={styles.stopButton}
-          >
-            <Stop />
-            <Text style={styles.stopButtonText}>생성 멈추기</Text>
-          </Pressable>
-        </View>
+        <Pressable
+          onPress={handleGptDiaryStopButtonClick}
+          style={styles.stopButton}
+        >
+          <Stop />
+          <Text style={styles.stopButtonText}>생성 멈추기</Text>
+        </Pressable>
       )}
 
       <View style={styles.grabber} />
