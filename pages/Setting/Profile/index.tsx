@@ -25,7 +25,7 @@ export function ProfilePage() {
   });
 
   const { data: user } = useQuery(
-    [],
+    ["userInfo"],
     async () => {
       const {
         data: { data },
@@ -62,6 +62,7 @@ export function ProfilePage() {
       onSuccess: () => {
         fireToast("수정이 완료되었습니다.", 3000);
 
+        queryClient.invalidateQueries("loginInfo");
         queryClient.invalidateQueries("userInfo");
       },
     }

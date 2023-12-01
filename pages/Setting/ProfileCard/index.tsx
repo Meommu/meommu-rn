@@ -10,7 +10,7 @@ import { styles } from "./index.styles";
 
 export function ProfileCard() {
   const { data } = useQuery(
-    ["userInfo"],
+    ["loginInfo"],
     async () => {
       return await apiService.getLoginInfo();
     },
