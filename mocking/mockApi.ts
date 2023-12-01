@@ -23,6 +23,34 @@ export class MockApiService {
 
     const serverConfig: ServerConfig<AnyModels, AnyFactories> = {
       routes() {
+        this.get("/api/v1/notices", (schema, request) => {
+          return new Response(
+            httpStatus.OK,
+            {},
+            resBodyTemplate({
+              code: CODE.OK,
+              message: "정상",
+              data: {
+                notices: [
+                  {
+                    id: 2,
+                    title: "공지 2 제목",
+                    content:
+                      "안녕하세요, 네이버웍스입니다.\n네이버웍스 V3.8 정기 업데이트가\n2023년 11월 21일(화)에 진행됩니다.\n■ 업데이트 일정: 2023년 11월 21일(목) 오전 중 작업 시간 중에도 네이버웍스 서비스를 이용할 수 있으나 서비스 접속이 일시적으로 불안정할 수 있으며, 앱 노출 시간은 앱 스토어 사정에 따라 상이할 수 있습니다. ■ 배포 대상 ① NAVER WORKSWindows 버전/macOS 버전/Android/iOS 버전",
+                    createdAt: "2023-11-30T14:45:32.43085",
+                  },
+                  {
+                    id: 1,
+                    title: "공지 1 제목",
+                    content: "공지 1 내용",
+                    createdAt: "2023-11-29T14:45:32.430834",
+                  },
+                ],
+              },
+            })
+          );
+        });
+
         this.patch("/api/v1/kindergartens/info", (schema, request) => {
           const {
             requestHeaders: { Authorization },
