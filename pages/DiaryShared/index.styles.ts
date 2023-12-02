@@ -1,6 +1,9 @@
 // react
 import { StyleSheet } from "react-native";
 
+// constants
+import { color } from "@/constants";
+
 export const styles = StyleSheet.create({
   container: {
     width: "100%",
@@ -35,7 +38,7 @@ export const styles = StyleSheet.create({
   },
 
   bodyTitle: {
-    color: "#626154",
+    color: color.g900,
     fontSize: 26,
     fontFamily: "yeonTheLand",
   },
