@@ -2,14 +2,13 @@
 import { StyleSheet } from "react-native";
 
 // constants
-import { size } from "@/constants";
+import { color, font } from "@/constants";
 
 export const styles = StyleSheet.create({
   container: {
     width: "100%",
     height: "100%",
-    paddingBottom: size.NAVIGATION_BUTTON_HEIGHT + 40,
-    backgroundColor: "#F5F6F8",
+    backgroundColor: color.w,
   },
 
   /**
@@ -85,23 +84,27 @@ export const styles = StyleSheet.create({
   },
 
   writeFormTitleInput: {
-    fontSize: 20,
     paddingBottom: 7,
+
+    color: color.g500,
+    borderColor: color.g200,
   },
 
   writeFormContentInputWrapper: {
-    padding: 20,
     width: "100%",
     height: "100%",
     flexShrink: 1,
+
+    padding: 20,
   },
 
   writeFormContentInput: {
     width: "100%",
     height: "100%",
+
     fontSize: 16,
-    fontFamily: "yeonTheLand",
+    fontFamily: font.YeonTheLand,
+    color: color.g500,
     textAlign: "center",
-    color: "#606077",
   },
 });

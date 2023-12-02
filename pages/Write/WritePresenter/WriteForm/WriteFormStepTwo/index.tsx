@@ -18,7 +18,7 @@ import { UnderlineInput } from "@/components/Input/UnderlineInput";
 import { b64ToBlob } from "@/utils";
 
 // constants
-import { IMAGE_CATEGORY } from "@/constants";
+import { IMAGE_CATEGORY, color } from "@/constants";
 
 // apis
 import { apiService } from "@/apis";
@@ -206,6 +206,7 @@ export function WriteFormStepTwo() {
                   style={styles.writeFormTitleInput}
                   maxLength={20}
                   placeholder="글 제목 (0/20)"
+                  placeholderTextColor={color.g300}
                   onBlur={onBlur}
                   onChangeText={onChange}
                   value={value}
@@ -234,6 +235,7 @@ export function WriteFormStepTwo() {
                   placeholder={`${getValues(
                     "dogName"
                   )}의 일기를 작성해주세요. (0/1000)`}
+                  placeholderTextColor={color.g300}
                   onBlur={onBlur}
                   onChangeText={onChange}
                   value={value}

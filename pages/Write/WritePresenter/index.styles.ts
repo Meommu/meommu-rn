@@ -1,18 +1,26 @@
 // react
 import { StyleSheet } from "react-native";
 
+// constants
+import { color, font } from "@/constants";
+
 export const styles = StyleSheet.create({
   container: {
     width: "100%",
     height: "100%",
-    backgroundColor: "white",
-    position: "relative",
+    backgroundColor: color.w,
   },
 
+  /**
+   * 헤더
+   */
   header: {
     padding: 12,
   },
 
+  /**
+   * 글 작성 완료 버튼
+   */
   completeButton: {
     width: 40,
     height: 40,
@@ -21,16 +29,16 @@ export const styles = StyleSheet.create({
   },
 
   completeButtonText: {
-    color: "#828282",
-    fontFamily: "Pretendard-SemiBold",
+    color: color.g400,
+    fontFamily: font.PretendardSemiBold,
     fontSize: 16,
   },
 
+  /**
+   * 하단 버튼
+   */
   bottomButtonWrapper: {
-    position: "absolute",
-    left: 0,
-    right: 0,
-    bottom: 0,
     padding: 20,
+    paddingTop: 0,
   },
 });
