@@ -1,5 +1,5 @@
-import { SharedDiaryPage } from "@/pages/Diary";
+import { DiarySharedPage } from "@/pages/DiaryShared";
 
 export default function SharedDiary() {
-  return <SharedDiaryPage />;
+  return <DiarySharedPage />;
 }

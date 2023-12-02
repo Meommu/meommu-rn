@@ -12,27 +12,14 @@ import { size } from "@/constants";
 // styles
 import { styles } from "./index.styles";
 
-interface DiaryPresenterSkeletonProps {
-  isShared?: boolean;
-}
-
-export function DiaryPresenterSkeleton({
-  isShared = false,
-}: DiaryPresenterSkeletonProps) {
+export function DiarySkeleton() {
   return (
     <View style={styles.container}>
-      {!isShared ? (
-        <Header
-          style={styles.header}
-          left={<SView style={{ width: 24, height: 24, margin: 8 }} />}
-          right={<SView style={{ width: 24, height: 24, margin: 8 }} />}
-        />
-      ) : (
-        <Header
-          style={[styles.header, { height: 64 }]}
-          title={<SView style={[styles.header, { width: 100, height: 30 }]} />}
-        />
-      )}
+      <Header
+        style={styles.header}
+        left={<SView style={{ width: 24, height: 24, margin: 8 }} />}
+        right={<SView style={{ width: 24, height: 24, margin: 8 }} />}
+      />
 
       <NonIndicatorScrollView>
         <View style={styles.captureArea}>
