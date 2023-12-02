@@ -9,6 +9,9 @@ export const styles = StyleSheet.create({
     position: "relative",
   },
 
+  /**
+   * 헤더
+   */
   header: {
     padding: 12,
   },
@@ -18,6 +21,9 @@ export const styles = StyleSheet.create({
     fontFamily: "yeonTheLand",
   },
 
+  /**
+   * 본문
+   */
   captureArea: {
     backgroundColor: "white",
   },
@@ -47,7 +53,35 @@ export const styles = StyleSheet.create({
     fontFamily: "Pretendard-Regular",
   },
 
+  /**
+   * 하단 버튼
+   */
   bottomButtonWrapper: {
     padding: 20,
+  },
+
+  /**
+   * 캡처된 화면 모달
+   */
+  modal: {
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    padding: 15,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  modalDimmed: {
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    backgroundColor: "rgba(0, 0, 0, 0.7)",
+  },
+
+  modalClosebutton: {
+    position: "absolute",
+    top: 15,
+    right: 15,
   },
 });

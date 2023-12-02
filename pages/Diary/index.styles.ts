@@ -9,15 +9,16 @@ export const styles = StyleSheet.create({
     position: "relative",
   },
 
+  /**
+   * 헤더
+   */
   header: {
     padding: 12,
   },
 
-  headerTitle: {
-    fontSize: 30,
-    fontFamily: "yeonTheLand",
-  },
-
+  /**
+   * 본문
+   */
   body: {
     paddingHorizontal: 20,
     paddingVertical: 33,
@@ -43,10 +44,16 @@ export const styles = StyleSheet.create({
     fontFamily: "Pretendard-Regular",
   },
 
+  /**
+   * 하단 버튼
+   */
   bottomButtonWrapper: {
     padding: 20,
   },
 
+  /**
+   * 바텀 시트
+   */
   bottomSheetContent: {
     paddingHorizontal: 20,
     paddingBottom: 20,

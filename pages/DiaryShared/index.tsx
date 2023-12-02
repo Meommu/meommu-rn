@@ -115,23 +115,9 @@ function DiaryShared() {
       </NonIndicatorScrollView>
 
       {captureImageB64 !== null && (
-        <View
-          style={{
-            position: "absolute",
-            width: "100%",
-            height: "100%",
-            padding: 15,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
+        <View style={styles.modal}>
           <Pressable
-            style={{
-              position: "absolute",
-              width: "100%",
-              height: "100%",
-              backgroundColor: "rgba(0, 0, 0, 0.7)",
-            }}
+            style={styles.modalDimmed}
             onPress={handleCloseModalButtonClick}
           />
           <OriginRatioImage
@@ -140,7 +126,7 @@ function DiaryShared() {
             expansion="height"
           />
           <Pressable
-            style={{ position: "absolute", top: 15, right: 15 }}
+            style={styles.modalClosebutton}
             onPress={handleCloseModalButtonClick}
           >
             <XBig />
