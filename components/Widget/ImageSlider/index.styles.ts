@@ -1,6 +1,9 @@
 // react
 import { StyleSheet } from "react-native";
 
+// constants
+import { color, font } from "@/constants";
+
 export const styles = StyleSheet.create({
   container: {
     width: "100%",
@@ -12,15 +15,16 @@ export const styles = StyleSheet.create({
     position: "absolute",
     bottom: 10,
     right: 10,
-    backgroundColor: "rgba(13, 61, 70, 0.8)",
+    backgroundColor: color.bg400,
     borderRadius: 400,
     paddingVertical: 3,
     paddingHorizontal: 11,
   },
 
   orderText: {
+    color: color.w,
     fontSize: 14,
-    color: "white",
-    fontFamily: "Pretendard-Regular",
+    fontFamily: font.PretendardRegular,
+    letterSpacing: 1.4,
   },
 });
