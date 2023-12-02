@@ -1,5 +1,5 @@
 // react
-import { Platform, Share, View, Text } from "react-native";
+import { Platform, Share, View, Text, Pressable } from "react-native";
 import { useCallback, useState, Suspense } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 
@@ -27,6 +27,9 @@ import { useToast, useConfirm } from "@/hooks";
 
 // bottom sheets
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
+
+// svgs
+import ShareButton from "@/assets/svgs/share.svg";
 
 // styles
 import { styles } from "./index.styles";
@@ -150,8 +153,16 @@ function Diary() {
           />
 
           <View style={styles.body}>
-            <Text style={styles.bodyTitle}>{diary.title}</Text>
+            <View style={styles.bodyTitleLayout}>
+              <Text style={styles.bodyTitle}>{diary.title}</Text>
+
+              <Pressable onPress={handleShareButtonClick}>
+                <ShareButton />
+              </Pressable>
+            </View>
+
             <Text style={styles.bodyContent}>{diary.content}</Text>
+
             <Text style={styles.bodyDate}>
               {diary.date.replaceAll("-", ".")} {diary.dogName} 일기
             </Text>

@@ -28,7 +28,14 @@ export const styles = StyleSheet.create({
     gap: 16,
   },
 
+  bodyTitleLayout: {
+    flexDirection: "row",
+    gap: 20,
+  },
+
   bodyTitle: {
+    width: "100%",
+    flexShrink: 1,
     color: color.g900,
     fontSize: 26,
     fontFamily: "yeonTheLand",
