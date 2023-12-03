@@ -5,29 +5,35 @@ import { StyleSheet } from "react-native";
 import { color, font, size } from "@/constants";
 
 export const styles = StyleSheet.create({
-  bottomSheetFooter: {
+  container: {
     width: "100%",
-    paddingVertical: 20,
-    paddingHorizontal: 26,
-
-    backgroundColor: color.bg500,
-
-    gap: 16,
   },
 
-  bottomSheetFooterTitle: {
+  header: {
+    width: "100%",
+    height: 37,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  headerText: {
     fontSize: 14,
     fontFamily: font.PretendardRegular,
     color: color.bg300,
     textAlign: "center",
   },
 
-  bottomSheetFooterButtonWrapper: {
+  footer: {
     flexDirection: "row",
     gap: 12,
+
+    paddingTop: 0,
+    paddingHorizontal: 26,
+
+    backgroundColor: color.bg500,
   },
 
-  bottomSheetFooterPrevButton: {
+  prevButton: {
     width: "100%",
     height: size.NAVIGATION_BUTTON_HEIGHT,
     flexShrink: 1,
@@ -39,7 +45,7 @@ export const styles = StyleSheet.create({
     borderRadius: 6,
   },
 
-  bottomSheetFooterPrevButtonText: {
+  prevButtonText: {
     color: color.g300,
     fontSize: 16,
     fontFamily: font.PretendardSemiBold,

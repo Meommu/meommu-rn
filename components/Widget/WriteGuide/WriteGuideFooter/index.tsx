@@ -1,14 +1,28 @@
+// react
 import React from "react";
 import { View, Text, Pressable } from "react-native";
-import { BottomSheetMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
 import Swiper from "react-native-web-swiper";
+import Animated, { useDerivedValue } from "react-native-reanimated";
+
+// expo
+import { LinearGradient } from "expo-linear-gradient";
+
+// bottom sheet
+import { BottomSheetMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
 import { BottomSheetFooterProps } from "@gorhom/bottom-sheet";
-import Animated from "react-native-reanimated";
-import { size } from "@/constants";
-import { useDerivedValue } from "react-native-reanimated";
 import { BottomSheetFooter } from "@gorhom/bottom-sheet";
+
+// constants
+import { color, size } from "@/constants";
+
+// styles
 import { styles } from "./index.styles";
+
+// components
 import { NavigationButton } from "@/components/Button/NavigationButton";
+import { Footer } from "@/components/Layout/Footer";
+
+// hooks
 import { useToast } from "@/hooks";
 
 interface WriteGuideFooterProps {
@@ -265,18 +279,23 @@ function WriteGuideFooter({
 
   return (
     <BottomSheetFooter bottomInset={0} animatedFooterPosition={footerPosition}>
-      <View style={styles.bottomSheetFooter}>
-        <Text style={styles.bottomSheetFooterTitle}>{footerTitle}</Text>
-        <View style={styles.bottomSheetFooterButtonWrapper}>
-          <Pressable
-            style={styles.bottomSheetFooterPrevButton}
-            onPress={handlePrevButtonClick}
-          >
-            <Text style={styles.bottomSheetFooterPrevButtonText}>이전</Text>
+      <View style={styles.container}>
+        <LinearGradient
+          style={styles.header}
+          colors={[color.bg500, "transparent"]}
+          start={{ x: 0, y: 1 }}
+          end={{ x: 0, y: 0 }}
+        >
+          <Text style={styles.headerText}>{footerTitle}</Text>
+        </LinearGradient>
+
+        <Footer style={styles.footer}>
+          <Pressable style={styles.prevButton} onPress={handlePrevButtonClick}>
+            <Text style={styles.prevButtonText}>이전</Text>
           </Pressable>
 
           <NavigationButton content="다음" onPress={handleNextButtonClick} />
-        </View>
+        </Footer>
       </View>
     </BottomSheetFooter>
   );
