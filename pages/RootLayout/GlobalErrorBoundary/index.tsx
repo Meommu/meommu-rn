@@ -1,10 +1,20 @@
 // react
-import React from "react";
-import { View, Text } from "react-native";
+import React, { useCallback } from "react";
+import { View, Text, Image } from "react-native";
 import { ErrorBoundary } from "react-error-boundary";
-import { NavigationButton } from "@/components/Button/NavigationButton";
+
+// expo
 import { router } from "expo-router";
+
+// components
+import { NavigationButton } from "@/components/Button/NavigationButton";
+import { Footer } from "@/components/Layout/Footer";
+
+// constants
 import { PATH } from "@/constants";
+
+// styles
+import { styles } from "./index.styles";
 
 interface GlobalErrorBoundaryProps {
   children: React.ReactNode;
@@ -19,15 +29,26 @@ export function GlobalErrorBoundary({ children }: GlobalErrorBoundaryProps) {
 }
 
 function ErrorBoundaryFallBack() {
+  const handleGoHomeButtonClick = useCallback(() => {
+    router.replace(PATH.ROOT);
+  }, []);
+
   return (
-    <View>
-      <Text>오류 발생</Text>
-      <NavigationButton
-        onPress={() => {
-          router.replace(PATH.ROOT);
-        }}
-        content="홈으로"
-      />
+    <View style={styles.container}>
+      <View style={styles.content}>
+        <View style={styles.guideLayout}>
+          <Text style={styles.guideTitleText}>ERROR</Text>
+          <Text style={styles.guideContentText}>
+            예상치 못한 에러가 발생했습니다.
+          </Text>
+        </View>
+
+        <Image source={require("@/assets/images/404/not-found.png")} />
+      </View>
+
+      <Footer>
+        <NavigationButton onPress={handleGoHomeButtonClick} content="홈으로" />
+      </Footer>
     </View>
   );
 }
