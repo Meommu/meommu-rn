@@ -10,13 +10,10 @@ import { GoBackButton } from "@/components/Button/GoBackButton";
 import { WriteFormStepOne } from "@/pages/Write/WritePresenter/WriteForm/WriteFormStepOne";
 import { WriteFormStepTwo } from "@/pages/Write/WritePresenter/WriteForm/WriteFormStepTwo";
 import { NavigationButton } from "@/components/Button/NavigationButton";
-
-// constants
-import { color } from "@/constants";
+import { MemoizedWriteGuide } from "@/components/Widget/WriteGuide";
 
 // styles
 import { styles } from "./index.styles";
-import { MemoizedWriteGuide } from "./WriteGuide";
 
 interface WritePresenterProps {
   swiperRef: MutableRefObject<Swiper | null>;
