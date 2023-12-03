@@ -102,24 +102,24 @@ export function SignUpFormStepOne() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.GuideText}>
-        <Text style={styles.GreetingText}>
-          안녕하세요,{"\n"}
+      <View style={styles.greeting}>
+        <Text style={styles.greetingTitle}>
+          안녕하세요 선생님,{"\n"}
           멈무유치원에 오신걸 환영합니다!
         </Text>
-        <Text style={styles.IntroductionText}>
+        <Text style={styles.greetingSubTitle}>
           반려동물과의 건강한 추억을 기록해드리겠습니다.
         </Text>
       </View>
 
       <NonIndicatorScrollView>
-        <View style={styles.fieldLayout}>
+        <View style={styles.formLayout}>
           {/**
            * 이메일
            */}
-          <View style={styles.fieldView}>
-            <View style={styles.fieldTextLayoutView}>
-              <Text style={styles.fieldGuideText}>
+          <View style={styles.formField}>
+            <View style={styles.formFieldGuideLayout}>
+              <Text style={styles.formFieldGuideText}>
                 이메일 주소를 입력해주세요
               </Text>
 
@@ -128,7 +128,7 @@ export function SignUpFormStepOne() {
               </AlertText>
             </View>
 
-            <View style={styles.emailFieldControllerLayoutView}>
+            <View style={styles.emailFormFieldLayout}>
               <Controller
                 name="email"
                 control={control}
@@ -166,9 +166,11 @@ export function SignUpFormStepOne() {
           {/**
            * 패스워드
            */}
-          <View style={styles.fieldView}>
-            <View style={styles.fieldTextLayoutView}>
-              <Text style={styles.fieldGuideText}>비밀번호를 입력해주세요</Text>
+          <View style={styles.formField}>
+            <View style={styles.formFieldGuideLayout}>
+              <Text style={styles.formFieldGuideText}>
+                비밀번호를 입력해주세요
+              </Text>
 
               <AlertText condition={!errors.password ? true : false}>
                 {(errors.password && errors.password.message) || ""}
@@ -197,16 +199,18 @@ export function SignUpFormStepOne() {
               )}
             />
 
-            <Text style={styles.fieldIntroText}>
+            <Text style={styles.formFieldGuideDetailText}>
               *영문 대/소문자, 숫자, 기호(!@#$%^~*+=-) 사용하여 8~20 글자 사이의
               비밀번호를 사용하세요. 숫자와 특수기호가 한 글자 이상
               포함되어야합니다.
             </Text>
           </View>
 
-          <View style={styles.fieldView}>
-            <View style={styles.fieldTextLayoutView}>
-              <Text style={styles.fieldGuideText}>비밀번호를 확인해주세요</Text>
+          <View style={styles.formField}>
+            <View style={styles.formFieldGuideLayout}>
+              <Text style={styles.formFieldGuideText}>
+                비밀번호를 확인해주세요
+              </Text>
 
               <AlertText condition={!errors.passwordConfirm ? true : false}>
                 {!errors.password
@@ -241,19 +245,18 @@ export function SignUpFormStepOne() {
           {/**
            * 약관동의
            */}
-          <View style={styles.agreementFieldControllerLayoutView}>
+          <View style={styles.agreementFormFieldLayout}>
             <CheckBoxButton
               isCheck={agreement}
               onPress={handleAgreementButtonClick}
               testID="button-agreement"
             />
 
-            <View style={styles.agreementFieldControllerTextLayoutView}>
-              <Text style={styles.fieldGuideText}>
-                서비스 이용 및 개인정보 수집약관에 동의합니다.
-              </Text>
-              <CaretRight />
-            </View>
+            <Text style={styles.agreementFormFieldText}>
+              서비스 이용 및 개인정보 수집약관에 동의합니다.
+            </Text>
+
+            <CaretRight />
           </View>
         </View>
       </NonIndicatorScrollView>

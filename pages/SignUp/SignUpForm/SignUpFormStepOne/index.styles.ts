@@ -1,74 +1,89 @@
 // react
 import { StyleSheet } from "react-native";
 
+// constants
+import { color, font } from "@/constants";
+
 export const styles = StyleSheet.create({
   container: {
     width: "100%",
     height: "100%",
   },
 
-  GuideText: {
+  /**
+   * 인삿말
+   */
+  greeting: {
     gap: 10,
     paddingHorizontal: 20,
     paddingTop: 30,
     paddingBottom: 60,
   },
 
-  GreetingText: {
+  greetingTitle: {
     fontSize: 25,
-    fontFamily: "Pretendard-SemiBold",
+    fontFamily: font.PretendardSemiBold,
+    color: color.g800,
   },
 
-  IntroductionText: {
+  greetingSubTitle: {
     fontSize: 14,
-    fontFamily: "Pretendard-SemiBold",
-    color: "#B7B7CB",
+    fontFamily: font.PretendardSemiBold,
+    color: color.g400,
   },
 
-  fieldLayout: {
-    gap: 18,
-    paddingHorizontal: 20,
+  /**
+   * 폼 요소
+   */
+  formLayout: {
     width: "100%",
+    gap: 18,
+
+    paddingHorizontal: 20,
   },
 
-  fieldView: {
+  formField: {
     gap: 12,
   },
 
-  fieldTextLayoutView: {
+  formFieldGuideLayout: {
     flexDirection: "row",
     justifyContent: "space-between",
     gap: 12,
   },
 
-  fieldGuideText: {
+  formFieldGuideText: {
     fontSize: 14,
-    fontFamily: "Pretendard-SemiBold",
+    fontFamily: font.PretendardSemiBold,
+    color: color.g800,
   },
 
-  fieldIntroText: {
+  formFieldGuideDetailText: {
     fontSize: 10,
-    fontFamily: "Pretendard-SemiBold",
-    color: "#B7B7CB",
-    paddingHorizontal: 10,
+    fontFamily: font.PretendardSemiBold,
+    color: color.g400,
   },
 
-  emailFieldControllerLayoutView: {
+  emailFormFieldLayout: {
     flexDirection: "row",
     gap: 15,
   },
 
-  agreementFieldControllerLayoutView: {
+  agreementFormFieldLayout: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "space-between",
+
     gap: 9,
   },
 
-  agreementFieldControllerTextLayoutView: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+  agreementFormFieldText: {
     width: "100%",
     flexGrow: 1,
     flexShrink: 1,
+
+    color: color.g700,
+    fontSize: 14,
+    fontFamily: font.PretendardSemiBold,
   },
 });
