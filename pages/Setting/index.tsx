@@ -15,6 +15,7 @@ import { GoBackButton } from "@/components/Button/GoBackButton";
 import { Header } from "@/components/Layout/Header";
 import { ProfileCard } from "./ProfileCard";
 import { ProfileCardSkeleton } from "./ProfileCard/index.skeleton";
+import { TransparentButton } from "@/components/Button/TransparentButton";
 
 // apis
 import axios from "axios";
@@ -102,49 +103,45 @@ export function SettingPage() {
         left={<GoBackButton onPress={handleGoBackButtonClick} />}
       />
 
-      <View style={styles.profileCardLayout}>
-        <Suspense fallback={<ProfileCardSkeleton />}>
-          <ProfileCard />
-        </Suspense>
-      </View>
+      <View style={styles.content}>
+        <View style={styles.profileCardLayout}>
+          <Suspense fallback={<ProfileCardSkeleton />}>
+            <ProfileCard />
+          </Suspense>
+        </View>
 
-      <View style={styles.navigationButtonLayout}>
-        <Pressable
-          style={styles.navigationButton}
-          onPress={handleProfileManageButtonClick}
-        >
-          <Text style={styles.navigationButtonText}>계정 관리</Text>
-          <CaretRight />
-        </Pressable>
+        <View style={styles.navigationButtonLayout}>
+          <Pressable
+            style={styles.navigationButton}
+            onPress={handleProfileManageButtonClick}
+          >
+            <Text style={styles.navigationButtonText}>계정 관리</Text>
+            <CaretRight />
+          </Pressable>
 
-        <Pressable
-          style={styles.navigationButton}
-          onPress={handleNoticeButtonClick}
-        >
-          <Text style={styles.navigationButtonText}>공지</Text>
-          <CaretRight />
-        </Pressable>
+          <Pressable
+            style={styles.navigationButton}
+            onPress={handleNoticeButtonClick}
+          >
+            <Text style={styles.navigationButtonText}>공지</Text>
+            <CaretRight />
+          </Pressable>
+        </View>
       </View>
 
       <View style={styles.signLayout}>
-        <View style={styles.sign}>
-          <Pressable
-            style={styles.signButton}
-            onPress={handleLogoutButtonClick}
-            testID="button-logout"
-          >
-            <Text style={styles.signButtonText}>로그아웃</Text>
-          </Pressable>
+        <TransparentButton
+          content="로그아웃"
+          onPress={handleLogoutButtonClick}
+          testID="button-logout"
+        />
 
-          <View style={styles.splitBar} />
+        <View style={styles.splitBar} />
 
-          <Pressable
-            style={styles.signButton}
-            onPress={handleResignButtonClick}
-          >
-            <Text style={styles.signButtonText}>회원 탈퇴</Text>
-          </Pressable>
-        </View>
+        <TransparentButton
+          content="회원 탈퇴"
+          onPress={handleResignButtonClick}
+        />
       </View>
     </View>
   );

@@ -2,18 +2,26 @@
 import { StyleSheet } from "react-native";
 
 // constants
-import { color, size } from "@/constants";
+import { color, font } from "@/constants";
 
 export const styles = StyleSheet.create({
   container: {
     width: "100%",
     height: "100%",
-    backgroundColor: "white",
+
     position: "relative",
+
+    backgroundColor: color.w,
   },
 
   header: {
     padding: 12,
+  },
+
+  content: {
+    width: "100%",
+    height: "100%",
+    flexShrink: 1,
   },
 
   profileCardLayout: {
@@ -34,39 +42,22 @@ export const styles = StyleSheet.create({
   },
 
   navigationButtonText: {
-    fontFamily: "Pretendard-Regular",
+    fontFamily: font.PretendardRegular,
     fontSize: 16,
     color: color.g400,
   },
 
   signLayout: {
-    position: "absolute",
-    bottom: 0,
     width: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+
     padding: 20,
   },
 
-  sign: {
-    width: "100%",
-    height: size.NAVIGATION_BUTTON_HEIGHT,
-    flexDirection: "row",
-    alignItems: "center",
-  },
-
-  signButton: {
-    width: "50%",
-  },
-
-  signButtonText: {
-    color: "#ABB0BA",
-    fontSize: 14,
-    fontFamily: "Pretendard-Regular",
-    textAlign: "center",
-  },
-
   splitBar: {
-    borderWidth: 1,
-    borderColor: "#ABB0BA",
+    borderLeftWidth: 1,
+    borderColor: color.g300,
     height: 12,
   },
 });
