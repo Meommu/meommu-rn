@@ -266,13 +266,13 @@ export function RecoveryPage() {
         }}
       >
         <View style={styles.slideLayout}>
-          <Text style={styles.guideText}>
-            비밀번호를 찾고자하는{"\n"}이메일을 입력해주세요
-          </Text>
-
           <BannerImage
             source={require("@/assets/images/recovery/recovery.png")}
           />
+
+          <Text style={styles.guideText}>
+            비밀번호를 찾고자하는{"\n"}이메일을 입력해주세요
+          </Text>
 
           <Controller
             name="email"
@@ -410,7 +410,11 @@ export function RecoveryPage() {
           content="다음"
           onPress={handleNextButtonClick}
           disabled={!isNextButtonClickable()}
-          isLoading={recoveryEmailChkMutation.isLoading}
+          isLoading={
+            recoveryEmailChkMutation.isLoading ||
+            recoveryCodeChkMutation.isLoading ||
+            recoveryPasswordMutation.isLoading
+          }
         />
       </View>
     </View>
