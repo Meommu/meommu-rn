@@ -22,16 +22,19 @@ export function DiarySkeleton() {
       />
 
       <NonIndicatorScrollView>
-        <View style={styles.captureArea}>
-          <SView
-            style={{ width: "100%", aspectRatio: "3/4", borderRadius: 0 }}
-          />
+        <SView style={{ width: "100%", aspectRatio: "3/4", borderRadius: 0 }} />
 
-          <View style={styles.body}>
-            <SView style={{ width: "50%", height: 32 }} />
-            <SView style={{ width: "40%", height: 22 }} />
-            <SView style={{ width: "100%", height: 300 }} />
+        <View style={styles.body}>
+          <View style={styles.bodyTitleLayout}>
+            <View style={styles.bodyTitle}>
+              <SView style={{ width: "70%", height: 32 }} />
+            </View>
+
+            <SView style={{ width: 32, height: 32 }} />
           </View>
+
+          <SView style={{ width: "40%", height: 22 }} />
+          <SView style={{ width: "100%", height: 300 }} />
         </View>
 
         <View style={styles.bottomButtonWrapper}>
