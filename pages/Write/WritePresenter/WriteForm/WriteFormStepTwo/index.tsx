@@ -4,7 +4,7 @@ import { useFormContext, Controller } from "react-hook-form";
 
 // components
 import { UnderlineInput } from "@/components/Input/UnderlineInput";
-import { UploadImagePicker } from "@/components/Widget/UploadImagePicker";
+import { UploadImagePicker } from "@/pages/Write/UploadImagePicker";
 
 // constants
 import { color } from "@/constants";

@@ -10,7 +10,7 @@ import { GoBackButton } from "@/components/Button/GoBackButton";
 import { WriteFormStepOne } from "@/pages/Write/WritePresenter/WriteForm/WriteFormStepOne";
 import { WriteFormStepTwo } from "@/pages/Write/WritePresenter/WriteForm/WriteFormStepTwo";
 import { NavigationButton } from "@/components/Button/NavigationButton";
-import { MemoizedWriteGuide } from "@/components/Widget/WriteGuide";
+import { MemoizedWriteGuide } from "@/pages/Write/WriteGuide";
 import { Footer } from "@/components/Layout/Footer";
 
 // styles

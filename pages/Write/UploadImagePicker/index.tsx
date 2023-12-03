@@ -28,9 +28,6 @@ import { styles } from "./index.styles";
 interface ImagePickerProps {
   imageIds: number[];
 
-  /**
-   * TODO: DiaryWriteForm에 종속되어 있는 문제 해결
-   */
   setValue: UseFormSetValue<DiaryWriteFormFieldValues>;
 }
 
