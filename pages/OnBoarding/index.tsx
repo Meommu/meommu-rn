@@ -9,6 +9,7 @@ import { router } from "expo-router";
 // components
 import { NavigationButton } from "@/components/Button/NavigationButton";
 import { BannerImage } from "@/components/Image/BannerImage";
+import { Header } from "@/components/Layout/Header";
 
 // constants
 import { PATH, color } from "@/constants";
@@ -49,6 +50,8 @@ export function OnBoardingPage() {
 
   return (
     <View style={styles.container}>
+      <Header left={<View style={styles.dummyHeaderLayout} />} />
+
       <Swiper
         ref={swiperRef}
         containerStyle={styles.swiper}

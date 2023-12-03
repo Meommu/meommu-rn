@@ -12,6 +12,13 @@ export const styles = StyleSheet.create({
   },
 
   /**
+   * header
+   */
+  dummyHeaderLayout: {
+    height: 44,
+  },
+
+  /**
    * swiper
    */
   swiper: {
@@ -31,7 +38,7 @@ export const styles = StyleSheet.create({
     fontFamily: font.PretendardSemiBold,
 
     paddingHorizontal: 20,
-    paddingTop: 52,
+    paddingTop: 20,
   },
 
   dotContainer: {
