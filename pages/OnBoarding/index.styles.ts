@@ -1,13 +1,19 @@
 // react
 import { StyleSheet } from "react-native";
 
+// constants
+import { color, font } from "@/constants";
+
 export const styles = StyleSheet.create({
   container: {
     width: "100%",
     height: "100%",
-    backgroundColor: "white",
+    backgroundColor: color.w,
   },
 
+  /**
+   * swiper
+   */
   swiper: {
     /**
      * ※ width 값을 고정시키면 슬라이더가 동작하지 않음
@@ -18,26 +24,21 @@ export const styles = StyleSheet.create({
   slideLayout: {
     width: "100%",
     height: "100%",
-    position: "relative",
-    justifyContent: "center",
-    alignContent: "center",
   },
 
   guideText: {
     fontSize: 25,
-    fontFamily: "Pretendard-SemiBold",
-    position: "absolute",
-    left: 20,
-    top: 64,
-    zIndex: 1,
+    fontFamily: font.PretendardSemiBold,
+
+    paddingHorizontal: 20,
+    paddingTop: 52,
   },
 
-  buttonView: {
-    width: "100%",
-    padding: 20,
+  dotContainer: {
+    margin: 0,
   },
 
-  dotStyle: {
+  dot: {
     marginLeft: 3.75,
     marginRight: 3.75,
     width: 6,
@@ -47,5 +48,14 @@ export const styles = StyleSheet.create({
      * minWidth 속성 default(8)값을 제거해주기 위함
      */
     minWidth: 0,
+  },
+
+  /**
+   * bottom button
+   */
+  buttonView: {
+    width: "100%",
+    padding: 20,
+    paddingTop: 6,
   },
 });
