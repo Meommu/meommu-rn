@@ -34,6 +34,7 @@ import ShareButton from "@/assets/svgs/share.svg";
 
 // styles
 import { styles } from "./index.styles";
+import { Footer } from "@/components/Layout/Footer";
 
 function Diary() {
   const { diaryId } = useLocalSearchParams<{ diaryId: string }>();
@@ -169,26 +170,29 @@ function Diary() {
             </Text>
           </View>
 
-          <View style={styles.bottomButtonWrapper}>
+          <Footer>
             <NavigationButton
               content="보내기"
               onPress={handleShareButtonClick}
             />
-          </View>
+          </Footer>
         </NonIndicatorScrollView>
 
         <ResponsiveBottomSheetModal
           isOpen={bottomSheetIsOpen}
           setIsOpen={setBottomSheetIsOpen}
         >
-          <View style={styles.bottomSheetContent}>
+          <Footer style={styles.bottomSheetContent}>
             <NavigationButton
               content="일기 수정하기"
               onPress={handleDiaryEditButtonClick}
             />
 
-            <TransparentButton content="일기 삭제하기" />
-          </View>
+            <TransparentButton
+              content="일기 삭제하기"
+              onPress={handleDiaryDeleteButtonClick}
+            />
+          </Footer>
         </ResponsiveBottomSheetModal>
       </View>
     </BottomSheetModalProvider>
