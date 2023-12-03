@@ -38,9 +38,4 @@ export const styles = StyleSheet.create({
     fontFamily: font.PretendardSemiBold,
     textAlign: "center",
   },
-
-  bottomButtonLayout: {
-    width: "100%",
-    padding: 20,
-  },
 });

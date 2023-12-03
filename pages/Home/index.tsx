@@ -12,6 +12,7 @@ import { router } from "expo-router";
 import { NavigationButton } from "@/components/Button/NavigationButton";
 import { BannerImage } from "@/components/Image/BannerImage";
 import { FormInput } from "@/components/Input/FormInput";
+import { Footer } from "@/components/Layout/Footer";
 
 // constants
 import { PATH, regExp } from "@/constants";
@@ -86,80 +87,89 @@ export function HomePage() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.contentView}>
-        <View style={styles.titleView}>
-          <Text style={styles.titleText}>meommu</Text>
-          <Text style={styles.subTitleText}>
-            간단하게 기록해요,{"\n"}우리 강아지 다이어리 꾸미기
-          </Text>
-        </View>
-      </View>
-
       <BannerImage source={require("@/assets/images/home/home.png")} />
 
-      <View style={styles.signInFormView}>
-        <Controller
-          name="id"
-          control={control}
-          rules={{
-            required: {
-              value: true,
-              message: "이메일이 입력되지 않았습니다.",
-            },
-            pattern: {
-              value: regExp.email,
-              message: "이메일 형식이 올바르지 않습니다.",
-            },
-          }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <FormInput
-              placeholder="아이디 (이메일)"
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-              testID="input-signin-email"
-            />
-          )}
-        />
-        <Controller
-          name="password"
-          control={control}
-          rules={{
-            required: {
-              value: true,
-              message: "패스워드가 입력되지 않았습니다.",
-            },
-          }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <FormInput
-              placeholder="비밀번호"
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-              secureTextEntry={true}
-              testID="input-signin-password"
-            />
-          )}
-        />
+      <View style={styles.brandContainer}>
+        <Text style={styles.logo}>meommu</Text>
+        <Text style={styles.caption}>
+          간단하게 기록해요,{"\n"}우리 강아지 다이어리 꾸미기
+        </Text>
+      </View>
 
-        <View style={styles.navigationLayoutView}>
-          <Pressable onPress={handlePasswordRecoveryButtoncClick}>
-            <Text style={styles.navigationText}>비밀번호 찾기</Text>
+      <View>
+        <View style={styles.signInForm}>
+          <Controller
+            name="id"
+            control={control}
+            rules={{
+              required: {
+                value: true,
+                message: "이메일이 입력되지 않았습니다.",
+              },
+              pattern: {
+                value: regExp.email,
+                message: "이메일 형식이 올바르지 않습니다.",
+              },
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <FormInput
+                placeholder="아이디 (이메일)"
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+                testID="input-signin-email"
+              />
+            )}
+          />
+          <Controller
+            name="password"
+            control={control}
+            rules={{
+              required: {
+                value: true,
+                message: "패스워드가 입력되지 않았습니다.",
+              },
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <FormInput
+                placeholder="비밀번호"
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+                secureTextEntry={true}
+                testID="input-signin-password"
+              />
+            )}
+          />
+        </View>
+
+        <View style={styles.navigationLayout}>
+          <Pressable
+            style={styles.navigationButton}
+            onPress={handlePasswordRecoveryButtoncClick}
+          >
+            <Text style={styles.navigationButtonText}>비밀번호 찾기</Text>
           </Pressable>
 
-          <View style={styles.splitBarView} />
+          <View style={styles.splitBar} />
 
-          <Pressable onPress={handleSignUpButtonClick} testID="button-signup">
-            <Text style={styles.navigationText}>회원가입</Text>
+          <Pressable
+            style={styles.navigationButton}
+            onPress={handleSignUpButtonClick}
+            testID="button-signup"
+          >
+            <Text style={styles.navigationButtonText}>회원가입</Text>
           </Pressable>
         </View>
 
-        <NavigationButton
-          content="로그인"
-          onPress={handleSignInButtonClick}
-          isLoading={signinMutation.isLoading}
-          testID="button-signin"
-        />
+        <Footer style={styles.bottomButton}>
+          <NavigationButton
+            content="로그인"
+            onPress={handleSignInButtonClick}
+            isLoading={signinMutation.isLoading}
+            testID="button-signin"
+          />
+        </Footer>
       </View>
     </View>
   );

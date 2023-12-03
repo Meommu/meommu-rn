@@ -56,13 +56,4 @@ export const styles = StyleSheet.create({
      */
     minWidth: 0,
   },
-
-  /**
-   * bottom button
-   */
-  buttonView: {
-    width: "100%",
-    padding: 20,
-    paddingTop: 6,
-  },
 });

@@ -28,6 +28,7 @@ import { styles } from "./index.styles";
 
 // apis
 import { apiService } from "@/apis";
+import { Footer } from "@/components/Layout/Footer";
 
 const FIRST_SLIDE_INDEX = 0;
 const SECOND_SLIDE_INDEX = 1;
@@ -191,7 +192,7 @@ export function SignUpPage() {
           <SignUpFormStepThree />
         </Swiper>
 
-        <View style={styles.navigationView}>
+        <Footer>
           <NavigationButton
             content={isLastSlide() ? "시작하기" : "다음"}
             onPress={handleNextButtonClick}
@@ -199,7 +200,7 @@ export function SignUpPage() {
             isLoading={signUpMutation.isLoading}
             testID="button-next-step-of-signup"
           />
-        </View>
+        </Footer>
 
         <SwiperIndexForTest swiperIndex={swiperIndex} />
       </View>

@@ -57,13 +57,6 @@ export const styles = StyleSheet.create({
   },
 
   /**
-   * 하단 버튼
-   */
-  bottomButtonWrapper: {
-    padding: 20,
-  },
-
-  /**
    * 캡처된 화면 모달
    */
   modal: {

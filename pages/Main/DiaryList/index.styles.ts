@@ -1,22 +1,27 @@
 // react
 import { StyleSheet } from "react-native";
 
+// constants
+import { font, color } from "@/constants";
+
 export const styles = StyleSheet.create({
   container: {
     padding: 20,
   },
 
   listCountText: {
-    textAlign: "center",
     paddingTop: 10,
     paddingBottom: 60,
+
+    color: color.g300,
     fontSize: 14,
-    color: "#7D8899",
-    fontFamily: "Pretendard-SemiBold",
+    fontFamily: font.PretendardSemiBold,
+    textAlign: "center",
   },
 
   bottomSheetContent: {
     paddingHorizontal: 20,
     paddingBottom: 20,
+    gap: 6,
   },
 });

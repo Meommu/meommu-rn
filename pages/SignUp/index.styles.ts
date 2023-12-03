@@ -14,8 +14,4 @@ export const styles = StyleSheet.create({
   header: {
     padding: 12,
   },
-
-  navigationView: {
-    padding: 20,
-  },
 });

@@ -22,6 +22,7 @@ import { DiaryItem } from "./DiaryItem";
 import { NavigationButton } from "@/components/Button/NavigationButton";
 import { TransparentButton } from "@/components/Button/TransparentButton";
 import { ResponsiveBottomSheetModal } from "@/components/Layout/ResponsiveBottomSheetModal";
+import { Footer } from "@/components/Layout/Footer";
 
 // hooks
 import { useConfirm } from "@/hooks";
@@ -116,7 +117,7 @@ export function DiaryList() {
         isOpen={bottomSheetIsOpen}
         setIsOpen={setBottomSheetIsOpen}
       >
-        <View style={styles.bottomSheetContent}>
+        <Footer style={styles.bottomSheetContent}>
           <NavigationButton
             content="일기 수정하기"
             onPress={handleDiaryEditButtonClick}
@@ -126,7 +127,7 @@ export function DiaryList() {
             content="일기 삭제하기"
             onPress={handleDiaryDeleteButtonClick}
           />
-        </View>
+        </Footer>
       </ResponsiveBottomSheetModal>
     </BottomSheetModalProvider>
   );

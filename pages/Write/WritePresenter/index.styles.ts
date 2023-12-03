@@ -33,12 +33,4 @@ export const styles = StyleSheet.create({
     fontFamily: font.PretendardSemiBold,
     fontSize: 16,
   },
-
-  /**
-   * 하단 버튼
-   */
-  bottomButtonWrapper: {
-    padding: 20,
-    paddingTop: 0,
-  },
 });

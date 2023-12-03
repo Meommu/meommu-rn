@@ -11,6 +11,7 @@ import { WriteFormStepOne } from "@/pages/Write/WritePresenter/WriteForm/WriteFo
 import { WriteFormStepTwo } from "@/pages/Write/WritePresenter/WriteForm/WriteFormStepTwo";
 import { NavigationButton } from "@/components/Button/NavigationButton";
 import { MemoizedWriteGuide } from "@/components/Widget/WriteGuide";
+import { Footer } from "@/components/Layout/Footer";
 
 // styles
 import { styles } from "./index.styles";
@@ -94,13 +95,13 @@ export function WritePresenter({
         <WriteFormStepTwo />
       </Swiper>
 
-      <View style={styles.bottomButtonWrapper}>
+      <Footer>
         <NavigationButton
           content={isStepOneSlide() ? "다음" : "멈무일기 가이드"}
           onPress={handleBottomButtonClick}
           disabled={!isBottomButtonActive()}
         />
-      </View>
+      </Footer>
 
       <MemoizedWriteGuide setValue={setValue} getValues={getValues} />
     </View>

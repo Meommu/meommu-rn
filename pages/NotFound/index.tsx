@@ -7,6 +7,7 @@ import { router } from "expo-router";
 
 // components
 import { NavigationButton } from "@/components/Button/NavigationButton";
+import { Footer } from "@/components/Layout/Footer";
 
 // constants
 import { PATH } from "@/constants";
@@ -33,9 +34,9 @@ export function NotFound() {
         <Image source={require("@/assets/images/404/not-found.png")} />
       </View>
 
-      <View style={styles.bottomButtonLayout}>
+      <Footer>
         <NavigationButton content="홈으로" onPress={handleGoHomeButtonClick} />
-      </View>
+      </Footer>
     </View>
   );
 }

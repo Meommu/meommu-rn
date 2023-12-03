@@ -4,11 +4,15 @@ import { View, Text, TextInput } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import { useMutation } from "react-query";
 
+// expo
+import { router } from "expo-router";
+
 // components
 import { NavigationButton } from "@/components/Button/NavigationButton";
 import { Header } from "@/components/Layout/Header";
 import { BannerImage } from "@/components/Image/BannerImage";
 import { GoBackButton } from "@/components/Button/GoBackButton";
+import { Footer } from "@/components/Layout/Footer";
 
 // swiper
 import Swiper from "react-native-web-swiper";
@@ -24,7 +28,6 @@ import axios from "axios";
 
 // styles
 import { styles } from "./index.styles";
-import { router } from "expo-router";
 
 const EMAIL_SLIDE = 0;
 const CODE_VERIFY_SLIDE = 1;
@@ -405,7 +408,7 @@ export function RecoveryPage() {
         </View>
       </Swiper>
 
-      <View style={styles.footerLayout}>
+      <Footer>
         <NavigationButton
           content="다음"
           onPress={handleNextButtonClick}
@@ -416,7 +419,7 @@ export function RecoveryPage() {
             recoveryPasswordMutation.isLoading
           }
         />
-      </View>
+      </Footer>
     </View>
   );
 }

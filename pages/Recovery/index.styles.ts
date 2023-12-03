@@ -44,6 +44,7 @@ export const styles = StyleSheet.create({
   input: {
     width: "100%",
     paddingHorizontal: 20,
+    paddingBottom: 10,
   },
 
   inputContent: {
@@ -61,13 +62,5 @@ export const styles = StyleSheet.create({
     color: color.g800,
     fontFamily: font.PretendardSemiBold,
     fontSize: 16,
-  },
-
-  /**
-   * footer
-   */
-  footerLayout: {
-    gap: 20,
-    padding: 20,
   },
 });

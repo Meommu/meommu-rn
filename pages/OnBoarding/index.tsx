@@ -10,6 +10,7 @@ import { router } from "expo-router";
 import { NavigationButton } from "@/components/Button/NavigationButton";
 import { BannerImage } from "@/components/Image/BannerImage";
 import { Header } from "@/components/Layout/Header";
+import { Footer } from "@/components/Layout/Footer";
 
 // constants
 import { PATH, color } from "@/constants";
@@ -102,12 +103,12 @@ export function OnBoardingPage() {
         </View>
       </Swiper>
 
-      <View style={styles.buttonView}>
+      <Footer>
         <NavigationButton
           content={swiperIndex === LAST_SLIDE_INDEX ? "시작하기" : "다음"}
           onPress={handleNextButtonClick}
         />
-      </View>
+      </Footer>
     </View>
   );
 }

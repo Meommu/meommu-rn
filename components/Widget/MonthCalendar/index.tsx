@@ -12,6 +12,7 @@ import { MonthCalendarItem } from "./MonthCalendarItem";
 import { Header } from "@/components/Layout/Header";
 import { NavigationButton } from "@/components/Button/NavigationButton";
 import { MonthCalendarProvider } from "./index.context";
+import { Footer } from "@/components/Layout/Footer";
 
 // utils
 import { getPastYearDate } from "@/utils";
@@ -150,13 +151,13 @@ export function MonthCalendar({
         </Swiper>
       </MonthCalendarProvider>
 
-      <View style={styles.chooseMonthButton}>
+      <Footer>
         <NavigationButton
           content="확인"
           onPress={handleDatePickButtonClick(currentYear, currentMonth)}
           testID="button-month-calendar-apply-button"
         />
-      </View>
+      </Footer>
     </View>
   );
 }

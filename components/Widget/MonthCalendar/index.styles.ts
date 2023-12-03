@@ -27,8 +27,4 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-
-  chooseMonthButton: {
-    padding: 20,
-  },
 });

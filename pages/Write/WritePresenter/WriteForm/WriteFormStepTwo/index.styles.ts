@@ -40,6 +40,7 @@ export const styles = StyleSheet.create({
     flexShrink: 1,
 
     padding: 20,
+    paddingBottom: 10,
   },
 
   writeFormContentInput: {

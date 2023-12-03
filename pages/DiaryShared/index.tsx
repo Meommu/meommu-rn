@@ -11,6 +11,7 @@ import { ImageSlider } from "@/components/Widget/ImageSlider";
 import { NavigationButton } from "@/components/Button/NavigationButton";
 import { OriginRatioImage } from "@/components/Image/OriginRatioImage";
 import { DiarySharedSkeleton } from "./index.skeleton";
+import { Footer } from "@/components/Layout/Footer";
 
 // apis
 import { apiService, baseURL } from "@/apis";
@@ -106,12 +107,12 @@ function DiaryShared() {
           </View>
         </View>
 
-        <View style={styles.bottomButtonWrapper}>
+        <Footer>
           <NavigationButton
             content="저장하기"
             onPress={handleShareButtonClick}
           />
-        </View>
+        </Footer>
       </NonIndicatorScrollView>
 
       {captureImageB64 !== null && (

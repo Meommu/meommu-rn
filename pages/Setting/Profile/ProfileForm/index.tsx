@@ -1,5 +1,4 @@
 // react
-import { View } from "react-native";
 import { useEffect, useCallback } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { FormProvider, useForm } from "react-hook-form";
@@ -7,9 +6,7 @@ import { FormProvider, useForm } from "react-hook-form";
 // components
 import { SignUpFormStepTwo } from "@/pages/SignUp/SignUpForm/SignUpFormStepTwo";
 import { NavigationButton } from "@/components/Button/NavigationButton";
-
-// styles
-import { styles } from "./index.styles";
+import { Footer } from "@/components/Layout/Footer";
 
 // hooks
 import { useToast } from "@/hooks";
@@ -84,12 +81,12 @@ export function ProfileForm() {
     <FormProvider {...methods}>
       <SignUpFormStepTwo showGuideText={false} />
 
-      <View style={styles.bottomButtonLayout}>
+      <Footer>
         <NavigationButton
           content="수정하기"
           onPress={handleProfileModifyButtonClick}
         />
-      </View>
+      </Footer>
     </FormProvider>
   );
 }
