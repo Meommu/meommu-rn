@@ -1,6 +1,9 @@
 // react
 import { StyleSheet } from "react-native";
 
+// constants
+import { color, font } from "@/constants";
+
 export const styles = StyleSheet.create({
   container: {
     width: "100%",
@@ -10,25 +13,25 @@ export const styles = StyleSheet.create({
     alignItems: "center",
   },
 
-  GuideText: {
+  /**
+   * 인삿말
+   */
+  greeting: {
     gap: 10,
     paddingHorizontal: 20,
     paddingTop: 30,
     paddingBottom: 60,
-
-    position: "absolute",
-    top: 0,
-    left: 0,
   },
 
-  GreetingText: {
+  greetingTitle: {
     fontSize: 25,
-    fontFamily: "Pretendard-SemiBold",
+    fontFamily: font.PretendardSemiBold,
+    color: color.g800,
   },
 
-  IntroductionText: {
+  greetingSubTitle: {
     fontSize: 14,
-    fontFamily: "Pretendard-SemiBold",
-    color: "#B7B7CB",
+    fontFamily: font.PretendardSemiBold,
+    color: color.g400,
   },
 });
