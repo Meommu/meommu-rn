@@ -30,7 +30,7 @@ export const styles = StyleSheet.create({
 
   bodyTitleLayout: {
     flexDirection: "row",
-    gap: 20,
+    gap: 26,
   },
 
   bodyTitle: {
