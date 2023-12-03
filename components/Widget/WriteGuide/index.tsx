@@ -41,6 +41,9 @@ import * as _ from "lodash";
 import { sleep } from "@/utils";
 
 interface WriteGuideProps {
+  /**
+   * TODO: DiaryWriteForm에 종속되어 있는 문제 해결
+   */
   setValue: UseFormSetValue<DiaryWriteFormFieldValues>;
 
   getValues: UseFormGetValues<DiaryWriteFormFieldValues>;
