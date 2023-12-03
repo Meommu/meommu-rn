@@ -30,15 +30,11 @@ switch (process.env.EXPO_PUBLIC_MODE) {
     axios.interceptors.request.use((config) => {
       const delay = createRandomNumberInRange(500, 1000);
 
-      if (config.method === "get") {
-        return new Promise((resolve) => {
-          setTimeout(() => {
-            resolve(config);
-          }, delay);
-        });
-      }
-
-      return config;
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve(config);
+        }, delay);
+      });
     });
 
     break;
