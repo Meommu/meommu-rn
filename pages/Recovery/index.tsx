@@ -248,12 +248,6 @@ export function RecoveryPage() {
     }
   }, [swiperIndex, formState]);
 
-  console.log(
-    "[test]",
-    isNextButtonClickable(),
-    recoveryEmailChkMutation.isLoading
-  );
-
   return (
     <View style={styles.container}>
       <View style={styles.headerLayout}>
