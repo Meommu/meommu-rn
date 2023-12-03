@@ -108,8 +108,8 @@ function DiaryShared() {
 
         <View style={styles.bottomButtonWrapper}>
           <NavigationButton
-            onPress={handleShareButtonClick}
             content="저장하기"
+            onPress={handleShareButtonClick}
           />
         </View>
       </NonIndicatorScrollView>

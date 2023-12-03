@@ -152,9 +152,9 @@ export function MonthCalendar({
 
       <View style={styles.chooseMonthButton}>
         <NavigationButton
-          testID="button-month-calendar-apply-button"
           content="확인"
           onPress={handleDatePickButtonClick(currentYear, currentMonth)}
+          testID="button-month-calendar-apply-button"
         />
       </View>
     </View>

@@ -72,12 +72,13 @@ export function SignUpPresenter({
 
       <View style={styles.navigationView}>
         <NavigationButton
-          backgroundColor={
-            isNextButtonActive() ? color.primary : color.inactive
-          }
           content={isLastSlide() ? "시작하기" : "다음"}
           onPress={handleNextButtonClick}
-          disabled={!isNextButtonActive() || isSubmitting}
+          disabled={!isNextButtonActive()}
+          /**
+           * TODO: useMutation의 로딩 상태로 변경
+           */
+          isLoading={isSubmitting}
           testID="button-next-step-of-signup"
         />
       </View>

@@ -27,11 +27,7 @@ import { useToast } from "@/hooks";
 import { styles } from "./index.styles";
 
 export function HomePage() {
-  const {
-    control,
-    handleSubmit,
-    formState: { isSubmitting },
-  } = useForm<SignInFormFieldValues>({
+  const { control, handleSubmit } = useForm<SignInFormFieldValues>({
     defaultValues: {
       id: "",
       password: "",
@@ -164,7 +160,7 @@ export function HomePage() {
         <NavigationButton
           content="로그인"
           onPress={handleSignInButtonClick}
-          disabled={isSubmitting}
+          isLoading={signinMutation.isLoading}
           testID="button-signin"
         />
       </View>

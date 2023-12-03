@@ -92,12 +92,9 @@ export function WritePresenter({
 
       <View style={styles.bottomButtonWrapper}>
         <NavigationButton
-          onPress={handleBottomButtonClick}
-          backgroundColor={
-            isBottomButtonActive() ? color.primary : color.inactive
-          }
-          disabled={!isBottomButtonActive()}
           content={isStepOneSlide() ? "다음" : "멈무일기 가이드"}
+          onPress={handleBottomButtonClick}
+          disabled={!isBottomButtonActive()}
         />
       </View>
 

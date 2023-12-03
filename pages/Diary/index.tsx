@@ -15,6 +15,7 @@ import { ImageSlider } from "@/components/Widget/ImageSlider";
 import { NonIndicatorScrollView } from "@/components/ScrollView/NonIndicatorScrollView";
 import { NavigationButton } from "@/components/Button/NavigationButton";
 import { ResponsiveBottomSheetModal } from "@/components/Layout/ResponsiveBottomSheetModal";
+import { TransparentButton } from "@/components/Button/TransparentButton";
 
 // constants
 import { PATH } from "@/constants";
@@ -170,8 +171,8 @@ function Diary() {
 
           <View style={styles.bottomButtonWrapper}>
             <NavigationButton
-              onPress={handleShareButtonClick}
               content="보내기"
+              onPress={handleShareButtonClick}
             />
           </View>
         </NonIndicatorScrollView>
@@ -185,12 +186,8 @@ function Diary() {
               content="일기 수정하기"
               onPress={handleDiaryEditButtonClick}
             />
-            <NavigationButton
-              fontColor="#6F7682"
-              content="일기 삭제하기"
-              backgroundColor="transparent"
-              onPress={handleDiaryDeleteButtonClick}
-            />
+
+            <TransparentButton content="일기 삭제하기" />
           </View>
         </ResponsiveBottomSheetModal>
       </View>

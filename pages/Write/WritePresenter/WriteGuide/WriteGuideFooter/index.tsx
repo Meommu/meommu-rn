@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, Pressable } from "react-native";
 import { BottomSheetMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
 import Swiper from "react-native-web-swiper";
 import { BottomSheetFooterProps } from "@gorhom/bottom-sheet";
@@ -268,11 +268,13 @@ function WriteGuideFooter({
       <View style={styles.bottomSheetFooter}>
         <Text style={styles.bottomSheetFooterTitle}>{footerTitle}</Text>
         <View style={styles.bottomSheetFooterButtonWrapper}>
-          <NavigationButton
-            content="이전"
+          <Pressable
+            style={styles.bottomSheetFooterPrevButton}
             onPress={handlePrevButtonClick}
-            backgroundColor="#373840"
-          />
+          >
+            <Text style={styles.bottomSheetFooterPrevButtonText}>이전</Text>
+          </Pressable>
+
           <NavigationButton content="다음" onPress={handleNextButtonClick} />
         </View>
       </View>

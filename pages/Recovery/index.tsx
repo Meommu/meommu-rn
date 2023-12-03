@@ -248,6 +248,12 @@ export function RecoveryPage() {
     }
   }, [swiperIndex, formState]);
 
+  console.log(
+    "[test]",
+    isNextButtonClickable(),
+    recoveryEmailChkMutation.isLoading
+  );
+
   return (
     <View style={styles.container}>
       <View style={styles.headerLayout}>
@@ -407,12 +413,10 @@ export function RecoveryPage() {
 
       <View style={styles.footerLayout}>
         <NavigationButton
-          backgroundColor={isNextButtonClickable() ? color.primary : color.g300}
           content="다음"
           onPress={handleNextButtonClick}
-          disabled={
-            !isNextButtonClickable() || recoveryEmailChkMutation.isLoading
-          }
+          disabled={!isNextButtonClickable()}
+          isLoading={recoveryEmailChkMutation.isLoading}
         />
       </View>
     </View>

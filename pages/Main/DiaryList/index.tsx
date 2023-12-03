@@ -20,6 +20,7 @@ import { DiaryListPlaceholder } from "./DiaryListPlaceholder";
 import { DiaryItemSkeleton } from "./DiaryItem/index.skeleton";
 import { DiaryItem } from "./DiaryItem";
 import { NavigationButton } from "@/components/Button/NavigationButton";
+import { TransparentButton } from "@/components/Button/TransparentButton";
 import { ResponsiveBottomSheetModal } from "@/components/Layout/ResponsiveBottomSheetModal";
 
 // hooks
@@ -120,10 +121,9 @@ export function DiaryList() {
             content="일기 수정하기"
             onPress={handleDiaryEditButtonClick}
           />
-          <NavigationButton
-            fontColor="#6F7682"
+
+          <TransparentButton
             content="일기 삭제하기"
-            backgroundColor="transparent"
             onPress={handleDiaryDeleteButtonClick}
           />
         </View>
