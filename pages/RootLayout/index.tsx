@@ -1,10 +1,10 @@
 // react
 import { Platform } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // expo
-import { useFonts } from "expo-font";
+import { FontSource, useFonts } from "expo-font";
 import { Stack } from "expo-router";
 
 // components
@@ -23,6 +23,7 @@ import { MockApiService } from "@/mocking/mockApi";
 import { polyfill as polyfillReadableStream } from "react-native-polyfill-globals/src/readable-stream";
 import { polyfill as polyfillFetch } from "react-native-polyfill-globals/src/fetch";
 import { polyfill as polyfillEncoding } from "react-native-polyfill-globals/src/encoding";
+import { font } from "@/constants";
 
 /**
  * rn이 아닌 웹 환경에서 polyfill를 실행 할 경우
@@ -38,11 +39,17 @@ export function RootLayout() {
   /**
    * 폰트, Mocking API, accessToken 설정
    */
-  const [fontsLoaded] = useFonts({
-    "Pretendard-SemiBold": require("@/assets/fonts/Pretendard-SemiBold.otf"),
-    "Pretendard-Regular": require("@/assets/fonts/Pretendard-Regular.otf"),
-    yeonTheLand: require("@/assets/fonts/yeonTheLand.ttf"),
-  });
+  const map = useMemo(() => {
+    const map: Record<string, FontSource> = {};
+
+    map[font.PretendardRegular] = require("@/assets/fonts/Pretendard-Regular.otf");
+    map[font.PretendardSemiBold] = require("@/assets/fonts/Pretendard-SemiBold.otf");
+    map[font.YeonTheLand] = require("@/assets/fonts/yeonTheLand.ttf");
+
+    return map;
+  }, []); 
+
+  const [fontsLoaded] = useFonts(map);
 
   const [ready, setReady] = useState(false);
 
