@@ -21,6 +21,7 @@ export const b = "#000000";
 export const error = "#FF8585";
 export const success = "#63BCA9";
 export const primary = "#8579F1";
+export const primaryB = "#604FF4";
 
 /**
  * 삭제될 색상들
