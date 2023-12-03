@@ -88,7 +88,7 @@ export function ModifyContainer() {
   /**
    * 글쓰기 완료 버튼 클릭 시 동작할 mutation
    */
-  const writeDiaryMutation = useMutation(
+  const modifyDiaryMutation = useMutation(
     async (data: DiaryWriteFormFieldValues) => {
       await apiService.modifyDiary(diaryId || "", data);
     },
@@ -147,7 +147,7 @@ export function ModifyContainer() {
 
     handleSubmit(
       (data) => {
-        writeDiaryMutation.mutate(data);
+        modifyDiaryMutation.mutate(data);
       },
       (errors) => {
         if (errors.title) {
@@ -232,6 +232,7 @@ export function ModifyContainer() {
           handleSwiperIndexChange={handleSwiperIndexChange}
           isBottomButtonActive={isBottomButtonActive}
           isStepOneSlide={isStepOneSlide}
+          isLoading={modifyDiaryMutation.isLoading}
         />
       )}
     </FormProvider>

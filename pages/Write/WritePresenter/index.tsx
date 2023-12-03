@@ -43,6 +43,11 @@ interface WritePresenterProps {
    * 현재 swiper가 첫 단계의 슬라이드인지 반환하는 함수
    */
   isStepOneSlide: () => boolean;
+
+  /**
+   * `완료` 버튼을 눌러 서버로 post 요청이 전송된 상태인지를 구분하기 위한 변수
+   */
+  isLoading: boolean;
 }
 
 export function WritePresenter({
@@ -53,6 +58,7 @@ export function WritePresenter({
   handleSwiperIndexChange,
   isBottomButtonActive,
   isStepOneSlide,
+  isLoading,
 }: WritePresenterProps) {
   const { setValue, getValues } = useFormContext<DiaryWriteFormFieldValues>();
 
@@ -67,6 +73,7 @@ export function WritePresenter({
             <Pressable
               style={styles.completeButton}
               onPress={handleFinishButtonClick}
+              disabled={isLoading}
             >
               <Text style={styles.completeButtonText}>완료</Text>
             </Pressable>

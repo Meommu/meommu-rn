@@ -207,6 +207,7 @@ export function WriteContainer() {
         handleSwiperIndexChange={handleSwiperIndexChange}
         isBottomButtonActive={isBottomButtonActive}
         isStepOneSlide={isStepOneSlide}
+        isLoading={writeDiaryMutation.isLoading}
       />
     </FormProvider>
   );
