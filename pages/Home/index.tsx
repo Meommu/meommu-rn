@@ -93,12 +93,9 @@ export function HomePage() {
             간단하게 기록해요,{"\n"}우리 강아지 다이어리 꾸미기
           </Text>
         </View>
-
-        <BannerImage
-          source={require("@/assets/images/home/home.png")}
-          extraMarginTop={150}
-        />
       </View>
+
+      <BannerImage source={require("@/assets/images/home/home.png")} />
 
       <View style={styles.signInFormView}>
         <Controller
