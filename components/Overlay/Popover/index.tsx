@@ -18,12 +18,13 @@ import { styles } from "./index.styles";
 
 interface PopoverProps {
   id: string;
+  content: string;
 }
 
 const UP = 8;
 const DOWN = 0;
 
-export function Popover({ id }: PopoverProps) {
+export function Popover({ id, content }: PopoverProps) {
   const [isShow, setIsShow] = useState(false);
   const sv = useSharedValue(DOWN);
 
@@ -71,7 +72,7 @@ export function Popover({ id }: PopoverProps) {
   return (
     <Animated.View style={animatedStyle}>
       <Pressable onPress={handlePopoverClick} style={styles.container}>
-        <Text style={styles.contentText}>선생님 지금 시작해보세요</Text>
+        <Text style={styles.contentText}>{content}</Text>
 
         <View style={styles.tabLayout}>
           <PopoverTap />

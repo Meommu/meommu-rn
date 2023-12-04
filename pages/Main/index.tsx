@@ -63,7 +63,7 @@ export function MainPage() {
 
       <View style={styles.footerWrapper}>
         <View style={styles.popoverLayout}>
-          <Popover id="write" />
+          <Popover id="write" content="선생님 지금 시작해보세요" />
         </View>
 
         <LinearGradient
