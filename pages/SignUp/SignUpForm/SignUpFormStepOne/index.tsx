@@ -87,18 +87,18 @@ export function SignUpFormStepOne() {
   }, []);
 
   const emailInputCondition =
-    errors.email === undefined
-      ? typeof emailDupChk === "boolean"
-        ? emailDupChk
-        : false
+    errors.email !== undefined
+      ? false
+      : typeof emailDupChk === "boolean"
+      ? emailDupChk
       : false;
 
   const emailInputAlertMessage =
-    errors.email === undefined
-      ? typeof emailDupChk === "boolean"
-        ? `사용 ${!emailDupChk ? "불" : ""}가능한 이메일 입니다.`
-        : ""
-      : errors.email.message;
+    errors.email !== undefined
+      ? errors.email.message
+      : typeof emailDupChk === "boolean"
+      ? `사용 ${!emailDupChk ? "불" : ""}가능한 이메일 입니다.`
+      : "";
 
   return (
     <View style={styles.container}>

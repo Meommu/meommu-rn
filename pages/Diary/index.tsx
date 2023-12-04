@@ -64,11 +64,9 @@ function Diary() {
     {
       onSuccess: (uuid) => {
         const origin =
-          Platform.OS === "web"
-            ? process.env.EXPO_PUBLIC_MODE === "dev"
-              ? window.location.origin
-              : "https://meommu-rn.vercel.app"
-            : "https://meommu-rn.vercel.app";
+          Platform.OS !== "web"
+            ? "https://meommu-rn.vercel.app"
+            : window.location.origin;
 
         Share.share({
           title: "Meommu Diary",
