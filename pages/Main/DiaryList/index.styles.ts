@@ -11,7 +11,7 @@ export const styles = StyleSheet.create({
 
   listCountText: {
     paddingTop: 10,
-    paddingBottom: 60,
+    paddingBottom: 150,
 
     color: color.g300,
     fontSize: 14,

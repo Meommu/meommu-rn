@@ -1,6 +1,6 @@
 // react
 import { useState } from "react";
-import { View, Text } from "react-native";
+import { Text } from "react-native";
 import { useQuery } from "react-query";
 
 // redux

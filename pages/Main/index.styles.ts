@@ -1,6 +1,9 @@
 // react
 import { StyleSheet } from "react-native";
 
+// constants
+import { color } from "@/constants";
+
 export const styles = StyleSheet.create({
   container: {
     backgroundColor: "white",
@@ -27,5 +30,19 @@ export const styles = StyleSheet.create({
    */
   controllerBox: {
     flexDirection: "row",
+  },
+
+  /**
+   * footer
+   */
+  footerWrapper: {
+    width: "100%",
+    position: "absolute",
+    bottom: 0,
+  },
+
+  footer: {
+    paddingTop: 0,
+    backgroundColor: color.w,
   },
 });
