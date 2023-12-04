@@ -1,12 +1,11 @@
 // react
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useRef } from "react";
 import { View, Text, Pressable } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Animated, {
   Easing,
   useAnimatedStyle,
   useSharedValue,
-  withRepeat,
   withTiming,
 } from "react-native-reanimated";
 
@@ -26,6 +25,10 @@ const DOWN = 0;
 
 export function Popover({ id, content }: PopoverProps) {
   const [isShow, setIsShow] = useState(false);
+
+  const interval = useRef<ReturnType<typeof setInterval> | null>(null);
+  const index = useRef<number>(0);
+
   const sv = useSharedValue(DOWN);
 
   const animatedStyle = useAnimatedStyle(() => ({
@@ -33,20 +36,25 @@ export function Popover({ id, content }: PopoverProps) {
   }));
 
   useEffect(() => {
-    sv.value = withRepeat(
-      withTiming(sv.value === UP ? DOWN : UP, {
+    interval.current = setInterval(() => {
+      sv.value = withTiming(index.current % 2 === 0 ? UP : DOWN, {
         duration: 600,
-        easing: {
-          factory: () => {
-            return sv.value < (DOWN + UP) / 2
-              ? Easing.out(Easing.bezierFn(0.42, -0.68, 0.96, 0.6))
-              : Easing.bounce;
-          },
-        },
-      }),
-      -1,
-      true
-    );
+        easing:
+          index.current % 2 === 0
+            ? Easing.out(Easing.bezierFn(0.42, -0.68, 0.96, 0.6))
+            : Easing.bounce,
+      });
+
+      index.current++;
+    }, 600);
+
+    return () => {
+      if (!interval.current) {
+        return;
+      }
+
+      clearInterval(interval.current);
+    };
   }, []);
 
   useEffect(() => {
