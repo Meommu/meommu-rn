@@ -282,7 +282,7 @@ function WriteGuideFooter({
       <View style={styles.container}>
         <LinearGradient
           style={styles.header}
-          colors={[color.bg500, "transparent"]}
+          colors={[color.bg500, `${color.bg500}00`]}
           start={{ x: 0, y: 1 }}
           end={{ x: 0, y: 0 }}
         >

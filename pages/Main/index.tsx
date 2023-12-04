@@ -68,7 +68,7 @@ export function MainPage() {
 
         <LinearGradient
           style={{ height: 24 }}
-          colors={[color.w, "transparent"]}
+          colors={[color.w, "rgba(255, 255, 255, 0)"]}
           start={{ x: 0, y: 1 }}
           end={{ x: 0, y: 0 }}
         />
