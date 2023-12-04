@@ -37,5 +37,6 @@ export const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: font.PretendardSemiBold,
     textAlign: "center",
+    lineHeight: 22,
   },
 });

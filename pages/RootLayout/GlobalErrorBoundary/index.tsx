@@ -37,9 +37,9 @@ function ErrorBoundaryFallBack() {
     <View style={styles.container}>
       <View style={styles.content}>
         <View style={styles.guideLayout}>
-          <Text style={styles.guideTitleText}>ERROR</Text>
+          <Text style={styles.guideTitleText}>WOOPS!</Text>
           <Text style={styles.guideContentText}>
-            예상치 못한 에러가 발생했습니다.
+            죄송합니다 일시적 오류가 발생했습니다.{"\n"}잠시후 다시 확인해주세요
           </Text>
         </View>
 
