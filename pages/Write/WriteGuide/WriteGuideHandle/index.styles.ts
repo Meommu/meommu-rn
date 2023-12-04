@@ -6,11 +6,12 @@ import { size, font } from "@/constants";
 
 export const styles = StyleSheet.create({
   container: {
-    position: "relative",
     width: "100%",
     height: size.BOTTOM_SHEET_INDICATOR_HEIGHT,
     justifyContent: "center",
     alignItems: "center",
+
+    position: "relative",
   },
 
   stopButton: {
@@ -40,9 +41,11 @@ export const styles = StyleSheet.create({
   },
 
   grabber: {
-    backgroundColor: "rgba(235, 235, 245, 0.3)",
-    borderRadius: 2.5,
     width: 48,
     height: 4,
+
+    backgroundColor: "rgba(235, 235, 245, 0.3)",
+
+    borderRadius: 2.5,
   },
 });
