@@ -18,6 +18,7 @@ import { MonthPicker } from "./MonthPicker";
 import { MonthPickerSkeleton } from "./MonthPicker/index.skeleton";
 import { Footer } from "@/components/Layout/Footer";
 import { NavigationButton } from "@/components/Button/NavigationButton";
+import { Popover } from "@/components/Overlay/Popover";
 
 // styles
 import { styles } from "./index.styles";
@@ -61,8 +62,12 @@ export function MainPage() {
       <DiaryList />
 
       <View style={styles.footerWrapper}>
+        <View style={styles.popoverLayout}>
+          <Popover id="write" />
+        </View>
+
         <LinearGradient
-          style={{ height: 30 }}
+          style={{ height: 24 }}
           colors={[color.w, "transparent"]}
           start={{ x: 0, y: 1 }}
           end={{ x: 0, y: 0 }}

@@ -45,4 +45,13 @@ export const styles = StyleSheet.create({
     paddingTop: 0,
     backgroundColor: color.w,
   },
+
+  popoverLayout: {
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+
+    position: "absolute",
+    top: -48,
+  },
 });
