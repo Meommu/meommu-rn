@@ -80,11 +80,9 @@ export function Popover({ id, content, bottom = 0 }: PopoverProps) {
 
   useEffect(() => {
     AsyncStorage.getItem(`popover-${id}`).then((v) => {
-      /*
       if (v === "clicked") {
         return;
       }
-      */
 
       setIsShow(true);
     });
