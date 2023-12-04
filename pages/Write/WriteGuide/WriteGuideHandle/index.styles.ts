@@ -2,7 +2,7 @@
 import { StyleSheet } from "react-native";
 
 // constants
-import { size } from "@/constants";
+import { size, font } from "@/constants";
 
 export const styles = StyleSheet.create({
   container: {
@@ -14,31 +14,29 @@ export const styles = StyleSheet.create({
   },
 
   stopButton: {
-    width: 140,
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+    gap: 7,
 
     position: "absolute",
-    top: -(14 + 40),
+    bottom: size.BOTTOM_SHEET_INDICATOR_HEIGHT + 14,
 
-    marginHorizontal: "auto",
-    paddingVertical: 10,
+    paddingVertical: 4,
+    paddingHorizontal: 19,
 
     backgroundColor: "white",
 
     borderRadius: 6,
     borderColor: "#D0D0D0",
     borderWidth: 2,
-
-    gap: 7,
-
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
   },
 
   stopButtonText: {
     color: "#B0B0B0",
     fontSize: 16,
-    fontFamily: "Pretendard-SemiBold",
+    fontFamily: font.PretendardSemiBold,
+    lineHeight: 32,
   },
 
   grabber: {
