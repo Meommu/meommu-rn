@@ -15,6 +15,7 @@ import { Footer } from "@/components/Layout/Footer";
 
 // styles
 import { styles } from "./index.styles";
+import { Popover } from "@/components/Overlay/Popover";
 
 interface WritePresenterProps {
   swiperRef: MutableRefObject<Swiper | null>;
@@ -95,12 +96,20 @@ export function WritePresenter({
         <WriteFormStepTwo />
       </Swiper>
 
-      <Footer>
-        <NavigationButton
-          content={isStepOneSlide() ? "다음" : "멈무일기 가이드"}
-          onPress={handleBottomButtonClick}
-          disabled={!isBottomButtonActive()}
-        />
+      <Footer style={styles.footer}>
+        {!isStepOneSlide() && (
+          <View style={styles.popoverLayout}>
+            <Popover id="guide" content="빠르게 쓸 수 있도록 도와드릴게요" />
+          </View>
+        )}
+
+        <View style={styles.navigationButtonLayout}>
+          <NavigationButton
+            content={isStepOneSlide() ? "다음" : "멈무일기 가이드"}
+            onPress={handleBottomButtonClick}
+            disabled={!isBottomButtonActive()}
+          />
+        </View>
       </Footer>
 
       <MemoizedWriteGuide setValue={setValue} getValues={getValues} />
