@@ -65,6 +65,7 @@ export const styles = StyleSheet.create({
    * 바텀 시트
    */
   bottomSheetContent: {
+    paddingTop: 0,
     gap: 6,
   },
 });

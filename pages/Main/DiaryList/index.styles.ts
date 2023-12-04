@@ -20,8 +20,7 @@ export const styles = StyleSheet.create({
   },
 
   bottomSheetContent: {
-    paddingHorizontal: 20,
-    paddingBottom: 20,
+    paddingTop: 0,
     gap: 6,
   },
 });
