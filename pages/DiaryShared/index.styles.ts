@@ -2,14 +2,16 @@
 import { StyleSheet } from "react-native";
 
 // constants
-import { color } from "@/constants";
+import { color, font } from "@/constants";
 
 export const styles = StyleSheet.create({
   container: {
     width: "100%",
     height: "100%",
-    backgroundColor: "white",
+
     position: "relative",
+
+    backgroundColor: color.w,
   },
 
   /**
@@ -21,57 +23,63 @@ export const styles = StyleSheet.create({
 
   headerTitle: {
     fontSize: 30,
-    fontFamily: "yeonTheLand",
+    fontFamily: font.YeonTheLand,
   },
 
   /**
    * 본문
    */
   captureArea: {
-    backgroundColor: "white",
+    backgroundColor: color.w,
   },
 
   body: {
+    gap: 16,
+
     paddingHorizontal: 20,
     paddingVertical: 33,
-    gap: 16,
   },
 
   bodyTitle: {
     color: color.g900,
     fontSize: 26,
-    fontFamily: "yeonTheLand",
+    fontFamily: font.YeonTheLand,
+    lineHeight: 26,
   },
 
   bodyContent: {
-    color: "#626154",
+    color: color.g500,
     fontSize: 17,
-    fontFamily: "yeonTheLand",
+    fontFamily: font.YeonTheLand,
+    lineHeight: 22,
   },
 
   bodyDate: {
-    color: "#8F8F8F",
+    color: color.g300,
     fontSize: 14,
-
-    fontFamily: "Pretendard-Regular",
+    fontFamily: font.PretendardRegular,
   },
 
   /**
    * 캡처된 화면 모달
    */
   modal: {
-    position: "absolute",
     width: "100%",
     height: "100%",
-    padding: 15,
     justifyContent: "center",
     alignItems: "center",
+
+    position: "absolute",
+
+    padding: 15,
   },
 
   modalDimmed: {
-    position: "absolute",
     width: "100%",
     height: "100%",
+
+    position: "absolute",
+
     backgroundColor: "rgba(0, 0, 0, 0.7)",
   },
 

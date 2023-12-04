@@ -51,5 +51,6 @@ export const styles = StyleSheet.create({
     fontFamily: font.YeonTheLand,
     color: color.g500,
     textAlign: "center",
+    lineHeight: 22,
   },
 });

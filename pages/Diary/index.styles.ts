@@ -2,14 +2,16 @@
 import { StyleSheet } from "react-native";
 
 // constants
-import { color } from "@/constants";
+import { color, font } from "@/constants";
 
 export const styles = StyleSheet.create({
   container: {
     width: "100%",
     height: "100%",
-    backgroundColor: "white",
+
     position: "relative",
+
+    backgroundColor: color.w,
   },
 
   /**
@@ -23,9 +25,10 @@ export const styles = StyleSheet.create({
    * 본문
    */
   body: {
+    gap: 16,
+
     paddingHorizontal: 20,
     paddingVertical: 33,
-    gap: 16,
   },
 
   bodyTitleLayout: {
@@ -36,22 +39,24 @@ export const styles = StyleSheet.create({
   bodyTitle: {
     width: "100%",
     flexShrink: 1,
+
     color: color.g900,
     fontSize: 26,
-    fontFamily: "yeonTheLand",
+    fontFamily: font.YeonTheLand,
+    lineHeight: 26,
   },
 
   bodyContent: {
-    color: "#626154",
+    color: color.g500,
     fontSize: 17,
-    fontFamily: "yeonTheLand",
+    fontFamily: font.YeonTheLand,
+    lineHeight: 22,
   },
 
   bodyDate: {
-    color: "#8F8F8F",
+    color: color.g300,
     fontSize: 14,
-
-    fontFamily: "Pretendard-Regular",
+    fontFamily: font.PretendardRegular,
   },
 
   /**
