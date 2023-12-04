@@ -6,17 +6,26 @@ import { color, font } from "@/constants";
 
 export const styles = StyleSheet.create({
   container: {
-    borderRadius: 8,
-
-    backgroundColor: color.g200,
-
+    width: "100%",
+    height: 0,
     alignItems: "center",
+
+    position: "absolute",
+    bottom: 0,
+  },
+
+  content: {
+    position: "absolute",
+    bottom: 0,
 
     paddingHorizontal: 22,
     paddingVertical: 6,
 
-    position: "relative",
-    zIndex: 1,
+    alignItems: "center",
+
+    borderRadius: 8,
+
+    backgroundColor: color.g200,
   },
 
   contentText: {

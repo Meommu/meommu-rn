@@ -8,6 +8,7 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 // svgs
 import PopoverTap from "@/assets/svgs/popover-tap.svg";
@@ -16,15 +17,30 @@ import PopoverTap from "@/assets/svgs/popover-tap.svg";
 import { styles } from "./index.styles";
 
 interface PopoverProps {
+  /**
+   * Popover의 출현 여부를 결정하기 위한 고유한 id값
+   */
   id: string;
+
+  /**
+   * Popover에 담길 문구
+   */
   content: string;
+
+  /**
+   * Overlay가 위치할 화면 하단으로부터의 높이
+   */
+  bottom?: number;
 }
 
-const UP = 8;
-const DOWN = 0;
+export function Popover({ id, content, bottom = 0 }: PopoverProps) {
+  const insets = useSafeAreaInsets();
 
-export function Popover({ id, content }: PopoverProps) {
-  const [isShow, setIsShow] = useState(false);
+  /**
+   * Popover 애니메이션
+   */
+  const UP = 8;
+  const DOWN = 0;
 
   const interval = useRef<ReturnType<typeof setInterval> | null>(null);
   const index = useRef<number>(0);
@@ -57,16 +73,26 @@ export function Popover({ id, content }: PopoverProps) {
     };
   }, []);
 
+  /**
+   * Popover 출현 여부 결정
+   */
+  const [isShow, setIsShow] = useState(false);
+
   useEffect(() => {
     AsyncStorage.getItem(`popover-${id}`).then((v) => {
+      /*
       if (v === "clicked") {
         return;
       }
+      */
 
       setIsShow(true);
     });
   }, []);
 
+  /**
+   * 이벤트 핸들러
+   */
   const handlePopoverClick = useCallback(async () => {
     await AsyncStorage.setItem(`popover-${id}`, "clicked");
 
@@ -78,14 +104,22 @@ export function Popover({ id, content }: PopoverProps) {
   }
 
   return (
-    <Animated.View style={animatedStyle}>
-      <Pressable onPress={handlePopoverClick} style={styles.container}>
-        <Text style={styles.contentText}>{content}</Text>
+    <View style={styles.container}>
+      <Animated.View
+        style={[
+          animatedStyle,
+          styles.content,
+          { bottom: bottom + insets.bottom },
+        ]}
+      >
+        <Pressable onPress={handlePopoverClick}>
+          <Text style={styles.contentText}>{content}</Text>
+        </Pressable>
 
         <View style={styles.tabLayout}>
           <PopoverTap />
         </View>
-      </Pressable>
-    </Animated.View>
+      </Animated.View>
+    </View>
   );
 }

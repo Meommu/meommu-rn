@@ -7,7 +7,7 @@ import { router } from "expo-router";
 import { LinearGradient } from "expo-linear-gradient";
 
 // constants
-import { PATH, color } from "@/constants";
+import { PATH, size } from "@/constants";
 
 // components
 import { PlusButton } from "@/components/Button/PlusButton";
@@ -62,13 +62,9 @@ export function MainPage() {
       <DiaryList />
 
       <View style={styles.footerWrapper}>
-        <View style={styles.popoverLayout}>
-          <Popover id="write" content="선생님 지금 시작해보세요" />
-        </View>
-
         <LinearGradient
-          style={{ height: 24 }}
-          colors={[color.w, "rgba(255, 255, 255, 0)"]}
+          style={styles.scrollGradient}
+          colors={["rgba(255, 255, 255, 0.55)", "rgba(255, 255, 255, 0)"]}
           start={{ x: 0, y: 1 }}
           end={{ x: 0, y: 0 }}
         />
@@ -80,6 +76,16 @@ export function MainPage() {
           />
         </Footer>
       </View>
+
+      <Popover
+        id="write"
+        content="선생님 지금 시작해보세요"
+        bottom={
+          size.NAVIGATION_BUTTON_HEIGHT +
+          size.FOOTER_PADDING_BOTTOM +
+          size.LINEAR_GRADIENT_HEIGHT
+        }
+      />
     </View>
   );
 }

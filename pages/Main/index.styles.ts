@@ -2,13 +2,14 @@
 import { StyleSheet } from "react-native";
 
 // constants
-import { color } from "@/constants";
+import { color, size, font } from "@/constants";
 
 export const styles = StyleSheet.create({
   container: {
-    backgroundColor: "white",
     width: "100%",
     height: "100%",
+
+    backgroundColor: color.w,
   },
 
   /**
@@ -22,7 +23,7 @@ export const styles = StyleSheet.create({
 
   logoText: {
     fontSize: 30,
-    fontFamily: "yeonTheLand",
+    fontFamily: font.YeonTheLand,
   },
 
   /**
@@ -37,21 +38,19 @@ export const styles = StyleSheet.create({
    */
   footerWrapper: {
     width: "100%",
+
     position: "absolute",
     bottom: 0,
   },
 
   footer: {
     paddingTop: 0,
+
     backgroundColor: color.w,
   },
 
-  popoverLayout: {
+  scrollGradient: {
     width: "100%",
-    justifyContent: "center",
-    alignItems: "center",
-
-    position: "absolute",
-    top: -48,
+    height: size.LINEAR_GRADIENT_HEIGHT,
   },
 });

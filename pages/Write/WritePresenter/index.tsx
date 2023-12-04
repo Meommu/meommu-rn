@@ -12,10 +12,13 @@ import { WriteFormStepTwo } from "@/pages/Write/WritePresenter/WriteForm/WriteFo
 import { NavigationButton } from "@/components/Button/NavigationButton";
 import { MemoizedWriteGuide } from "@/pages/Write/WriteGuide";
 import { Footer } from "@/components/Layout/Footer";
+import { Popover } from "@/components/Overlay/Popover";
+
+// constants
+import { size } from "@/constants";
 
 // styles
 import { styles } from "./index.styles";
-import { Popover } from "@/components/Overlay/Popover";
 
 interface WritePresenterProps {
   swiperRef: MutableRefObject<Swiper | null>;
@@ -97,20 +100,22 @@ export function WritePresenter({
       </Swiper>
 
       <Footer style={styles.footer}>
-        {!isStepOneSlide() && (
-          <View style={styles.popoverLayout}>
-            <Popover id="guide" content="빠르게 쓸 수 있도록 도와드릴게요" />
-          </View>
-        )}
-
-        <View style={styles.navigationButtonLayout}>
-          <NavigationButton
-            content={isStepOneSlide() ? "다음" : "멈무일기 가이드"}
-            onPress={handleBottomButtonClick}
-            disabled={!isBottomButtonActive()}
-          />
-        </View>
+        <NavigationButton
+          content={isStepOneSlide() ? "다음" : "멈무일기 가이드"}
+          onPress={handleBottomButtonClick}
+          disabled={!isBottomButtonActive()}
+        />
       </Footer>
+
+      {!isStepOneSlide() && (
+        <Popover
+          id="guide"
+          content="빠르게 쓸 수 있도록 도와드릴게요"
+          bottom={
+            size.FOOTER_PADDING_BOTTOM + size.NAVIGATION_BUTTON_HEIGHT + 24
+          }
+        />
+      )}
 
       <MemoizedWriteGuide setValue={setValue} getValues={getValues} />
     </View>

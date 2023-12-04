@@ -38,21 +38,6 @@ export const styles = StyleSheet.create({
    * footer
    */
   footer: {
-    position: "relative",
-    paddingHorizontal: 0,
-  },
-
-  navigationButtonLayout: {
-    paddingHorizontal: 20,
-  },
-
-  popoverLayout: {
-    width: "100%",
-    flexShrink: 1,
-    justifyContent: "center",
     alignItems: "center",
-
-    position: "absolute",
-    top: -62,
   },
 });
