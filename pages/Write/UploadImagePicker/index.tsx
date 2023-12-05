@@ -4,13 +4,17 @@ import {
   Text,
   Pressable,
   Platform,
-  useWindowDimensions,
   ScrollView,
   type ViewStyle,
   type StyleProp,
 } from "react-native";
 import { useMutation } from "react-query";
 import { type UseFormSetValue } from "react-hook-form";
+
+// redux
+import { useSelector } from "react-redux";
+import { type RootState } from "@/store";
+import { type LayoutState } from "@/store/modules/layout";
 
 // expo
 import * as ImagePicker from "expo-image-picker";
@@ -152,7 +156,9 @@ export function UploadImagePicker({ imageIds, setValue }: ImagePickerProps) {
     return formData;
   };
 
-  const { width } = useWindowDimensions();
+  const { width } = useSelector<RootState, LayoutState>(
+    (state) => state.layout
+  );
 
   const sideLength = (width - 7 * 2) / 5;
 

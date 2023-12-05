@@ -1,11 +1,13 @@
 // react
-import { useWindowDimensions, Platform, ViewStyle } from "react-native";
+import { type ViewStyle } from "react-native";
+
+// redux
+import { useSelector } from "react-redux";
+import { type RootState } from "@/store";
+import { type LayoutState } from "@/store/modules/layout";
 
 // hooks
 import { useDynamicStyle } from "./useDynamicStyle";
-
-// constants
-import { size } from "@/constants";
 
 export const useResponsiveMobileWidth = () => {
   /**
@@ -15,18 +17,15 @@ export const useResponsiveMobileWidth = () => {
    *
    * 리렌더링으로 인한 오작동이 발생하지 않게 훅을 사용하는 컴포넌트를 잘 고려하며 사용해야 한다.
    */
-  const { width, height } = useWindowDimensions();
+  const { width } = useSelector<RootState, LayoutState>(
+    (state) => state.layout
+  );
 
   const responsiveWidthStyle = useDynamicStyle<ViewStyle>(() => {
-    const maxWidth =
-      Platform.OS === "web" && width >= size.LAPTOP_WIDTH
-        ? (9 * height) / 16
-        : "100%";
-
     return {
-      maxWidth,
+      maxWidth: width,
     };
-  }, [width, height]);
+  }, [width]);
 
   return {
     responsiveWidthStyle,
