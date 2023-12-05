@@ -1,20 +1,20 @@
 // react
 import { useCallback } from "react";
-import { View, Text, Pressable, StyleSheet } from "react-native";
+import { View, Text, Pressable } from "react-native";
 
 // redux
 import { useSelector, useDispatch } from "react-redux";
 import type { RootState } from "@/store";
 import { changeVisible, type ConfirmState } from "@/store/modules/confirm";
 
-// constants
-import { color, size } from "@/constants";
-
 // components
 import { AView } from "@/components/Layout/AView";
 
 // hooks
 import { ZoomAndFadeInOut } from "@/hooks";
+
+// styles
+import { styles } from "./index.styles";
 
 export function Confirm() {
   const {
@@ -79,86 +79,3 @@ export function Confirm() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    position: "absolute",
-    width: "100%",
-    height: "100%",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-
-  dimmed: {
-    position: "absolute",
-    width: "100%",
-    height: "100%",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-    pointerEvents: "auto",
-  },
-
-  content: {
-    width: "80%",
-    maxWidth: size.MOBILE_WIDTH,
-    borderRadius: 20,
-    backgroundColor: "#1B1E26",
-    padding: 16,
-    gap: 24,
-    pointerEvents: "auto",
-  },
-
-  message: {
-    gap: 12,
-  },
-
-  titleText: {
-    fontSize: 20,
-    fontFamily: "Pretendard-SemiBold",
-    color: color.w,
-    textAlign: "center",
-  },
-
-  bodyText: {
-    fontSize: 16,
-    fontFamily: "Pretendard-Regular",
-    color: "#ABABAB",
-    textAlign: "center",
-  },
-
-  buttonWrapper: {
-    flexDirection: "row",
-    gap: 12,
-  },
-
-  okButton: {
-    width: "60%",
-    flexShrink: 1,
-    height: size.NAVIGATION_BUTTON_HEIGHT,
-    borderRadius: 6,
-    backgroundColor: "#CCCCD9",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-
-  okButtonText: {
-    fontSize: 16,
-    fontFamily: "Pretendard-SemiBold",
-    color: "#565667",
-  },
-
-  cancelButton: {
-    width: "40%",
-    flexShrink: 1,
-    height: size.NAVIGATION_BUTTON_HEIGHT,
-    borderRadius: 6,
-    backgroundColor: color.primary,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-
-  cancelButtonText: {
-    fontSize: 16,
-    fontFamily: "Pretendard-SemiBold",
-    color: color.w,
-  },
-});
