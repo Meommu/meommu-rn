@@ -1,10 +1,12 @@
 // react
 import React from "react";
-import { View, Text, Pressable, StyleSheet } from "react-native";
-import type { PressableProps } from "react-native";
+import { View, Text, Pressable, type PressableProps } from "react-native";
 
 // constants
 import { color } from "@/constants";
+
+// styles
+import { styles } from "./index.styles";
 
 interface FormDupChkButtonProps extends PressableProps {
   isDupChk: boolean | null;
@@ -17,7 +19,7 @@ export function FormDupChkButton({
 }: FormDupChkButtonProps) {
   const fontColor =
     isDupChk === null
-      ? color.g2
+      ? color.g300
       : isDupChk === false
       ? color.error
       : color.success;
@@ -39,29 +41,3 @@ export function FormDupChkButton({
     </Pressable>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: color.g1,
-    borderRadius: 4,
-    position: "relative",
-  },
-
-  border: {
-    position: "absolute",
-    width: "100%",
-    height: "100%",
-    borderWidth: 2,
-    borderRadius: 4,
-  },
-
-  content: {
-    paddingHorizontal: 18,
-    paddingVertical: 10,
-  },
-
-  contentText: {
-    fontSize: 16,
-    fontFamily: "Pretendard-SemiBold",
-  },
-});

@@ -1,5 +1,5 @@
 // react
-import { View, Text, Pressable, type PressableProps } from "react-native";
+import { Text, Pressable, type PressableProps } from "react-native";
 
 // constants
 import { color } from "@/constants";

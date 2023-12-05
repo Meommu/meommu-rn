@@ -14,6 +14,7 @@ export const styles = StyleSheet.create({
   contentWrapper: {
     width: "100%",
     height: "100%",
+
     padding: 20,
     paddingBottom: 10,
   },
@@ -21,18 +22,23 @@ export const styles = StyleSheet.create({
   content: {
     width: "100%",
     height: "100%",
-    borderRadius: 8,
-    backgroundColor: color.formElementBg,
     alignItems: "center",
-    paddingVertical: 55,
     gap: 39,
+
+    borderRadius: 8,
+
+    backgroundColor: color.g200,
+
+    paddingVertical: 55,
   },
 
   dogImageBox: {
     width: 169,
     height: 169,
+
     borderRadius: 60,
-    backgroundColor: "white",
+
+    backgroundColor: color.w,
   },
 
   dogImage: {

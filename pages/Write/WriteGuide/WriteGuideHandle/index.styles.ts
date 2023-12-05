@@ -2,7 +2,7 @@
 import { StyleSheet } from "react-native";
 
 // constants
-import { size, font } from "@/constants";
+import { size, font, color } from "@/constants";
 
 export const styles = StyleSheet.create({
   container: {
@@ -26,15 +26,15 @@ export const styles = StyleSheet.create({
     paddingVertical: 4,
     paddingHorizontal: 19,
 
-    backgroundColor: "white",
+    backgroundColor: color.w,
 
     borderRadius: 6,
-    borderColor: "#D0D0D0",
+    borderColor: color.bg100,
     borderWidth: 2,
   },
 
   stopButtonText: {
-    color: "#B0B0B0",
+    color: color.bg100,
     fontSize: 16,
     fontFamily: font.PretendardSemiBold,
     lineHeight: 32,
