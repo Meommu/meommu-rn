@@ -6,33 +6,12 @@ import { color, font } from "@/constants";
 
 export const styles = StyleSheet.create({
   list: {
-    width: "100%",
     flexDirection: "row",
 
     padding: 7,
   },
 
-  itemLayout: {
-    width: "20%",
-    height: 0,
-
-    paddingBottom: "20%",
-
-    position: "relative",
-  },
-
   item: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-
-    width: "100%",
-    height: "100%",
-
-    padding: 7,
-  },
-
-  itemBorder: {
     width: "100%",
     height: "100%",
 

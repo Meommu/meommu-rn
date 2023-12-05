@@ -1,5 +1,14 @@
 // react
-import { View, Text, Pressable, Platform, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  Pressable,
+  Platform,
+  useWindowDimensions,
+  ScrollView,
+  type ViewStyle,
+  type StyleProp,
+} from "react-native";
 import { useMutation } from "react-query";
 import { type UseFormSetValue } from "react-hook-form";
 
@@ -143,11 +152,21 @@ export function UploadImagePicker({ imageIds, setValue }: ImagePickerProps) {
     return formData;
   };
 
+  const { width } = useWindowDimensions();
+
+  const sideLength = (width - 7 * 2) / 5;
+
+  const itemLayoutStyle: StyleProp<ViewStyle> = {
+    width: sideLength,
+    height: sideLength,
+    padding: 7,
+  };
+
   return (
-    <ScrollView contentContainerStyle={styles.list} horizontal>
-      <View style={styles.itemLayout}>
-        <View style={styles.item}>
-          <View style={styles.itemBorder}>
+    <ScrollView style={{ flexShrink: 0 }} horizontal>
+      <View style={styles.list} onStartShouldSetResponder={() => true}>
+        <View style={itemLayoutStyle}>
+          <View style={styles.item}>
             <Pressable style={styles.uploader} onPress={handleImagePick}>
               <Camera />
 
@@ -155,16 +174,14 @@ export function UploadImagePicker({ imageIds, setValue }: ImagePickerProps) {
             </Pressable>
           </View>
         </View>
-      </View>
 
-      {Array(5)
-        .fill(null)
-        .map((_, i) => {
-          if (imageIds[i] !== undefined) {
-            return (
-              <View key={`imageId${imageIds[i]}`} style={styles.itemLayout}>
-                <View style={styles.item}>
-                  <View style={styles.itemBorder}>
+        {Array(5)
+          .fill(null)
+          .map((_, i) => {
+            if (imageIds[i] !== undefined) {
+              return (
+                <View style={itemLayoutStyle} key={`imageId${imageIds[i]}`}>
+                  <View style={styles.item}>
                     <LoadImage imageId={imageIds[i]} />
 
                     <Pressable
@@ -175,18 +192,16 @@ export function UploadImagePicker({ imageIds, setValue }: ImagePickerProps) {
                     </Pressable>
                   </View>
                 </View>
+              );
+            }
+
+            return (
+              <View style={itemLayoutStyle} key={i}>
+                <View style={styles.item} />
               </View>
             );
-          }
-
-          return (
-            <View key={i} style={styles.itemLayout}>
-              <View style={styles.item}>
-                <View style={styles.itemBorder} />
-              </View>
-            </View>
-          );
-        })}
+          })}
+      </View>
     </ScrollView>
   );
 }
