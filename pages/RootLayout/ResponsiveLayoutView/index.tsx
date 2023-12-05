@@ -1,75 +1,73 @@
 // react
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useCallback } from "react";
 import {
   View,
   useWindowDimensions,
   Platform,
-  StyleSheet,
-  type StyleProp,
+  type LayoutChangeEvent,
   type ViewStyle,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+// redux
+import { useDispatch } from "react-redux";
+import { changeLayoutWidth } from "@/store/modules/layout";
+
 // constants
 import { size } from "@/constants";
+
+// hooks
+import { useDynamicStyle } from "@/hooks";
+
+// styles
+import { styles } from "./index.styles";
 
 interface ResponsiveLayoutViewProps {
   children: React.ReactNode;
 }
 
 export function ResponsiveLayoutView({ children }: ResponsiveLayoutViewProps) {
-  /**
-   * notch, home indicator를 고려한 레이아웃
-   */
+  const dispatch = useDispatch();
+
   const { top } = useSafeAreaInsets();
 
-  /**
-   * 기기의 너비에 따른 반응형 레이아웃
-   */
   const { width } = useWindowDimensions();
 
-  const [isPcWeb, setIsPcWeb] = useState<boolean | null>(null);
+  const responsiveStyle = useDynamicStyle<ViewStyle>(() => {
+    if (Platform.OS !== "web" || width < size.LAPTOP_WIDTH) {
+      return {
+        width: "100%",
+        height: "100%",
+      };
+    }
 
-  useEffect(() => {
-    setIsPcWeb(Platform.OS === "web" && width >= size.LAPTOP_WIDTH);
-  }, [width]);
-
-  const mobileLayoutStyle: StyleProp<ViewStyle> = useMemo(
-    () => ({
+    return {
       width: "auto",
       maxWidth: "100%",
       height: "100%",
       aspectRatio: "9 / 16",
-      marginLeft: "auto",
-      marginRight: "auto",
+
+      marginHorizontal: "auto",
+
       overflow: "hidden",
-    }),
+    };
+  }, [width]);
+
+  const handleLayoutChange = useCallback(
+    ({
+      nativeEvent: {
+        layout: { width },
+      },
+    }: LayoutChangeEvent) => {
+      dispatch(changeLayoutWidth(width));
+    },
     []
   );
-
-  const hiddenStyle: StyleProp<ViewStyle> = useMemo(
-    () => ({
-      display: "none",
-    }),
-    []
-  );
-
-  const dummyStyle: StyleProp<ViewStyle> = useMemo(() => ({}), []);
-
-  const responsiveStyle =
-    isPcWeb === null ? hiddenStyle : isPcWeb ? mobileLayoutStyle : dummyStyle;
 
   return (
-    <View style={[styles.container, responsiveStyle]}>
-      <View style={{ width: "100%", height: top, backgroundColor: "white" }} />
+    <View style={responsiveStyle} onLayout={handleLayoutChange}>
+      <View style={[styles.notch, { height: top }]} />
       {children}
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    width: "100%",
-    height: "100%",
-  },
-});
