@@ -1,5 +1,5 @@
 // react
-import { View, Text, Pressable, Platform } from "react-native";
+import { View, Text, Pressable, Platform, ScrollView } from "react-native";
 import { useMutation } from "react-query";
 import { type UseFormSetValue } from "react-hook-form";
 
@@ -144,46 +144,49 @@ export function UploadImagePicker({ imageIds, setValue }: ImagePickerProps) {
   };
 
   return (
-    <View style={styles.imageUploader}>
+    <ScrollView contentContainerStyle={styles.list} horizontal>
+      <View style={styles.itemLayout}>
+        <View style={styles.item}>
+          <View style={styles.itemBorder}>
+            <Pressable style={styles.uploader} onPress={handleImagePick}>
+              <Camera />
+
+              <Text style={styles.uploaderText}>{imageIds.length} / 5</Text>
+            </Pressable>
+          </View>
+        </View>
+      </View>
+
       {Array(5)
         .fill(null)
         .map((_, i) => {
-          return (
-            <View
-              key={imageIds[i] ? `imageId${imageIds[i]}` : i}
-              style={styles.imageUploaderItemLayout}
-            >
-              <View style={styles.imageUploaderItem}>
-                {imageIds.length === i ? (
-                  <Pressable
-                    style={styles.imageUploadButton}
-                    onPress={handleImagePick}
-                  >
-                    <Camera />
-                    <Text style={styles.imageUploadButtonText}>
-                      {imageIds.length} / 5
-                    </Text>
-                  </Pressable>
-                ) : imageIds[i] ? (
-                  <View style={styles.imageUploadedItem}>
-                    <LoadImage
-                      style={styles.imageUploadedItemImage}
-                      imageId={imageIds[i]}
-                    />
+          if (imageIds[i] !== undefined) {
+            return (
+              <View key={`imageId${imageIds[i]}`} style={styles.itemLayout}>
+                <View style={styles.item}>
+                  <View style={styles.itemBorder}>
+                    <LoadImage imageId={imageIds[i]} />
+
                     <Pressable
                       onPress={handleImageRemoveButtonClick(i)}
-                      style={styles.imageUploadedItemRemoveButton}
+                      style={styles.imageRemover}
                     >
                       <ImageRemoveButton />
                     </Pressable>
                   </View>
-                ) : (
-                  <View style={styles.imageUploaderEmptyItem} />
-                )}
+                </View>
+              </View>
+            );
+          }
+
+          return (
+            <View key={i} style={styles.itemLayout}>
+              <View style={styles.item}>
+                <View style={styles.itemBorder} />
               </View>
             </View>
           );
         })}
-    </View>
+    </ScrollView>
   );
 }
