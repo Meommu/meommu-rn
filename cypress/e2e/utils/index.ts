@@ -96,6 +96,10 @@ export const clickMonthCalendarApplyButton = () => {
   getTestElement("button-month-calendar-apply-button").click();
 };
 
+export const clickConfirmOkButton = () => {
+  return getTestElement("button-confirm-ok");
+};
+
 /**
  * contains
  */

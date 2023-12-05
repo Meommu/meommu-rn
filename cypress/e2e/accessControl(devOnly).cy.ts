@@ -1,5 +1,6 @@
 import {
   clearAndWriteInputText,
+  clickConfirmOkButton,
   clickLogoutButton,
   clickSettingButton,
   clickSignInButton,
@@ -52,6 +53,13 @@ describe("로그인/비로그인 상태에서의 페이지 접근제어", () => 
     cy.contains("로그아웃");
 
     clickLogoutButton();
+
+    cy.contains("로그아웃 후 알림을 받을 수 없습니다.");
+
+    /**
+     * TODO: 확인 오버레이의 OK 버튼을 누르지 못해 테스트가 제대로 되고있지 않은 오류 수정
+     */
+    clickConfirmOkButton();
 
     cy.contains("로그인");
   });

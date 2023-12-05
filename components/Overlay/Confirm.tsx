@@ -60,7 +60,11 @@ export function Confirm() {
         </View>
 
         <View style={styles.buttonWrapper}>
-          <Pressable style={styles.okButton} onPress={handleOkButtonClick}>
+          <Pressable
+            style={styles.okButton}
+            onPress={handleOkButtonClick}
+            testID="button-confirm-ok"
+          >
             <Text style={styles.okButtonText}>{okMessage}</Text>
           </Pressable>
 
@@ -83,11 +87,6 @@ const styles = StyleSheet.create({
     height: "100%",
     justifyContent: "center",
     alignItems: "center",
-    /**
-     * 확인 모달의 레이아웃을 위해 항상 맨 위에 화면 가득 존재하는 요소로,
-     *
-     * 사용을 방해하지 않도록 pointerEvents를 'none'으로 설정함.
-     */
   },
 
   dimmed: {
