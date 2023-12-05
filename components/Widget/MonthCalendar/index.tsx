@@ -155,7 +155,7 @@ export function MonthCalendar({
         <NavigationButton
           content="확인"
           onPress={handleDatePickButtonClick(currentYear, currentMonth)}
-          testID="button-month-calendar-apply-button"
+          testID="button-month-calendar-apply"
         />
       </Footer>
     </View>

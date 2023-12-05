@@ -93,7 +93,7 @@ export const clickMonthCalendarPrevButton = () => {
 };
 
 export const clickMonthCalendarApplyButton = () => {
-  getTestElement("button-month-calendar-apply-button").click();
+  getTestElement("button-month-calendar-apply").click();
 };
 
 export const clickConfirmOkButton = () => {
