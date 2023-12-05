@@ -145,6 +145,7 @@ export function SignUpFormStepOne() {
                 render={({ field: { onChange, onBlur, value } }) => (
                   <FormInput
                     placeholder="이메일"
+                    inputMode="email"
                     onBlur={onBlur}
                     onChangeText={(text: string) => {
                       resetEmailDupChk();
