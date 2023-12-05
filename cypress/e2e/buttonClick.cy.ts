@@ -12,17 +12,13 @@ describe("버튼 클릭 테스트", () => {
     agreementButton.then(([$el]) => {
       const $circleSvg = $el.querySelector("circle");
 
-      expect($circleSvg?.getAttribute("fill")).is.equal(color.formElementBg);
+      expect($circleSvg?.getAttribute("fill")).is.equal(color.g200);
 
       agreementButton.click().then(() => {
-        expect($circleSvg?.getAttribute("fill")).is.equal(
-          color.agreementClicked
-        );
+        expect($circleSvg?.getAttribute("fill")).is.equal(color.g800);
 
         agreementButton.click().then(() => {
-          expect($circleSvg?.getAttribute("fill")).is.equal(
-            color.formElementBg
-          );
+          expect($circleSvg?.getAttribute("fill")).is.equal(color.g200);
         });
       });
     });
