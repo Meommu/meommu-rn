@@ -8,22 +8,24 @@ import { FontSource, useFonts } from "expo-font";
 import { Stack } from "expo-router";
 
 // components
-import { QueryProvider } from "./QueryProvider";
-import { ReduxStore } from "./ReduxStore";
-import { ResponsiveLayoutView } from "./ResponsiveLayoutView";
 import { Toast } from "@/components/Overlay/Toast";
 import { Confirm } from "@/components/Overlay/Confirm";
+import { ReduxStore } from "./ReduxStore";
+import { QueryProvider } from "./QueryProvider";
+import { ResponsiveLayoutView } from "./ResponsiveLayoutView";
 import { GlobalErrorBoundary } from "./GlobalErrorBoundary";
 
 // apis
 import axios from "axios";
 import { MockApiService } from "@/mocking/mockApi";
 
+// constants
+import { font } from "@/constants";
+
 // polyfills
 import { polyfill as polyfillReadableStream } from "react-native-polyfill-globals/src/readable-stream";
 import { polyfill as polyfillFetch } from "react-native-polyfill-globals/src/fetch";
 import { polyfill as polyfillEncoding } from "react-native-polyfill-globals/src/encoding";
-import { font } from "@/constants";
 
 /**
  * rn이 아닌 웹 환경에서 polyfill를 실행 할 경우
@@ -36,22 +38,26 @@ if (Platform.OS !== "web") {
 }
 
 export function RootLayout() {
+  const [ready, setReady] = useState(false);
+
   /**
    * 폰트, Mocking API, accessToken 설정
    */
   const map = useMemo(() => {
     const map: Record<string, FontSource> = {};
 
-    map[font.PretendardRegular] = require("@/assets/fonts/Pretendard-Regular.otf");
-    map[font.PretendardSemiBold] = require("@/assets/fonts/Pretendard-SemiBold.otf");
+    map[
+      font.PretendardRegular
+    ] = require("@/assets/fonts/Pretendard-Regular.otf");
+    map[
+      font.PretendardSemiBold
+    ] = require("@/assets/fonts/Pretendard-SemiBold.otf");
     map[font.YeonTheLand] = require("@/assets/fonts/yeonTheLand.ttf");
 
     return map;
-  }, []); 
+  }, []);
 
   const [fontsLoaded] = useFonts(map);
-
-  const [ready, setReady] = useState(false);
 
   useEffect(() => {
     (async () => {
