@@ -169,11 +169,11 @@ export function SignUpPage() {
         <Header
           style={styles.header}
           left={
-            <GoBackButton
-              onPress={handleGoBackButtonClick}
-              isHidden={isLastSlide()}
-              disabled={isLastSlide()}
-            />
+            !isLastSlide() ? (
+              <GoBackButton onPress={handleGoBackButtonClick} />
+            ) : (
+              <View style={styles.dummyButton} />
+            )
           }
         />
 

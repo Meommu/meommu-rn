@@ -14,4 +14,9 @@ export const styles = StyleSheet.create({
   header: {
     padding: 12,
   },
+
+  dummyButton: {
+    width: 40,
+    height: 40,
+  },
 });
