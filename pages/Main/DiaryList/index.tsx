@@ -1,7 +1,7 @@
 // react
 import { useState } from "react";
 import { Text } from "react-native";
-import { useQuery } from "react-query";
+import { useQuery, useQueryClient } from "react-query";
 
 // redux
 import { useSelector } from "react-redux";
@@ -34,6 +34,8 @@ import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { styles } from "./index.styles";
 
 export function DiaryList() {
+  const queryClient = useQueryClient();
+
   const [menuPressedDiaryId, setMenuPressedDiaryId] = useState(-1);
   const [bottomSheetIsOpen, setBottomSheetIsOpen] = useState({ value: false });
 
@@ -76,6 +78,8 @@ export function DiaryList() {
       "삭제시, 해당 일기를 영구적으로 열람할 수 없게 됩니다.",
       async () => {
         await apiService.deleteDiary(menuPressedDiaryId.toString());
+
+        await queryClient.invalidateQueries(["diariesSummary"]);
 
         refetch();
       },

@@ -117,7 +117,8 @@ function Diary() {
 
         const [year, month] = diary.date.split("-").map(Number);
 
-        queryClient.invalidateQueries(["diaryList", year, month]);
+        await queryClient.invalidateQueries(["diaryList", year, month]);
+        await queryClient.invalidateQueries(["diariesSummary"]);
 
         if (router.canGoBack()) {
           router.back();

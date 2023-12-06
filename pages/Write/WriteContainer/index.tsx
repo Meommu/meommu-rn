@@ -73,6 +73,7 @@ export function WriteContainer() {
         const [year, month] = diaryWriteDate.split("-").map(Number);
 
         await queryClient.invalidateQueries(["diaryList", year, month]);
+        await queryClient.invalidateQueries(["diariesSummary"]);
 
         router.replace(`/diary/${savedId}`);
       },

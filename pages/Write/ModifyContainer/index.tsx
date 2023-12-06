@@ -99,8 +99,8 @@ export function ModifyContainer() {
         const [year, month] = diaryWriteDate.split("-").map(Number);
 
         await queryClient.invalidateQueries(["diaryList", year, month]);
-
         await queryClient.invalidateQueries(["diaryDetail", diaryId]);
+        await queryClient.invalidateQueries(["diariesSummary"]);
 
         router.replace(`/diary/${diaryId}`);
       },
