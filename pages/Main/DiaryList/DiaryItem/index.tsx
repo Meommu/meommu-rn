@@ -30,10 +30,9 @@ export function DiaryItem({
       <View style={styles.imageSliderWrapper}>
         <ImageSlider imageIds={imageIds} aspectRatio="1/1" />
 
-        <KebabMenuButton
-          style={styles.menu}
-          onPress={handleKebabMenuButtonClick}
-        />
+        <View style={styles.menu}>
+          <KebabMenuButton onPress={handleKebabMenuButtonClick} />
+        </View>
       </View>
 
       <Pressable style={styles.diaryBody} onPress={handleDiaryBodyClick}>
