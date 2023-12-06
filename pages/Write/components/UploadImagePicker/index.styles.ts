@@ -40,6 +40,13 @@ export const styles = StyleSheet.create({
     fontFamily: font.PretendardRegular,
   },
 
+  wait: {
+    width: "100%",
+    height: "100%",
+
+    backgroundColor: color.g300,
+  },
+
   /**
    * 업로드 된 이미지
    */

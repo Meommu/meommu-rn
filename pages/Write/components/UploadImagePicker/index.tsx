@@ -8,7 +8,7 @@ import {
   type StyleProp,
 } from "react-native";
 import { useMutation } from "react-query";
-import { type UseFormSetValue } from "react-hook-form";
+import { type UseFormGetValues, type UseFormSetValue } from "react-hook-form";
 
 // redux
 import { useSelector } from "react-redux";
@@ -27,7 +27,7 @@ import { DraggableHorizontalScrollView } from "@/components/ScrollView/Draggable
 import { b64ToBlob } from "@/utils";
 
 // constants
-import { IMAGE_CATEGORY } from "@/constants";
+import { IMAGE_CATEGORY, color } from "@/constants";
 
 // apis
 import { apiService } from "@/apis";
@@ -42,12 +42,24 @@ import { useToast } from "@/hooks";
 import { styles } from "./index.styles";
 
 interface ImagePickerProps {
+  /**
+   * imagesIds의 값
+   *
+   * -1 : 업로드 중인 이미지
+   * 0~ : 업로드 된 이미지
+   */
   imageIds: number[];
 
   setValue: UseFormSetValue<DiaryWriteFormFieldValues>;
+
+  getValues: UseFormGetValues<DiaryWriteFormFieldValues>;
 }
 
-export function UploadImagePicker({ imageIds, setValue }: ImagePickerProps) {
+export function UploadImagePicker({
+  imageIds,
+  setValue,
+  getValues,
+}: ImagePickerProps) {
   const { fireToast } = useToast();
 
   /**
@@ -60,11 +72,43 @@ export function UploadImagePicker({ imageIds, setValue }: ImagePickerProps) {
    */
   const uploadImageMutation = useMutation(
     async (formData: FormData) => {
+      setValue("imageIds", [...imageIds, -1]);
+
       return await apiService.uploadImage(formData);
     },
     {
       onSuccess: (id: number) => {
-        setValue("imageIds", [...imageIds, id]);
+        const imageIds = getValues("imageIds");
+
+        const index = imageIds.indexOf(-1);
+
+        if (index === -1) {
+          return;
+        }
+
+        const newImageIds = [...imageIds];
+
+        newImageIds.splice(index, 1, id);
+
+        setValue("imageIds", newImageIds);
+      },
+      /**
+       * TODO: 직접 에러처리 핸들러를 등록해주게되면, 이미지 업로드 관련한 에러처리를 추가로 해 주어야 함.
+       */
+      onError: () => {
+        const imageIds = getValues("imageIds");
+
+        const index = imageIds.indexOf(-1);
+
+        if (index === -1) {
+          return;
+        }
+
+        const newImageIds = [...imageIds];
+
+        newImageIds.splice(index, 1);
+
+        setValue("imageIds", newImageIds);
       },
     }
   );
@@ -194,7 +238,17 @@ export function UploadImagePicker({ imageIds, setValue }: ImagePickerProps) {
           </View>
         </View>
 
-        {[...imageIds].reverse().map((imageId) => {
+        {[...imageIds].reverse().map((imageId, i) => {
+          if (imageId === -1) {
+            return (
+              <View style={itemLayoutStyle} key={`loadingImageId${i}`}>
+                <View style={styles.item}>
+                  <View style={styles.wait} />
+                </View>
+              </View>
+            );
+          }
+
           return (
             <View style={itemLayoutStyle} key={`imageId${imageId}`}>
               <View style={styles.item}>

@@ -20,7 +20,11 @@ export function WriteFormStepTwo() {
 
   return (
     <View style={styles.container}>
-      <UploadImagePicker imageIds={imageIds} setValue={setValue} />
+      <UploadImagePicker
+        imageIds={imageIds}
+        setValue={setValue}
+        getValues={getValues}
+      />
 
       <View style={styles.writeForm}>
         <View style={styles.writeFormTitleInputWrapper}>
