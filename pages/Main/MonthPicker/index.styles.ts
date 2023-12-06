@@ -2,14 +2,14 @@
 import { StyleSheet } from "react-native";
 
 // constants
-import { zIndex } from "@/constants";
+import { color, font, zIndex } from "@/constants";
 
 export const styles = StyleSheet.create({
   container: {
-    paddingVertical: 8,
+    paddingVertical: 10,
     paddingHorizontal: 21,
-    backgroundColor: "#ECECF2",
-    alignItems: "flex-start",
+
+    backgroundColor: color.g200,
   },
 
   content: {
@@ -19,9 +19,10 @@ export const styles = StyleSheet.create({
   },
 
   dateText: {
+    color: color.g500,
     fontSize: 18,
-    fontFamily: "yeonTheLand",
-    color: "#89899C",
+    fontFamily: font.YeonTheLand,
+    lineHeight: 24,
   },
 
   /**
@@ -29,16 +30,19 @@ export const styles = StyleSheet.create({
    */
   bottomSheetBackdrop: {
     width: "100%",
+
     zIndex: zIndex.bottomSheetBackdrop,
   },
 
   bottomSheetContainer: {
     marginHorizontal: "auto",
+
     zIndex: zIndex.bottomSheetContainer,
   },
 
   handleIndicator: {
-    backgroundColor: "rgba(0, 0, 0, 0.3)",
     width: "10%",
+
+    backgroundColor: "rgba(0, 0, 0, 0.3)",
   },
 });

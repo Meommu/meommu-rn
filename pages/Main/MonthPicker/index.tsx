@@ -110,6 +110,7 @@ export function MonthPicker() {
           <Text style={styles.dateText}>
             {selectedYear}년 {selectedMonth}월
           </Text>
+
           <ArrowDropDown />
         </Pressable>
       </View>
