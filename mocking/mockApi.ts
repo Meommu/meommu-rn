@@ -620,7 +620,16 @@ export class MockApiService {
          * [POST] 이미지 업로드
          */
         this.post("/api/v1/images", (schema, request) => {
-          // TODO: 확장자에 대한 예외응답 생성
+          const images = schema.db.images;
+
+          const nextId = images.length + 1;
+
+          schema.db.images.insert({
+            id: nextId,
+            url: faker.image.url(),
+          });
+
+          console.log("[miragejs]", images);
 
           return new Response(
             httpStatus.CREATED,
@@ -629,7 +638,7 @@ export class MockApiService {
               code: CODE.OK,
               message: "정상",
               data: {
-                images: [{ id: createRandomNumberInRange(1, 7), url: "" }],
+                images: [{ id: nextId, url: "" }],
               },
             })
           );
