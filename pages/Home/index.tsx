@@ -114,6 +114,7 @@ export function HomePage() {
             render={({ field: { onChange, onBlur, value } }) => (
               <FormInput
                 placeholder="아이디 (이메일)"
+                inputMode="email"
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
