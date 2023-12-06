@@ -12,6 +12,7 @@
       "backgroundColor": "#ffffff"
     },
     "assetBundlePatterns": ["**/*"],
+    "scheme": "meommu",
     "ios": {
       "supportsTablet": true
     },
