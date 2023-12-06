@@ -1,6 +1,6 @@
 // react
 import { useState } from "react";
-import { Text } from "react-native";
+import { RefreshControl, Text } from "react-native";
 import { useQuery, useQueryClient } from "react-query";
 
 // redux
@@ -49,7 +49,7 @@ export function DiaryList() {
   /**
    * 다이어리 일기정보 불러오기
    */
-  const { data, isLoading, refetch } = useQuery(
+  const { data, isLoading, isFetching, refetch } = useQuery(
     ["diaryList", selectedYear, selectedMonth],
     async () => {
       return await apiService.getDiaries(selectedYear, selectedMonth);
@@ -88,10 +88,26 @@ export function DiaryList() {
     );
   };
 
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
   return (
     <BottomSheetModalProvider>
-      <NonIndicatorScrollView style={styles.container}>
-        {isLoading ? (
+      <NonIndicatorScrollView
+        contentContainerStyle={styles.container}
+        refreshControl={
+          <RefreshControl
+            refreshing={isRefreshing}
+            onRefresh={async () => {
+              setIsRefreshing(true);
+
+              await refetch();
+
+              setIsRefreshing(false);
+            }}
+          />
+        }
+      >
+        {isLoading || isFetching ? (
           Array(3)
             .fill(null)
             .map((_, i) => {
