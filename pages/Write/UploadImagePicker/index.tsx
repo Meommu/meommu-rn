@@ -72,7 +72,9 @@ export function UploadImagePicker({ imageIds, setValue }: ImagePickerProps) {
   /**
    * event handler
    */
-  const handleImageRemoveButtonClick = (index: number) => () => {
+  const handleImageRemoveButtonClick = (imageId: number) => () => {
+    const index = imageIds.indexOf(imageId);
+
     const newImageIds = [...imageIds];
 
     newImageIds.splice(index, 1);
@@ -192,26 +194,26 @@ export function UploadImagePicker({ imageIds, setValue }: ImagePickerProps) {
           </View>
         </View>
 
-        {Array(5)
+        {[...imageIds].reverse().map((imageId) => {
+          return (
+            <View style={itemLayoutStyle} key={`imageId${imageId}`}>
+              <View style={styles.item}>
+                <LoadImage imageId={imageId} />
+
+                <Pressable
+                  onPress={handleImageRemoveButtonClick(imageId)}
+                  style={styles.imageRemover}
+                >
+                  <ImageRemoveButton />
+                </Pressable>
+              </View>
+            </View>
+          );
+        })}
+
+        {Array(5 - imageIds.length)
           .fill(null)
           .map((_, i) => {
-            if (imageIds[i] !== undefined) {
-              return (
-                <View style={itemLayoutStyle} key={`imageId${imageIds[i]}`}>
-                  <View style={styles.item}>
-                    <LoadImage imageId={imageIds[i]} />
-
-                    <Pressable
-                      onPress={handleImageRemoveButtonClick(i)}
-                      style={styles.imageRemover}
-                    >
-                      <ImageRemoveButton />
-                    </Pressable>
-                  </View>
-                </View>
-              );
-            }
-
             return (
               <View style={itemLayoutStyle} key={i}>
                 <View style={styles.item} />
