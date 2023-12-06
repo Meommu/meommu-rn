@@ -6,6 +6,8 @@ import { color, font, zIndex } from "@/constants";
 
 export const styles = StyleSheet.create({
   container: {
+    alignItems: "flex-start",
+
     paddingVertical: 10,
     paddingHorizontal: 21,
 
