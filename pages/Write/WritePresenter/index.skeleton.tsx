@@ -4,6 +4,7 @@ import { View } from "react-native";
 // components
 import { Header } from "@/components/Layout/Header";
 import { SView } from "@/components/Layout/SView";
+import { Footer } from "@/components/Layout/Footer";
 import { WriteFormStepOneSkeleton } from "./WriteForm/WriteFormStepOne/index.skeleton";
 
 // constants
@@ -27,11 +28,11 @@ export function WritePresenterSkeleton() {
 
       <WriteFormStepOneSkeleton />
 
-      <View style={styles.bottomButtonWrapper}>
+      <Footer style={styles.footer}>
         <SView
           style={{ width: "100%", height: size.NAVIGATION_BUTTON_HEIGHT }}
         />
-      </View>
+      </Footer>
     </View>
   );
 }
