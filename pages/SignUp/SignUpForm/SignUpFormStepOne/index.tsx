@@ -1,7 +1,10 @@
 // react
 import { Controller, useFormContext } from "react-hook-form";
-import { View, Text } from "react-native";
+import { View, Text, Pressable, Platform } from "react-native";
 import { useMutation } from "react-query";
+
+// expo
+import * as Linking from "expo-linking";
 
 // components
 import { FormInput } from "@/components/Input/FormInput";
@@ -24,6 +27,13 @@ import { regExp } from "@/constants";
 
 // styles
 import { styles } from "./index.styles";
+
+const TERMS_OF_USE_LINK =
+  "https://glittery-indigo-2e2.notion.site/8628c2aec700417299577d4ab1547f3d?pvs=25#9ff248ea306a4a6da8de2c3214ebb255";
+const PRIVACY_POLICY_LINK =
+  "https://glittery-indigo-2e2.notion.site/8628c2aec700417299577d4ab1547f3d#d117b28858274d6aacc87700d0fc77f9";
+const TERMS_OF_USE_AND_PRIVACY_POLICY_LINK =
+  "https://glittery-indigo-2e2.notion.site/8628c2aec700417299577d4ab1547f3d";
 
 export function SignUpFormStepOne() {
   /**
@@ -78,6 +88,36 @@ export function SignUpFormStepOne() {
 
     return;
   }, [trigger, emailDupChkMutation]);
+
+  const handleTermsOfUseTextClick = useCallback(() => {
+    if (Platform.OS === "web") {
+      window.open(TERMS_OF_USE_LINK, "_blank");
+
+      return;
+    }
+
+    Linking.openURL(TERMS_OF_USE_LINK);
+  }, []);
+
+  const handlePrivacyPolicyTextClick = useCallback(() => {
+    if (Platform.OS === "web") {
+      window.open(PRIVACY_POLICY_LINK, "_blank");
+
+      return;
+    }
+
+    Linking.openURL(PRIVACY_POLICY_LINK);
+  }, []);
+
+  const handleTermsOfUseAndPrivacyPolicyButtonClick = useCallback(() => {
+    if (Platform.OS === "web") {
+      window.open(TERMS_OF_USE_AND_PRIVACY_POLICY_LINK, "_blank");
+
+      return;
+    }
+
+    Linking.openURL(TERMS_OF_USE_AND_PRIVACY_POLICY_LINK);
+  }, []);
 
   /**
    * 유틸 함수
@@ -253,11 +293,40 @@ export function SignUpFormStepOne() {
               testID="button-agreement"
             />
 
-            <Text style={styles.agreementFormFieldText}>
-              서비스 이용 및 개인정보 수집약관에 동의합니다.
-            </Text>
+            <View style={styles.agreementFormField}>
+              <Pressable onPress={handleTermsOfUseTextClick}>
+                <Text
+                  style={[
+                    styles.agreementFormFieldText,
+                    { textDecorationLine: "underline" },
+                  ]}
+                >
+                  서비스 이용
+                </Text>
+              </Pressable>
 
-            <CaretRight />
+              <Text style={styles.agreementFormFieldText}> 및 </Text>
+
+              <Pressable onPress={handlePrivacyPolicyTextClick}>
+                <Text
+                  style={[
+                    styles.agreementFormFieldText,
+                    { textDecorationLine: "underline" },
+                  ]}
+                >
+                  개인정보 수집약관
+                </Text>
+              </Pressable>
+
+              <Text style={styles.agreementFormFieldText}>에 동의합니다.</Text>
+            </View>
+
+            <Pressable
+              style={styles.agreementFormFieldCaretRight}
+              onPress={handleTermsOfUseAndPrivacyPolicyButtonClick}
+            >
+              <CaretRight />
+            </Pressable>
           </View>
         </View>
       </NonIndicatorScrollView>

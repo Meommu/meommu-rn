@@ -62,6 +62,7 @@ export const styles = StyleSheet.create({
     fontSize: 10,
     fontFamily: font.PretendardSemiBold,
     color: color.g400,
+    lineHeight: 14,
   },
 
   emailFormFieldLayout: {
@@ -77,13 +78,22 @@ export const styles = StyleSheet.create({
     gap: 9,
   },
 
-  agreementFormFieldText: {
+  agreementFormField: {
     width: "100%",
-    flexGrow: 1,
     flexShrink: 1,
+    flexDirection: "row",
+  },
 
+  agreementFormFieldText: {
     color: color.g700,
     fontSize: 14,
     fontFamily: font.PretendardSemiBold,
+  },
+
+  agreementFormFieldCaretRight: {
+    width: 26,
+    height: 26,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
