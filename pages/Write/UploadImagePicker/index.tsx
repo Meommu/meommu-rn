@@ -35,6 +35,9 @@ import { apiService } from "@/apis";
 // svgs
 import Camera from "@/assets/svgs/camera.svg";
 
+// hooks
+import { useToast } from "@/hooks";
+
 // styles
 import { styles } from "./index.styles";
 
@@ -45,6 +48,8 @@ interface ImagePickerProps {
 }
 
 export function UploadImagePicker({ imageIds, setValue }: ImagePickerProps) {
+  const { fireToast } = useToast();
+
   /**
    * imagePicker
    */
@@ -83,6 +88,12 @@ export function UploadImagePicker({ imageIds, setValue }: ImagePickerProps) {
       if (!permission.granted) {
         return;
       }
+    }
+
+    if (imageIds.length >= 5) {
+      fireToast("이미지는 최대 5개까지 추가할 수 있습니다.", 3000);
+
+      return;
     }
 
     // 이미지 선택 후 업로드
