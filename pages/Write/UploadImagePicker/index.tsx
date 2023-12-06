@@ -4,7 +4,6 @@ import {
   Text,
   Pressable,
   Platform,
-  ScrollView,
   type ViewStyle,
   type StyleProp,
 } from "react-native";
@@ -22,6 +21,7 @@ import * as ImagePicker from "expo-image-picker";
 // components
 import { LoadImage } from "@/components/Widget/LoadImage";
 import { ImageRemoveButton } from "@/components/Button/ImageRemoveButton";
+import { DraggableHorizontalScrollView } from "@/components/ScrollView/DraggableHorizontalScrollView";
 
 // utils
 import { b64ToBlob } from "@/utils";
@@ -182,7 +182,7 @@ export function UploadImagePicker({ imageIds, setValue }: ImagePickerProps) {
   };
 
   return (
-    <ScrollView style={{ flexShrink: 0 }} horizontal>
+    <DraggableHorizontalScrollView>
       <View style={styles.list} onStartShouldSetResponder={() => true}>
         <View style={itemLayoutStyle}>
           <View style={styles.item}>
@@ -221,6 +221,6 @@ export function UploadImagePicker({ imageIds, setValue }: ImagePickerProps) {
             );
           })}
       </View>
-    </ScrollView>
+    </DraggableHorizontalScrollView>
   );
 }
