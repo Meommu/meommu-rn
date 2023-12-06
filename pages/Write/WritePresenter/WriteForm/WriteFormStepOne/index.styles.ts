@@ -15,7 +15,7 @@ export const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
 
-    padding: 20,
+    paddingHorizontal: 20,
     paddingBottom: 10,
   },
 
