@@ -40,7 +40,7 @@ export function MultiSelectList({ guideElementItems }: MultiSelectListProps) {
             style={[
               styles.item,
               {
-                backgroundColor: isSelect ? color.primary : "#363C48",
+                backgroundColor: isSelect ? color.primary : color.bg400,
               },
             ]}
           >
@@ -49,7 +49,7 @@ export function MultiSelectList({ guideElementItems }: MultiSelectListProps) {
               style={[
                 styles.itemText,
                 {
-                  color: isSelect ? "white" : "#8A8E95",
+                  color: isSelect ? color.w : color.bg200,
                 },
               ]}
             >

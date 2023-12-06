@@ -2,7 +2,7 @@
 import { StyleSheet } from "react-native";
 
 // constants
-import { color } from "@/constants";
+import { color, font } from "@/constants";
 
 export const styles = StyleSheet.create({
   container: {
@@ -17,24 +17,27 @@ export const styles = StyleSheet.create({
 
   profileImageLayout: {
     width: "100%",
-    marginTop: 21,
-    marginBottom: 45,
     justifyContent: "center",
     alignItems: "center",
+
+    marginTop: 21,
+    marginBottom: 45,
   },
 
   profileImage: {
     width: 90,
     height: 90,
-    backgroundColor: color.primary,
-    borderRadius: 36,
     justifyContent: "center",
     alignItems: "center",
+
+    backgroundColor: color.primary,
+
+    borderRadius: 36,
   },
 
   profileImageText: {
-    fontFamily: "yeonTheLand",
-    fontSize: 26,
     color: color.w,
+    fontFamily: font.YeonTheLand,
+    fontSize: 26,
   },
 });

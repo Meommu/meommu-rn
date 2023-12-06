@@ -2,7 +2,7 @@
 import { StyleSheet } from "react-native";
 
 // constants
-import { zIndex } from "@/constants";
+import { color, zIndex } from "@/constants";
 
 export const styles = StyleSheet.create({
   /**
@@ -14,7 +14,7 @@ export const styles = StyleSheet.create({
   },
 
   bottomSheetBackground: {
-    backgroundColor: "#1B1E26",
+    backgroundColor: color.bg500,
   },
 
   bottomSheetContent: {

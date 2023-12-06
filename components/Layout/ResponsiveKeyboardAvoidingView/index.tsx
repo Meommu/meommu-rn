@@ -6,17 +6,16 @@ import {
   Pressable,
   Platform,
   View,
-  StyleSheet,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+
+// styles
+import { styles } from "./index.styles";
 
 interface ResponsiveKeyboardAvoidingViewProps {
   children: React.ReactNode;
 }
 
-/**
- * input이 내부에 존재하는 화면을 구현할 때 사용하는 뷰
- */
 export function ResponsiveKeyboardAvoidingView({
   children,
 }: ResponsiveKeyboardAvoidingViewProps) {
@@ -24,9 +23,9 @@ export function ResponsiveKeyboardAvoidingView({
 
   if (Platform.OS === "ios") {
     return (
-      <Pressable style={styles.fillScreen} onPress={Keyboard.dismiss}>
+      <Pressable style={styles.container} onPress={Keyboard.dismiss}>
         <KeyboardAvoidingView
-          style={styles.fillScreen}
+          style={styles.container}
           behavior="padding"
           keyboardVerticalOffset={top - bottom}
         >
@@ -38,23 +37,11 @@ export function ResponsiveKeyboardAvoidingView({
 
   if (Platform.OS === "android") {
     return (
-      <Pressable style={styles.fillScreen} onPress={Keyboard.dismiss}>
+      <Pressable style={styles.container} onPress={Keyboard.dismiss}>
         {children}
       </Pressable>
     );
   }
 
-  return <View style={styles.fillScreen}>{children}</View>;
+  return <View style={styles.container}>{children}</View>;
 }
-
-const styles = StyleSheet.create({
-  fillScreen: {
-    width: "100%",
-    height: "100%",
-    ...Platform.select({
-      web: {
-        cursor: "normal",
-      },
-    }),
-  },
-});

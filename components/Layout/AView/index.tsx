@@ -1,7 +1,7 @@
 // react
 import React, { useState, useEffect, useRef } from "react";
+import { type ViewStyle } from "react-native";
 import Animated from "react-native-reanimated";
-import { ViewStyle } from "react-native";
 
 // hooks
 import { FadeInOut } from "@/hooks";

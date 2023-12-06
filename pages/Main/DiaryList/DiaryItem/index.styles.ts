@@ -1,14 +1,19 @@
 // react
 import { StyleSheet } from "react-native";
 
+// constants
+import { color, font } from "@/constants";
+
 export const styles = StyleSheet.create({
   container: {
-    paddingBottom: 30,
     gap: 16,
+
+    paddingBottom: 30,
   },
 
   imageSliderWrapper: {
     width: "100%",
+
     position: "relative",
   },
 
@@ -24,20 +29,20 @@ export const styles = StyleSheet.create({
   },
 
   diaryTitle: {
-    color: "black",
+    color: color.b,
     fontSize: 26,
-    fontFamily: "yeonTheLand",
+    fontFamily: font.YeonTheLand,
   },
 
   diaryContent: {
+    color: color.g500,
     fontSize: 16,
-    fontFamily: "yeonTheLand",
-    color: "#626154",
+    fontFamily: font.YeonTheLand,
   },
 
   diaryInfo: {
-    color: "#8F8F8F",
+    color: color.g400,
     fontSize: 14,
-    fontFamily: "yeonTheLand",
+    fontFamily: font.YeonTheLand,
   },
 });

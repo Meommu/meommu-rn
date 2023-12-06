@@ -1,36 +1,45 @@
 // react
 import { StyleSheet } from "react-native";
 
+// constants
+import { color, font } from "@/constants";
+
 export const styles = StyleSheet.create({
   container: {
-    padding: 12,
     flexDirection: "row",
     alignItems: "center",
     gap: 14,
+
+    padding: 12,
   },
 
   profileImage: {
     width: 70,
     height: 70,
+
     borderRadius: 30,
+
     position: "relative",
+
     overflow: "hidden",
   },
 
   profileImagePlaceholder: {
     position: "absolute",
+
     width: "100%",
     height: "100%",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#8579F1",
+
+    backgroundColor: color.primary,
   },
 
   profileImagePlaceholderText: {
+    color: color.w,
     fontSize: 26,
-    fontFamily: "yeonTheLand",
+    fontFamily: font.YeonTheLand,
     fontWeight: "normal",
-    color: "white",
   },
 
   profileContent: {
@@ -38,14 +47,14 @@ export const styles = StyleSheet.create({
   },
 
   profileContentName: {
-    color: "#1A1A1A",
+    color: color.g800,
     fontSize: 18,
-    fontFamily: "Pretendard-SemiBold",
+    fontFamily: font.PretendardSemiBold,
   },
 
   profileContentEmail: {
-    fontFamily: "Pretendard-Regular",
+    color: color.g400,
+    fontFamily: font.PretendardRegular,
     fontSize: 12,
-    color: "#808080",
   },
 });

@@ -1,6 +1,5 @@
 // react
-import { ScrollView } from "react-native";
-import type { ScrollViewProps } from "react-native";
+import { ScrollView, type ScrollViewProps } from "react-native";
 
 export function NonIndicatorScrollView({
   children,
@@ -8,9 +7,9 @@ export function NonIndicatorScrollView({
 }: ScrollViewProps) {
   return (
     <ScrollView
-      {...props}
       showsVerticalScrollIndicator={false}
       showsHorizontalScrollIndicator={false}
+      {...props}
     >
       {children}
     </ScrollView>

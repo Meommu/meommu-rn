@@ -1,24 +1,30 @@
 // react
 import { StyleSheet } from "react-native";
 
+// constants
+import { font } from "@/constants";
+
 export const styles = StyleSheet.create({
   list: {
     width: "100%",
     gap: 10,
+
     paddingHorizontal: 20,
   },
 
   item: {
     width: "100%",
     height: 48,
-    borderRadius: 6,
     justifyContent: "center",
     alignItems: "flex-start",
+
+    borderRadius: 6,
   },
 
   itemText: {
-    paddingHorizontal: 16,
     fontSize: 16,
-    fontFamily: "Pretendard-SemiBold",
+    fontFamily: font.PretendardSemiBold,
+
+    paddingHorizontal: 16,
   },
 });

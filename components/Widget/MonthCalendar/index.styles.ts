@@ -2,7 +2,7 @@
 import { StyleSheet } from "react-native";
 
 // constants
-import { size } from "@/constants";
+import { size, font, color } from "@/constants";
 
 export const styles = StyleSheet.create({
   container: {
@@ -10,21 +10,22 @@ export const styles = StyleSheet.create({
   },
 
   header: {
-    paddingHorizontal: 20,
     height: 40,
+
+    paddingHorizontal: 20,
   },
 
   yearText: {
     fontSize: 18,
-    fontFamily: "Pretendard-SemiBold",
+    fontFamily: font.PretendardSemiBold,
     textAlign: "center",
-    color: "#4A5660",
+    color: color.g500,
   },
 
   swiperController: {
     width: 40,
     height: 40,
-    justifyContent: "center",
     alignItems: "center",
+    justifyContent: "center",
   },
 });

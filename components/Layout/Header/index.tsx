@@ -1,7 +1,9 @@
 // react
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
-import type { ViewProps } from "react-native";
+import { View, Text, type ViewProps } from "react-native";
+
+// styles
+import { styles } from "./index.styles";
 
 interface HeaderProps extends ViewProps {
   title?: string | React.ReactNode;
@@ -27,28 +29,3 @@ export function Header({ title, left, right, style, ...props }: HeaderProps) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    width: "100%",
-    position: "relative",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-
-  controller: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    width: "100%",
-  },
-
-  title: {
-    position: "absolute",
-  },
-
-  titleText: {
-    fontSize: 20,
-    fontFamily: "Pretendard-SemiBold",
-    color: "#2B2B32",
-  },
-});

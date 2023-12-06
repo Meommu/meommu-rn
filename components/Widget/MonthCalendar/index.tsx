@@ -3,22 +3,25 @@ import React, { useCallback, useMemo, useState } from "react";
 import { View, Text, Pressable } from "react-native";
 import Swiper from "react-native-web-swiper";
 
-// svgs
-import CaretRight from "@/assets/svgs/caret-right.svg";
-import CaretLeft from "@/assets/svgs/caret-left.svg";
-
 // components
 import { MonthCalendarItem } from "./MonthCalendarItem";
-import { Header } from "@/components/Layout/Header";
 import { NavigationButton } from "@/components/Button/NavigationButton";
-import { MonthCalendarProvider } from "./index.context";
+import { Header } from "@/components/Layout/Header";
 import { Footer } from "@/components/Layout/Footer";
+import { MonthCalendarProvider } from "./index.context";
 
 // utils
 import { getPastYearDate } from "@/utils";
 
 // hooks
 import { useSwiper } from "@/hooks";
+
+// constants
+import { color } from "@/constants";
+
+// svgs
+import CaretRight from "@/assets/svgs/caret-right.svg";
+import CaretLeft from "@/assets/svgs/caret-left.svg";
 
 // styles
 import { styles } from "./index.styles";
@@ -95,7 +98,7 @@ export function MonthCalendar({
               testID="button-month-calendar-prev"
               style={styles.swiperController}
             >
-              <CaretLeft fill={"#B5BEC6"} />
+              <CaretLeft fill={color.g300} />
             </Pressable>
           )
         }
@@ -105,7 +108,7 @@ export function MonthCalendar({
               onPress={handlerSwiperNextButtonClick}
               style={styles.swiperController}
             >
-              <CaretRight fill={"#B5BEC6"} />
+              <CaretRight fill={color.g300} />
             </Pressable>
           )
         }

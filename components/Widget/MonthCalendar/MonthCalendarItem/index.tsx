@@ -8,6 +8,9 @@ import { LoadImage } from "@/components/Widget/LoadImage";
 // context
 import { MonthCalendarContext } from "../index.context";
 
+// constants
+import { color } from "@/constants";
+
 // styles
 import { styles } from "./index.styles";
 
@@ -61,7 +64,7 @@ export function MonthCalendarItem({
                   style={[
                     styles.monthElementCircle,
                     {
-                      borderColor: isSelected ? "black" : "white",
+                      borderColor: isSelected ? color.b : color.w,
                     },
                   ]}
                   onPress={handleMonthSelect(month)}
@@ -92,8 +95,8 @@ export function MonthCalendarItem({
                         color: isFuture
                           ? "lightgray"
                           : isCurrentDate || diaryImageId !== undefined
-                          ? "white"
-                          : "#4A5660",
+                          ? color.w
+                          : color.g500,
                       },
                     ]}
                   >

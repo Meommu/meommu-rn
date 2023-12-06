@@ -1,9 +1,12 @@
 // react
+import { useState } from "react";
 import { View, TextInput } from "react-native";
+
+// constants
+import { color } from "@/constants";
 
 // styles
 import { styles } from "./index.styles";
-import { useState } from "react";
 
 interface SentenseInputProps {
   guideElementItems: GuideElementItem[];
@@ -31,7 +34,7 @@ export function SentenseInput({ guideElementItems }: SentenseInputProps) {
       <TextInput
         multiline={true}
         placeholder="GPT가 자동으로 만들어 드릴게요"
-        placeholderTextColor={"#B7B8BA"}
+        placeholderTextColor={color.bg200}
         textAlignVertical="top"
         style={styles.input}
         onChangeText={handleTextChange}

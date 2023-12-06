@@ -7,16 +7,21 @@ import { color, font } from "@/constants";
 export const styles = StyleSheet.create({
   container: {
     width: "100%",
-    overflow: "hidden",
+
     position: "relative",
+
+    overflow: "hidden",
   },
 
   order: {
     position: "absolute",
     bottom: 10,
     right: 10,
+
     backgroundColor: color.bg400,
+
     borderRadius: 400,
+
     paddingVertical: 3,
     paddingHorizontal: 11,
   },

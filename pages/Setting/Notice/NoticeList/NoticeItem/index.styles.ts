@@ -1,6 +1,9 @@
 // react
 import { StyleSheet } from "react-native";
 
+// constants
+import { font, color } from "@/constants";
+
 export const styles = StyleSheet.create({
   container: {
     width: "100%",
@@ -8,19 +11,22 @@ export const styles = StyleSheet.create({
 
   title: {
     width: "100%",
-    paddingVertical: 12,
-    paddingHorizontal: 21,
-    backgroundColor: "#ECECF2",
     flexDirection: "row",
     justifyContent: "space-between",
+
+    paddingVertical: 12,
+    paddingHorizontal: 21,
+
+    backgroundColor: "#ECECF2",
   },
 
   titleText: {
-    color: "#4E4E5B",
-    fontSize: 16,
-    fontFamily: "Pretendard-SemiBold",
     justifyContent: "center",
     alignItems: "center",
+
+    color: color.g700,
+    fontSize: 16,
+    fontFamily: font.PretendardSemiBold,
   },
 
   content: {
@@ -30,8 +36,8 @@ export const styles = StyleSheet.create({
 
   contentText: {
     color: "#8B8B99",
-    lineHeight: 32,
     fontSize: 16,
-    fontFamily: "Pretendard-Regular",
+    fontFamily: font.PretendardRegular,
+    lineHeight: 32,
   },
 });

@@ -1,6 +1,5 @@
 // react
-import { View, Image } from "react-native";
-import type { ViewProps, ImageStyle } from "react-native";
+import { View, Image, type ViewProps, type ImageStyle } from "react-native";
 import { useQuery } from "react-query";
 
 // apis

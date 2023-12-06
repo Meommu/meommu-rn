@@ -1,6 +1,9 @@
 // react
 import { StyleSheet } from "react-native";
 
+// constants
+import { color, font } from "@/constants";
+
 export const styles = StyleSheet.create({
   container: {
     width: "100%",
@@ -17,8 +20,8 @@ export const styles = StyleSheet.create({
   monthElement: {
     width: "100%",
     height: "100%",
-    justifyContent: "center",
     alignItems: "center",
+    justifyContent: "center",
 
     padding: 5,
   },
@@ -26,9 +29,8 @@ export const styles = StyleSheet.create({
   monthElementCircle: {
     height: "100%",
     aspectRatio: "1/1",
-
-    justifyContent: "center",
     alignItems: "center",
+    justifyContent: "center",
 
     borderRadius: 999,
     borderWidth: 1,
@@ -39,14 +41,15 @@ export const styles = StyleSheet.create({
   },
 
   monthElementCircleImage: {
-    position: "absolute",
     width: "100%",
     height: "100%",
+
+    position: "absolute",
   },
 
   monthElementText: {
     fontSize: 16,
-    fontFamily: "Pretendard-Regular",
-    color: "#4A5660",
+    fontFamily: font.PretendardRegular,
+    color: color.g500,
   },
 });

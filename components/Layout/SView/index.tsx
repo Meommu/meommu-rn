@@ -1,12 +1,14 @@
 // react
 import { useEffect, useRef } from "react";
 import type { ViewProps } from "react-native";
-import {
+import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
-import Animated from "react-native-reanimated";
+
+// styles
+import { styles } from "./index.styles";
 
 const BRIGHT = 0.3;
 const DARK = 0.8;
@@ -43,13 +45,5 @@ export function SView({ style, duration = 750 }: SViewProps) {
     };
   }, []);
 
-  return (
-    <Animated.View
-      style={[
-        animatedStyle,
-        { backgroundColor: "lightgray", borderRadius: 4 },
-        style,
-      ]}
-    />
-  );
+  return <Animated.View style={[animatedStyle, styles.container, style]} />;
 }

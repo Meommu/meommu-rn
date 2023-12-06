@@ -1,7 +1,6 @@
 // react
 import { useEffect, useState } from "react";
-import { Image, ImageStyle } from "react-native";
-import type { ImageProps } from "react-native";
+import { Image, ImageStyle, type ImageProps } from "react-native";
 
 // hooks
 import { useDynamicStyle } from "@/hooks";
@@ -66,10 +65,5 @@ export function OriginRatioImage({
     return;
   }
 
-  return (
-    <Image
-      {...props}
-      style={[style, imageRatioStyle]}
-    />
-  );
+  return <Image {...props} style={[style, imageRatioStyle]} />;
 }
