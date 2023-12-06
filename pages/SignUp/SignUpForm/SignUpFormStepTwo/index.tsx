@@ -10,6 +10,9 @@ import { NonIndicatorScrollView } from "@/components/ScrollView/NonIndicatorScro
 // constants
 import { regExp } from "@/constants";
 
+// utils
+import { insertHyphenToPhoneNumber } from "@/utils";
+
 // styles
 import { styles } from "./index.styles";
 
@@ -134,7 +137,9 @@ export function SignUpFormStepTwo({
                 <FormInput
                   placeholder="예) 010-1234-5678"
                   onBlur={onBlur}
-                  onChangeText={onChange}
+                  onChangeText={(str) => {
+                    onChange(insertHyphenToPhoneNumber(str));
+                  }}
                   value={value}
                   testID="input-signup-phone-number"
                 />
