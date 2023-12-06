@@ -7,7 +7,7 @@ import type { AnyModels, AnyFactories } from "miragejs/-types";
 import { CODE, regExp } from "@/constants";
 
 // utils
-import { resBodyTemplate, createRandomNumberInRange } from "@/utils";
+import { resBodyTemplate } from "@/utils";
 
 // other
 import httpStatus from "http-status";
@@ -628,8 +628,6 @@ export class MockApiService {
             id: nextId,
             url: faker.image.url(),
           });
-
-          console.log("[miragejs]", images);
 
           return new Response(
             httpStatus.CREATED,

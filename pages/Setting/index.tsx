@@ -13,8 +13,8 @@ import { PATH } from "@/constants";
 // components
 import { GoBackButton } from "@/components/Button/GoBackButton";
 import { Header } from "@/components/Layout/Header";
-import { ProfileCard } from "./ProfileCard";
-import { ProfileCardSkeleton } from "./ProfileCard/index.skeleton";
+import { ProfileCard } from "./components/ProfileCard";
+import { ProfileCardSkeleton } from "./components/ProfileCard/index.skeleton";
 import { TransparentButton } from "@/components/Button/TransparentButton";
 
 // apis

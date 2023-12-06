@@ -16,9 +16,9 @@ import { GoBackButton } from "@/components/Button/GoBackButton";
 import { NavigationButton } from "@/components/Button/NavigationButton";
 import { Header } from "@/components/Layout/Header";
 import { SwiperIndexForTest } from "@/components/Widget/SwiperIndexForTest";
-import { SignUpFormStepOne } from "./SignUpForm/SignUpFormStepOne";
-import { SignUpFormStepTwo } from "./SignUpForm/SignUpFormStepTwo";
-import { SignUpFormStepThree } from "./SignUpForm/SignUpFormStepThree";
+import { SignUpFormStepOne } from "./SignUpPresenter/SignUpForm/SignUpFormStepOne";
+import { SignUpFormStepTwo } from "./SignUpPresenter/SignUpForm/SignUpFormStepTwo";
+import { SignUpFormStepThree } from "./SignUpPresenter/SignUpForm/SignUpFormStepThree";
 
 // constants
 import { PATH } from "@/constants";

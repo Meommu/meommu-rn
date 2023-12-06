@@ -10,10 +10,10 @@ import { Stack } from "expo-router";
 // components
 import { Toast } from "@/components/Overlay/Toast";
 import { Confirm } from "@/components/Overlay/Confirm";
-import { ReduxStore } from "./ReduxStore";
-import { QueryProvider } from "./QueryProvider";
-import { ResponsiveLayoutView } from "./ResponsiveLayoutView";
-import { GlobalErrorBoundary } from "./GlobalErrorBoundary";
+import { ReduxStore } from "./components/ReduxStore";
+import { QueryProvider } from "./components/QueryProvider";
+import { ResponsiveLayoutView } from "./components/ResponsiveLayoutView";
+import { GlobalErrorBoundary } from "./components/GlobalErrorBoundary";
 
 // apis
 import axios from "axios";

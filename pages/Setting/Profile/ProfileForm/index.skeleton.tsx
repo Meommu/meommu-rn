@@ -1,6 +1,6 @@
 // components
 import { SView } from "@/components/Layout/SView";
-import { SignUpFormStepTwoSkeleton } from "@/pages/SignUp/SignUpForm/SignUpFormStepTwo/index.skeleton";
+import { SignUpFormStepTwoSkeleton } from "@/pages/SignUp/SignUpPresenter/SignUpForm/SignUpFormStepTwo/index.skeleton";
 import { Footer } from "@/components/Layout/Footer";
 
 // constants

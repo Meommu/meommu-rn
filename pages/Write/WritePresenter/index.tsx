@@ -10,9 +10,9 @@ import { GoBackButton } from "@/components/Button/GoBackButton";
 import { WriteFormStepOne } from "@/pages/Write/WritePresenter/WriteForm/WriteFormStepOne";
 import { WriteFormStepTwo } from "@/pages/Write/WritePresenter/WriteForm/WriteFormStepTwo";
 import { NavigationButton } from "@/components/Button/NavigationButton";
-import { MemoizedWriteGuide } from "@/pages/Write/WriteGuide";
 import { Footer } from "@/components/Layout/Footer";
 import { Popover } from "@/components/Overlay/Popover";
+import { MemoizedWriteGuide } from "../components/WriteGuide";
 
 // constants
 import { size } from "@/constants";

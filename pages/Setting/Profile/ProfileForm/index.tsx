@@ -4,7 +4,7 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import { FormProvider, useForm } from "react-hook-form";
 
 // components
-import { SignUpFormStepTwo } from "@/pages/SignUp/SignUpForm/SignUpFormStepTwo";
+import { SignUpFormStepTwo } from "@/pages/SignUp/SignUpPresenter/SignUpForm/SignUpFormStepTwo";
 import { NavigationButton } from "@/components/Button/NavigationButton";
 import { Footer } from "@/components/Layout/Footer";
 
