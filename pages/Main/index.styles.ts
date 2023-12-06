@@ -51,6 +51,6 @@ export const styles = StyleSheet.create({
 
   scrollGradient: {
     width: "100%",
-    height: size.LINEAR_GRADIENT_HEIGHT,
+    height: 24,
   },
 });

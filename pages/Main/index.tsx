@@ -80,11 +80,7 @@ export function MainPage() {
       <Popover
         id="write"
         content="선생님 지금 시작해보세요"
-        bottom={
-          size.NAVIGATION_BUTTON_HEIGHT +
-          size.FOOTER_PADDING_BOTTOM +
-          size.LINEAR_GRADIENT_HEIGHT
-        }
+        bottom={size.NAVIGATION_BUTTON_HEIGHT + size.FOOTER_PADDING_BOTTOM + 24}
       />
     </View>
   );
