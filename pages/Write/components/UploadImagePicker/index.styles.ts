@@ -40,11 +40,33 @@ export const styles = StyleSheet.create({
     fontFamily: font.PretendardRegular,
   },
 
-  wait: {
+  loadingImage: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+
+    width: "100%",
+    height: "100%",
+  },
+
+  dimmed: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+
     width: "100%",
     height: "100%",
 
-    backgroundColor: color.g300,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+
+  activityIndicator: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+
+    width: "100%",
+    height: "100%",
   },
 
   /**

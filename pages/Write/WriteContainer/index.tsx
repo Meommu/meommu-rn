@@ -124,7 +124,7 @@ export function WriteContainer() {
       return;
     }
 
-    if (imageIds.includes(-1)) {
+    if (imageIds.some((imageId) => imageId < 0)) {
       fireToast("업로드 중인 이미지가 존재합니다.", 2000);
 
       return;

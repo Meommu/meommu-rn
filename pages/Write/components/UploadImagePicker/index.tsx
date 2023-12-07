@@ -1,9 +1,12 @@
 // react
+import { useRef } from "react";
 import {
   View,
   Text,
+  Image,
   Pressable,
   Platform,
+  ActivityIndicator,
   type ViewStyle,
   type StyleProp,
 } from "react-native";
@@ -27,7 +30,7 @@ import { DraggableHorizontalScrollView } from "@/components/ScrollView/Draggable
 import { b64ToBlob } from "@/utils";
 
 // constants
-import { IMAGE_CATEGORY, color } from "@/constants";
+import { IMAGE_CATEGORY } from "@/constants";
 
 // apis
 import { apiService } from "@/apis";
@@ -43,10 +46,8 @@ import { styles } from "./index.styles";
 
 interface ImagePickerProps {
   /**
-   * imagesIds의 값
-   *
-   * -1 : 업로드 중인 이미지
-   * 0~ : 업로드 된 이미지
+   * value < 0 : 업로드 중인 이미지
+   * value >= 0 : 업로드 된 이미지
    */
   imageIds: number[];
 
@@ -62,72 +63,53 @@ export function UploadImagePicker({
 }: ImagePickerProps) {
   const { fireToast } = useToast();
 
-  /**
-   * imagePicker
-   */
   const [status, requestPermission] = ImagePicker.useMediaLibraryPermissions();
 
-  /**
-   * useMutation
-   */
-  const uploadImageMutation = useMutation(
-    async (formData: FormData) => {
-      setValue("imageIds", [...imageIds, -1]);
+  const index = useRef(-1);
 
-      return await apiService.uploadImage(formData);
+  const indexToB64 = useRef<Map<number, string>>(new Map());
+
+  const uploadImageMutation = useMutation(
+    async ({ formData }: { loadingImageId: number; formData: FormData }) => {
+      const imageId = await apiService.uploadImage(formData);
+
+      return imageId;
     },
     {
-      onSuccess: (id: number) => {
+      onSuccess: (imageId, { loadingImageId }) => {
         const imageIds = getValues("imageIds");
 
-        const index = imageIds.indexOf(-1);
+        const i = imageIds.indexOf(loadingImageId);
 
-        if (index === -1) {
+        if (i === -1) {
           return;
         }
 
         const newImageIds = [...imageIds];
 
-        newImageIds.splice(index, 1, id);
+        newImageIds.splice(i, 1, imageId);
 
         setValue("imageIds", newImageIds);
       },
-      /**
-       * TODO: 직접 에러처리 핸들러를 등록해주게되면, 이미지 업로드 관련한 에러처리를 추가로 해 주어야 함.
-       */
-      onError: () => {
+      onError: (_, { loadingImageId }) => {
         const imageIds = getValues("imageIds");
 
-        const index = imageIds.indexOf(-1);
+        const i = imageIds.indexOf(loadingImageId);
 
-        if (index === -1) {
+        if (i === -1) {
           return;
         }
 
         const newImageIds = [...imageIds];
 
-        newImageIds.splice(index, 1);
+        newImageIds.splice(i, 1);
 
         setValue("imageIds", newImageIds);
       },
     }
   );
 
-  /**
-   * event handler
-   */
-  const handleImageRemoveButtonClick = (imageId: number) => () => {
-    const index = imageIds.indexOf(imageId);
-
-    const newImageIds = [...imageIds];
-
-    newImageIds.splice(index, 1);
-
-    setValue("imageIds", newImageIds);
-  };
-
   const handleImagePick = async () => {
-    // 권한 확인 후 획득
     if (!status?.granted) {
       const permission = await requestPermission();
 
@@ -136,29 +118,18 @@ export function UploadImagePicker({
       }
     }
 
+    if (uploadImageMutation.isLoading) {
+      fireToast("다른 이미지가 업로드 중입니다.", 3000);
+
+      return;
+    }
+
     if (imageIds.length >= 5) {
       fireToast("이미지는 최대 5개까지 추가할 수 있습니다.", 3000);
 
       return;
     }
 
-    // 이미지 선택 후 업로드
-    const getImageFormData =
-      Platform.OS === "web" ? getImageFormDataOnWeb : getImageFormDataOnMobile;
-
-    const formData = await getImageFormData();
-
-    if (!formData) {
-      return;
-    }
-
-    uploadImageMutation.mutate(formData);
-  };
-
-  /**
-   * util function
-   */
-  const getImageFormDataOnWeb = async (): Promise<FormData | null> => {
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: false,
@@ -167,50 +138,58 @@ export function UploadImagePicker({
     });
 
     if (result.canceled) {
-      return null;
+      return;
     }
 
     const formData = new FormData();
 
     const { base64, uri } = result.assets[0];
 
-    const fileExtension = uri.split(";")[0].split("/")[1];
-    const fileName = `imageName.${fileExtension}`;
-    const contentType = `image/${fileExtension}`;
+    /**
+     * 폼 요소 생성
+     */
+    if (Platform.OS === "web") {
+      const fileExtension = uri.split(";")[0].split("/")[1];
+      const fileName = `image.${fileExtension}`;
+      const contentType = `image/${fileExtension}`;
 
-    const blob = b64ToBlob(base64, contentType);
-    const file = new File([blob], fileName, { type: contentType });
+      const blob = b64ToBlob(base64, contentType);
+      const file = new File([blob], fileName, { type: contentType });
 
-    formData.append("category", IMAGE_CATEGORY.DIARY_IMAGE);
-    formData.append("images", file);
+      formData.append("category", IMAGE_CATEGORY.DIARY_IMAGE);
+      formData.append("images", file);
+    } else {
+      const fileExtension = uri.slice(uri.lastIndexOf(".") + 1);
+      const fileName = `image.${fileExtension}`;
+      const contentType = `image/${fileExtension}`;
 
-    return formData;
-  };
-
-  const getImageFormDataOnMobile = async (): Promise<FormData | null> => {
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: false,
-      allowsMultipleSelection: false,
-    });
-
-    if (result.canceled) {
-      return null;
+      formData.append("category", IMAGE_CATEGORY.DIARY_IMAGE);
+      // @ts-ignore
+      formData.append("images", { uri, name: fileName, type: contentType });
     }
 
-    const formData = new FormData();
+    /**
+     * 로딩 중 표시할 요소를 위한 데이터 생성
+     */
+    const loadingImageId = index.current;
 
-    const { uri } = result.assets[0];
+    indexToB64.current.set(loadingImageId, "data:image/jpeg;base64," + base64);
 
-    const fileExtension = uri.slice(uri.lastIndexOf(".") + 1);
-    const fileName = `imageName.${fileExtension}`;
-    const contentType = `image/${fileExtension}`;
+    setValue("imageIds", [...imageIds, loadingImageId]);
 
-    formData.append("category", IMAGE_CATEGORY.DIARY_IMAGE);
-    // @ts-ignore
-    formData.append("images", { uri, name: fileName, type: contentType });
+    index.current--;
 
-    return formData;
+    uploadImageMutation.mutate({ loadingImageId, formData });
+  };
+
+  const handleImageRemoveButtonClick = (imageId: number) => () => {
+    const index = imageIds.indexOf(imageId);
+
+    const newImageIds = [...imageIds];
+
+    newImageIds.splice(index, 1);
+
+    setValue("imageIds", newImageIds);
   };
 
   const { width } = useSelector<RootState, LayoutState>(
@@ -239,11 +218,18 @@ export function UploadImagePicker({
         </View>
 
         {[...imageIds].reverse().map((imageId, i) => {
-          if (imageId === -1) {
+          if (imageId < 0) {
+            const base64 = indexToB64.current.get(imageId);
+
             return (
               <View style={itemLayoutStyle} key={`loadingImageId${i}`}>
                 <View style={styles.item}>
-                  <View style={styles.wait} />
+                  <Image style={styles.loadingImage} source={{ uri: base64 }} />
+                  <View style={styles.dimmed} />
+                  <ActivityIndicator
+                    style={styles.activityIndicator}
+                    size={"large"}
+                  />
                 </View>
               </View>
             );
