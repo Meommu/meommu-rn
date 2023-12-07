@@ -70,39 +70,43 @@ export function UploadImagePicker({
   const indexToB64 = useRef<Map<number, string>>(new Map());
 
   const uploadImageMutation = useMutation(
-    async ({ formData }: { loadingImageId: number; formData: FormData }) => {
-      const imageId = await apiService.uploadImage(formData);
+    async ({ formData }: { loadingImageIds: number[]; formData: FormData }) => {
+      const uploadedImageIds = await apiService.uploadImage(formData);
 
-      return imageId;
+      return uploadedImageIds;
     },
     {
-      onSuccess: (imageId, { loadingImageId }) => {
+      onSuccess: (uploadedImageIds, { loadingImageIds }) => {
         const imageIds = getValues("imageIds");
-
-        const i = imageIds.indexOf(loadingImageId);
-
-        if (i === -1) {
-          return;
-        }
 
         const newImageIds = [...imageIds];
 
-        newImageIds.splice(i, 1, imageId);
+        for (let i = 0; i < uploadedImageIds.length; i++) {
+          const j = imageIds.indexOf(loadingImageIds[i]);
+
+          if (j === -1) {
+            return;
+          }
+
+          newImageIds.splice(j, 1, uploadedImageIds[i]);
+        }
 
         setValue("imageIds", newImageIds);
       },
-      onError: (_, { loadingImageId }) => {
+      onError: (_, { loadingImageIds }) => {
         const imageIds = getValues("imageIds");
-
-        const i = imageIds.indexOf(loadingImageId);
-
-        if (i === -1) {
-          return;
-        }
 
         const newImageIds = [...imageIds];
 
-        newImageIds.splice(i, 1);
+        for (let i = 0; i < loadingImageIds.length; i++) {
+          const j = imageIds.indexOf(loadingImageIds[i]);
+
+          if (j === -1) {
+            return;
+          }
+
+          newImageIds.splice(j, 1);
+        }
 
         setValue("imageIds", newImageIds);
       },
@@ -133,7 +137,8 @@ export function UploadImagePicker({
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: false,
-      allowsMultipleSelection: false,
+      allowsMultipleSelection: true,
+      selectionLimit: 5 - imageIds.length,
       base64: true,
     });
 
@@ -141,45 +146,60 @@ export function UploadImagePicker({
       return;
     }
 
-    const formData = new FormData();
+    if (imageIds.length + result.assets.length > 5) {
+      fireToast("이미지의 총 개수는 5개를 넘길 수 없습니다.", 3000);
 
-    const { base64, uri } = result.assets[0];
-
-    /**
-     * 폼 요소 생성
-     */
-    if (Platform.OS === "web") {
-      const fileExtension = uri.split(";")[0].split("/")[1];
-      const fileName = `image.${fileExtension}`;
-      const contentType = `image/${fileExtension}`;
-
-      const blob = b64ToBlob(base64, contentType);
-      const file = new File([blob], fileName, { type: contentType });
-
-      formData.append("category", IMAGE_CATEGORY.DIARY_IMAGE);
-      formData.append("images", file);
-    } else {
-      const fileExtension = uri.slice(uri.lastIndexOf(".") + 1);
-      const fileName = `image.${fileExtension}`;
-      const contentType = `image/${fileExtension}`;
-
-      formData.append("category", IMAGE_CATEGORY.DIARY_IMAGE);
-      // @ts-ignore
-      formData.append("images", { uri, name: fileName, type: contentType });
+      return;
     }
 
-    /**
-     * 로딩 중 표시할 요소를 위한 데이터 생성
-     */
-    const loadingImageId = index.current;
+    const formData = new FormData();
 
-    indexToB64.current.set(loadingImageId, "data:image/jpeg;base64," + base64);
+    formData.append("category", IMAGE_CATEGORY.DIARY_IMAGE);
 
-    setValue("imageIds", [...imageIds, loadingImageId]);
+    const loadingImageIds: number[] = [];
 
-    index.current--;
+    result.assets.forEach((asset) => {
+      const { base64, uri } = asset;
 
-    uploadImageMutation.mutate({ loadingImageId, formData });
+      /**
+       * 폼 요소 추가
+       */
+      if (Platform.OS === "web") {
+        const fileExtension = uri.split(";")[0].split("/")[1];
+        const fileName = `image.${fileExtension}`;
+        const contentType = `image/${fileExtension}`;
+
+        const blob = b64ToBlob(base64, contentType);
+        const file = new File([blob], fileName, { type: contentType });
+
+        formData.append("images", file);
+      } else {
+        const fileExtension = uri.slice(uri.lastIndexOf(".") + 1);
+        const fileName = `image.${fileExtension}`;
+        const contentType = `image/${fileExtension}`;
+
+        // @ts-ignore
+        formData.append("images", { uri, name: fileName, type: contentType });
+      }
+
+      /**
+       * 로딩 중 표시할 요소를 위한 데이터 생성
+       */
+      const loadingImageId = index.current;
+
+      indexToB64.current.set(
+        loadingImageId,
+        "data:image/jpeg;base64," + base64
+      );
+
+      loadingImageIds.push(loadingImageId);
+
+      index.current--;
+    });
+
+    setValue("imageIds", [...imageIds, ...loadingImageIds]);
+
+    uploadImageMutation.mutate({ loadingImageIds, formData });
   };
 
   const handleImageRemoveButtonClick = (imageId: number) => () => {

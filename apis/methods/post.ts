@@ -35,12 +35,10 @@ export const signin = async (id: string, password: string): Promise<string> => {
   return accessToken;
 };
 
-export const uploadImage = async (formData: FormData): Promise<number> => {
+export const uploadImage = async (formData: FormData): Promise<number[]> => {
   const {
     data: {
-      data: {
-        images: [{ id }],
-      },
+      data: { images },
     },
   } = await axios.post<
     ResponseTemplate<{ images: { id: number; url: string }[] }>
@@ -54,7 +52,7 @@ export const uploadImage = async (formData: FormData): Promise<number> => {
     process.env.EXPO_PUBLIC_MODE !== "dev" && formData
   );
 
-  return id;
+  return images.map((image) => image.id);
 };
 
 /**
