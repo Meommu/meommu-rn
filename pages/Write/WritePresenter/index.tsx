@@ -12,7 +12,7 @@ import { WriteFormStepTwo } from "@/pages/Write/WritePresenter/WriteForm/WriteFo
 import { NavigationButton } from "@/components/Button/NavigationButton";
 import { Footer } from "@/components/Layout/Footer";
 import { Popover } from "@/components/Overlay/Popover";
-import { MemoizedWriteGuide } from "../components/WriteGuide";
+import { WriteGuide } from "../components/WriteGuide";
 
 // constants
 import { size } from "@/constants";
@@ -117,7 +117,7 @@ export function WritePresenter({
         />
       )}
 
-      <MemoizedWriteGuide setValue={setValue} getValues={getValues} />
+      <WriteGuide setValue={setValue} getValues={getValues} />
     </View>
   );
 }

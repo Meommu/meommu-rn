@@ -1,5 +1,5 @@
 // react
-import { useRef } from "react";
+import { memo, useRef } from "react";
 import {
   View,
   Text,
@@ -56,231 +56,238 @@ interface ImagePickerProps {
   getValues: UseFormGetValues<DiaryWriteFormFieldValues>;
 }
 
-export function UploadImagePicker({
-  imageIds,
-  setValue,
-  getValues,
-}: ImagePickerProps) {
-  const { fireToast } = useToast();
+export const UploadImagePicker = memo(
+  ({ imageIds, setValue, getValues }: ImagePickerProps) => {
+    const { fireToast } = useToast();
 
-  const [status, requestPermission] = ImagePicker.useMediaLibraryPermissions();
+    const [status, requestPermission] =
+      ImagePicker.useMediaLibraryPermissions();
 
-  const index = useRef(-1);
+    const index = useRef(-1);
 
-  const indexToB64 = useRef<Map<number, string>>(new Map());
+    const indexToB64 = useRef<Map<number, string>>(new Map());
 
-  const uploadImageMutation = useMutation(
-    async ({ formData }: { loadingImageIds: number[]; formData: FormData }) => {
-      const uploadedImageIds = await apiService.uploadImage(formData);
+    const uploadImageMutation = useMutation(
+      async ({
+        formData,
+      }: {
+        loadingImageIds: number[];
+        formData: FormData;
+      }) => {
+        const uploadedImageIds = await apiService.uploadImage(formData);
 
-      return uploadedImageIds;
-    },
-    {
-      onSuccess: (uploadedImageIds, { loadingImageIds }) => {
-        const imageIds = getValues("imageIds");
+        return uploadedImageIds;
+      },
+      {
+        onSuccess: (uploadedImageIds, { loadingImageIds }) => {
+          const imageIds = getValues("imageIds");
 
-        const newImageIds = [...imageIds];
+          const newImageIds = [...imageIds];
 
-        for (let i = 0; i < uploadedImageIds.length; i++) {
-          const j = imageIds.indexOf(loadingImageIds[i]);
+          for (let i = 0; i < uploadedImageIds.length; i++) {
+            const j = imageIds.indexOf(loadingImageIds[i]);
 
-          if (j === -1) {
-            return;
+            if (j === -1) {
+              return;
+            }
+
+            newImageIds.splice(j, 1, uploadedImageIds[i]);
           }
 
-          newImageIds.splice(j, 1, uploadedImageIds[i]);
-        }
+          setValue("imageIds", newImageIds);
+        },
+        onError: (_, { loadingImageIds }) => {
+          const imageIds = getValues("imageIds");
 
-        setValue("imageIds", newImageIds);
-      },
-      onError: (_, { loadingImageIds }) => {
-        const imageIds = getValues("imageIds");
+          const newImageIds = [...imageIds];
 
-        const newImageIds = [...imageIds];
+          for (let i = 0; i < loadingImageIds.length; i++) {
+            const j = imageIds.indexOf(loadingImageIds[i]);
 
-        for (let i = 0; i < loadingImageIds.length; i++) {
-          const j = imageIds.indexOf(loadingImageIds[i]);
+            if (j === -1) {
+              return;
+            }
 
-          if (j === -1) {
-            return;
+            newImageIds.splice(j, 1);
           }
 
-          newImageIds.splice(j, 1);
+          setValue("imageIds", newImageIds);
+        },
+      }
+    );
+
+    const handleImagePick = async () => {
+      if (!status?.granted) {
+        const permission = await requestPermission();
+
+        if (!permission.granted) {
+          return;
         }
+      }
 
-        setValue("imageIds", newImageIds);
-      },
-    }
-  );
+      if (uploadImageMutation.isLoading) {
+        fireToast("다른 이미지가 업로드 중입니다.", 3000);
 
-  const handleImagePick = async () => {
-    if (!status?.granted) {
-      const permission = await requestPermission();
-
-      if (!permission.granted) {
         return;
       }
-    }
 
-    if (uploadImageMutation.isLoading) {
-      fireToast("다른 이미지가 업로드 중입니다.", 3000);
+      if (imageIds.length >= 5) {
+        fireToast("이미지는 최대 5개까지 추가할 수 있습니다.", 3000);
 
-      return;
-    }
-
-    if (imageIds.length >= 5) {
-      fireToast("이미지는 최대 5개까지 추가할 수 있습니다.", 3000);
-
-      return;
-    }
-
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: false,
-      allowsMultipleSelection: true,
-      selectionLimit: 5 - imageIds.length,
-      base64: true,
-    });
-
-    if (result.canceled) {
-      return;
-    }
-
-    if (imageIds.length + result.assets.length > 5) {
-      fireToast("이미지의 총 개수는 5개를 넘길 수 없습니다.", 3000);
-
-      return;
-    }
-
-    const formData = new FormData();
-
-    formData.append("category", IMAGE_CATEGORY.DIARY_IMAGE);
-
-    const loadingImageIds: number[] = [];
-
-    result.assets.forEach((asset) => {
-      const { base64, uri } = asset;
-
-      /**
-       * 폼 요소 추가
-       */
-      if (Platform.OS === "web") {
-        const fileExtension = uri.split(";")[0].split("/")[1];
-        const fileName = `image.${fileExtension}`;
-        const contentType = `image/${fileExtension}`;
-
-        const blob = b64ToBlob(base64, contentType);
-        const file = new File([blob], fileName, { type: contentType });
-
-        formData.append("images", file);
-      } else {
-        const fileExtension = uri.slice(uri.lastIndexOf(".") + 1);
-        const fileName = `image.${fileExtension}`;
-        const contentType = `image/${fileExtension}`;
-
-        // @ts-ignore
-        formData.append("images", { uri, name: fileName, type: contentType });
+        return;
       }
 
-      /**
-       * 로딩 중 표시할 요소를 위한 데이터 생성
-       */
-      const loadingImageId = index.current;
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: false,
+        allowsMultipleSelection: true,
+        selectionLimit: 5 - imageIds.length,
+        base64: true,
+      });
 
-      indexToB64.current.set(
-        loadingImageId,
-        "data:image/jpeg;base64," + base64
-      );
+      if (result.canceled) {
+        return;
+      }
 
-      loadingImageIds.push(loadingImageId);
+      if (imageIds.length + result.assets.length > 5) {
+        fireToast("이미지의 총 개수는 5개를 넘길 수 없습니다.", 3000);
 
-      index.current--;
-    });
+        return;
+      }
 
-    setValue("imageIds", [...imageIds, ...loadingImageIds]);
+      const formData = new FormData();
 
-    uploadImageMutation.mutate({ loadingImageIds, formData });
-  };
+      formData.append("category", IMAGE_CATEGORY.DIARY_IMAGE);
 
-  const handleImageRemoveButtonClick = (imageId: number) => () => {
-    const index = imageIds.indexOf(imageId);
+      const loadingImageIds: number[] = [];
 
-    const newImageIds = [...imageIds];
+      result.assets.forEach((asset) => {
+        const { base64, uri } = asset;
 
-    newImageIds.splice(index, 1);
+        /**
+         * 폼 요소 추가
+         */
+        if (Platform.OS === "web") {
+          const fileExtension = uri.split(";")[0].split("/")[1];
+          const fileName = `image.${fileExtension}`;
+          const contentType = `image/${fileExtension}`;
 
-    setValue("imageIds", newImageIds);
-  };
+          const blob = b64ToBlob(base64, contentType);
+          const file = new File([blob], fileName, { type: contentType });
 
-  const { width } = useSelector<RootState, LayoutState>(
-    (state) => state.layout
-  );
+          formData.append("images", file);
+        } else {
+          const fileExtension = uri.slice(uri.lastIndexOf(".") + 1);
+          const fileName = `image.${fileExtension}`;
+          const contentType = `image/${fileExtension}`;
 
-  const sideLength = (width - 7 * 2) / 5;
+          // @ts-ignore
+          formData.append("images", { uri, name: fileName, type: contentType });
+        }
 
-  const itemLayoutStyle: StyleProp<ViewStyle> = {
-    width: sideLength,
-    height: sideLength,
-    padding: 7,
-  };
+        /**
+         * 로딩 중 표시할 요소를 위한 데이터 생성
+         */
+        const loadingImageId = index.current;
 
-  return (
-    <DraggableHorizontalScrollView>
-      <View style={styles.list} onStartShouldSetResponder={() => true}>
-        <View style={itemLayoutStyle}>
-          <View style={styles.item}>
-            <Pressable style={styles.uploader} onPress={handleImagePick}>
-              <Camera />
+        indexToB64.current.set(
+          loadingImageId,
+          "data:image/jpeg;base64," + base64
+        );
 
-              <Text style={styles.uploaderText}>{imageIds.length} / 5</Text>
-            </Pressable>
+        loadingImageIds.push(loadingImageId);
+
+        index.current--;
+      });
+
+      setValue("imageIds", [...imageIds, ...loadingImageIds]);
+
+      uploadImageMutation.mutate({ loadingImageIds, formData });
+    };
+
+    const handleImageRemoveButtonClick = (imageId: number) => () => {
+      const index = imageIds.indexOf(imageId);
+
+      const newImageIds = [...imageIds];
+
+      newImageIds.splice(index, 1);
+
+      setValue("imageIds", newImageIds);
+    };
+
+    const { width } = useSelector<RootState, LayoutState>(
+      (state) => state.layout
+    );
+
+    const sideLength = (width - 7 * 2) / 5;
+
+    const itemLayoutStyle: StyleProp<ViewStyle> = {
+      width: sideLength,
+      height: sideLength,
+      padding: 7,
+    };
+
+    return (
+      <DraggableHorizontalScrollView>
+        <View style={styles.list} onStartShouldSetResponder={() => true}>
+          <View style={itemLayoutStyle}>
+            <View style={styles.item}>
+              <Pressable style={styles.uploader} onPress={handleImagePick}>
+                <Camera />
+
+                <Text style={styles.uploaderText}>{imageIds.length} / 5</Text>
+              </Pressable>
+            </View>
           </View>
-        </View>
 
-        {[...imageIds].reverse().map((imageId, i) => {
-          if (imageId < 0) {
-            const base64 = indexToB64.current.get(imageId);
+          {[...imageIds].reverse().map((imageId, i) => {
+            if (imageId < 0) {
+              const base64 = indexToB64.current.get(imageId);
+
+              return (
+                <View style={itemLayoutStyle} key={`loadingImageId${i}`}>
+                  <View style={styles.item}>
+                    <Image
+                      style={styles.loadingImage}
+                      source={{ uri: base64 }}
+                    />
+                    <View style={styles.dimmed} />
+                    <ActivityIndicator
+                      style={styles.activityIndicator}
+                      size={"large"}
+                    />
+                  </View>
+                </View>
+              );
+            }
 
             return (
-              <View style={itemLayoutStyle} key={`loadingImageId${i}`}>
+              <View style={itemLayoutStyle} key={`imageId${imageId}`}>
                 <View style={styles.item}>
-                  <Image style={styles.loadingImage} source={{ uri: base64 }} />
-                  <View style={styles.dimmed} />
-                  <ActivityIndicator
-                    style={styles.activityIndicator}
-                    size={"large"}
-                  />
+                  <LoadImage imageId={imageId} />
+
+                  <Pressable
+                    onPress={handleImageRemoveButtonClick(imageId)}
+                    style={styles.imageRemover}
+                  >
+                    <ImageRemoveButton />
+                  </Pressable>
                 </View>
               </View>
             );
-          }
-
-          return (
-            <View style={itemLayoutStyle} key={`imageId${imageId}`}>
-              <View style={styles.item}>
-                <LoadImage imageId={imageId} />
-
-                <Pressable
-                  onPress={handleImageRemoveButtonClick(imageId)}
-                  style={styles.imageRemover}
-                >
-                  <ImageRemoveButton />
-                </Pressable>
-              </View>
-            </View>
-          );
-        })}
-
-        {Array(5 - imageIds.length)
-          .fill(null)
-          .map((_, i) => {
-            return (
-              <View style={itemLayoutStyle} key={i}>
-                <View style={styles.item} />
-              </View>
-            );
           })}
-      </View>
-    </DraggableHorizontalScrollView>
-  );
-}
+
+          {Array(5 - imageIds.length)
+            .fill(null)
+            .map((_, i) => {
+              return (
+                <View style={itemLayoutStyle} key={i}>
+                  <View style={styles.item} />
+                </View>
+              );
+            })}
+        </View>
+      </DraggableHorizontalScrollView>
+    );
+  }
+);

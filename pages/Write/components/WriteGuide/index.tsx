@@ -1,5 +1,5 @@
 // react
-import React, { useCallback, useEffect, useMemo, useRef } from "react";
+import React, { memo, useCallback, useEffect, useMemo, useRef } from "react";
 import { useMutation, useQuery } from "react-query";
 import { UseFormGetValues, UseFormSetValue } from "react-hook-form";
 import Swiper from "react-native-web-swiper";
@@ -46,7 +46,7 @@ interface WriteGuideProps {
   getValues: UseFormGetValues<DiaryWriteFormFieldValues>;
 }
 
-const WriteGuide = ({ setValue, getValues }: WriteGuideProps) => {
+export const WriteGuide = memo(({ setValue, getValues }: WriteGuideProps) => {
   const { fireToast } = useToast();
 
   const dispatch = useDispatch();
@@ -295,6 +295,4 @@ const WriteGuide = ({ setValue, getValues }: WriteGuideProps) => {
       </BottomSheetView>
     </BottomSheet>
   );
-};
-
-export const MemoizedWriteGuide = React.memo(WriteGuide);
+});
