@@ -7,6 +7,7 @@ type DatePickerContextValue = {
   setYear: (year: number) => void;
   setMonth: (month: number) => void;
   setDate: (date: number) => void;
+  dateToImageId: Map<string, number>;
 };
 
 const DatePickerContext = createContext<DatePickerContextValue>({
@@ -16,6 +17,7 @@ const DatePickerContext = createContext<DatePickerContextValue>({
   setYear: (year: number) => {},
   setMonth: (month: number) => {},
   setDate: (date: number) => {},
+  dateToImageId: new Map(),
 });
 
 interface DatePickerProvider {

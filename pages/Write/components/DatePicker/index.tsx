@@ -1,8 +1,9 @@
 // react
 import { memo, useEffect, useRef, useMemo, useState } from "react";
 import { View, Text, Pressable } from "react-native";
-import type { UseFormGetValues, UseFormSetValue } from "react-hook-form";
+import type { UseFormSetValue } from "react-hook-form";
 import { DatePickerProvider } from "./index.context";
+import { useQuery } from "react-query";
 
 // redux
 import { updateDatePickerBottomSheetRef } from "@/store/modules/bottomSheet";
@@ -23,6 +24,9 @@ import { DatePickerCalendar } from "./DatePickerCalendar";
 // constants
 import { color, font, zIndex } from "@/constants";
 
+// apis
+import { apiService } from "@/apis";
+
 // bottom sheet
 import BottomSheet, {
   useBottomSheetDynamicSnapPoints,
@@ -37,6 +41,39 @@ interface DatePickerProps {
 
 export const DatePicker = memo(({ setValue }: DatePickerProps) => {
   const dispatch = useDispatch();
+
+  const now = useMemo(() => new Date(), []);
+
+  const [calendarType, setCalendarType] = useState<"year" | "date">("date");
+  const [currentMonth, setCurrentMonth] = useState<number>(now.getMonth() + 1);
+
+  const [year, setYear] = useState<number>(now.getFullYear());
+  const [month, setMonth] = useState<number>(now.getMonth() + 1);
+  const [date, setDate] = useState<number>(now.getDate());
+
+  const [dateToImageId, setDateToImageId] = useState<Map<string, number>>(
+    new Map()
+  );
+
+  const { data: diariesSummary } = useQuery(["diariesSummary"], async () => {
+    return await apiService.getDiariesSummary();
+  });
+
+  useEffect(() => {
+    if (!diariesSummary) {
+      return;
+    }
+
+    const newDateToImageId = new Map();
+
+    diariesSummary.forEach(({ date, imageIds }) => {
+      newDateToImageId.set(date, imageIds[0]);
+    });
+
+    console.log(newDateToImageId);
+
+    setDateToImageId(newDateToImageId);
+  }, [diariesSummary]);
 
   /**
    * bottom sheet
@@ -56,18 +93,6 @@ export const DatePicker = memo(({ setValue }: DatePickerProps) => {
     animatedContentHeight,
     handleContentLayout,
   } = useBottomSheetDynamicSnapPoints(initialSnapPoints);
-
-  /**
-   * react hooks
-   */
-  const now = useMemo(() => new Date(), []);
-
-  const [calendarType, setCalendarType] = useState<"year" | "date">("date");
-  const [currentMonth, setCurrentMonth] = useState<number>(now.getMonth() + 1);
-
-  const [year, setYear] = useState<number>(now.getFullYear());
-  const [month, setMonth] = useState<number>(now.getMonth() + 1);
-  const [date, setDate] = useState<number>(now.getDate());
 
   /**
    * event handler
@@ -202,6 +227,7 @@ export const DatePicker = memo(({ setValue }: DatePickerProps) => {
                 setYear: (year: number) => setYear(year),
                 setMonth: (month: number) => setMonth(month),
                 setDate: (date: number) => setDate(date),
+                dateToImageId,
               }}
             >
               <DatePickerCalendar

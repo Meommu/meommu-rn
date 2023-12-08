@@ -5,6 +5,7 @@ import { DatePickerContext } from "../../index.context";
 
 // constants
 import { color, font } from "@/constants";
+import { LoadImage } from "@/components/Widget/LoadImage";
 
 interface DatePickerCalendarItemProps {
   calendarMonth: number;
@@ -13,7 +14,7 @@ interface DatePickerCalendarItemProps {
 export function DatePickerCalendarItem({
   calendarMonth,
 }: DatePickerCalendarItemProps) {
-  const { year, month, date, setDate, setMonth } =
+  const { year, month, date, setDate, setMonth, dateToImageId } =
     useContext(DatePickerContext);
 
   const MONTH_END_DATE = useMemo(
@@ -100,6 +101,14 @@ export function DatePickerCalendarItem({
 
         const isSelect = month === calendarMonth && date === v;
 
+        const imageId = dateToImageId.get(
+          [
+            year,
+            calendarMonth.toString().padStart(2, "0"),
+            v.toString().padStart(2, "0"),
+          ].join("-")
+        );
+
         return (
           <View
             style={{
@@ -138,7 +147,26 @@ export function DatePickerCalendarItem({
                     borderColor: color.b,
                     borderRadius: 9999,
                   }}
-                ></View>
+                />
+              )}
+
+              {imageId && (
+                <View
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+
+                    width: "100%",
+                    height: "100%",
+
+                    borderRadius: 9999,
+
+                    overflow: "hidden",
+                  }}
+                >
+                  <LoadImage imageId={imageId} />
+                </View>
               )}
 
               <View
@@ -157,7 +185,7 @@ export function DatePickerCalendarItem({
                   style={{
                     fontSize: 16,
                     fontFamily: font.PretendardRegular,
-                    color: color.g500,
+                    color: imageId ? color.w : color.g500,
                   }}
                 >
                   {v}
