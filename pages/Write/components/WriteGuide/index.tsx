@@ -1,7 +1,7 @@
 // react
 import React, { memo, useCallback, useEffect, useMemo, useRef } from "react";
 import { useMutation, useQuery } from "react-query";
-import { UseFormGetValues, UseFormSetValue } from "react-hook-form";
+import type { UseFormGetValues, UseFormSetValue } from "react-hook-form";
 import Swiper from "react-native-web-swiper";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
