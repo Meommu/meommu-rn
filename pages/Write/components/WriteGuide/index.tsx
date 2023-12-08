@@ -7,7 +7,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // redux
 import { useDispatch } from "react-redux";
-import { shareAiBottomSheetRef } from "@/store/modules/aiBottomSheet";
+import { updateWriteGuideBottomSheetRef } from "@/store/modules/bottomSheet";
 
 // components
 import { MultiSelectList } from "./MultiSelectList";
@@ -70,7 +70,7 @@ export const WriteGuide = memo(({ setValue, getValues }: WriteGuideProps) => {
    * 가이드의 열림/닫힘을 외부 컴포넌트에서도 제어할 수 있도록 bottomSheetRef를 전역 상태로 공유
    */
   useEffect(() => {
-    dispatch(shareAiBottomSheetRef(bottomSheetRef));
+    dispatch(updateWriteGuideBottomSheetRef(bottomSheetRef));
   }, []);
 
   /**

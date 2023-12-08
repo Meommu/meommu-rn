@@ -6,7 +6,7 @@ import { useMutation, useQueryClient } from "react-query";
 // redux
 import { useSelector } from "react-redux";
 import type { RootState } from "@/store";
-import { type AiBottomSheetState } from "@/store/modules/aiBottomSheet";
+import { type BottomSheetState } from "@/store/modules/bottomSheet";
 
 // expo
 import { router } from "expo-router";
@@ -29,8 +29,8 @@ const STEP_TWO_SLIDE_INDEX = 1;
 export function WriteContainer() {
   const { fireToast } = useToast();
 
-  const { bottomSheetRef } = useSelector<RootState, AiBottomSheetState>(
-    (state) => state.aiBottomSheet
+  const { writeGuideBottomSheetRef } = useSelector<RootState, BottomSheetState>(
+    (state) => state.bottomSheet
   );
 
   /**
@@ -97,7 +97,7 @@ export function WriteContainer() {
         break;
 
       case STEP_TWO_SLIDE_INDEX:
-        bottomSheetRef?.current?.snapToIndex(1);
+        writeGuideBottomSheetRef?.current?.snapToIndex(1);
 
         break;
     }
@@ -195,14 +195,14 @@ export function WriteContainer() {
    * 첫단계에서는 AI 글쓰기 가이드가 나타나지 않도록 함.
    */
   useEffect(() => {
-    if (!bottomSheetRef) {
+    if (!writeGuideBottomSheetRef || !writeGuideBottomSheetRef.current) {
       return;
     }
 
     if (swiperIndex === STEP_ONE_SLIDE_INDEX) {
-      bottomSheetRef.current?.close();
+      writeGuideBottomSheetRef.current.close();
     }
-  }, [bottomSheetRef, swiperIndex]);
+  }, [writeGuideBottomSheetRef, swiperIndex]);
 
   return (
     <FormProvider {...methods}>

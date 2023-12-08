@@ -2,14 +2,14 @@ import { combineReducers } from "redux";
 
 import toast from "./modules/toast";
 import diaryDate from "./modules/diaryDate";
-import aiBottomSheet from "./modules/aiBottomSheet";
+import bottomSheet from "./modules/bottomSheet";
 import confirm from "./modules/confirm";
 import layout from "./modules/layout";
 
 const rootReducer = combineReducers({
   toast,
   diaryDate,
-  aiBottomSheet,
+  bottomSheet,
   confirm,
   layout,
 });
