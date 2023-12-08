@@ -29,9 +29,10 @@ const STEP_TWO_SLIDE_INDEX = 1;
 export function WriteContainer() {
   const { fireToast } = useToast();
 
-  const { writeGuideBottomSheetRef } = useSelector<RootState, BottomSheetState>(
-    (state) => state.bottomSheet
-  );
+  const { writeGuideBottomSheetRef, datePickerBottomSheetRef } = useSelector<
+    RootState,
+    BottomSheetState
+  >((state) => state.bottomSheet);
 
   /**
    * useForm
@@ -192,17 +193,14 @@ export function WriteContainer() {
   }, [swiperIndex]);
 
   /**
-   * 첫단계에서는 AI 글쓰기 가이드가 나타나지 않도록 함.
+   * 첫 단계에서는 두번째 폼의 바텀시트들이 나타나지 않도록 함.
    */
   useEffect(() => {
-    if (!writeGuideBottomSheetRef || !writeGuideBottomSheetRef.current) {
-      return;
-    }
-
     if (swiperIndex === STEP_ONE_SLIDE_INDEX) {
-      writeGuideBottomSheetRef.current.close();
+      writeGuideBottomSheetRef?.current?.close();
+      datePickerBottomSheetRef?.current?.close();
     }
-  }, [writeGuideBottomSheetRef, swiperIndex]);
+  }, [writeGuideBottomSheetRef, datePickerBottomSheetRef, swiperIndex]);
 
   return (
     <FormProvider {...methods}>
