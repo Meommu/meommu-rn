@@ -169,6 +169,8 @@ export const WriteGuide = memo(({ setValue, getValues }: WriteGuideProps) => {
 
           setValue("content", getValues("content") + word);
         }
+
+        bottomSheetRef.current?.close();
       },
     }
   );
