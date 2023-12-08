@@ -21,6 +21,13 @@ interface AViewProps {
   duration: number;
 
   /**
+   * 실제로 언마운트 않도록 하는 옵션
+   *
+   * default: false
+   */
+  fakeUnmount?: boolean;
+
+  /**
    * 적용할 등장, 퇴장 애니메이션 훅
    *
    * default: fade in/out
@@ -38,6 +45,7 @@ export function AView({
   children,
   isMount,
   duration,
+  fakeUnmount = false,
   enterExitAnimation = FadeInOut,
 }: AViewProps) {
   const [isRealMount, setRealMount] = useState(isMount);
@@ -65,7 +73,7 @@ export function AView({
     }
   }, [isMount]);
 
-  if (!isRealMount) {
+  if (!fakeUnmount && !isRealMount) {
     return null;
   }
 
