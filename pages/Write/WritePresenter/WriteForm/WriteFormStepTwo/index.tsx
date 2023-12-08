@@ -1,5 +1,5 @@
 // react
-import { View, TextInput } from "react-native";
+import { View, Text, TextInput, Pressable } from "react-native";
 import { useFormContext, Controller } from "react-hook-form";
 
 // components
@@ -7,10 +7,16 @@ import { UnderlineInput } from "@/components/Input/UnderlineInput";
 import { UploadImagePicker } from "@/pages/Write/components/UploadImagePicker";
 
 // constants
-import { color } from "@/constants";
+import { color, font } from "@/constants";
+
+// svgs
+import ArrowDropDown from "@/assets/svgs/arrow-drop-down.svg";
 
 // styles
 import { styles } from "./index.styles";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
+import { BottomSheetState } from "@/store/modules/bottomSheet";
 
 export function WriteFormStepTwo() {
   const { control, watch, setValue, getValues } =
@@ -18,8 +24,54 @@ export function WriteFormStepTwo() {
 
   const imageIds = watch("imageIds");
 
+  /**
+   * TODO: container로 이동
+   */
+  const { datePickerBottomSheetRef } = useSelector<RootState, BottomSheetState>(
+    (state) => state.bottomSheet
+  );
+
+  const handleDatePickerButtonClick = () => {
+    datePickerBottomSheetRef?.current?.snapToIndex(0);
+  };
+
   return (
     <View style={styles.container}>
+      <View
+        style={{
+          alignItems: "flex-start",
+
+          paddingVertical: 10,
+          paddingHorizontal: 21,
+
+          backgroundColor: color.g200,
+        }}
+      >
+        <Pressable
+          onPress={handleDatePickerButtonClick}
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            gap: 12,
+          }}
+        >
+          <Text
+            style={{
+              color: color.g500,
+              fontSize: 18,
+              fontFamily: font.YeonTheLand,
+              lineHeight: 24,
+            }}
+          >
+            {`${getValues("date").split("-")[0]}년 ${
+              getValues("date").split("-")[1]
+            }월 ${getValues("date").split("-")[2]}일`}
+          </Text>
+
+          <ArrowDropDown />
+        </Pressable>
+      </View>
+
       <UploadImagePicker
         imageIds={imageIds}
         setValue={setValue}

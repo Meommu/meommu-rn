@@ -13,6 +13,7 @@ import { NavigationButton } from "@/components/Button/NavigationButton";
 import { Footer } from "@/components/Layout/Footer";
 import { Popover } from "@/components/Overlay/Popover";
 import { WriteGuide } from "../components/WriteGuide";
+import { DatePicker } from "../components/DatePicker";
 
 // constants
 import { size } from "@/constants";
@@ -118,6 +119,7 @@ export function WritePresenter({
       )}
 
       <WriteGuide setValue={setValue} getValues={getValues} />
+      <DatePicker setValue={setValue} />
     </View>
   );
 }
