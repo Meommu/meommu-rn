@@ -1,17 +1,11 @@
 // react
 import React, { useCallback } from "react";
 import { View, Text, Image } from "react-native";
-import { ErrorBoundary } from "react-error-boundary";
-
-// expo
-import { router } from "expo-router";
+import { ErrorBoundary, type FallbackProps } from "react-error-boundary";
 
 // components
 import { NavigationButton } from "@/components/Button/NavigationButton";
 import { Footer } from "@/components/Layout/Footer";
-
-// constants
-import { PATH } from "@/constants";
 
 // styles
 import { styles } from "./index.styles";
@@ -22,15 +16,15 @@ interface GlobalErrorBoundaryProps {
 
 export function GlobalErrorBoundary({ children }: GlobalErrorBoundaryProps) {
   return (
-    <ErrorBoundary fallback={<ErrorBoundaryFallBack />}>
+    <ErrorBoundary FallbackComponent={ErrorBoundaryFallBack}>
       {children}
     </ErrorBoundary>
   );
 }
 
-function ErrorBoundaryFallBack() {
+function ErrorBoundaryFallBack(props: FallbackProps) {
   const handleGoHomeButtonClick = useCallback(() => {
-    router.replace(PATH.ROOT);
+    props.resetErrorBoundary();
   }, []);
 
   return (
