@@ -8,7 +8,6 @@ import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "@/store";
 import type { DiaryDateState } from "@/store/modules/diaryDate";
 import { changeSelectedYearMonth } from "@/store/modules/diaryDate";
-import { updateMonthPickerBottomSheetRef } from "@/store/modules/bottomSheet";
 
 // components
 import { Footer } from "@/components/Layout/Footer";
@@ -78,10 +77,6 @@ export function MonthPicker() {
    * bottom sheet
    */
   const bottomSheetRef = useRef<BottomSheet | null>(null);
-
-  useEffect(() => {
-    dispatch(updateMonthPickerBottomSheetRef(bottomSheetRef));
-  }, []);
 
   const { responsiveWidthStyle } = useResponsiveMobileWidth();
 
