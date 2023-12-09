@@ -33,9 +33,11 @@ import { createYearMonthKey } from "@/utils";
 import { size } from "@/constants";
 
 // bottom sheets
-import BottomSheet, {
+import {
   BottomSheetView,
   useBottomSheetDynamicSnapPoints,
+  BottomSheetModalProvider,
+  BottomSheetModal,
 } from "@gorhom/bottom-sheet";
 
 // styles
@@ -76,7 +78,7 @@ export function MonthPicker() {
   /**
    * bottom sheet
    */
-  const bottomSheetRef = useRef<BottomSheet | null>(null);
+  const bottomSheetRef = useRef<BottomSheetModal | null>(null);
 
   const { responsiveWidthStyle } = useResponsiveMobileWidth();
 
@@ -158,7 +160,7 @@ export function MonthPicker() {
   }, [currentYear, currentMonth]);
 
   const handleSheetOpen = useCallback(() => {
-    bottomSheetRef.current?.snapToIndex(0);
+    bottomSheetRef.current?.present();
   }, [bottomSheetRef]);
 
   /**
@@ -170,7 +172,7 @@ export function MonthPicker() {
   }, []);
 
   return (
-    <>
+    <BottomSheetModalProvider>
       <View style={styles.container}>
         <Pressable
           style={styles.content}
@@ -185,7 +187,7 @@ export function MonthPicker() {
         </Pressable>
       </View>
 
-      <BottomSheet
+      <BottomSheetModal
         ref={bottomSheetRef}
         containerStyle={[responsiveWidthStyle, styles.bottomSheetContainer]}
         snapPoints={animatedSnapPoints}
@@ -197,7 +199,6 @@ export function MonthPicker() {
           swiperIndex,
         })}
         backdropComponent={renderBackdrop()}
-        index={-1}
         enableContentPanningGesture={false}
       >
         <BottomSheetView onLayout={handleContentLayout}>
@@ -251,7 +252,7 @@ export function MonthPicker() {
             />
           </Footer>
         </BottomSheetView>
-      </BottomSheet>
-    </>
+      </BottomSheetModal>
+    </BottomSheetModalProvider>
   );
 }
