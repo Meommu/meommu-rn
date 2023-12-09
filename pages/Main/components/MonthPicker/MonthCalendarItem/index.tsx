@@ -99,7 +99,7 @@ export function MonthCalendarItem({
                           ? "lightgray"
                           : isCurrentDate || diaryImageId !== undefined
                           ? color.w
-                          : color.g500,
+                          : color.g700,
                       },
                     ]}
                   >

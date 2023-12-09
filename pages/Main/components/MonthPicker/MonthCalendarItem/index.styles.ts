@@ -10,6 +10,8 @@ export const styles = StyleSheet.create({
     height: "100%",
     flexDirection: "row",
     flexWrap: "wrap",
+
+    paddingHorizontal: 20,
   },
 
   monthElementLayout: {
@@ -23,11 +25,11 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
 
-    padding: 5,
+    padding: 7,
   },
 
   monthElementCircle: {
-    height: "100%",
+    width: "100%",
     aspectRatio: "1/1",
     alignItems: "center",
     justifyContent: "center",
@@ -48,8 +50,8 @@ export const styles = StyleSheet.create({
   },
 
   monthElementText: {
-    fontSize: 16,
+    fontSize: 24,
     fontFamily: font.PretendardRegular,
-    color: color.g500,
+    color: color.g700,
   },
 });
