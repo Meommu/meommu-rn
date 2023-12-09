@@ -220,6 +220,9 @@ export function MonthPicker() {
             }}
           >
             <View style={styles.monthCalendar}>
+              <Text style={styles.monthCalendarGuide}>
+                이동하고 싶은 월을 선택하세요
+              </Text>
               <Swiper
                 ref={swiperRef}
                 from={initialSwiperIndex}
