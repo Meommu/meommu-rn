@@ -30,7 +30,7 @@ import { DraggableHorizontalScrollView } from "@/components/ScrollView/Draggable
 import { b64ToBlob } from "@/utils";
 
 // constants
-import { IMAGE_CATEGORY } from "@/constants";
+import { IMAGE_CATEGORY, color } from "@/constants";
 
 // apis
 import { apiService } from "@/apis";
@@ -255,6 +255,7 @@ export const UploadImagePicker = memo(
                     <ActivityIndicator
                       style={styles.activityIndicator}
                       size={"large"}
+                      color={color.primary}
                     />
                   </View>
                 </View>
