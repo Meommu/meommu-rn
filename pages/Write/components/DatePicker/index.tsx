@@ -3,7 +3,6 @@ import { memo, useEffect, useRef, useMemo, useState } from "react";
 import { View, Text, Pressable } from "react-native";
 import type { UseFormSetValue } from "react-hook-form";
 import { useQuery } from "react-query";
-import { DatePickerProvider } from "./index.context";
 
 // redux
 import { updateDatePickerBottomSheetRef } from "@/store/modules/bottomSheet";
@@ -20,6 +19,7 @@ import { AView } from "@/components/Layout/AView";
 import { renderHandle } from "./DatePickerHandle";
 import { renderBackdrop } from "./DatePickerBackdrop";
 import { DatePickerCalendar } from "./DatePickerCalendar";
+import { DatePickerProvider } from "./index.context";
 
 // apis
 import { apiService } from "@/apis";

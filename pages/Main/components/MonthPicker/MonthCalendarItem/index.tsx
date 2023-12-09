@@ -40,14 +40,17 @@ export function MonthCalendarItem({
         .fill(null)
         .map((_, i) => {
           const month = i + 1;
+
           const yearMonthKey = `${calendarYear}|${month}`;
 
           const isSelected =
             calendarYear === currentYear && month === currentMonth;
+
           const isFuture =
             now.getFullYear() > calendarYear
               ? false
               : month > now.getMonth() + 1;
+
           const isCurrentDate =
             calendarYear === selectedYear && month === selectedMonth;
 
