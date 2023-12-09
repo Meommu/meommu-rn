@@ -1,0 +1,42 @@
+// react
+import { StyleSheet } from "react-native";
+
+// constants
+import { color, font } from "@/constants";
+
+export const styles = StyleSheet.create({
+  container: {
+    width: "100%",
+    height: 60,
+    justifyContent: "center",
+    alignItems: "center",
+
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+  },
+
+  grabber: {
+    width: 48,
+    height: 4,
+
+    marginTop: 12,
+
+    backgroundColor: color.g300,
+
+    borderRadius: 2.5,
+  },
+
+  toggler: {
+    alignItems: "center",
+    flexDirection: "row",
+    gap: 5,
+
+    marginVertical: 14,
+  },
+
+  togglerText: {
+    color: color.g500,
+    fontSize: 18,
+    fontFamily: font.PretendardSemiBold,
+  },
+});

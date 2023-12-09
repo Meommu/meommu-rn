@@ -8,3 +8,5 @@ export const FOOTER_PADDING_BOTTOM = 13;
 export const MOBILE_WIDTH = 425;
 export const TABLET_WIDTH = 768;
 export const LAPTOP_WIDTH = 1024;
+
+export const CALENDAR_HEIGHT = 330;

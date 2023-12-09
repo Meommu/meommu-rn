@@ -2,8 +2,8 @@
 import { memo, useEffect, useRef, useMemo, useState } from "react";
 import { View, Text, Pressable } from "react-native";
 import type { UseFormSetValue } from "react-hook-form";
-import { DatePickerProvider } from "./index.context";
 import { useQuery } from "react-query";
+import { DatePickerProvider } from "./index.context";
 
 // redux
 import { updateDatePickerBottomSheetRef } from "@/store/modules/bottomSheet";
@@ -21,9 +21,6 @@ import { renderHandle } from "./DatePickerHandle";
 import { renderBackdrop } from "./DatePickerBackdrop";
 import { DatePickerCalendar } from "./DatePickerCalendar";
 
-// constants
-import { color, font, zIndex } from "@/constants";
-
 // apis
 import { apiService } from "@/apis";
 
@@ -33,7 +30,8 @@ import BottomSheet, {
   BottomSheetView,
 } from "@gorhom/bottom-sheet";
 
-export const DATE_PICKER_CONTENT_HEIGHT = 330;
+// styles
+import { styles } from "./index.styles";
 
 interface DatePickerProps {
   setValue: UseFormSetValue<DiaryWriteFormFieldValues>;
@@ -69,8 +67,6 @@ export const DatePicker = memo(({ setValue }: DatePickerProps) => {
     diariesSummary.forEach(({ date, imageIds }) => {
       newDateToImageId.set(date, imageIds[0]);
     });
-
-    console.log(newDateToImageId);
 
     setDateToImageId(newDateToImageId);
   }, [diariesSummary]);
@@ -120,10 +116,7 @@ export const DatePicker = memo(({ setValue }: DatePickerProps) => {
   return (
     <BottomSheet
       ref={bottomSheetRef}
-      containerStyle={[
-        responsiveWidthStyle,
-        { marginHorizontal: "auto", zIndex: zIndex.bottomSheetContainer },
-      ]}
+      containerStyle={[responsiveWidthStyle, styles.bottomSheetContainer]}
       snapPoints={animatedSnapPoints}
       contentHeight={animatedContentHeight}
       backdropComponent={renderBackdrop()}
@@ -138,13 +131,7 @@ export const DatePicker = memo(({ setValue }: DatePickerProps) => {
       enableContentPanningGesture={false}
     >
       <BottomSheetView onLayout={handleContentLayout}>
-        <View
-          style={{
-            position: "relative",
-            width: "100%",
-            height: DATE_PICKER_CONTENT_HEIGHT,
-          }}
-        >
+        <View style={styles.contentLayout}>
           {/**
            * 년 선택
            */}
@@ -153,23 +140,10 @@ export const DatePicker = memo(({ setValue }: DatePickerProps) => {
             enterExitAnimation={ZoomAndFadeInOut}
             duration={500}
             fakeUnmount={true}
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-
-              width: "100%",
-              height: "100%",
-            }}
+            style={styles.content}
           >
             <NonIndicatorScrollView>
-              <View
-                style={{
-                  width: "100%",
-                  flexDirection: "row",
-                  flexWrap: "wrap",
-                }}
-              >
+              <View style={styles.yearPicker}>
                 {Array(now.getFullYear() - 1970 + 1)
                   .fill(null)
                   .map((_, i) => {
@@ -177,24 +151,11 @@ export const DatePicker = memo(({ setValue }: DatePickerProps) => {
 
                     return (
                       <Pressable
-                        style={{
-                          width: "25%",
-                          height: DATE_PICKER_CONTENT_HEIGHT / 3,
-                          alignItems: "center",
-                          justifyContent: "center",
-                        }}
+                        style={styles.yearPickerItem}
                         onPress={handleYearItemClick(year)}
                         key={year}
                       >
-                        <Text
-                          style={{
-                            textAlign: "center",
-                            fontFamily: font.PretendardSemiBold,
-                            color: color.g500,
-                          }}
-                        >
-                          {year}
-                        </Text>
+                        <Text style={styles.yearPickerItemText}>{year}</Text>
                       </Pressable>
                     );
                   })}
@@ -210,14 +171,7 @@ export const DatePicker = memo(({ setValue }: DatePickerProps) => {
             enterExitAnimation={ZoomAndFadeInOut}
             duration={500}
             fakeUnmount={true}
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-
-              width: "100%",
-              height: "100%",
-            }}
+            style={styles.content}
           >
             <DatePickerProvider
               value={{

@@ -3,9 +3,14 @@ import { useContext, useMemo } from "react";
 import { View, Text, Pressable } from "react-native";
 import { DatePickerContext } from "../../index.context";
 
-// constants
-import { color, font } from "@/constants";
+// components
 import { LoadImage } from "@/components/Widget/LoadImage";
+
+// constants
+import { color } from "@/constants";
+
+// styles
+import { styles } from "./index.styles";
 
 interface DatePickerCalendarItemProps {
   calendarMonth: number;
@@ -16,6 +21,11 @@ export function DatePickerCalendarItem({
 }: DatePickerCalendarItemProps) {
   const { year, month, date, setDate, setMonth, dateToImageId } =
     useContext(DatePickerContext);
+
+  const handleCalendarItemClick = (date: number) => () => {
+    setMonth(calendarMonth);
+    setDate(date);
+  };
 
   const MONTH_END_DATE = useMemo(
     () => [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
@@ -47,150 +57,58 @@ export function DatePickerCalendarItem({
   ];
 
   return (
-    <View
-      style={{
-        width: "100%",
-        height: "100%",
-        flexDirection: "row",
-        flexWrap: "wrap",
-        justifyContent: "center",
-
-        paddingHorizontal: 20,
-      }}
-      onStartShouldSetResponder={() => true}
-    >
-      {items.map((v, j) => {
-        if (v === null) {
-          return (
-            <View
-              style={{
-                width: "14%",
-                height: "14%",
-              }}
-              key={j}
-            />
-          );
+    <View style={styles.container} onStartShouldSetResponder={() => true}>
+      {items.map((calendarDate, i) => {
+        if (calendarDate === null) {
+          return <View style={styles.calenderItemLayout} key={i} />;
         }
 
-        if (isNaN(v)) {
+        if (isNaN(calendarDate)) {
           return (
-            <View
-              style={{
-                width: "14%",
-                height: "14%",
-                justifyContent: "center",
-                alignItems: "center",
-
-                padding: 6,
-              }}
-              key={j}
-            >
-              <Text
-                style={{
-                  textAlign: "center",
-                  color: color.g300,
-                  fontSize: 16,
-                  fontFamily: font.PretendardRegular,
-                }}
-              >
-                {v}
-              </Text>
+            <View style={styles.calenderItemLayout} key={i}>
+              <Text style={styles.calendarItemHeaderText}>{calendarDate}</Text>
             </View>
           );
         }
 
-        const isSelect = month === calendarMonth && date === v;
+        const isSelect = month === calendarMonth && date === calendarDate;
 
         const imageId = dateToImageId.get(
           [
             year,
             calendarMonth.toString().padStart(2, "0"),
-            v.toString().padStart(2, "0"),
+            calendarDate.toString().padStart(2, "0"),
           ].join("-")
         );
 
         return (
-          <View
-            style={{
-              width: "14%",
-              height: "14%",
-              justifyContent: "center",
-              alignItems: "center",
-
-              padding: 6,
-            }}
-            key={j}
-          >
+          <View style={styles.calenderItemLayout} key={i}>
             <Pressable
-              style={{
-                position: "relative",
-
-                height: "100%",
-                aspectRatio: "1/1",
-              }}
-              onPress={() => {
-                setMonth(calendarMonth);
-                setDate(v);
-              }}
+              style={styles.calendarItemDataLayout}
+              onPress={handleCalendarItemClick(calendarDate)}
             >
-              {isSelect && (
-                <View
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-
-                    width: "100%",
-                    height: "100%",
-
-                    borderWidth: 1,
-                    borderColor: color.b,
-                    borderRadius: 9999,
-                  }}
-                />
-              )}
-
               {imageId && (
-                <View
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-
-                    width: "100%",
-                    height: "100%",
-
-                    borderRadius: 9999,
-
-                    overflow: "hidden",
-                  }}
-                >
+                <View style={styles.calenderItemDataImage}>
                   <LoadImage imageId={imageId} />
                 </View>
               )}
 
-              <View
-                style={{
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-
-                  width: "100%",
-                  height: "100%",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
+              <View style={styles.calenderItemData}>
                 <Text
-                  style={{
-                    fontSize: 16,
-                    fontFamily: font.PretendardRegular,
-                    color: imageId ? color.w : color.g500,
-                  }}
+                  style={[
+                    styles.calendarItemDataText,
+                    {
+                      color: imageId ? color.w : color.g500,
+                    },
+                  ]}
                 >
-                  {v}
+                  {calendarDate}
                 </Text>
               </View>
+
+              {isSelect && (
+                <View style={styles.calendarItemDataSelectedCircle} />
+              )}
             </Pressable>
           </View>
         );

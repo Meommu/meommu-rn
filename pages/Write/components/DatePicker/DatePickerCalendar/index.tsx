@@ -1,5 +1,5 @@
 // react
-import React, { memo } from "react";
+import React from "react";
 
 // swiper
 import Swiper from "react-native-web-swiper";
@@ -16,25 +16,26 @@ interface DatePickerCalendarProps {
   month: number;
 }
 
-export const DatePickerCalendar = memo(
-  ({ setCurrentMonth, month }: DatePickerCalendarProps) => {
-    const { swiperRef } = useSwiper(0);
+export function DatePickerCalendar({
+  setCurrentMonth,
+  month,
+}: DatePickerCalendarProps) {
+  const { swiperRef } = useSwiper(0);
 
-    return (
-      <Swiper
-        ref={swiperRef}
-        from={month - 1}
-        onIndexChanged={(index) => {
-          setCurrentMonth(index + 1);
-        }}
-        controlsEnabled={false}
-      >
-        {Array(12)
-          .fill(null)
-          .map((_, i) => {
-            return <DatePickerCalendarItem calendarMonth={i + 1} key={i} />;
-          })}
-      </Swiper>
-    );
-  }
-);
+  return (
+    <Swiper
+      ref={swiperRef}
+      from={month - 1}
+      onIndexChanged={(index) => {
+        setCurrentMonth(index + 1);
+      }}
+      controlsEnabled={false}
+    >
+      {Array(12)
+        .fill(null)
+        .map((_, i) => {
+          return <DatePickerCalendarItem calendarMonth={i + 1} key={i} />;
+        })}
+    </Swiper>
+  );
+}
