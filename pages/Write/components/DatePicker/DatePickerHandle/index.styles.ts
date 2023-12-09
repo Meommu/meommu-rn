@@ -10,9 +10,6 @@ export const styles = StyleSheet.create({
     height: 60,
     justifyContent: "center",
     alignItems: "center",
-
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
   },
 
   grabber: {
