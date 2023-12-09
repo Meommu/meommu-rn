@@ -136,19 +136,19 @@ export function WriteContainer() {
         writeDiaryMutation.mutate(data);
       },
       (errors) => {
-        if (errors.title?.message) {
+        if (errors.title) {
           fireToast("올바른 제목을 입력하세요.", 2000);
 
           return;
         }
 
-        if (errors.content?.message) {
+        if (errors.content) {
           fireToast("올바른 일기를 입력하세요.", 2000);
 
           return;
         }
 
-        if (errors.dogName?.message) {
+        if (errors.dogName) {
           fireToast("올바른 강아지 이름을 입력하세요.", 2000);
 
           return;
