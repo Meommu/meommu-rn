@@ -64,36 +64,39 @@ export function MonthCalendarItem({
             >
               <View style={styles.monthElement}>
                 <Pressable
-                  style={[
-                    styles.monthElementCircle,
-                    {
-                      borderColor: isSelected ? color.b : color.w,
-                    },
-                  ]}
+                  style={styles.monthElementButton}
                   onPress={handleMonthSelect(month)}
                   disabled={isFuture}
                 >
                   {diaryImageId && (
-                    <LoadImage
-                      imageId={diaryImageId}
-                      style={styles.monthElementCircleImage}
+                    <View style={styles.monthElementButtonCircleLayout}>
+                      <LoadImage imageId={diaryImageId} />
+                    </View>
+                  )}
+
+                  {isCurrentDate && (
+                    <View
+                      style={[
+                        styles.monthElementButtonCircleLayout,
+                        {
+                          backgroundColor: "rgba(0, 0, 0, 0.3)",
+                        },
+                      ]}
                     />
                   )}
 
-                  <View
-                    style={[
-                      styles.monthElementCircleImage,
-                      {
-                        backgroundColor: isCurrentDate
-                          ? "rgba(0, 0, 0, 0.3)"
-                          : "transparnet",
-                      },
-                    ]}
-                  />
+                  {isSelected && (
+                    <View
+                      style={[
+                        styles.monthElementButtonCircleLayout,
+                        { borderWidth: 1 },
+                      ]}
+                    />
+                  )}
 
                   <Text
                     style={[
-                      styles.monthElementText,
+                      styles.monthElementButtonText,
                       {
                         color: isFuture
                           ? "lightgray"

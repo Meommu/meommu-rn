@@ -28,28 +28,29 @@ export const styles = StyleSheet.create({
     padding: 7,
   },
 
-  monthElementCircle: {
-    height: "100%",
+  monthElementButton: {
+    height: "80%",
     aspectRatio: "1/1",
     alignItems: "center",
     justifyContent: "center",
 
-    borderRadius: 999,
-    borderWidth: 1,
-
-    overflow: "hidden",
-
     position: "relative",
   },
 
-  monthElementCircleImage: {
+  monthElementButtonCircleLayout: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+
     width: "100%",
     height: "100%",
 
-    position: "absolute",
+    borderRadius: 9999,
+
+    overflow: "hidden",
   },
 
-  monthElementText: {
+  monthElementButtonText: {
     fontSize: 24,
     fontFamily: font.PretendardRegular,
     color: color.g700,
