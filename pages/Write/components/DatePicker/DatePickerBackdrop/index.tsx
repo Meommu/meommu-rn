@@ -7,7 +7,7 @@ import {
 // style
 import { styles } from "./index.styles";
 
-function WriteGuideBackdrop(props: BottomSheetBackdropProps) {
+function DatePickerBackdrop(props: BottomSheetBackdropProps) {
   return (
     <BottomSheetBackdrop
       {...props}
@@ -20,6 +20,6 @@ function WriteGuideBackdrop(props: BottomSheetBackdropProps) {
 
 export const renderBackdrop = () => {
   return (props: BottomSheetBackdropProps) => {
-    return <WriteGuideBackdrop {...props} />;
+    return <DatePickerBackdrop {...props} />;
   };
 };
