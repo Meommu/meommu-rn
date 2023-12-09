@@ -75,6 +75,7 @@ export const DatePicker = memo(({ setValue }: DatePickerProps) => {
    * bottom sheet
    */
   const bottomSheetRef = useRef<BottomSheet | null>(null);
+
   useEffect(() => {
     dispatch(updateDatePickerBottomSheetRef(bottomSheetRef));
   }, [dispatch, bottomSheetRef]);
