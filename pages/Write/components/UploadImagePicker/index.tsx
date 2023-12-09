@@ -240,7 +240,7 @@ export const UploadImagePicker = memo(
             </View>
           </View>
 
-          {[...imageIds].reverse().map((imageId, i) => {
+          {imageIds.map((imageId, i) => {
             if (imageId < 0) {
               const base64 = indexToB64.current.get(imageId);
 
