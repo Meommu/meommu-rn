@@ -2,21 +2,23 @@
 import { View, Text, TextInput, Pressable } from "react-native";
 import { useFormContext, Controller } from "react-hook-form";
 
+// redux
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
+import { BottomSheetState } from "@/store/modules/bottomSheet";
+
 // components
 import { UnderlineInput } from "@/components/Input/UnderlineInput";
 import { UploadImagePicker } from "@/pages/Write/components/UploadImagePicker";
 
 // constants
-import { color, font } from "@/constants";
+import { color } from "@/constants";
 
 // svgs
 import ArrowDropDown from "@/assets/svgs/arrow-drop-down.svg";
 
 // styles
 import { styles } from "./index.styles";
-import { useSelector } from "react-redux";
-import { RootState } from "@/store";
-import { BottomSheetState } from "@/store/modules/bottomSheet";
 
 export function WriteFormStepTwo() {
   const { control, watch, setValue, getValues } =
@@ -24,45 +26,25 @@ export function WriteFormStepTwo() {
 
   const imageIds = watch("imageIds");
 
-  /**
-   * TODO: container로 이동
-   */
   const { datePickerBottomSheetRef } = useSelector<RootState, BottomSheetState>(
     (state) => state.bottomSheet
   );
 
+  /**
+   * swiper 라이브러리의 한계로 상태변화가 발생하지 않아 Presenter에 직접 핸들러를 작성함.
+   */
   const handleDatePickerButtonClick = () => {
     datePickerBottomSheetRef?.current?.snapToIndex(0);
   };
 
   return (
     <View style={styles.container}>
-      <View
-        style={{
-          alignItems: "flex-start",
-
-          paddingVertical: 10,
-          paddingHorizontal: 21,
-
-          backgroundColor: color.g200,
-        }}
-      >
+      <View style={styles.imagePickerLayout}>
         <Pressable
           onPress={handleDatePickerButtonClick}
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            gap: 12,
-          }}
+          style={styles.imagePicker}
         >
-          <Text
-            style={{
-              color: color.g500,
-              fontSize: 18,
-              fontFamily: font.YeonTheLand,
-              lineHeight: 24,
-            }}
-          >
+          <Text style={styles.imagePickerText}>
             {`${getValues("date").split("-")[0]}년 ${
               getValues("date").split("-")[1]
             }월 ${getValues("date").split("-")[2]}일`}
