@@ -29,7 +29,7 @@ export const styles = StyleSheet.create({
   },
 
   monthElementCircle: {
-    width: "100%",
+    height: "100%",
     aspectRatio: "1/1",
     alignItems: "center",
     justifyContent: "center",
