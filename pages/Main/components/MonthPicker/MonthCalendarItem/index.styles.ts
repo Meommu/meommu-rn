@@ -51,7 +51,7 @@ export const styles = StyleSheet.create({
   },
 
   monthElementButtonText: {
-    fontSize: 24,
+    fontSize: 18,
     fontFamily: font.PretendardRegular,
     color: color.g700,
   },
