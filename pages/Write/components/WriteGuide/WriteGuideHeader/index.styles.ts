@@ -6,7 +6,7 @@ import { size, font, color } from "@/constants";
 
 export const styles = StyleSheet.create({
   container: {
-    height: size.AI_BOTTOM_SHEET_HEADER_HEIGHT,
+    height: size.WRITE_GUIDE_HEADER_HEIGHT,
     justifyContent: "center",
     alignItems: "center",
     gap: 4,

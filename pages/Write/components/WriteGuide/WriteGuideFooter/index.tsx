@@ -52,7 +52,7 @@ function WriteGuideFooter({
   const footerPosition = useDerivedValue(() => {
     return Math.max(
       animatedFooterPosition.value,
-      size.AI_BOTTOM_SHEET_HEADER_HEIGHT
+      size.WRITE_GUIDE_HEADER_HEIGHT
     );
   }, []);
 

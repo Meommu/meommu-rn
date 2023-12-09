@@ -59,7 +59,7 @@ export const WriteGuide = memo(({ setValue, getValues }: WriteGuideProps) => {
 
   const snapPoints = useMemo(
     () => [
-      size.BOTTOM_SHEET_INDICATOR_HEIGHT + size.AI_BOTTOM_SHEET_HEADER_HEIGHT,
+      size.BOTTOM_SHEET_INDICATOR_HEIGHT + size.WRITE_GUIDE_HEADER_HEIGHT,
       "65%",
       "99%",
     ],
