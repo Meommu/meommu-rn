@@ -6,7 +6,7 @@ import { View, Text, Pressable } from "react-native";
 import { LoadImage } from "@/components/Widget/LoadImage";
 
 // context
-import { MonthCalendarContext } from "../index.context";
+import { MonthPickerContext } from "../index.context";
 
 // constants
 import { color } from "@/constants";
@@ -26,7 +26,7 @@ export function MonthCalendarItem({
   selectedMonth,
 }: MonthCalendarProps) {
   const { currentYear, currentMonth, yearMonthToImageId, setCurrentYearMonth } =
-    useContext(MonthCalendarContext);
+    useContext(MonthPickerContext);
 
   const now = useMemo(() => new Date(), []);
 

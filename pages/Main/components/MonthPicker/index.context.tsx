@@ -1,30 +1,30 @@
 import React, { createContext } from "react";
 
-type MonthCalendarContextValue = {
+type MonthPickerContextValue = {
   currentYear: number;
   currentMonth: number;
   yearMonthToImageId: Map<string, number>;
   setCurrentYearMonth: (year: number, month: number) => void;
 };
 
-const MonthCalendarContext = createContext<MonthCalendarContextValue>({
+const MonthPickerContext = createContext<MonthPickerContextValue>({
   currentYear: new Date().getFullYear(),
   currentMonth: new Date().getMonth() + 1,
   yearMonthToImageId: new Map(),
   setCurrentYearMonth: (year: number, month: number) => {},
 });
 
-interface MonthCalendarProvider {
-  value: MonthCalendarContextValue;
+interface MonthPickerProvider {
+  value: MonthPickerContextValue;
   children: React.ReactNode;
 }
 
-function MonthCalendarProvider({ value, children }: MonthCalendarProvider) {
+function MonthPickerProvider({ value, children }: MonthPickerProvider) {
   return (
-    <MonthCalendarContext.Provider value={value}>
+    <MonthPickerContext.Provider value={value}>
       {children}
-    </MonthCalendarContext.Provider>
+    </MonthPickerContext.Provider>
   );
 }
 
-export { MonthCalendarProvider, MonthCalendarContext };
+export { MonthPickerProvider, MonthPickerContext };

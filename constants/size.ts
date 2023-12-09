@@ -10,3 +10,5 @@ export const TABLET_WIDTH = 768;
 export const LAPTOP_WIDTH = 1024;
 
 export const CALENDAR_HEIGHT = 330;
+
+export const MONTH_CALENDAR_PAGE_COUNT = 10;

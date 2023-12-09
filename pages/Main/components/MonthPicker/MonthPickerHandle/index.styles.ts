@@ -2,11 +2,23 @@
 import { StyleSheet } from "react-native";
 
 // constants
-import { size, font, color } from "@/constants";
+import { font, color } from "@/constants";
 
 export const styles = StyleSheet.create({
   container: {
-    height: size.MONTH_CALENDAR_HEIGHT,
+    width: "100%",
+    alignItems: "center",
+  },
+
+  grabber: {
+    width: 48,
+    height: 4,
+
+    marginTop: 12,
+
+    backgroundColor: color.g300,
+
+    borderRadius: 2.5,
   },
 
   header: {
@@ -16,10 +28,10 @@ export const styles = StyleSheet.create({
   },
 
   yearText: {
+    color: color.g500,
     fontSize: 18,
     fontFamily: font.PretendardSemiBold,
     textAlign: "center",
-    color: color.g500,
   },
 
   swiperController: {

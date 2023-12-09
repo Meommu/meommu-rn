@@ -2,7 +2,7 @@
 import { StyleSheet } from "react-native";
 
 // constants
-import { color, font, zIndex } from "@/constants";
+import { size, color, font, zIndex } from "@/constants";
 
 export const styles = StyleSheet.create({
   container: {
@@ -30,21 +30,16 @@ export const styles = StyleSheet.create({
   /**
    * bottom sheet
    */
-  bottomSheetBackdrop: {
-    width: "100%",
-
-    zIndex: zIndex.bottomSheetBackdrop,
-  },
-
   bottomSheetContainer: {
     marginHorizontal: "auto",
 
     zIndex: zIndex.bottomSheetContainer,
   },
 
-  handleIndicator: {
-    width: "10%",
-
-    backgroundColor: "rgba(0, 0, 0, 0.3)",
+  /**
+   * swiper
+   */
+  monthCalendar: {
+    height: size.CALENDAR_HEIGHT,
   },
 });
