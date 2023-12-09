@@ -27,6 +27,8 @@ export function DatePickerCalendarItem({
     setDate(date);
   };
 
+  const now = useMemo(() => new Date(), []);
+
   const MONTH_END_DATE = useMemo(
     () => [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
     []
@@ -40,7 +42,7 @@ export function DatePickerCalendarItem({
   const startingDate = new Date();
 
   startingDate.setFullYear(year);
-  startingDate.setMonth(calendarMonth);
+  startingDate.setMonth(calendarMonth - 1);
   startingDate.setDate(1);
 
   const items = [
@@ -73,6 +75,9 @@ export function DatePickerCalendarItem({
 
         const isSelect = month === calendarMonth && date === calendarDate;
 
+        const isFuture =
+          new Date(year, calendarMonth - 1, calendarDate, 0, 0, 0) > now;
+
         const imageId = dateToImageId.get(
           [
             year,
@@ -86,6 +91,7 @@ export function DatePickerCalendarItem({
             <Pressable
               style={styles.calendarItemDataLayout}
               onPress={handleCalendarItemClick(calendarDate)}
+              disabled={isFuture}
             >
               {imageId && (
                 <View style={styles.calenderItemDataImage}>
@@ -98,7 +104,11 @@ export function DatePickerCalendarItem({
                   style={[
                     styles.calendarItemDataText,
                     {
-                      color: imageId ? color.w : color.g500,
+                      color: isFuture
+                        ? color.g300
+                        : imageId
+                        ? color.w
+                        : color.g500,
                     },
                   ]}
                 >
