@@ -13,7 +13,7 @@ import { color } from "@/constants";
 export function ImageRemoveButton() {
   return (
     <View style={styles.container}>
-      <X fill={color.g400} />
+      <X fill={color.g300} />
     </View>
   );
 }
