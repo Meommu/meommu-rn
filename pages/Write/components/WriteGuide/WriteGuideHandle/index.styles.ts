@@ -29,12 +29,12 @@ export const styles = StyleSheet.create({
     backgroundColor: color.w,
 
     borderRadius: 6,
-    borderColor: color.bg100,
-    borderWidth: 2,
+    borderColor: color.g300,
+    borderWidth: 1,
   },
 
   stopButtonText: {
-    color: color.bg100,
+    color: color.g300,
     fontSize: 16,
     fontFamily: font.PretendardSemiBold,
     lineHeight: 32,
