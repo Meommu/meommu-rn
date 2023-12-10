@@ -56,7 +56,7 @@ export const styles = StyleSheet.create({
   },
 
   splitBar: {
-    borderLeftWidth: 1,
+    borderLeftWidth: 2,
     borderColor: color.g300,
     height: 12,
   },

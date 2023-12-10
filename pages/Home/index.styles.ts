@@ -70,7 +70,7 @@ export const styles = StyleSheet.create({
 
   splitBar: {
     borderLeftColor: color.g300,
-    borderLeftWidth: 1,
+    borderLeftWidth: 2,
     height: 12,
   },
 
