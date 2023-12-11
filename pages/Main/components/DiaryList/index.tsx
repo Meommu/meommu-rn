@@ -49,7 +49,7 @@ export function DiaryList() {
   /**
    * 다이어리 일기정보 불러오기
    */
-  const { data, isLoading, isFetching, refetch } = useQuery(
+  const { data, isLoading, refetch } = useQuery(
     ["diaryList", selectedYear, selectedMonth],
     async () => {
       return await apiService.getDiaries(selectedYear, selectedMonth);
@@ -107,7 +107,7 @@ export function DiaryList() {
           />
         }
       >
-        {isLoading || isFetching ? (
+        {isLoading || isRefreshing ? (
           Array(3)
             .fill(null)
             .map((_, i) => {
