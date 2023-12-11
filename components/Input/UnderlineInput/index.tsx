@@ -1,5 +1,5 @@
 // react
-import { View, TextInput, type TextInputProps } from "react-native";
+import { TextInput, type TextInputProps } from "react-native";
 
 // constants
 import { color } from "@/constants";
