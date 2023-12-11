@@ -32,22 +32,4 @@ export const styles = StyleSheet.create({
 
     backgroundColor: color.bg500,
   },
-
-  prevButton: {
-    width: "100%",
-    height: size.NAVIGATION_BUTTON_HEIGHT,
-    flexShrink: 1,
-    justifyContent: "center",
-    alignItems: "center",
-
-    backgroundColor: color.g800,
-
-    borderRadius: 6,
-  },
-
-  prevButtonText: {
-    color: color.g300,
-    fontSize: 16,
-    fontFamily: font.PretendardSemiBold,
-  },
 });

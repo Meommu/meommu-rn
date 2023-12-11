@@ -290,9 +290,12 @@ function WriteGuideFooter({
         </LinearGradient>
 
         <Footer style={styles.footer}>
-          <Pressable style={styles.prevButton} onPress={handlePrevButtonClick}>
-            <Text style={styles.prevButtonText}>이전</Text>
-          </Pressable>
+          <NavigationButton
+            content="이전"
+            onPress={handlePrevButtonClick}
+            backgroundColor={color.g800}
+            fontColor={color.g300}
+          />
 
           <NavigationButton content="다음" onPress={handleNextButtonClick} />
         </Footer>
