@@ -295,6 +295,7 @@ export function RecoveryPage() {
                 <TextInput
                   placeholder="이메일"
                   placeholderTextColor={color.g300}
+                  inputMode="email"
                   style={styles.inputContent}
                   onBlur={onBlur}
                   onChangeText={(text) => {
