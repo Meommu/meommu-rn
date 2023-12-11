@@ -1,6 +1,6 @@
 // react
 import { useEffect, useCallback, useState, useRef, useMemo } from "react";
-import { View, Text, Pressable } from "react-native";
+import { View } from "react-native";
 import { useQuery } from "react-query";
 
 // redux
@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "@/store";
 import type { DiaryDateState } from "@/store/modules/diaryDate";
 import { changeSelectedYearMonth } from "@/store/modules/diaryDate";
+import { updateMonthPickerBottomSheetModalRef } from "@/store/modules/bottomSheet";
 
 // components
 import { Footer } from "@/components/Layout/Footer";
@@ -16,9 +17,6 @@ import { MonthPickerProvider } from "./index.context";
 import { MonthCalendarItem } from "./MonthCalendarItem";
 import { renderHandle } from "./MonthPickerHandle";
 import { renderBackdrop } from "./MonthPickerBackdrop";
-
-// svgs
-import ArrowDropDown from "@/assets/svgs/arrow-drop-down.svg";
 
 // hooks
 import { useResponsiveMobileWidth, useSwiper } from "@/hooks";
@@ -49,15 +47,23 @@ import Swiper from "react-native-web-swiper";
 export function MonthPicker() {
   const dispatch = useDispatch();
 
+  const now = useMemo(() => new Date(), []);
+
   const { selectedYear, selectedMonth } = useSelector<
     RootState,
     DiaryDateState
   >((state) => state.diaryDate);
 
-  const now = useMemo(() => new Date(), []);
-
   const [currentYear, setCurrentYear] = useState(selectedYear);
   const [currentMonth, setCurrentMonth] = useState(selectedMonth);
+
+  /**
+   * 현재 선택되어있는 년, 월과 MonhtPicker의 선택 년 월 상태를 동기화
+   */
+  useEffect(() => {
+    setCurrentYear(selectedYear);
+    setCurrentMonth(selectedMonth);
+  }, [selectedYear, selectedMonth]);
 
   /**
    * swiper
@@ -91,6 +97,10 @@ export function MonthPicker() {
     handleContentLayout,
   } = useBottomSheetDynamicSnapPoints(initialSnapPoints);
 
+  useEffect(() => {
+    dispatch(updateMonthPickerBottomSheetModalRef(bottomSheetRef));
+  }, [bottomSheetRef]);
+
   /**
    * useQuery
    */
@@ -106,32 +116,14 @@ export function MonthPicker() {
     }
   );
 
+  /**
+   * 년, 월에 존재하는 일기들의 대표 이미지 추출
+   */
   useEffect(() => {
-    if (!diariesSummary || !diariesSummary.length) {
+    if (!diariesSummary) {
       return;
     }
 
-    /**
-     * 최신 일기가 존재하는 년, 월 추출
-     */
-    const latestDate = diariesSummary
-      .map(({ date }) => {
-        const [yyyy, mm, dd] = date.split("-").map(Number);
-
-        return new Date(yyyy, mm - 1, dd);
-      })
-      .sort((a, b) => {
-        return a > b ? -1 : 1;
-      })[0];
-
-    const year = latestDate.getFullYear();
-    const month = latestDate.getMonth() + 1;
-
-    dispatch(changeSelectedYearMonth(year, month));
-
-    /**
-     * 년, 월에 존재하는 일기들의 대표 이미지 추출
-     */
     const yearMonthToImageId: Map<string, number> = new Map();
 
     diariesSummary.forEach(({ date, imageIds }) => {
@@ -159,10 +151,6 @@ export function MonthPicker() {
     bottomSheetRef.current?.close();
   }, [currentYear, currentMonth]);
 
-  const handleSheetOpen = useCallback(() => {
-    bottomSheetRef.current?.present();
-  }, [bottomSheetRef]);
-
   /**
    * util functions
    */
@@ -173,20 +161,6 @@ export function MonthPicker() {
 
   return (
     <BottomSheetModalProvider>
-      <View style={styles.container}>
-        <Pressable
-          style={styles.content}
-          onPress={handleSheetOpen}
-          testID="button-month-picker"
-        >
-          <Text style={styles.dateText}>
-            {selectedYear}년 {selectedMonth}월
-          </Text>
-
-          <ArrowDropDown />
-        </Pressable>
-      </View>
-
       <BottomSheetModal
         ref={bottomSheetRef}
         containerStyle={[responsiveWidthStyle, styles.bottomSheetContainer]}

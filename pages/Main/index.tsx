@@ -16,6 +16,7 @@ import { Header } from "@/components/Layout/Header";
 import { DiaryList } from "./components/DiaryList";
 import { MonthPicker } from "./components/MonthPicker";
 import { MonthPickerSkeleton } from "./components/MonthPicker/index.skeleton";
+import { MonthPickerController } from "./components/MonthPickerController";
 import { Footer } from "@/components/Layout/Footer";
 import { NavigationButton } from "@/components/Button/NavigationButton";
 import { Popover } from "@/components/Overlay/Popover";
@@ -52,8 +53,10 @@ export function MainPage() {
       />
 
       <Suspense fallback={<MonthPickerSkeleton />}>
-        <MonthPicker />
+        <MonthPickerController />
       </Suspense>
+
+      <MonthPicker />
 
       {/**
        * Suspense를 사용하지 않고, 내부적으로 `isLoading` 상태를 사용한 이유는,
