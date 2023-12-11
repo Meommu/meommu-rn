@@ -8,6 +8,7 @@ export const styles = StyleSheet.create({
   container: {
     width: "100%",
     height: size.NAVIGATION_BUTTON_HEIGHT,
+    flexShrink: 1,
 
     borderRadius: 6,
 
@@ -19,10 +20,9 @@ export const styles = StyleSheet.create({
   content: {
     width: "100%",
     height: "100%",
-    flexShrink: 1,
-    flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
+    flexDirection: "row",
     gap: 7,
   },
 
