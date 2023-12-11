@@ -45,12 +45,13 @@ export const styles = StyleSheet.create({
 
   footer: {
     paddingTop: 0,
-
-    backgroundColor: color.w,
   },
 
   scrollGradient: {
+    position: "absolute",
+    top: "-50%",
+
     width: "100%",
-    height: 24,
+    height: "150%",
   },
 });

@@ -64,7 +64,7 @@ export function MainPage() {
       <View style={styles.footerWrapper}>
         <LinearGradient
           style={styles.scrollGradient}
-          colors={["rgba(255, 255, 255, 0.55)", "rgba(255, 255, 255, 0)"]}
+          colors={["rgba(255, 255, 255, 1)", "rgba(255, 255, 255, 0)"]}
           start={{ x: 0, y: 1 }}
           end={{ x: 0, y: 0 }}
         />
