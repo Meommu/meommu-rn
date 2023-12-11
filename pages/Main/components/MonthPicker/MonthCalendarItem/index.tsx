@@ -106,7 +106,7 @@ export function MonthCalendarItem({
                       },
                     ]}
                   >
-                    {month}
+                    {month}월
                   </Text>
                 </Pressable>
               </View>
