@@ -42,11 +42,4 @@ export const styles = StyleSheet.create({
   monthCalendar: {
     height: size.CALENDAR_HEIGHT,
   },
-
-  monthCalendarGuide: {
-    color: color.bg100,
-    textAlign: "center",
-    fontSize: 16,
-    fontFamily: font.PretendardSemiBold,
-  },
 });

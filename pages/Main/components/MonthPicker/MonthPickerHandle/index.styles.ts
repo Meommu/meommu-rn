@@ -40,4 +40,11 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+
+  guideText: {
+    color: color.bg100,
+    textAlign: "center",
+    fontSize: 16,
+    fontFamily: font.PretendardSemiBold,
+  },
 });
