@@ -21,6 +21,10 @@ interface NavigationButtonProps extends PressableProps {
   content: string;
 
   isLoading?: boolean;
+
+  backgroundColor?: string;
+
+  fontColor?: string;
 }
 
 export function NavigationButton({
@@ -28,14 +32,16 @@ export function NavigationButton({
 
   isLoading = false,
 
+  backgroundColor = color.primary,
+
+  fontColor = color.w,
+
   style,
 
   disabled,
 
   ...props
 }: NavigationButtonProps) {
-  const backgroundColor = disabled ? color.g300 : color.primary;
-
   const scale = useSharedValue(1);
   const opacity = useSharedValue(0);
 
@@ -64,14 +70,17 @@ export function NavigationButton({
   return (
     <Animated.View style={[styles.container, containerAnimatedStyle]}>
       <Pressable
-        style={[styles.content, { backgroundColor }]}
+        style={[
+          styles.content,
+          { backgroundColor: disabled ? color.g300 : backgroundColor },
+        ]}
         disabled={disabled || isLoading}
         onPressIn={handleButtonPressIn}
         onPressOut={handleButtonPressOut}
         {...props}
       >
         {isLoading && <ActivityIndicator color={color.primaryB} />}
-        <Text style={styles.buttonText}>{content}</Text>
+        <Text style={[styles.buttonText, { color: fontColor }]}>{content}</Text>
       </Pressable>
 
       <Animated.View style={[styles.dimmed, dimmedAnimatedStyle]} />
