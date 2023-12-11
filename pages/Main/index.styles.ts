@@ -16,7 +16,7 @@ export const styles = StyleSheet.create({
    * header
    */
   header: {
-    paddingVertical: 20,
+    paddingVertical: 12,
     paddingLeft: 20,
     paddingRight: 12,
   },
