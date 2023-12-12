@@ -94,8 +94,8 @@ export function RootLayout() {
               />
             </GlobalErrorBoundary>
 
-            <Toast />
             <Confirm />
+            <Toast />
           </ResponsiveLayoutView>
         )}
       </QueryProvider>
