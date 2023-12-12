@@ -7,7 +7,6 @@ import { color, font } from "@/constants";
 export const styles = StyleSheet.create({
   container: {
     width: "100%",
-    height: 60,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -16,7 +15,7 @@ export const styles = StyleSheet.create({
     width: 48,
     height: 4,
 
-    marginTop: 12,
+    marginTop: 10,
 
     backgroundColor: color.g300,
 

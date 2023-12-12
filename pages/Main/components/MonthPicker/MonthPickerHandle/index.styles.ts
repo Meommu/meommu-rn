@@ -14,7 +14,7 @@ export const styles = StyleSheet.create({
     width: 48,
     height: 4,
 
-    marginTop: 12,
+    marginTop: 10,
 
     backgroundColor: color.g300,
 
