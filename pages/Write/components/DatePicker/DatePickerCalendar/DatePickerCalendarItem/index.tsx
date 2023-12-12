@@ -9,6 +9,9 @@ import { LoadImage } from "@/components/Widget/LoadImage";
 // constants
 import { color } from "@/constants";
 
+// utils
+import { dateToHyphenatedYYYYMMDD } from "@/utils";
+
 // styles
 import { styles } from "./index.styles";
 
@@ -79,11 +82,9 @@ export function DatePickerCalendarItem({
           new Date(year, calendarMonth - 1, calendarDate, 0, 0, 0) > now;
 
         const imageId = dateToImageId.get(
-          [
-            year,
-            calendarMonth.toString().padStart(2, "0"),
-            calendarDate.toString().padStart(2, "0"),
-          ].join("-")
+          dateToHyphenatedYYYYMMDD(
+            new Date(year, calendarMonth - 1, calendarDate)
+          )
         );
 
         return (

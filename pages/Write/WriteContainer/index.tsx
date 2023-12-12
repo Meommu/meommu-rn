@@ -20,6 +20,9 @@ import { useSwiper, useToast } from "@/hooks";
 // constants
 import { PATH, regExp } from "@/constants";
 
+// utils
+import { dateToHyphenatedYYYYMMDD } from "@/utils";
+
 // apis
 import { apiService } from "@/apis";
 
@@ -39,9 +42,7 @@ export function WriteContainer() {
    */
   const methods = useForm<DiaryWriteFormFieldValues>({
     defaultValues: {
-      date: `${new Date().getFullYear()}-${(new Date().getMonth() + 1)
-        .toString()
-        .padStart(2, "0")}-${new Date().getDate().toString().padStart(2, "0")}`,
+      date: dateToHyphenatedYYYYMMDD(new Date()),
       title: "",
       content: "",
       dogName: "",

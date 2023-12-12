@@ -2,6 +2,9 @@
 import { useState, useMemo, useCallback } from "react";
 import { View, Pressable, Text } from "react-native";
 
+// utils
+import { dateToKoreanStyleYYMMDD } from "@/utils";
+
 // svgs
 import CaretDown from "@/assets/svgs/caret-down.svg";
 import CaretUp from "@/assets/svgs/caret-up.svg";
@@ -17,9 +20,7 @@ export function NoticeItem({ date, content }: { date: Date; content: string }) {
     []
   );
 
-  const title = `${date.getFullYear() % 100}년 ${(date.getMonth() + 1)
-    .toString()
-    .padStart(2, "0")}월 ${date.getDate().toString().padStart(2, "0")}일 ${
+  const title = `${dateToKoreanStyleYYMMDD(date)} ${
     DAY_OF_THE_WEEK[date.getDay()]
   }요일 공지`;
 

@@ -21,6 +21,9 @@ import { renderBackdrop } from "./DatePickerBackdrop";
 import { DatePickerCalendar } from "./DatePickerCalendar";
 import { DatePickerProvider } from "./index.context";
 
+// utils
+import { dateToHyphenatedYYYYMMDD } from "@/utils";
+
 // apis
 import { apiService } from "@/apis";
 
@@ -104,12 +107,7 @@ export const DatePicker = memo(({ setValue }: DatePickerProps) => {
   };
 
   const handleApplyButtonClick = () => {
-    setValue(
-      "date",
-      `${year}-${month.toString().padStart(2, "0")}-${date
-        .toString()
-        .padStart(2, "0")}`
-    );
+    setValue("date", dateToHyphenatedYYYYMMDD(new Date(year, month - 1, date)));
 
     bottomSheetRef.current?.close();
   };
