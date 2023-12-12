@@ -106,15 +106,9 @@ export function MonthPicker() {
    */
   const [yearMonthToImageId, setYearMonthToImageId] = useState(new Map());
 
-  const { data: diariesSummary } = useQuery(
-    ["diariesSummary"],
-    async () => {
-      return await apiService.getDiariesSummary();
-    },
-    {
-      suspense: true,
-    }
-  );
+  const { data: diariesSummary } = useQuery(["diariesSummary"], async () => {
+    return await apiService.getDiariesSummary();
+  });
 
   /**
    * 년, 월에 존재하는 일기들의 대표 이미지 추출
