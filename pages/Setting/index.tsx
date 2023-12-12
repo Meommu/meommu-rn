@@ -36,32 +36,38 @@ export function SettingPage() {
   const { openConfirm } = useConfirm();
 
   const handleLogoutButtonClick = useCallback(async () => {
-    openConfirm(
-      "로그아웃",
-      "로그아웃 후 알림을 받을 수 없습니다.",
-      async () => {
-        delete axios.defaults.headers.common.Authorization;
+    openConfirm({
+      title: "로그아웃",
+      body: "로그아웃 후 알림을 받을 수 없습니다.",
+      button: {
+        ok: {
+          message: "로그아웃",
+          callback: async () => {
+            delete axios.defaults.headers.common.Authorization;
 
-        await AsyncStorage.removeItem("accessToken");
+            await AsyncStorage.removeItem("accessToken");
 
-        queryClient.removeQueries();
+            queryClient.removeQueries();
 
-        router.replace(PATH.HOME);
+            router.replace(PATH.HOME);
+          },
+        },
+        cancel: {
+          message: "이전",
+        },
       },
-      "로그아웃",
-      "이전"
-    );
+    });
   }, []);
 
   const handleResignButtonClick = useCallback(async () => {
-    openConfirm(
-      "회원탈퇴",
-      "그 동안 작성했던 모든 일기와 입력했던 정보들이 삭제됩니다.",
-      async () => {
-        openConfirm(
-          "정말 탈퇴하시겠어요?",
-          "이 작업은 돌이킬 수 없습니다.",
-          async () => {
+    openConfirm({
+      title: "회원탈퇴",
+      body: "그 동안 작성했던 모든 일기와 입력했던 정보들이 삭제됩니다.",
+      button: {
+        ok: {
+          lock: "탈퇴하겠습니다.",
+          message: "회원탈퇴",
+          callback: async () => {
             delete axios.defaults.headers.common.Authorization;
 
             await AsyncStorage.removeItem("accessToken");
@@ -70,13 +76,12 @@ export function SettingPage() {
 
             router.replace(PATH.HOME);
           },
-          "탈퇴하기",
-          "취소"
-        );
+        },
+        cancel: {
+          message: "이전",
+        },
       },
-      "회원탈퇴",
-      "이전"
-    );
+    });
   }, []);
 
   const handleGoBackButtonClick = useCallback(() => {

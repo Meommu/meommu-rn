@@ -1,34 +1,16 @@
 const enum UPDATE_CONFIRM {
-  CHANGE_CONTENT = "CHANGE_CONTENT",
-  CHANGE_VISIBLE = "CHANGE_VISIBLE",
+  CHANGE_CONFIRM_CONTENT = "CHANGE_CONFIRM_CONTENT",
+  CHANGE_CONFIRM_VISIBLE = "CHANGE_CONFIRM_VISIBLE",
 }
-
-export const changeContent = (
-  title: string,
-  body: string,
-  okCallback: () => void,
-  okMessage: string = "확인",
-  cancelMessage: string = "취소"
-) => ({
-  type: UPDATE_CONFIRM.CHANGE_CONTENT,
-  title,
-  body,
-  okCallback,
-  okMessage,
-  cancelMessage,
-});
-
-export const changeVisible = (isConfirmOpen: boolean) => ({
-  type: UPDATE_CONFIRM.CHANGE_VISIBLE,
-  isConfirmOpen,
-});
 
 export interface ConfirmState {
   isConfirmOpen: boolean;
+
   title: string;
   body: string;
   button: {
     ok: {
+      lock?: string;
       message: string;
       callback: () => void;
     };
@@ -38,18 +20,19 @@ export interface ConfirmState {
   };
 }
 
+export type ConfirmContentState = Omit<ConfirmState, "isConfirmOpen">;
+
 interface ConfirmAction {
   type: UPDATE_CONFIRM;
+
   isConfirmOpen: boolean;
-  title: string;
-  body: string;
-  okCallback: () => void;
-  okMessage: string;
-  cancelMessage: string;
+
+  content: ConfirmContentState;
 }
 
-const initialState = {
+const initialState: ConfirmState = {
   isConfirmOpen: false,
+
   title: "",
   body: "",
   button: {
@@ -63,38 +46,30 @@ const initialState = {
   },
 };
 
+export const changeContent = (content: ConfirmContentState) => ({
+  type: UPDATE_CONFIRM.CHANGE_CONFIRM_CONTENT,
+  content,
+});
+
+export const changeVisible = (isConfirmOpen: boolean) => ({
+  type: UPDATE_CONFIRM.CHANGE_CONFIRM_VISIBLE,
+  isConfirmOpen,
+});
+
 const confirm = (
   state: ConfirmState = initialState,
   action: ConfirmAction
 ): ConfirmState => {
-  const {
-    type,
-    isConfirmOpen,
-    title,
-    body,
-    okCallback,
-    okMessage,
-    cancelMessage,
-  } = action;
+  const { type, isConfirmOpen, content } = action;
 
   switch (type) {
-    case UPDATE_CONFIRM.CHANGE_CONTENT: {
+    case UPDATE_CONFIRM.CHANGE_CONFIRM_CONTENT: {
       return {
         ...state,
-        title,
-        body,
-        button: {
-          ok: {
-            message: okMessage,
-            callback: okCallback,
-          },
-          cancel: {
-            message: cancelMessage,
-          },
-        },
+        ...content,
       };
     }
-    case UPDATE_CONFIRM.CHANGE_VISIBLE: {
+    case UPDATE_CONFIRM.CHANGE_CONFIRM_VISIBLE: {
       return { ...state, isConfirmOpen };
     }
     default: {
