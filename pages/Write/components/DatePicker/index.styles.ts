@@ -15,7 +15,7 @@ export const styles = StyleSheet.create({
     position: "relative",
 
     width: "100%",
-    height: size.CALENDAR_HEIGHT,
+    height: size.DATE_PICKER_CALENDAR_HEIGHT,
   },
 
   content: {
@@ -35,7 +35,7 @@ export const styles = StyleSheet.create({
 
   yearPickerItem: {
     width: "25%",
-    height: size.CALENDAR_HEIGHT / 3,
+    height: size.DATE_PICKER_CALENDAR_HEIGHT / 3,
     alignItems: "center",
     justifyContent: "center",
   },

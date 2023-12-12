@@ -7,7 +7,9 @@ export const WRITE_GUIDE_HEADER_HEIGHT = 80;
 
 export const BOTTOM_SHEET_INDICATOR_HEIGHT = 24;
 
-export const CALENDAR_HEIGHT = 330;
+export const MONTN_PICKER_CALENDAR_HEIGHT = 250;
+
+export const DATE_PICKER_CALENDAR_HEIGHT = 330;
 
 /**
  * width

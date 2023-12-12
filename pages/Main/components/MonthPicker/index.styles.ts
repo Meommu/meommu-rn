@@ -18,6 +18,6 @@ export const styles = StyleSheet.create({
    * swiper
    */
   monthCalendar: {
-    height: size.CALENDAR_HEIGHT,
+    height: size.MONTN_PICKER_CALENDAR_HEIGHT,
   },
 });
