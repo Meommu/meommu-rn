@@ -191,7 +191,7 @@ describe("회원가입 페이지", () => {
 
   describe("전화번호 Validation", () => {
     it('xxx-xxxx-xxxx 형태의 전화번호가 입력되지 않았을 경우 "올바른 형식의 전화번호를 입력하세요" 메세지 출력', () => {
-      clearAndWriteInputText(getSignUpPhoneNumberInput(), "010-12345678");
+      clearAndWriteInputText(getSignUpPhoneNumberInput(), "010-1234-56789");
 
       clickSignUpNextStepButton();
 
