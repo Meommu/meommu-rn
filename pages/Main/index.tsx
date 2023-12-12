@@ -4,10 +4,9 @@ import { View, Text } from "react-native";
 
 // expo
 import { router } from "expo-router";
-import { LinearGradient } from "expo-linear-gradient";
 
 // constants
-import { PATH, size } from "@/constants";
+import { PATH } from "@/constants";
 
 // components
 import { PlusButton } from "@/components/Button/PlusButton";
@@ -17,9 +16,6 @@ import { DiaryList } from "./components/DiaryList";
 import { MonthPicker } from "./components/MonthPicker";
 import { MonthPickerSkeleton } from "./components/MonthPicker/index.skeleton";
 import { MonthPickerController } from "./components/MonthPickerController";
-import { Footer } from "@/components/Layout/Footer";
-import { NavigationButton } from "@/components/Button/NavigationButton";
-import { Popover } from "@/components/Overlay/Popover";
 
 // styles
 import { styles } from "./index.styles";
@@ -63,28 +59,6 @@ export function MainPage() {
        * 추후 무한 스크롤을 구현할 때 사용되기 때문임.
        */}
       <DiaryList />
-
-      <View style={styles.footerWrapper}>
-        <LinearGradient
-          style={styles.scrollGradient}
-          colors={["rgba(255, 255, 255, 1)", "rgba(255, 255, 255, 0)"]}
-          start={{ x: 0, y: 1 }}
-          end={{ x: 0, y: 0 }}
-        />
-
-        <Footer style={styles.footer}>
-          <NavigationButton
-            content="작성하기"
-            onPress={handleWriteButtonClick}
-          />
-        </Footer>
-      </View>
-
-      <Popover
-        id="write"
-        content="선생님 지금 시작해보세요"
-        bottom={size.NAVIGATION_BUTTON_HEIGHT + size.FOOTER_PADDING_BOTTOM + 24}
-      />
     </View>
   );
 }
