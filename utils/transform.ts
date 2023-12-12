@@ -55,3 +55,17 @@ export const insertHyphenToPhoneNumber = (str: string) => {
     return tmp;
   }
 };
+
+export const dateToHyphenatedYYYYMMDD = (date: Date) => {
+  return [
+    date.getFullYear(),
+    (date.getMonth() + 1).toString().padStart(2, "0"),
+    date.getDate().toString().padStart(2, "0"),
+  ].join("-");
+};
+
+export const dateToKoreanStyleYYMMDD = (date: Date) => {
+  return `${date.getFullYear() % 100}년 ${(date.getMonth() + 1)
+    .toString()
+    .padStart(2, "0")}월 ${date.getDate().toString().padStart(2, "0")}일`;
+};
