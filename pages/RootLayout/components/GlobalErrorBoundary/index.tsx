@@ -33,7 +33,8 @@ function ErrorBoundaryFallBack(props: FallbackProps) {
         <View style={styles.guideLayout}>
           <Text style={styles.guideTitleText}>WOOPS!</Text>
           <Text style={styles.guideContentText}>
-            죄송합니다 일시적 오류가 발생했습니다.{"\n"}잠시후 다시 확인해주세요
+            죄송합니다. 일시적인 오류가 발생했습니다.{"\n"}잠시 후에 다시 시도해
+            주세요.
           </Text>
         </View>
 
