@@ -32,26 +32,4 @@ export const styles = StyleSheet.create({
   controllerBox: {
     flexDirection: "row",
   },
-
-  /**
-   * footer
-   */
-  footerWrapper: {
-    width: "100%",
-
-    position: "absolute",
-    bottom: 0,
-  },
-
-  footer: {
-    paddingTop: 0,
-  },
-
-  scrollGradient: {
-    position: "absolute",
-    top: "-50%",
-
-    width: "100%",
-    height: "150%",
-  },
 });

@@ -10,8 +10,8 @@ export const styles = StyleSheet.create({
   },
 
   listCountText: {
-    paddingTop: 10,
-    paddingBottom: 150,
+    paddingTop: 20,
+    paddingBottom: 30,
 
     color: color.g300,
     fontSize: 14,

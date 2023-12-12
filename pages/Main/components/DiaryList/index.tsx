@@ -1,7 +1,13 @@
 // react
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { RefreshControl, Text } from "react-native";
 import { useQuery, useQueryClient } from "react-query";
+import Animated, {
+  useAnimatedScrollHandler,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from "react-native-reanimated";
 
 // redux
 import { useSelector } from "react-redux";
@@ -15,7 +21,6 @@ import { router } from "expo-router";
 import { apiService } from "@/apis";
 
 // components
-import { NonIndicatorScrollView } from "@/components/ScrollView/NonIndicatorScrollView";
 import { DiaryListPlaceholder } from "./DiaryListPlaceholder";
 import { DiaryItemSkeleton } from "./DiaryItem/index.skeleton";
 import { DiaryItem } from "./DiaryItem";
@@ -23,12 +28,16 @@ import { NavigationButton } from "@/components/Button/NavigationButton";
 import { TransparentButton } from "@/components/Button/TransparentButton";
 import { ResponsiveBottomSheetModal } from "@/components/Layout/ResponsiveBottomSheetModal";
 import { Footer } from "@/components/Layout/Footer";
+import { Popover } from "@/components/Overlay/Popover";
 
 // hooks
 import { useConfirm } from "@/hooks";
 
 // bottom sheet
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
+
+// constants
+import { PATH, size } from "@/constants";
 
 // styles
 import { styles } from "./index.styles";
@@ -90,10 +99,56 @@ export function DiaryList() {
 
   const [isRefreshing, setIsRefreshing] = useState(false);
 
+  /**
+   * floating button when scroll up
+   */
+  const translateY = useSharedValue(0);
+  const lastOffset = useSharedValue(0);
+
+  const scrollHandler = useAnimatedScrollHandler(
+    {
+      onScroll: ({ contentOffset: { y }, contentSize, layoutMeasurement }) => {
+        const threshold = contentSize.height - layoutMeasurement.height;
+
+        /**
+         * 위로 스크롤 될 경우 (= 스크롤 뷰의 y축 offset값이 작아질 경우)
+         */
+        if (y > 0 && y < threshold && lastOffset.value > y) {
+          translateY.value = 0;
+        }
+
+        /**
+         * 아래로 스크롤 될 경우
+         */
+        if (y > 0 && y < threshold && lastOffset.value < y) {
+          translateY.value = 1000;
+        }
+
+        lastOffset.value = y;
+      },
+    },
+    []
+  );
+
+  const floatingButtonStyle = useAnimatedStyle(() => {
+    return {
+      transform: [
+        { translateY: withTiming(translateY.value, { duration: 600 }) },
+      ],
+    };
+  }, []);
+
+  const handleWriteButtonClick = useCallback(() => {
+    router.push(PATH.WRITE);
+  }, []);
+
   return (
     <BottomSheetModalProvider>
-      <NonIndicatorScrollView
+      <Animated.ScrollView
+        scrollEventThrottle={16}
+        onScroll={scrollHandler}
         contentContainerStyle={styles.container}
+        showsVerticalScrollIndicator={false}
         refreshControl={
           <RefreshControl
             refreshing={isRefreshing}
@@ -131,7 +186,29 @@ export function DiaryList() {
         ) : (
           <DiaryListPlaceholder />
         )}
-      </NonIndicatorScrollView>
+      </Animated.ScrollView>
+
+      <Animated.View
+        style={[
+          { position: "absolute", width: "100%", bottom: 0 },
+          floatingButtonStyle,
+        ]}
+      >
+        <Footer>
+          <NavigationButton
+            content="작성하기"
+            onPress={handleWriteButtonClick}
+          />
+        </Footer>
+
+        <Popover
+          id="write"
+          content="선생님 지금 시작해보세요"
+          bottom={
+            size.NAVIGATION_BUTTON_HEIGHT + size.FOOTER_PADDING_BOTTOM + 24
+          }
+        />
+      </Animated.View>
 
       <ResponsiveBottomSheetModal
         isOpen={bottomSheetIsOpen}
