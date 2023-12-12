@@ -16,6 +16,7 @@ import { NonIndicatorScrollView } from "@/components/ScrollView/NonIndicatorScro
 import { NavigationButton } from "@/components/Button/NavigationButton";
 import { ResponsiveBottomSheetModal } from "@/components/Layout/ResponsiveBottomSheetModal";
 import { TransparentButton } from "@/components/Button/TransparentButton";
+import { Footer } from "@/components/Layout/Footer";
 
 // constants
 import { PATH } from "@/constants";
@@ -34,13 +35,16 @@ import ShareButton from "@/assets/svgs/share.svg";
 
 // styles
 import { styles } from "./index.styles";
-import { Footer } from "@/components/Layout/Footer";
 
 function Diary() {
   const { diaryId } = useLocalSearchParams<{ diaryId: string }>();
+
   const { openConfirm } = useConfirm();
+
   const { fireToast } = useToast();
+
   const [bottomSheetIsOpen, setBottomSheetIsOpen] = useState({ value: false });
+
   const queryClient = useQueryClient();
 
   const { data: diary } = useQuery(
