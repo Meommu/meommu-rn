@@ -122,3 +122,44 @@ export const getGuideDetails = async (
 
   return details;
 };
+
+export const confirmEmailVerificationCode = async (
+  email: string,
+  recoveryCode: string
+) => {
+  const {
+    data: { data: isCorrect },
+  } = await axios.get<ResponseTemplate<boolean>>(
+    "/api/v1/kindergartens/email/verification",
+    {
+      params: {
+        email,
+        code: recoveryCode,
+      },
+    }
+  );
+
+  return isCorrect;
+};
+
+export const getUserInfo = async () => {
+  const {
+    data: { data },
+  } = await axios.get<ResponseTemplate<User>>("/api/v1/kindergartens/info");
+
+  return data;
+};
+
+export const getNotices = async () => {
+  const {
+    data: {
+      data: { notices },
+    },
+  } = await axios.get<
+    ResponseTemplate<{
+      notices: Notice[];
+    }>
+  >("/api/v1/notices");
+
+  return notices;
+};

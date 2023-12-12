@@ -85,3 +85,11 @@ export const createDiary = async (
 
   return savedId;
 };
+
+export const requestEmailVerificationCode = async (email: string) => {
+  await axios.post<ResponseTemplate<boolean>>(
+    "/api/v1/kindergartens/email/verification-request",
+    null,
+    { params: { email } }
+  );
+};

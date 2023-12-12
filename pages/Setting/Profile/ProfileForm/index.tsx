@@ -12,7 +12,7 @@ import { Footer } from "@/components/Layout/Footer";
 import { useToast } from "@/hooks";
 
 // apis
-import axios from "axios";
+import { apiService } from "@/apis";
 
 export function ProfileForm() {
   const { fireToast } = useToast();
@@ -30,11 +30,9 @@ export function ProfileForm() {
   const { data: user } = useQuery(
     ["userInfo"],
     async () => {
-      const {
-        data: { data },
-      } = await axios.get<ResponseTemplate<User>>("/api/v1/kindergartens/info");
+      const userInfo = apiService.getUserInfo();
 
-      return data;
+      return userInfo;
     },
     {
       suspense: true,
@@ -55,11 +53,11 @@ export function ProfileForm() {
 
   const updateProfileMutation = useMutation(
     async (data: ProfileFormFieldValues) => {
-      await axios.patch("/api/v1/kindergartens/info", {
-        name: data.kindergartenName,
-        ownerName: data.kindergartenDirectorName,
-        phone: data.phoneNumber,
-      });
+      await apiService.updateProfileInfo(
+        data.kindergartenName,
+        data.kindergartenDirectorName,
+        data.phoneNumber
+      );
     },
     {
       onSuccess: () => {

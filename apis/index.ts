@@ -7,6 +7,7 @@ import * as GET from "./methods/get";
 import * as POST from "./methods/post";
 import * as PUT from "./methods/put";
 import * as DELETE from "./methods/delete";
+import * as PATCH from "./methods/patch";
 
 // utils
 import { createRandomNumberInRange } from "@/utils";
@@ -73,4 +74,5 @@ export const apiService = {
   ...POST,
   ...PUT,
   ...DELETE,
+  ...PATCH,
 };
