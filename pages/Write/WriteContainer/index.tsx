@@ -39,9 +39,6 @@ export function WriteContainer() {
    */
   const methods = useForm<DiaryWriteFormFieldValues>({
     defaultValues: {
-      /**
-       * TODO: 날짜 선택 컴포넌트가 구현되면 고정 값 제거
-       */
       date: `${new Date().getFullYear()}-${(new Date().getMonth() + 1)
         .toString()
         .padStart(2, "0")}-${new Date().getDate().toString().padStart(2, "0")}`,

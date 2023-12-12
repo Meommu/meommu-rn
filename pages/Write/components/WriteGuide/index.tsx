@@ -88,7 +88,7 @@ export const WriteGuide = memo(({ setValue, getValues }: WriteGuideProps) => {
        *
        * https://stackoverflow.com/questions/60048180/is-it-possible-to-post-a-responsetype-stream-in-axios
        *
-       * ※ 현재 axios 사용하지 않기 때문에 공통 에러처리 핸들러에서 에러를 잡지 못하고 있다.
+       * TODO: 공통 에러처리 핸들러가 axiosError 이외의 에러는 무시하고 있어, fetch 에러를 적절히 처리하지 못하는 이슈 해결할 것
        */
       const stream = await fetch(`${baseURL}/api/v1/gpt/stream`, {
         method: "POST",
