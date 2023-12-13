@@ -31,8 +31,6 @@ import { useConfirm } from "@/hooks";
 import CaretRight from "@/assets/svgs/caret-right.svg";
 
 export function SettingPage() {
-  const queryClient = useQueryClient();
-
   const { openConfirm } = useConfirm();
 
   const handleLogoutButtonClick = useCallback(async () => {
@@ -46,8 +44,6 @@ export function SettingPage() {
             delete axios.defaults.headers.common.Authorization;
 
             await AsyncStorage.removeItem("accessToken");
-
-            queryClient.removeQueries();
 
             router.replace(PATH.HOME);
           },

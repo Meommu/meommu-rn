@@ -69,14 +69,6 @@ export function QueryProvider({ children }: QueryProviderProps) {
 
         await AsyncStorage.removeItem("accessToken");
 
-        queryClient.removeQueries({
-          predicate: ({ queryKey }) => {
-            const [queryType, ..._] = queryKey;
-
-            return queryType === "diaryImage" ? false : true;
-          },
-        });
-
         router.replace(PATH.HOME);
 
         break;
