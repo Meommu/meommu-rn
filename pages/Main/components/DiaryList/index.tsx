@@ -82,19 +82,25 @@ export function DiaryList() {
   const handleDiaryDeleteButtonClick = async () => {
     setBottomSheetIsOpen({ value: false });
 
-    openConfirm(
-      "일기 삭제",
-      "삭제시, 해당 일기를 영구적으로 열람할 수 없게 됩니다.",
-      async () => {
-        await apiService.deleteDiary(menuPressedDiaryId.toString());
+    openConfirm({
+      title: "일기 삭제",
+      body: "삭제시, 해당 일기를 영구적으로 열람할 수 없게 됩니다.",
+      button: {
+        ok: {
+          message: "삭제하기",
+          callback: async () => {
+            await apiService.deleteDiary(menuPressedDiaryId.toString());
 
-        await queryClient.invalidateQueries(["diariesSummary"]);
+            await queryClient.invalidateQueries(["diariesSummary"]);
 
-        refetch();
+            refetch();
+          },
+        },
+        cancel: {
+          message: "취소",
+        },
       },
-      "삭제하기",
-      "취소"
-    );
+    });
   };
 
   const [isRefreshing, setIsRefreshing] = useState(false);

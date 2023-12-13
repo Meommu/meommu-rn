@@ -113,26 +113,32 @@ function Diary() {
 
     setBottomSheetIsOpen({ value: false });
 
-    openConfirm(
-      "일기 삭제",
-      "삭제시, 해당 일기를 영구적으로 열람할 수 없게 됩니다.",
-      async () => {
-        await apiService.deleteDiary(diaryId);
+    openConfirm({
+      title: "일기 삭제",
+      body: "삭제시, 해당 일기를 영구적으로 열람할 수 없게 됩니다.",
+      button: {
+        ok: {
+          message: "삭제하기",
+          callback: async () => {
+            await apiService.deleteDiary(diaryId);
 
-        const [year, month] = diary.date.split("-").map(Number);
+            const [year, month] = diary.date.split("-").map(Number);
 
-        await queryClient.invalidateQueries(["diaryList", year, month]);
-        await queryClient.invalidateQueries(["diariesSummary"]);
+            await queryClient.invalidateQueries(["diaryList", year, month]);
+            await queryClient.invalidateQueries(["diariesSummary"]);
 
-        if (router.canGoBack()) {
-          router.back();
-        } else {
-          router.replace(PATH.MAIN);
-        }
+            if (router.canGoBack()) {
+              router.back();
+            } else {
+              router.replace(PATH.MAIN);
+            }
+          },
+        },
+        cancel: {
+          message: "취소",
+        },
       },
-      "삭제하기",
-      "취소"
-    );
+    });
   }, [diaryId, diary]);
 
   if (!diary) {
