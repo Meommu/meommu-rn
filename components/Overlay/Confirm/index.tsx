@@ -88,7 +88,15 @@ export function Confirm() {
 
         <View style={styles.buttonWrapper}>
           <Pressable
-            style={styles.okButton}
+            style={[
+              styles.okButton,
+              {
+                /**
+                 * 배경색이 어두우므로 투명도를 조절하면 버튼을 어둡게 할 수 있음.
+                 */
+                opacity: !lock ? 1 : lock !== inputValue ? 0.5 : 1,
+              },
+            ]}
             onPress={handleOkButtonClick}
             testID="button-confirm-ok"
             disabled={lock ? lock !== inputValue : false}
