@@ -618,6 +618,8 @@ export class MockApiService {
 
         /**
          * [POST] 이미지 업로드
+         * 
+         * ※ 이미지가 여러장 업로드 되었을 경우에도 하나의 결과만 리턴하고 있어 오작동 할 수 있음.
          */
         this.post("/api/v1/images", (schema, request) => {
           const images = schema.db.images;
