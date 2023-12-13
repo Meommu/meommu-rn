@@ -11,15 +11,15 @@ import { changeVisible, type ConfirmState } from "@/store/modules/confirm";
 import { AView } from "@/components/Layout/AView";
 
 // hooks
-import { ZoomAndFadeInOut, useToast } from "@/hooks";
+import { ZoomAndFadeInOut } from "@/hooks";
+
+// constants
+import { color } from "@/constants";
 
 // styles
 import { styles } from "./index.styles";
-import { color, font } from "@/constants";
 
 export function Confirm() {
-  const { fireToast } = useToast();
-
   const dispatch = useDispatch();
 
   const {
@@ -42,7 +42,7 @@ export function Confirm() {
 
         dispatch(changeVisible(false));
       } else {
-        fireToast("확인 문자열이 일치하지 않습니다.", 3000);
+        // do nothing
       }
     } else {
       callback();
@@ -70,50 +70,38 @@ export function Confirm() {
         style={styles.content}
         enterExitAnimation={ZoomAndFadeInOut}
       >
-        <View style={styles.message}>
-          <Text style={styles.titleText}>{title}</Text>
-          <Text style={styles.bodyText}>{body}</Text>
-        </View>
+        <Text style={styles.titleText}>{title}</Text>
 
-        <View style={{ width: "100%", gap: 12, flexDirection: "column" }}>
-          {lock && (
+        <Text style={styles.bodyText}>{body}</Text>
+
+        {lock && (
+          <View style={styles.confirmInputWrapper}>
             <TextInput
-              style={{
-                width: "100%",
-
-                backgroundColor: color.bg400,
-
-                borderRadius: 6,
-
-                padding: 14,
-
-                color: color.bg200,
-                fontSize: 16,
-                fontFamily: font.PretendardSemiBold,
-              }}
+              style={styles.confirmInput}
               onChangeText={setInputValue}
               value={inputValue}
               placeholder={lock}
               placeholderTextColor={color.bg200}
             />
-          )}
-
-          <View style={styles.buttonWrapper}>
-            <Pressable
-              style={styles.okButton}
-              onPress={handleOkButtonClick}
-              testID="button-confirm-ok"
-            >
-              <Text style={styles.okButtonText}>{okMessage}</Text>
-            </Pressable>
-
-            <Pressable
-              style={styles.cancelButton}
-              onPress={handleCancelButtonClick}
-            >
-              <Text style={styles.cancelButtonText}>{cancelMessage}</Text>
-            </Pressable>
           </View>
+        )}
+
+        <View style={styles.buttonWrapper}>
+          <Pressable
+            style={styles.okButton}
+            onPress={handleOkButtonClick}
+            testID="button-confirm-ok"
+            disabled={lock ? lock !== inputValue : false}
+          >
+            <Text style={styles.okButtonText}>{okMessage}</Text>
+          </Pressable>
+
+          <Pressable
+            style={styles.cancelButton}
+            onPress={handleCancelButtonClick}
+          >
+            <Text style={styles.cancelButtonText}>{cancelMessage}</Text>
+          </Pressable>
         </View>
       </AView>
     </View>

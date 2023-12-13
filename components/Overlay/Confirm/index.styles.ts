@@ -28,7 +28,6 @@ export const styles = StyleSheet.create({
   content: {
     width: "80%",
     maxWidth: size.MOBILE_WIDTH,
-    gap: 24,
 
     borderRadius: 20,
 
@@ -39,15 +38,13 @@ export const styles = StyleSheet.create({
     pointerEvents: "auto",
   },
 
-  message: {
-    gap: 12,
-  },
-
   titleText: {
     fontSize: 20,
     fontFamily: font.PretendardSemiBold,
     color: color.w,
     textAlign: "center",
+
+    marginBottom: 12,
   },
 
   bodyText: {
@@ -55,6 +52,29 @@ export const styles = StyleSheet.create({
     fontFamily: font.PretendardRegular,
     color: color.bg200,
     textAlign: "center",
+
+    marginBottom: 24,
+  },
+
+  confirmInputWrapper: {
+    width: "100%",
+    flexDirection: "column",
+
+    marginBottom: 12,
+  },
+
+  confirmInput: {
+    width: "100%",
+
+    backgroundColor: color.bg400,
+
+    borderRadius: 6,
+
+    padding: 14,
+
+    color: color.bg200,
+    fontSize: 16,
+    fontFamily: font.PretendardSemiBold,
   },
 
   buttonWrapper: {
