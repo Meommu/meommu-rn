@@ -1,5 +1,5 @@
 // react
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { View, Text, Pressable, TextInput } from "react-native";
 
 // redux
@@ -36,6 +36,17 @@ export function Confirm() {
 
   const [inputValue, setInputValue] = useState("");
 
+  const isOkButtonDisable = useMemo(() => {
+    if (!lock) {
+      return false;
+    }
+
+    return lock !== inputValue;
+  }, [lock, inputValue]);
+
+  /**
+   * dynamic styles
+   */
   const containerPointerEventStyle = useDynamicStyle(() => {
     if (isConfirmOpen) {
       return {
@@ -47,6 +58,25 @@ export function Confirm() {
       pointerEvents: "none",
     };
   }, [isConfirmOpen]);
+
+  const okButtonOpacityStyle = useDynamicStyle(() => {
+    if (!lock) {
+      return {
+        opacity: 1,
+      };
+    }
+
+    if (lock !== inputValue) {
+      // 배경색이 어두우므로 투명하게 하여 버튼을 어둡게 처리할 수 있음.
+      return {
+        opacity: 0.5,
+      };
+    }
+
+    return {
+      opacity: 1,
+    };
+  }, [lock, inputValue]);
 
   /**
    * event handlers
@@ -101,18 +131,10 @@ export function Confirm() {
 
             <View style={styles.buttonWrapper}>
               <Pressable
-                style={[
-                  styles.okButton,
-                  {
-                    /**
-                     * 배경색이 어두우므로 투명도를 조절하면 버튼을 어둡게 할 수 있음.
-                     */
-                    opacity: !lock ? 1 : lock !== inputValue ? 0.5 : 1,
-                  },
-                ]}
+                style={[styles.okButton, okButtonOpacityStyle]}
                 onPress={handleOkButtonClick}
+                disabled={isOkButtonDisable}
                 testID="button-confirm-ok"
-                disabled={lock ? lock !== inputValue : false}
               >
                 <Text style={styles.okButtonText}>{okMessage}</Text>
               </Pressable>
