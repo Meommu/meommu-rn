@@ -52,6 +52,7 @@ export const styles = StyleSheet.create({
     fontFamily: font.PretendardRegular,
     color: color.bg200,
     textAlign: "center",
+    lineHeight: 24,
 
     marginBottom: 24,
   },
