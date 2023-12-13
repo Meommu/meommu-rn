@@ -62,7 +62,7 @@ export function SettingPage() {
   const handleResignButtonClick = useCallback(async () => {
     openConfirm({
       title: "회원탈퇴",
-      body: "그 동안 작성했던 모든 일기와 입력했던 정보들이 삭제됩니다.",
+      body: '그 동안 작성했던 모든 일기와 입력했던 정보들이 삭제됩니다.\n계속하시겠으면 "탈퇴하겠습니다."를 입력해주세요.',
       button: {
         ok: {
           lock: "탈퇴하겠습니다.",
