@@ -24,7 +24,7 @@ import { useSwiper, useToast } from "@/hooks";
 import { PATH, color, regExp } from "@/constants";
 
 // apis
-import axios from "axios";
+import { apiService } from "@/apis";
 
 // styles
 import { styles } from "./index.styles";
@@ -63,11 +63,7 @@ export function RecoveryPage() {
 
   const recoveryEmailChkMutation = useMutation(
     async (email: string) => {
-      await axios.post<ResponseTemplate<boolean>>(
-        "/api/v1/kindergartens/email/verification-request",
-        null,
-        { params: { email } }
-      );
+      await apiService.requestEmailVerificationCode(email);
     },
     {
       onSuccess: () => {
@@ -81,16 +77,9 @@ export function RecoveryPage() {
       email,
       recoveryCode,
     }: Pick<RecoveryPasswordFormFieldValues, "email" | "recoveryCode">) => {
-      const {
-        data: { data: isCorrect },
-      } = await axios.get<ResponseTemplate<boolean>>(
-        "/api/v1/kindergartens/email/verification",
-        {
-          params: {
-            email,
-            code: recoveryCode,
-          },
-        }
+      const isCorrect = await apiService.confirmEmailVerificationCode(
+        email,
+        recoveryCode
       );
 
       return isCorrect;
@@ -112,11 +101,7 @@ export function RecoveryPage() {
     async (data: RecoveryPasswordFormFieldValues) => {
       const { email, password, passwordConfirm } = data;
 
-      await axios.patch(
-        "/api/v1/kindergartens/password",
-        { password, passwordConfirmation: passwordConfirm },
-        { params: { email } }
-      );
+      await apiService.resetPassword(password, passwordConfirm, email);
     },
     {
       onSuccess: () => {
