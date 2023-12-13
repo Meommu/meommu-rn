@@ -44,7 +44,6 @@ export const styles = StyleSheet.create({
     color: color.g900,
     fontSize: 26,
     fontFamily: font.YeonTheLand,
-    lineHeight: 26,
   },
 
   bodyContent: {
