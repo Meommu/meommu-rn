@@ -9,4 +9,12 @@ export const styles = StyleSheet.create({
     width: "100%",
     backgroundColor: color.w,
   },
+
+  content: {
+    position: "relative",
+
+    width: "100%",
+    height: "100%",
+    flexShrink: 1,
+  },
 });

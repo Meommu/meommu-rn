@@ -67,7 +67,8 @@ export function ResponsiveLayoutView({ children }: ResponsiveLayoutViewProps) {
   return (
     <View style={responsiveStyle} onLayout={handleLayoutChange}>
       <View style={[styles.notch, { height: top }]} />
-      {children}
+
+      <View style={styles.content}>{children}</View>
     </View>
   );
 }
