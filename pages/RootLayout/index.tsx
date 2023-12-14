@@ -48,7 +48,7 @@ export function RootLayout() {
 
     map[
       font.PretendardRegular
-    ] = require("@/assets/fonts/Pretendard-Regular.otf");
+    ] = require("@/assets/fonts/Pretendard-Light.otf");
     map[
       font.PretendardSemiBold
     ] = require("@/assets/fonts/Pretendard-SemiBold.otf");
