@@ -51,21 +51,8 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    gap: 10,
 
     paddingHorizontal: 20,
-  },
-
-  navigationButton: {
-    height: size.NAVIGATION_BUTTON_HEIGHT,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-
-  navigationButtonText: {
-    fontSize: 16,
-    color: color.g300,
-    fontFamily: font.PretendardSemiBold,
   },
 
   splitBar: {

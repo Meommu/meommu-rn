@@ -1,6 +1,6 @@
 // react
 import { useCallback } from "react";
-import { View, Text, Pressable } from "react-native";
+import { View, Text } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import { useMutation } from "react-query";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -13,6 +13,7 @@ import { NavigationButton } from "@/components/Button/NavigationButton";
 import { BannerImage } from "@/components/Image/BannerImage";
 import { FormInput } from "@/components/Input/FormInput";
 import { Footer } from "@/components/Layout/Footer";
+import { HomeNavigationButton } from "./components/HomeNavigationButton";
 
 // constants
 import { PATH, regExp } from "@/constants";
@@ -145,22 +146,18 @@ export function HomePage() {
         </View>
 
         <View style={styles.navigationLayout}>
-          <Pressable
-            style={styles.navigationButton}
+          <HomeNavigationButton
+            content="비밀번호 찾기"
             onPress={handlePasswordRecoveryButtoncClick}
-          >
-            <Text style={styles.navigationButtonText}>비밀번호 찾기</Text>
-          </Pressable>
+          />
 
           <View style={styles.splitBar} />
 
-          <Pressable
-            style={styles.navigationButton}
+          <HomeNavigationButton
+            content="회원가입"
             onPress={handleSignUpButtonClick}
             testID="button-signup"
-          >
-            <Text style={styles.navigationButtonText}>회원가입</Text>
-          </Pressable>
+          />
         </View>
 
         <Footer style={styles.bottomButton}>
