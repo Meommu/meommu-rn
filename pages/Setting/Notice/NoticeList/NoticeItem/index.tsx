@@ -1,9 +1,13 @@
 // react
 import { useState, useMemo, useCallback } from "react";
 import { View, Pressable, Text } from "react-native";
+import Animated from "react-native-reanimated";
 
 // utils
 import { dateToKoreanStyleYYMMDD } from "@/utils";
+
+// hooks
+import { usePressInOutAnimation } from "@/hooks";
 
 // svgs
 import CaretDown from "@/assets/svgs/caret-down.svg";
@@ -28,13 +32,31 @@ export function NoticeItem({ date, content }: { date: Date; content: string }) {
     setIsOpen(!isOpen);
   }, [isOpen]);
 
+  const {
+    containerAnimatedStyle,
+    Dimmed,
+    handleButtonPressIn,
+    handleButtonPressOut,
+  } = usePressInOutAnimation();
+
   return (
     <View style={styles.container}>
-      <Pressable onPress={handleTitleClick} style={styles.title}>
-        <Text style={styles.titleText}>{title}</Text>
+      <View style={styles.toggler}>
+        <Animated.View style={[styles.buttonWrapper, containerAnimatedStyle]}>
+          <Pressable
+            style={styles.button}
+            onPressIn={handleButtonPressIn}
+            onPressOut={handleButtonPressOut}
+            onPress={handleTitleClick}
+          >
+            <Text style={styles.buttonText}>{title}</Text>
 
-        {isOpen ? <CaretUp /> : <CaretDown />}
-      </Pressable>
+            {isOpen ? <CaretUp /> : <CaretDown />}
+          </Pressable>
+
+          {Dimmed}
+        </Animated.View>
+      </View>
 
       {isOpen && (
         <View style={styles.content}>

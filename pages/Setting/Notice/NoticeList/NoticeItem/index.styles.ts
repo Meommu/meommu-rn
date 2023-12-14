@@ -9,18 +9,34 @@ export const styles = StyleSheet.create({
     width: "100%",
   },
 
-  title: {
+  toggler: {
     width: "100%",
-    flexDirection: "row",
-    justifyContent: "space-between",
 
-    paddingVertical: 12,
-    paddingHorizontal: 21,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
 
-    backgroundColor: "#ECECF2",
+    backgroundColor: color.g200,
   },
 
-  titleText: {
+  buttonWrapper: {
+    width: "100%",
+
+    borderRadius: 6,
+
+    overflow: "hidden",
+  },
+
+  button: {
+    width: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+
+    paddingVertical: 4,
+    paddingHorizontal: 8,
+  },
+
+  buttonText: {
     justifyContent: "center",
     alignItems: "center",
 
