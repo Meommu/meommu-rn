@@ -9,11 +9,20 @@ export const styles = StyleSheet.create({
     width: "100%",
     height: size.NAVIGATION_BUTTON_HEIGHT,
     flexShrink: 1,
+
+    borderRadius: 6,
+
+    overflow: "hidden",
+  },
+
+  button: {
+    width: "100%",
+    height: "100%",
     justifyContent: "center",
     alignItems: "center",
   },
 
-  contentText: {
+  buttonText: {
     color: color.g300,
     fontSize: 16,
     fontFamily: font.PretendardSemiBold,

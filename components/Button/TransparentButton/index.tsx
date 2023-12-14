@@ -1,5 +1,9 @@
 // react
 import { Text, Pressable, type PressableProps } from "react-native";
+import Animated from "react-native-reanimated";
+
+// hooks
+import { usePressInOutAnimation } from "@/hooks";
 
 // styles
 import { styles } from "./index.styles";
@@ -13,9 +17,25 @@ export function TransparentButton({
   style,
   ...props
 }: TransparentButtonProps) {
+  const {
+    containerAnimatedStyle,
+    handleButtonPressIn,
+    handleButtonPressOut,
+    Dimmed,
+  } = usePressInOutAnimation();
+
   return (
-    <Pressable style={styles.container} {...props}>
-      <Text style={styles.contentText}>{content}</Text>
-    </Pressable>
+    <Animated.View style={[styles.container, containerAnimatedStyle]}>
+      <Pressable
+        style={styles.button}
+        onPressIn={handleButtonPressIn}
+        onPressOut={handleButtonPressOut}
+        {...props}
+      >
+        <Text style={styles.buttonText}>{content}</Text>
+      </Pressable>
+
+      {Dimmed}
+    </Animated.View>
   );
 }
