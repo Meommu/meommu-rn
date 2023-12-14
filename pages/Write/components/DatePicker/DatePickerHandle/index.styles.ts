@@ -22,12 +22,20 @@ export const styles = StyleSheet.create({
     borderRadius: 2.5,
   },
 
+  togglerWrapper: {
+    borderRadius: 6,
+
+    overflow: "hidden",
+
+    marginVertical: 14,
+  },
+
   toggler: {
     alignItems: "center",
     flexDirection: "row",
     gap: 5,
 
-    marginVertical: 14,
+    padding: 4,
   },
 
   togglerText: {

@@ -1,9 +1,13 @@
 // react
 import React, { useCallback } from "react";
 import { View, Text, Pressable } from "react-native";
+import Animated from "react-native-reanimated";
 
 // constants
 import { color } from "@/constants";
+
+// hooks
+import { usePressInOutAnimation } from "@/hooks";
 
 // svgs
 import CaretDown from "@/assets/svgs/caret-down.svg";
@@ -30,17 +34,33 @@ function DatePickerHandle({
     });
   }, [setCalendarType]);
 
+  const {
+    containerAnimatedStyle,
+    Dimmed,
+    handleButtonPressIn,
+    handleButtonPressOut,
+  } = usePressInOutAnimation();
+
   return (
     <View style={styles.container}>
       <View style={styles.grabber} />
 
-      <Pressable style={styles.toggler} onPress={handleYearMonthTextClick}>
-        <CaretDown fill={color.g300} width={12} />
+      <Animated.View style={[styles.togglerWrapper, containerAnimatedStyle]}>
+        <Pressable
+          style={styles.toggler}
+          onPressIn={handleButtonPressIn}
+          onPressOut={handleButtonPressOut}
+          onPress={handleYearMonthTextClick}
+        >
+          <CaretDown fill={color.g300} width={12} />
 
-        <Text style={styles.togglerText}>
-          {year}년 {calendarMonth.toString().padStart(2, "0")}월
-        </Text>
-      </Pressable>
+          <Text style={styles.togglerText}>
+            {year}년 {calendarMonth.toString().padStart(2, "0")}월
+          </Text>
+        </Pressable>
+
+        {Dimmed}
+      </Animated.View>
     </View>
   );
 }
