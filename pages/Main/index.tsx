@@ -16,6 +16,7 @@ import { DiaryList } from "./components/DiaryList";
 import { MonthPicker } from "./components/MonthPicker";
 import { MonthPickerSkeleton } from "./components/MonthPicker/index.skeleton";
 import { MonthPickerController } from "./components/MonthPickerController";
+import { FixedRelativeView } from "@/components/Layout/FixedRelativeView";
 
 // styles
 import { styles } from "./index.styles";
@@ -30,7 +31,7 @@ export function MainPage() {
   }, []);
 
   return (
-    <View style={styles.container}>
+    <FixedRelativeView style={styles.container}>
       <Header
         style={styles.header}
         left={<Text style={styles.logoText}>meommu</Text>}
@@ -59,6 +60,6 @@ export function MainPage() {
        * 추후 무한 스크롤을 구현할 때 사용되기 때문임.
        */}
       <DiaryList />
-    </View>
+    </FixedRelativeView>
   );
 }

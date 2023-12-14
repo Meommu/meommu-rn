@@ -19,7 +19,7 @@ import { renderHandle } from "./MonthPickerHandle";
 import { renderBackdrop } from "./MonthPickerBackdrop";
 
 // hooks
-import { useResponsiveMobileWidth, useSwiper } from "@/hooks";
+import { useSwiper } from "@/hooks";
 
 // apis
 import { apiService } from "@/apis";
@@ -85,8 +85,6 @@ export function MonthPicker() {
    * bottom sheet
    */
   const bottomSheetRef = useRef<BottomSheetModal | null>(null);
-
-  const { responsiveWidthStyle } = useResponsiveMobileWidth();
 
   const initialSnapPoints = useMemo(() => ["CONTENT_HEIGHT"], []);
 
@@ -157,7 +155,7 @@ export function MonthPicker() {
     <BottomSheetModalProvider>
       <BottomSheetModal
         ref={bottomSheetRef}
-        containerStyle={[responsiveWidthStyle, styles.bottomSheetContainer]}
+        containerStyle={styles.bottomSheetContainer}
         snapPoints={animatedSnapPoints}
         contentHeight={animatedContentHeight}
         handleHeight={animatedHandleHeight}

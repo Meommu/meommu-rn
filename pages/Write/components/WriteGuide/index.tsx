@@ -28,7 +28,7 @@ import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import { size } from "@/constants";
 
 // hooks
-import { useResponsiveMobileWidth, useSwiper, useToast } from "@/hooks";
+import { useSwiper, useToast } from "@/hooks";
 
 // bottom sheet modal
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
@@ -54,8 +54,6 @@ export const WriteGuide = memo(({ setValue, getValues }: WriteGuideProps) => {
   const { swiperIndex, swiperRef, handleSwiperIndexChange } = useSwiper(0);
 
   const bottomSheetRef = useRef<BottomSheetModal>(null);
-
-  const { responsiveWidthStyle } = useResponsiveMobileWidth();
 
   const snapPoints = useMemo(
     () => [
@@ -251,7 +249,7 @@ export const WriteGuide = memo(({ setValue, getValues }: WriteGuideProps) => {
     <BottomSheet
       ref={bottomSheetRef}
       snapPoints={snapPoints}
-      containerStyle={[styles.bottomSheetContainer, responsiveWidthStyle]}
+      containerStyle={styles.bottomSheetContainer}
       backgroundStyle={styles.bottomSheetBackground}
       footerComponent={renderFooter({
         bottomSheetRef,

@@ -9,8 +9,6 @@ export const styles = StyleSheet.create({
    * bottom sheet
    */
   bottomSheetContainer: {
-    marginHorizontal: "auto",
-
     zIndex: zIndex.bottomSheetContainer,
   },
 

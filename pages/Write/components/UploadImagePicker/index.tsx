@@ -1,5 +1,5 @@
 // react
-import { memo, useRef } from "react";
+import { memo, useCallback, useRef, useState } from "react";
 import {
   View,
   Text,
@@ -8,15 +8,10 @@ import {
   Platform,
   ActivityIndicator,
   type ViewStyle,
-  type StyleProp,
+  type LayoutChangeEvent,
 } from "react-native";
 import { useMutation } from "react-query";
 import { type UseFormGetValues, type UseFormSetValue } from "react-hook-form";
-
-// redux
-import { useSelector } from "react-redux";
-import { type RootState } from "@/store";
-import { type LayoutState } from "@/store/modules/layout";
 
 // expo
 import * as ImagePicker from "expo-image-picker";
@@ -39,7 +34,7 @@ import { apiService } from "@/apis";
 import Camera from "@/assets/svgs/camera.svg";
 
 // hooks
-import { useToast } from "@/hooks";
+import { useDynamicStyle, useToast } from "@/hooks";
 
 // styles
 import { styles } from "./index.styles";
@@ -60,6 +55,24 @@ export const UploadImagePicker = memo(
   ({ imageIds, setValue, getValues }: ImagePickerProps) => {
     const { fireToast } = useToast();
 
+    /**
+     * image uploader item layout
+     */
+    const [width, setWidth] = useState(0);
+
+    const itemLayoutStyle = useDynamicStyle<ViewStyle>(() => {
+      const sideLength = (width - 7 * 2) / 5;
+
+      return {
+        width: sideLength,
+        height: sideLength,
+        padding: 7,
+      };
+    }, [width]);
+
+    /**
+     * upload image
+     */
     const [status, requestPermission] =
       ImagePicker.useMediaLibraryPermissions();
 
@@ -116,6 +129,9 @@ export const UploadImagePicker = memo(
       }
     );
 
+    /**
+     * event handlers
+     */
     const handleImagePick = async () => {
       if (!status?.granted) {
         const permission = await requestPermission();
@@ -215,80 +231,80 @@ export const UploadImagePicker = memo(
       setValue("imageIds", newImageIds);
     };
 
-    const { width } = useSelector<RootState, LayoutState>(
-      (state) => state.layout
-    );
+    const handleLayoutChange = useCallback((e: LayoutChangeEvent) => {
+      const {
+        nativeEvent: {
+          layout: { width },
+        },
+      } = e;
 
-    const sideLength = (width - 7 * 2) / 5;
-
-    const itemLayoutStyle: StyleProp<ViewStyle> = {
-      width: sideLength,
-      height: sideLength,
-      padding: 7,
-    };
+      setWidth(width);
+    }, []);
 
     return (
-      <DraggableHorizontalScrollView>
-        <View style={styles.list} onStartShouldSetResponder={() => true}>
-          <View style={itemLayoutStyle}>
-            <View style={styles.item}>
-              <Pressable style={styles.uploader} onPress={handleImagePick}>
-                <Camera />
+      <View style={styles.container} onLayout={handleLayoutChange}>
+        <DraggableHorizontalScrollView>
+          <View style={styles.list} onStartShouldSetResponder={() => true}>
+            <View style={itemLayoutStyle}>
+              <View style={styles.item}>
+                <Pressable style={styles.uploader} onPress={handleImagePick}>
+                  <Camera />
 
-                <Text style={styles.uploaderText}>{imageIds.length} / 5</Text>
-              </Pressable>
+                  <Text style={styles.uploaderText}>{imageIds.length} / 5</Text>
+                </Pressable>
+              </View>
             </View>
-          </View>
 
-          {imageIds.map((imageId, i) => {
-            if (imageId < 0) {
-              const base64 = indexToB64.current.get(imageId);
+            {imageIds.map((imageId, i) => {
+              if (imageId < 0) {
+                const base64 = indexToB64.current.get(imageId);
+
+                return (
+                  <View style={itemLayoutStyle} key={`loadingImageId${i}`}>
+                    <View style={styles.item}>
+                      <Image
+                        style={styles.loadingImage}
+                        source={{ uri: base64 }}
+                      />
+                      <View style={styles.dimmed} />
+                      <ActivityIndicator
+                        style={styles.activityIndicator}
+                        size={"large"}
+                        color={color.primary}
+                      />
+                    </View>
+                  </View>
+                );
+              }
 
               return (
-                <View style={itemLayoutStyle} key={`loadingImageId${i}`}>
+                <View style={itemLayoutStyle} key={`imageId${imageId}`}>
                   <View style={styles.item}>
-                    <Image
-                      style={styles.loadingImage}
-                      source={{ uri: base64 }}
-                    />
-                    <View style={styles.dimmed} />
-                    <ActivityIndicator
-                      style={styles.activityIndicator}
-                      size={"large"}
-                      color={color.primary}
-                    />
+                    <LoadImage imageId={imageId} />
+
+                    <Pressable
+                      onPress={handleImageRemoveButtonClick(imageId)}
+                      style={styles.imageRemover}
+                    >
+                      <ImageRemoveButton />
+                    </Pressable>
                   </View>
                 </View>
               );
-            }
-
-            return (
-              <View style={itemLayoutStyle} key={`imageId${imageId}`}>
-                <View style={styles.item}>
-                  <LoadImage imageId={imageId} />
-
-                  <Pressable
-                    onPress={handleImageRemoveButtonClick(imageId)}
-                    style={styles.imageRemover}
-                  >
-                    <ImageRemoveButton />
-                  </Pressable>
-                </View>
-              </View>
-            );
-          })}
-
-          {Array(5 - imageIds.length)
-            .fill(null)
-            .map((_, i) => {
-              return (
-                <View style={itemLayoutStyle} key={i}>
-                  <View style={styles.item} />
-                </View>
-              );
             })}
-        </View>
-      </DraggableHorizontalScrollView>
+
+            {Array(5 - imageIds.length)
+              .fill(null)
+              .map((_, i) => {
+                return (
+                  <View style={itemLayoutStyle} key={i}>
+                    <View style={styles.item} />
+                  </View>
+                );
+              })}
+          </View>
+        </DraggableHorizontalScrollView>
+      </View>
     );
   }
 );

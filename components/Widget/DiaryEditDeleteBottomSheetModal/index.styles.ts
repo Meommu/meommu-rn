@@ -11,15 +11,18 @@ export const styles = StyleSheet.create({
     zIndex: zIndex.bottomSheetBackdrop,
   },
 
-  bottomSheetContainer: {
-    marginHorizontal: "auto",
-
-    zIndex: zIndex.bottomSheetContainer,
-  },
-
   handleIndicator: {
     width: "10%",
 
     backgroundColor: "rgba(0, 0, 0, 0.3)",
+  },
+
+  bottomSheetContainer: {
+    zIndex: zIndex.bottomSheetContainer,
+  },
+
+  bottomSheetContent: {
+    paddingTop: 0,
+    gap: 6,
   },
 });

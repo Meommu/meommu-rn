@@ -1,6 +1,6 @@
 // react
 import type { MutableRefObject } from "react";
-import { Pressable, View, Text } from "react-native";
+import { Pressable, Text } from "react-native";
 import Swiper from "react-native-web-swiper";
 import { useFormContext } from "react-hook-form";
 
@@ -14,6 +14,7 @@ import { Footer } from "@/components/Layout/Footer";
 import { Popover } from "@/components/Overlay/Popover";
 import { WriteGuide } from "../components/WriteGuide";
 import { DatePicker } from "../components/DatePicker";
+import { FixedRelativeView } from "@/components/Layout/FixedRelativeView";
 
 // constants
 import { size } from "@/constants";
@@ -69,7 +70,7 @@ export function WritePresenter({
   const { setValue, getValues } = useFormContext<DiaryWriteFormFieldValues>();
 
   return (
-    <View style={styles.container}>
+    <FixedRelativeView style={styles.container}>
       <Header
         style={styles.header}
         title={isStepOneSlide() ? "누구에게 보낼 건가요?" : "일기쓰기"}
@@ -120,6 +121,6 @@ export function WritePresenter({
 
       <WriteGuide setValue={setValue} getValues={getValues} />
       <DatePicker setValue={setValue} />
-    </View>
+    </FixedRelativeView>
   );
 }

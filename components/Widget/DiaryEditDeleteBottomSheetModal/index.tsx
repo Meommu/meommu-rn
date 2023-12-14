@@ -1,8 +1,10 @@
 // react
 import React, { useRef, useMemo, useCallback, useEffect } from "react";
 
-// hooks
-import { useResponsiveMobileWidth } from "@/hooks";
+// constants
+import { Footer } from "@/components/Layout/Footer";
+import { NavigationButton } from "@/components/Button/NavigationButton";
+import { TransparentButton } from "@/components/Button/TransparentButton";
 
 // bottom sheet
 import {
@@ -11,26 +13,32 @@ import {
   BottomSheetBackdrop,
   useBottomSheetDynamicSnapPoints,
   type BottomSheetBackdropProps,
+  BottomSheetModalProvider,
 } from "@gorhom/bottom-sheet";
 
 // style
 import { styles } from "./index.styles";
 
-interface ResponsiveBottomSheetModalProps {
+interface DiaryEditDeleteBottomSheetModalProps {
   /**
    * isOpen 값이 원시값일 경우, useEffect가 값 변화를 감지하지 못하는 경우가 있어
    * 객체 형태로 값을 관리하여 항상 useEffect가 동작하도록 구현함.
    */
   isOpen: { value: boolean };
+
   setIsOpen: React.Dispatch<React.SetStateAction<{ value: boolean }>>;
-  children: React.ReactNode;
+
+  handleDiaryEditButtonClick: () => void;
+
+  handleDiaryDeleteButtonClick: () => void;
 }
 
-export function ResponsiveBottomSheetModal({
+export function DiaryEditDeleteBottomSheetModal({
   isOpen,
   setIsOpen,
-  children,
-}: ResponsiveBottomSheetModalProps) {
+  handleDiaryDeleteButtonClick,
+  handleDiaryEditButtonClick,
+}: DiaryEditDeleteBottomSheetModalProps) {
   const bottomSheetRef = useRef<BottomSheetModal>(null);
 
   const initialSnapPoints = useMemo(() => ["CONTENT_HEIGHT"], []);
@@ -41,8 +49,6 @@ export function ResponsiveBottomSheetModal({
     animatedContentHeight,
     handleContentLayout,
   } = useBottomSheetDynamicSnapPoints(initialSnapPoints);
-
-  const { responsiveWidthStyle } = useResponsiveMobileWidth();
 
   useEffect(() => {
     if (isOpen.value) {
@@ -78,21 +84,33 @@ export function ResponsiveBottomSheetModal({
   );
 
   return (
-    <BottomSheetModal
-      ref={bottomSheetRef}
-      snapPoints={animatedSnapPoints}
-      contentHeight={animatedContentHeight}
-      handleHeight={animatedHandleHeight}
-      enableContentPanningGesture={false}
-      containerStyle={[styles.bottomSheetContainer, responsiveWidthStyle]}
-      handleIndicatorStyle={styles.handleIndicator}
-      backdropComponent={renderBackdrop}
-      enablePanDownToClose={true}
-      onChange={handleBottomSheetIndexChange}
-    >
-      <BottomSheetView onLayout={handleContentLayout}>
-        {children}
-      </BottomSheetView>
-    </BottomSheetModal>
+    <BottomSheetModalProvider>
+      <BottomSheetModal
+        ref={bottomSheetRef}
+        snapPoints={animatedSnapPoints}
+        contentHeight={animatedContentHeight}
+        handleHeight={animatedHandleHeight}
+        enableContentPanningGesture={false}
+        containerStyle={styles.bottomSheetContainer}
+        handleIndicatorStyle={styles.handleIndicator}
+        backdropComponent={renderBackdrop}
+        enablePanDownToClose={true}
+        onChange={handleBottomSheetIndexChange}
+      >
+        <BottomSheetView onLayout={handleContentLayout}>
+          <Footer style={styles.bottomSheetContent}>
+            <NavigationButton
+              content="일기 수정하기"
+              onPress={handleDiaryEditButtonClick}
+            />
+
+            <TransparentButton
+              content="일기 삭제하기"
+              onPress={handleDiaryDeleteButtonClick}
+            />
+          </Footer>
+        </BottomSheetView>
+      </BottomSheetModal>
+    </BottomSheetModalProvider>
   );
 }
