@@ -1,6 +1,6 @@
 // react
 import { Suspense, useCallback } from "react";
-import { View, Text, Pressable } from "react-native";
+import { View } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useQueryClient } from "react-query";
 
@@ -16,6 +16,7 @@ import { Header } from "@/components/Layout/Header";
 import { ProfileCard } from "./components/ProfileCard";
 import { ProfileCardSkeleton } from "./components/ProfileCard/index.skeleton";
 import { TransparentButton } from "@/components/Button/TransparentButton";
+import { SettingItem } from "./components/SettingItem";
 
 // apis
 import axios from "axios";
@@ -26,9 +27,6 @@ import { styles } from "./index.styles";
 
 // hooks
 import { useConfirm } from "@/hooks";
-
-// svgs
-import CaretRight from "@/assets/svgs/caret-right.svg";
 
 export function SettingPage() {
   const queryClient = useQueryClient();
@@ -121,22 +119,13 @@ export function SettingPage() {
           </Suspense>
         </View>
 
-        <View style={styles.navigationButtonLayout}>
-          <Pressable
-            style={styles.navigationButton}
+        <View style={styles.settingList}>
+          <SettingItem
+            title="게정 관리"
             onPress={handleProfileManageButtonClick}
-          >
-            <Text style={styles.navigationButtonText}>계정 관리</Text>
-            <CaretRight />
-          </Pressable>
+          />
 
-          <Pressable
-            style={styles.navigationButton}
-            onPress={handleNoticeButtonClick}
-          >
-            <Text style={styles.navigationButtonText}>공지</Text>
-            <CaretRight />
-          </Pressable>
+          <SettingItem title="공지" onPress={handleNoticeButtonClick} />
         </View>
       </View>
 
