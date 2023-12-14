@@ -1,5 +1,9 @@
 // react
+import { useCallback } from "react";
 import { View, Text, Pressable } from "react-native";
+
+// expo
+import { router } from "expo-router";
 
 // components
 import { KebabMenuButton } from "@/components/Button/KebabMenuButton";
@@ -7,8 +11,6 @@ import { ImageSlider } from "@/components/Widget/ImageSlider";
 
 // styles
 import { styles } from "./index.styles";
-import { router } from "expo-router";
-import { useCallback } from "react";
 
 interface DiaryItemProps {
   diary: Diary;
