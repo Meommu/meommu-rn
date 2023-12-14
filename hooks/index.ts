@@ -5,3 +5,4 @@ export * from "./usePreventTabScrolling";
 export * from "./useSwiper";
 export * from "./useReanimated";
 export * from "./useConfirm";
+export * from "./usePressAnimation";
