@@ -26,19 +26,6 @@ export const styles = StyleSheet.create({
     gap: 7,
   },
 
-  dimmed: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-
-    width: "100%",
-    height: "100%",
-
-    pointerEvents: "none",
-
-    backgroundColor: color.g800,
-  },
-
   buttonText: {
     color: color.w,
     fontSize: 16,

@@ -16,6 +16,7 @@ import { color, size } from "@/constants";
 
 // styles
 import { styles } from "./index.styles";
+import { usePressInOutAnimation } from "@/hooks";
 
 interface NavigationButtonProps extends PressableProps {
   content: string;
@@ -42,38 +43,12 @@ export function NavigationButton({
 
   ...props
 }: NavigationButtonProps) {
-  const scale = useSharedValue(1);
-  const opacity = useSharedValue(0);
-
-  const containerAnimatedStyle = useAnimatedStyle(() => {
-    return {
-      transform: [
-        {
-          scale: withTiming(scale.value, {
-            duration: size.BUTTON_PRESS_IN_OUT_DURATION,
-          }),
-        },
-      ],
-    };
-  });
-
-  const dimmedAnimatedStyle = useAnimatedStyle(() => {
-    return {
-      opacity: withTiming(opacity.value, {
-        duration: size.BUTTON_PRESS_IN_OUT_DURATION,
-      }),
-    };
-  });
-
-  const handleButtonPressIn = () => {
-    scale.value = 0.96;
-    opacity.value = 0.15;
-  };
-
-  const handleButtonPressOut = () => {
-    scale.value = 1;
-    opacity.value = 0;
-  };
+  const {
+    handleButtonPressIn,
+    handleButtonPressOut,
+    containerAnimatedStyle,
+    Dimmed,
+  } = usePressInOutAnimation();
 
   return (
     <Animated.View style={[styles.container, containerAnimatedStyle]}>
@@ -91,7 +66,7 @@ export function NavigationButton({
         <Text style={[styles.buttonText, { color: fontColor }]}>{content}</Text>
       </Pressable>
 
-      <Animated.View style={[styles.dimmed, dimmedAnimatedStyle]} />
+      {Dimmed}
     </Animated.View>
   );
 }
