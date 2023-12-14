@@ -15,8 +15,8 @@ export const styles = StyleSheet.create({
 
   order: {
     position: "absolute",
-    bottom: 10,
-    right: 10,
+    bottom: 12,
+    right: 12,
 
     backgroundColor: color.bg400,
 
