@@ -4,10 +4,8 @@ import { View, Text, Pressable } from "react-native";
 
 // components
 import { Header } from "@/components/Layout/Header";
-
-// svgs
-import CaretLeft from "@/assets/svgs/caret-left.svg";
-import CaretRight from "@/assets/svgs/caret-right.svg";
+import { CaretLeftButton } from "@/components/Button/CaretLeftButton";
+import { CaretRightButton } from "@/components/Button/CaretRightButton";
 
 // utils
 import { getPastYearDate } from "@/utils";
@@ -51,23 +49,15 @@ function MonthPickerHandle({ swiperRef, swiperIndex }: MonthPickerHandleProps) {
         }
         left={
           swiperIndex !== 0 && (
-            <Pressable
+            <CaretLeftButton
               onPress={handleSwiperPrevButtonClick}
               testID="button-month-calendar-prev"
-              style={styles.swiperController}
-            >
-              <CaretLeft fill={color.g300} />
-            </Pressable>
+            />
           )
         }
         right={
           swiperIndex !== size.MONTH_CALENDAR_PAGE_COUNT - 1 && (
-            <Pressable
-              onPress={handleSwiperNextButtonClick}
-              style={styles.swiperController}
-            >
-              <CaretRight fill={color.g300} />
-            </Pressable>
+            <CaretRightButton onPress={handleSwiperNextButtonClick} />
           )
         }
       />

@@ -34,13 +34,6 @@ export const styles = StyleSheet.create({
     textAlign: "center",
   },
 
-  swiperController: {
-    width: 40,
-    height: 40,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-
   guideText: {
     color: color.bg100,
     textAlign: "center",
