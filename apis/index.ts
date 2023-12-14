@@ -12,14 +12,10 @@ import * as PATCH from "./methods/patch";
 // utils
 import { createRandomNumberInRange } from "@/utils";
 
-/**
- * 운영용 API가 현재 존재하지 않기 때문에 API와 주소가 같은 상태
- */
 export const qaApiUrl =
   "https://port-0-meommu-api-jvvy2blm5wku9j.sel5.cloudtype.app";
 
-export const prodApiUrl =
-  "https://port-0-meommu-api-jvvy2blm5wku9j.sel5.cloudtype.app";
+export const prodApiUrl = "https://www.comibird.site";
 
 export let baseURL = "";
 
