@@ -2,7 +2,7 @@
 import { useCallback } from "react";
 import { View, Text, Pressable } from "react-native";
 import { useForm, Controller } from "react-hook-form";
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation } from "react-query";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // expo
@@ -37,8 +37,6 @@ export function HomePage() {
 
   const { fireToast } = useToast();
 
-  const queryClient = useQueryClient();
-
   const signinMutation = useMutation(
     async (data: SignInFormFieldValues) => {
       const accessToken = apiService.signin(data.id, data.password);
@@ -52,14 +50,6 @@ export function HomePage() {
         axios.defaults.headers.common.Authorization = accessToken;
 
         await AsyncStorage.setItem("accessToken", accessToken);
-
-        queryClient.removeQueries({
-          predicate: ({ queryKey }) => {
-            const [queryType, ..._] = queryKey;
-
-            return queryType === "diaryImage" ? false : true;
-          },
-        });
 
         router.replace(PATH.MAIN);
       },
