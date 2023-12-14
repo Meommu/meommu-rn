@@ -1,6 +1,7 @@
 // react
 import { useCallback } from "react";
 import { View, Text, Pressable } from "react-native";
+import Animated from "react-native-reanimated";
 
 // expo
 import { router } from "expo-router";
@@ -8,6 +9,9 @@ import { router } from "expo-router";
 // components
 import { KebabMenuButton } from "@/components/Button/KebabMenuButton";
 import { ImageSlider } from "@/components/Widget/ImageSlider";
+
+// hooks
+import { usePressInOutAnimation } from "@/hooks";
 
 // styles
 import { styles } from "./index.styles";
@@ -27,6 +31,13 @@ export function DiaryItem({
     router.push(`diary/${id}`);
   }, []);
 
+  const {
+    containerAnimatedStyle,
+    Dimmed,
+    handleButtonPressIn,
+    handleButtonPressOut,
+  } = usePressInOutAnimation();
+
   return (
     <View style={styles.container}>
       <View style={styles.imageSliderWrapper}>
@@ -37,21 +48,37 @@ export function DiaryItem({
         </View>
       </View>
 
-      <Pressable style={styles.diaryBody} onPress={handleDiaryBodyClick}>
-        <Text style={styles.diaryTitle} numberOfLines={1} ellipsizeMode="tail">
-          {title}
-        </Text>
-        <Text
-          style={styles.diaryContent}
-          numberOfLines={3}
-          ellipsizeMode="tail"
+      <Animated.View style={[styles.diaryBodyWrapper, containerAnimatedStyle]}>
+        <Pressable
+          style={styles.diaryBody}
+          onPress={handleDiaryBodyClick}
+          onPressIn={handleButtonPressIn}
+          onPressOut={handleButtonPressOut}
+          onTouchStart={handleButtonPressIn}
+          onTouchEnd={handleButtonPressOut}
+          onTouchMove={handleButtonPressIn}
         >
-          {content}
-        </Text>
-        <Text style={styles.diaryInfo}>
-          {date.replaceAll("-", ".")} {dogName} 일기
-        </Text>
-      </Pressable>
+          <Text
+            style={styles.diaryBodyTitle}
+            numberOfLines={1}
+            ellipsizeMode="tail"
+          >
+            {title}
+          </Text>
+          <Text
+            style={styles.diaryBodyContent}
+            numberOfLines={3}
+            ellipsizeMode="tail"
+          >
+            {content}
+          </Text>
+          <Text style={styles.diaryBodyInfo}>
+            {date.replaceAll("-", ".")} {dogName} 일기
+          </Text>
+        </Pressable>
+
+        {Dimmed}
+      </Animated.View>
     </View>
   );
 }

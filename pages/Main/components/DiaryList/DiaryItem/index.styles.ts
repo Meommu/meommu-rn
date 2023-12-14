@@ -23,24 +23,32 @@ export const styles = StyleSheet.create({
     right: 4,
   },
 
-  diaryBody: {
+  diaryBodyWrapper: {
     alignItems: "flex-start",
     gap: 6,
+
+    borderRadius: 6,
+
+    overflow: "hidden",
   },
 
-  diaryTitle: {
+  diaryBody: {
+    width: "100%",
+  },
+
+  diaryBodyTitle: {
     color: color.b,
     fontSize: 26,
     fontFamily: font.YeonTheLand,
   },
 
-  diaryContent: {
+  diaryBodyContent: {
     color: color.g500,
     fontSize: 16,
     fontFamily: font.YeonTheLand,
   },
 
-  diaryInfo: {
+  diaryBodyInfo: {
     color: color.g400,
     fontSize: 14,
     fontFamily: font.YeonTheLand,
