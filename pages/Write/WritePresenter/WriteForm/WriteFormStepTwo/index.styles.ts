@@ -12,28 +12,6 @@ export const styles = StyleSheet.create({
     backgroundColor: color.w,
   },
 
-  imagePickerLayout: {
-    alignItems: "flex-start",
-
-    paddingVertical: 10,
-    paddingHorizontal: 21,
-
-    backgroundColor: color.g200,
-  },
-
-  imagePicker: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 12,
-  },
-
-  imagePickerText: {
-    color: color.g500,
-    fontSize: 18,
-    fontFamily: font.YeonTheLand,
-    lineHeight: 24,
-  },
-
   /**
    * 제목 본문 폼
    */

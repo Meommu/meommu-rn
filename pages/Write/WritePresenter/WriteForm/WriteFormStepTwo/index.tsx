@@ -1,5 +1,5 @@
 // react
-import { View, Text, TextInput, Pressable } from "react-native";
+import { View, TextInput } from "react-native";
 import { useFormContext, Controller } from "react-hook-form";
 
 // redux
@@ -10,12 +10,10 @@ import { BottomSheetState } from "@/store/modules/bottomSheet";
 // components
 import { UnderlineInput } from "@/components/Input/UnderlineInput";
 import { UploadImagePicker } from "@/pages/Write/components/UploadImagePicker";
+import { DatePickerController } from "@/pages/Write/components/DatePickerController";
 
 // constants
 import { color } from "@/constants";
-
-// svgs
-import ArrowDropDown from "@/assets/svgs/arrow-drop-down.svg";
 
 // styles
 import { styles } from "./index.styles";
@@ -39,20 +37,10 @@ export function WriteFormStepTwo() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.imagePickerLayout}>
-        <Pressable
-          onPress={handleDatePickerButtonClick}
-          style={styles.imagePicker}
-        >
-          <Text style={styles.imagePickerText}>
-            {`${getValues("date").split("-")[0]}년 ${
-              getValues("date").split("-")[1]
-            }월 ${getValues("date").split("-")[2]}일`}
-          </Text>
-
-          <ArrowDropDown />
-        </Pressable>
-      </View>
+      <DatePickerController
+        getValues={getValues}
+        onPress={handleDatePickerButtonClick}
+      />
 
       <UploadImagePicker
         imageIds={imageIds}
