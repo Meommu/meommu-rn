@@ -5,13 +5,24 @@ import Animated from "react-native-reanimated";
 // hooks
 import { usePressInOutAnimation } from "@/hooks";
 
+// constants
+import { color } from "@/constants";
+
 // svgs
 import CaretLeft from "@/assets/svgs/caret-left.svg";
 
 // styles
 import { styles } from "./index.styles";
 
-export function CaretLeftButton({ style, ...props }: PressableProps) {
+interface CaretLeftButtonProps extends PressableProps {
+  fill?: string;
+}
+
+export function CaretLeftButton({
+  style,
+  fill = color.g300,
+  ...props
+}: CaretLeftButtonProps) {
   const {
     containerAnimatedStyle,
     Dimmed,
@@ -27,7 +38,7 @@ export function CaretLeftButton({ style, ...props }: PressableProps) {
         onPressOut={handleButtonPressOut}
         {...props}
       >
-        <CaretLeft />
+        <CaretLeft fill={fill} />
       </Pressable>
 
       {Dimmed}
