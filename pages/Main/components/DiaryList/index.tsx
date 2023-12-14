@@ -27,6 +27,7 @@ import { DiaryItem } from "./DiaryItem";
 import { NavigationButton } from "@/components/Button/NavigationButton";
 import { Footer } from "@/components/Layout/Footer";
 import { Popover } from "@/components/Overlay/Popover";
+import { DiaryEditDeleteBottomSheetModal } from "@/components/Widget/DiaryEditDeleteBottomSheetModal";
 
 // hooks
 import { useConfirm } from "@/hooks";
@@ -34,15 +35,18 @@ import { useConfirm } from "@/hooks";
 // constants
 import { PATH, size } from "@/constants";
 
+// utils
+import { sleep } from "@/utils";
+
 // styles
 import { styles } from "./index.styles";
-import { DiaryEditDeleteBottomSheetModal } from "@/components/Widget/DiaryEditDeleteBottomSheetModal";
 
 export function DiaryList() {
   const queryClient = useQueryClient();
 
   const [menuPressedDiaryId, setMenuPressedDiaryId] = useState(-1);
   const [bottomSheetIsOpen, setBottomSheetIsOpen] = useState({ value: false });
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
   const { selectedYear, selectedMonth } = useSelector<
     RootState,
@@ -99,7 +103,11 @@ export function DiaryList() {
     });
   };
 
-  const [isRefreshing, setIsRefreshing] = useState(false);
+  const handleWriteButtonClick = useCallback(async () => {
+    await sleep(200);
+
+    router.push(PATH.WRITE);
+  }, []);
 
   /**
    * floating button when scroll up
@@ -138,10 +146,6 @@ export function DiaryList() {
         { translateY: withTiming(translateY.value, { duration: 600 }) },
       ],
     };
-  }, []);
-
-  const handleWriteButtonClick = useCallback(() => {
-    router.push(PATH.WRITE);
   }, []);
 
   return (
