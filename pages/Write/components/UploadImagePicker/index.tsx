@@ -109,20 +109,10 @@ export const UploadImagePicker = memo(
 
           setValue("imageIds", newImageIds);
         },
-        onError: (_, { loadingImageIds }) => {
+        onError: () => {
           const imageIds = getValues("imageIds");
 
-          const newImageIds = [...imageIds];
-
-          for (let i = 0; i < loadingImageIds.length; i++) {
-            const j = imageIds.indexOf(loadingImageIds[i]);
-
-            if (j === -1) {
-              continue;
-            }
-
-            newImageIds.splice(j, 1);
-          }
+          const newImageIds = [...imageIds].filter((imageId) => imageId >= 0);
 
           setValue("imageIds", newImageIds);
 
