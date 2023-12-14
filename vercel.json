@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://port-0-meommu-api-jvvy2blm5wku9j.sel5.cloudtype.app/api/:path*"
+      "destination": "https://www.comibird.site/api/:path*"
     },
     { "source": "/:path*", "destination": "/index.html" }
   ]
