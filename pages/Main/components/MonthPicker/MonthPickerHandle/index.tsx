@@ -1,6 +1,6 @@
 // react
 import { MutableRefObject, useCallback } from "react";
-import { View, Text, Pressable } from "react-native";
+import { View, Text } from "react-native";
 
 // components
 import { Header } from "@/components/Layout/Header";
@@ -11,7 +11,7 @@ import { CaretRightButton } from "@/components/Button/CaretRightButton";
 import { getPastYearDate } from "@/utils";
 
 // constants
-import { size, color } from "@/constants";
+import { size } from "@/constants";
 
 // styles
 import { styles } from "./index.styles";
