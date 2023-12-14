@@ -5,9 +5,6 @@ import { View, Text } from "react-native";
 // expo
 import { router } from "expo-router";
 
-// constants
-import { PATH } from "@/constants";
-
 // components
 import { PlusButton } from "@/components/Button/PlusButton";
 import { SettingButton } from "@/components/Button/SettingButton";
@@ -18,15 +15,25 @@ import { MonthPickerSkeleton } from "./components/MonthPicker/index.skeleton";
 import { MonthPickerController } from "./components/MonthPickerController";
 import { FixedRelativeView } from "@/components/Layout/FixedRelativeView";
 
+// constants
+import { PATH, size } from "@/constants";
+
+// utils
+import { sleep } from "@/utils";
+
 // styles
 import { styles } from "./index.styles";
 
 export function MainPage() {
-  const handleSettingButtonClick = useCallback(() => {
+  const handleSettingButtonClick = useCallback(async () => {
+    await sleep(size.BUTTON_PRESS_IN_OUT_DURATION * 2);
+
     router.push(PATH.SETTING);
   }, []);
 
-  const handleWriteButtonClick = useCallback(() => {
+  const handleWriteButtonClick = useCallback(async () => {
+    await sleep(size.BUTTON_PRESS_IN_OUT_DURATION * 2);
+
     router.push(PATH.WRITE);
   }, []);
 
