@@ -25,6 +25,8 @@ export function GoBackButton({ style, ...props }: PressableProps) {
         style={styles.button}
         onPressIn={handleButtonPressIn}
         onPressOut={handleButtonPressOut}
+        onHoverIn={handleButtonPressIn}
+        onHoverOut={handleButtonPressOut}
         {...props}
       >
         <CaretLeft />
