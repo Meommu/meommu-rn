@@ -24,9 +24,6 @@ export const styles = StyleSheet.create({
   },
 
   diaryBodyWrapper: {
-    alignItems: "flex-start",
-    gap: 6,
-
     borderRadius: 6,
 
     overflow: "hidden",
@@ -34,6 +31,8 @@ export const styles = StyleSheet.create({
 
   diaryBody: {
     width: "100%",
+    alignItems: "flex-start",
+    gap: 6,
   },
 
   diaryBodyTitle: {
