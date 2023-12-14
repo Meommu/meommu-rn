@@ -121,7 +121,7 @@ export function SettingPage() {
 
         <View style={styles.settingList}>
           <SettingItem
-            title="게정 관리"
+            title="계정 관리"
             onPress={handleProfileManageButtonClick}
           />
 
