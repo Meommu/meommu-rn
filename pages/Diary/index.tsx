@@ -14,9 +14,9 @@ import { KebabMenuButton } from "@/components/Button/KebabMenuButton";
 import { ImageSlider } from "@/components/Widget/ImageSlider";
 import { NonIndicatorScrollView } from "@/components/ScrollView/NonIndicatorScrollView";
 import { NavigationButton } from "@/components/Button/NavigationButton";
-import { ResponsiveBottomSheetModal } from "@/components/Layout/ResponsiveBottomSheetModal";
-import { TransparentButton } from "@/components/Button/TransparentButton";
 import { Footer } from "@/components/Layout/Footer";
+import { FixedRelativeView } from "@/components/Layout/FixedRelativeView";
+import { DiaryEditDeleteBottomSheetModal } from "@/components/Widget/DiaryEditDeleteBottomSheetModal";
 
 // constants
 import { PATH } from "@/constants";
@@ -26,9 +26,6 @@ import { apiService } from "@/apis";
 
 // hooks
 import { useToast, useConfirm } from "@/hooks";
-
-// bottom sheets
-import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 
 // svgs
 import ShareButton from "@/assets/svgs/share.svg";
@@ -146,65 +143,48 @@ function Diary() {
   }
 
   return (
-    <BottomSheetModalProvider>
-      <View style={styles.container}>
-        <Header
-          style={styles.header}
-          left={<GoBackButton onPress={handleGoBackButtonClick} />}
-          right={
-            <KebabMenuButton onPress={handleEditButtonClick} fill="black" />
-          }
+    <FixedRelativeView style={styles.container}>
+      <Header
+        style={styles.header}
+        left={<GoBackButton onPress={handleGoBackButtonClick} />}
+        right={<KebabMenuButton onPress={handleEditButtonClick} fill="black" />}
+      />
+
+      <NonIndicatorScrollView>
+        <ImageSlider
+          imageIds={diary.imageIds}
+          aspectRatio="3/4"
+          borderRadius={0}
         />
 
-        <NonIndicatorScrollView>
-          <ImageSlider
-            imageIds={diary.imageIds}
-            aspectRatio="3/4"
-            borderRadius={0}
-          />
+        <View style={styles.body}>
+          <View style={styles.bodyTitleLayout}>
+            <Text style={styles.bodyTitle}>{diary.title}</Text>
 
-          <View style={styles.body}>
-            <View style={styles.bodyTitleLayout}>
-              <Text style={styles.bodyTitle}>{diary.title}</Text>
-
-              <Pressable onPress={handleShareButtonClick}>
-                <ShareButton />
-              </Pressable>
-            </View>
-
-            <Text style={styles.bodyContent}>{diary.content}</Text>
-
-            <Text style={styles.bodyDate}>
-              {diary.date.replaceAll("-", ".")} {diary.dogName} 일기
-            </Text>
+            <Pressable onPress={handleShareButtonClick}>
+              <ShareButton />
+            </Pressable>
           </View>
 
-          <Footer>
-            <NavigationButton
-              content="보내기"
-              onPress={handleShareButtonClick}
-            />
-          </Footer>
-        </NonIndicatorScrollView>
+          <Text style={styles.bodyContent}>{diary.content}</Text>
 
-        <ResponsiveBottomSheetModal
-          isOpen={bottomSheetIsOpen}
-          setIsOpen={setBottomSheetIsOpen}
-        >
-          <Footer style={styles.bottomSheetContent}>
-            <NavigationButton
-              content="일기 수정하기"
-              onPress={handleDiaryEditButtonClick}
-            />
+          <Text style={styles.bodyDate}>
+            {diary.date.replaceAll("-", ".")} {diary.dogName} 일기
+          </Text>
+        </View>
 
-            <TransparentButton
-              content="일기 삭제하기"
-              onPress={handleDiaryDeleteButtonClick}
-            />
-          </Footer>
-        </ResponsiveBottomSheetModal>
-      </View>
-    </BottomSheetModalProvider>
+        <Footer>
+          <NavigationButton content="보내기" onPress={handleShareButtonClick} />
+        </Footer>
+      </NonIndicatorScrollView>
+
+      <DiaryEditDeleteBottomSheetModal
+        isOpen={bottomSheetIsOpen}
+        setIsOpen={setBottomSheetIsOpen}
+        handleDiaryDeleteButtonClick={handleDiaryDeleteButtonClick}
+        handleDiaryEditButtonClick={handleDiaryEditButtonClick}
+      />
+    </FixedRelativeView>
   );
 }
 

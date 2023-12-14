@@ -18,9 +18,4 @@ export const styles = StyleSheet.create({
     fontFamily: font.PretendardSemiBold,
     textAlign: "center",
   },
-
-  bottomSheetContent: {
-    paddingTop: 0,
-    gap: 6,
-  },
 });
