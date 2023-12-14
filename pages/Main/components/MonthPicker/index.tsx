@@ -19,7 +19,7 @@ import { renderHandle } from "./MonthPickerHandle";
 import { renderBackdrop } from "./MonthPickerBackdrop";
 
 // hooks
-import { useResponsiveMobileWidth, useSwiper } from "@/hooks";
+import { useSwiper } from "@/hooks";
 
 // apis
 import { apiService } from "@/apis";
