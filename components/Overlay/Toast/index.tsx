@@ -8,6 +8,7 @@ import type { ToastState } from "@/store/modules/toast";
 
 // components
 import { AView } from "@/components/Layout/AView";
+import { ResponsiveKeyboardAvoidingView } from "@/components/Layout/ResponsiveKeyboardAvoidingView";
 
 // styles
 import { styles } from "./index.styles";
@@ -19,11 +20,13 @@ export function Toast() {
 
   return (
     <View style={styles.container}>
-      <AView isMount={isOpen} duration={300} style={styles.contentLayout}>
-        <View style={styles.contentBody}>
-          <Text style={styles.message}>{message}</Text>
+      <ResponsiveKeyboardAvoidingView>
+        <View style={styles.content}>
+          <AView style={styles.modal} isMount={isOpen} duration={300}>
+            <Text style={styles.modalMessage}>{message}</Text>
+          </AView>
         </View>
-      </AView>
+      </ResponsiveKeyboardAvoidingView>
     </View>
   );
 }

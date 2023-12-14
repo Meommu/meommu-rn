@@ -10,22 +10,28 @@ export const styles = StyleSheet.create({
 
     width: "100%",
     height: "100%",
-    alignItems: "center",
 
     pointerEvents: "none",
   },
 
-  contentLayout: {
-    position: "absolute",
-    bottom: 100,
+  content: {
+    position: "relative",
+
+    width: "100%",
+    height: "100%",
+    alignItems: "center",
   },
 
-  contentBody: {
+  modal: {
+    position: "absolute",
+    bottom: 100,
+
     backgroundColor: color.g400,
+
     borderRadius: 10,
   },
 
-  message: {
+  modalMessage: {
     color: color.w,
     fontSize: 16,
     fontFamily: font.PretendardRegular,
