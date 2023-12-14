@@ -1,6 +1,5 @@
 // react
 import type { MutableRefObject } from "react";
-import { Pressable, Text } from "react-native";
 import Swiper from "react-native-web-swiper";
 import { useFormContext } from "react-hook-form";
 
@@ -15,6 +14,7 @@ import { Popover } from "@/components/Overlay/Popover";
 import { WriteGuide } from "../components/WriteGuide";
 import { DatePicker } from "../components/DatePicker";
 import { FixedRelativeView } from "@/components/Layout/FixedRelativeView";
+import { CompleteButton } from "@/components/Button/CompleteButton";
 
 // constants
 import { size } from "@/constants";
@@ -77,13 +77,10 @@ export function WritePresenter({
         left={<GoBackButton onPress={handleGoBackButtonClick} />}
         right={
           !isStepOneSlide() && (
-            <Pressable
-              style={styles.completeButton}
+            <CompleteButton
               onPress={handleFinishButtonClick}
               disabled={isLoading}
-            >
-              <Text style={styles.completeButtonText}>완료</Text>
-            </Pressable>
+            />
           )
         }
       />
