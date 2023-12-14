@@ -16,7 +16,7 @@ import { Footer } from "@/components/Layout/Footer";
 import { HomeNavigationButton } from "./components/HomeNavigationButton";
 
 // constants
-import { PATH, regExp } from "@/constants";
+import { PATH, regExp, size } from "@/constants";
 
 // api
 import { apiService } from "@/apis";
@@ -24,6 +24,9 @@ import axios from "axios";
 
 // hooks
 import { useToast } from "@/hooks";
+
+// utils
+import { sleep } from "@/utils";
 
 // styles
 import { styles } from "./index.styles";
@@ -78,11 +81,15 @@ export function HomePage() {
     )();
   };
 
-  const handleSignUpButtonClick = useCallback(() => {
+  const handleSignUpButtonClick = useCallback(async () => {
+    await sleep(size.BUTTON_PRESS_IN_OUT_DURATION * 2);
+
     router.push(PATH.SIGN_UP);
   }, []);
 
-  const handlePasswordRecoveryButtoncClick = useCallback(() => {
+  const handlePasswordRecoveryButtoncClick = useCallback(async () => {
+    await sleep(size.BUTTON_PRESS_IN_OUT_DURATION * 2);
+
     router.push(PATH.RECOVERY);
   }, []);
 
