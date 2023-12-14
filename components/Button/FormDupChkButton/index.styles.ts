@@ -6,11 +6,15 @@ import { color, font } from "@/constants";
 
 export const styles = StyleSheet.create({
   container: {
+    borderRadius: 4,
+
+    overflow: "hidden",
+  },
+
+  button: {
     position: "relative",
 
     backgroundColor: color.g200,
-
-    borderRadius: 4,
   },
 
   border: {
