@@ -9,7 +9,7 @@ import { updateDatePickerBottomSheetRef } from "@/store/modules/bottomSheet";
 import { useDispatch } from "react-redux";
 
 // hooks
-import { ZoomAndFadeInOut, useResponsiveMobileWidth } from "@/hooks";
+import { ZoomAndFadeInOut } from "@/hooks";
 
 // components
 import { NonIndicatorScrollView } from "@/components/ScrollView/NonIndicatorScrollView";
@@ -83,8 +83,6 @@ export const DatePicker = memo(({ setValue }: DatePickerProps) => {
     dispatch(updateDatePickerBottomSheetRef(bottomSheetRef));
   }, [dispatch, bottomSheetRef]);
 
-  const { responsiveWidthStyle } = useResponsiveMobileWidth();
-
   const initialSnapPoints = useMemo(() => ["CONTENT_HEIGHT"], []);
 
   const {
@@ -115,7 +113,7 @@ export const DatePicker = memo(({ setValue }: DatePickerProps) => {
   return (
     <BottomSheet
       ref={bottomSheetRef}
-      containerStyle={[responsiveWidthStyle, styles.bottomSheetContainer]}
+      containerStyle={styles.bottomSheetContainer}
       snapPoints={animatedSnapPoints}
       contentHeight={animatedContentHeight}
       backdropComponent={renderBackdrop()}
