@@ -101,7 +101,7 @@ export const UploadImagePicker = memo(
             const j = imageIds.indexOf(loadingImageIds[i]);
 
             if (j === -1) {
-              return;
+              continue;
             }
 
             newImageIds.splice(j, 1, uploadedImageIds[i]);
@@ -118,13 +118,15 @@ export const UploadImagePicker = memo(
             const j = imageIds.indexOf(loadingImageIds[i]);
 
             if (j === -1) {
-              return;
+              continue;
             }
 
             newImageIds.splice(j, 1);
           }
 
           setValue("imageIds", newImageIds);
+
+          fireToast("이미지 업로드에 실패하였습니다.", 3000);
         },
       }
     );
