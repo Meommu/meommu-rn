@@ -30,7 +30,7 @@ export const styles = StyleSheet.create({
   modal: {
     borderRadius: 10,
 
-    backgroundColor: color.g500,
+    backgroundColor: "#626262",
 
     opacity: 0.9,
   },
