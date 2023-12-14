@@ -6,6 +6,8 @@ import { color, font } from "@/constants";
 
 export const styles = StyleSheet.create({
   container: {
+    position: "relative",
+
     borderRadius: 4,
 
     overflow: "hidden",
@@ -13,11 +15,7 @@ export const styles = StyleSheet.create({
     backgroundColor: color.g200,
   },
 
-  button: {
-    position: "relative",
-  },
-
-  buttonBorder: {
+  border: {
     position: "absolute",
     top: 0,
     left: 0,
@@ -26,12 +24,12 @@ export const styles = StyleSheet.create({
     height: "100%",
   },
 
-  buttonContent: {
+  content: {
     paddingVertical: 10,
     paddingHorizontal: 18,
   },
 
-  buttonContentText: {
+  contentText: {
     fontSize: 16,
     fontFamily: font.PretendardSemiBold,
   },

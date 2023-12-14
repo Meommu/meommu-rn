@@ -55,19 +55,15 @@ export function FormDupChkButton({
   return (
     <Animated.View style={[styles.container, containerAnimatedStyle]}>
       <Pressable
-        style={styles.button}
+        style={styles.content}
         onPressIn={handleButtonPressIn}
         onPressOut={handleButtonPressOut}
         {...props}
       >
-        <View style={[styles.buttonBorder, borderStyle]} />
-
-        <View style={styles.buttonContent}>
-          <Text style={[styles.buttonContentText, fontColorStyle]}>
-            중복확인
-          </Text>
-        </View>
+        <Text style={[styles.contentText, fontColorStyle]}>중복확인</Text>
       </Pressable>
+
+      <View style={[styles.border, borderStyle]} />
 
       {Dimmed}
     </Animated.View>
