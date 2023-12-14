@@ -25,16 +25,11 @@ import { DiaryListPlaceholder } from "./DiaryListPlaceholder";
 import { DiaryItemSkeleton } from "./DiaryItem/index.skeleton";
 import { DiaryItem } from "./DiaryItem";
 import { NavigationButton } from "@/components/Button/NavigationButton";
-import { TransparentButton } from "@/components/Button/TransparentButton";
-import { ResponsiveBottomSheetModal } from "@/components/Layout/ResponsiveBottomSheetModal";
 import { Footer } from "@/components/Layout/Footer";
 import { Popover } from "@/components/Overlay/Popover";
 
 // hooks
 import { useConfirm } from "@/hooks";
-
-// bottom sheet
-import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 
 // constants
 import { PATH, size } from "@/constants";
