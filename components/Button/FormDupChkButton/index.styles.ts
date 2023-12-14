@@ -9,30 +9,29 @@ export const styles = StyleSheet.create({
     borderRadius: 4,
 
     overflow: "hidden",
-  },
-
-  button: {
-    position: "relative",
 
     backgroundColor: color.g200,
   },
 
-  border: {
+  button: {
+    position: "relative",
+  },
+
+  buttonBorder: {
     position: "absolute",
+    top: 0,
+    left: 0,
 
     width: "100%",
     height: "100%",
-
-    borderWidth: 2,
-    borderRadius: 4,
   },
 
-  content: {
+  buttonContent: {
     paddingVertical: 10,
     paddingHorizontal: 18,
   },
 
-  contentText: {
+  buttonContentText: {
     fontSize: 16,
     fontFamily: font.PretendardSemiBold,
   },

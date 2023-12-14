@@ -7,7 +7,7 @@ import Animated from "react-native-reanimated";
 import { color } from "@/constants";
 
 // hooks
-import { usePressInOutAnimation } from "@/hooks";
+import { useDynamicStyle, usePressInOutAnimation } from "@/hooks";
 
 // styles
 import { styles } from "./index.styles";
@@ -28,19 +28,29 @@ export function FormDupChkButton({
     handleButtonPressOut,
   } = usePressInOutAnimation();
 
-  const fontColor =
-    isDupChk === null
-      ? color.g300
-      : isDupChk === false
-      ? color.error
-      : color.success;
+  const fontColorStyle = useDynamicStyle(() => {
+    if (isDupChk === null) {
+      return {
+        color: color.g300,
+      };
+    }
 
-  const borderColor =
-    isDupChk === null
-      ? "transparent"
-      : isDupChk === false
-      ? color.error
-      : color.success;
+    return {
+      color: isDupChk ? color.success : color.error,
+    };
+  }, [isDupChk]);
+
+  const borderStyle = useDynamicStyle(() => {
+    if (isDupChk === null) {
+      return {};
+    }
+
+    return {
+      borderWidth: 2,
+      borderRadius: 4,
+      borderColor: isDupChk ? color.success : color.error,
+    };
+  }, [isDupChk]);
 
   return (
     <Animated.View style={[styles.container, containerAnimatedStyle]}>
@@ -50,10 +60,10 @@ export function FormDupChkButton({
         onPressOut={handleButtonPressOut}
         {...props}
       >
-        <View style={[styles.border, { borderColor }]} />
+        <View style={[styles.buttonBorder, borderStyle]} />
 
-        <View style={styles.content}>
-          <Text style={[styles.contentText, { color: fontColor }]}>
+        <View style={styles.buttonContent}>
+          <Text style={[styles.buttonContentText, fontColorStyle]}>
             중복확인
           </Text>
         </View>
