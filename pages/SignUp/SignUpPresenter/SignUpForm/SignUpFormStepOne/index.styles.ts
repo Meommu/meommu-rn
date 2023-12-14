@@ -89,11 +89,4 @@ export const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: font.PretendardSemiBold,
   },
-
-  agreementFormFieldCaretRight: {
-    width: 26,
-    height: 26,
-    justifyContent: "center",
-    alignItems: "center",
-  },
 });

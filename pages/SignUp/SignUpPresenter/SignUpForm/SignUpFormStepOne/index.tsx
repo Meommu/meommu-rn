@@ -12,9 +12,7 @@ import { FormDupChkButton } from "@/components/Button/FormDupChkButton";
 import { CheckBoxButton } from "@/components/Button/CheckboxButton";
 import { AlertText } from "@/components/Text/AlertText";
 import { NonIndicatorScrollView } from "@/components/ScrollView/NonIndicatorScrollView";
-
-// svgs
-import CaretRight from "@/assets/svgs/caret-right.svg";
+import { CaretRightButton } from "@/components/Button/CaretRightButton";
 
 // apis
 import { apiService } from "@/apis";
@@ -321,12 +319,9 @@ export function SignUpFormStepOne() {
               <Text style={styles.agreementFormFieldText}>에 동의합니다.</Text>
             </View>
 
-            <Pressable
-              style={styles.agreementFormFieldCaretRight}
+            <CaretRightButton
               onPress={handleTermsOfUseAndPrivacyPolicyButtonClick}
-            >
-              <CaretRight />
-            </Pressable>
+            />
           </View>
         </View>
       </NonIndicatorScrollView>
