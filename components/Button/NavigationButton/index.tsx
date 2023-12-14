@@ -12,7 +12,7 @@ import Animated, {
 } from "react-native-reanimated";
 
 // constants
-import { color } from "@/constants";
+import { color, size } from "@/constants";
 
 // styles
 import { styles } from "./index.styles";
@@ -47,19 +47,27 @@ export function NavigationButton({
 
   const containerAnimatedStyle = useAnimatedStyle(() => {
     return {
-      transform: [{ scale: withTiming(scale.value, { duration: 100 }) }],
+      transform: [
+        {
+          scale: withTiming(scale.value, {
+            duration: size.BUTTON_PRESS_IN_OUT_DURATION,
+          }),
+        },
+      ],
     };
   });
 
   const dimmedAnimatedStyle = useAnimatedStyle(() => {
     return {
-      opacity: withTiming(opacity.value, { duration: 100 }),
+      opacity: withTiming(opacity.value, {
+        duration: size.BUTTON_PRESS_IN_OUT_DURATION,
+      }),
     };
   });
 
   const handleButtonPressIn = () => {
-    scale.value = 0.98;
-    opacity.value = 0.1;
+    scale.value = 0.96;
+    opacity.value = 0.15;
   };
 
   const handleButtonPressOut = () => {

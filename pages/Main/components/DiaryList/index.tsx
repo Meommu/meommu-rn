@@ -104,7 +104,7 @@ export function DiaryList() {
   };
 
   const handleWriteButtonClick = useCallback(async () => {
-    await sleep(200);
+    await sleep(size.BUTTON_PRESS_IN_OUT_DURATION * 2);
 
     router.push(PATH.WRITE);
   }, []);

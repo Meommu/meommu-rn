@@ -29,3 +29,9 @@ export const FOOTER_PADDING_BOTTOM = 13;
  * count
  */
 export const MONTH_CALENDAR_PAGE_COUNT = 10;
+
+/**
+ * animation
+ */
+
+export const BUTTON_PRESS_IN_OUT_DURATION = 100;
