@@ -22,21 +22,26 @@ export const styles = StyleSheet.create({
     alignItems: "center",
   },
 
-  modal: {
+  modalLayout: {
     position: "absolute",
     bottom: 100,
+  },
 
-    backgroundColor: color.g400,
-
+  modal: {
     borderRadius: 10,
+
+    backgroundColor: color.g500,
+
+    opacity: 0.9,
   },
 
   modalMessage: {
     color: color.w,
     fontSize: 16,
     fontFamily: font.PretendardRegular,
-    lineHeight: 22,
+    lineHeight: 25,
 
-    padding: 10,
+    paddingVertical: 7,
+    paddingHorizontal: 14,
   },
 });

@@ -22,8 +22,10 @@ export function Toast() {
     <View style={styles.container}>
       <ResponsiveKeyboardAvoidingView>
         <View style={styles.content}>
-          <AView style={styles.modal} isMount={isOpen} duration={300}>
-            <Text style={styles.modalMessage}>{message}</Text>
+          <AView style={styles.modalLayout} isMount={isOpen} duration={300}>
+            <View style={styles.modal}>
+              <Text style={styles.modalMessage}>{message}</Text>
+            </View>
           </AView>
         </View>
       </ResponsiveKeyboardAvoidingView>
