@@ -19,7 +19,7 @@ import { FixedRelativeView } from "@/components/Layout/FixedRelativeView";
 import { DiaryEditDeleteBottomSheetModal } from "@/components/Widget/DiaryEditDeleteBottomSheetModal";
 
 // constants
-import { PATH } from "@/constants";
+import { PATH, color } from "@/constants";
 
 // apis
 import { apiService } from "@/apis";
@@ -147,7 +147,9 @@ function Diary() {
       <Header
         style={styles.header}
         left={<GoBackButton onPress={handleGoBackButtonClick} />}
-        right={<KebabMenuButton onPress={handleEditButtonClick} fill="black" />}
+        right={
+          <KebabMenuButton onPress={handleEditButtonClick} fill={color.g400} />
+        }
       />
 
       <NonIndicatorScrollView>
