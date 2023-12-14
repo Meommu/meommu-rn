@@ -2,6 +2,7 @@
 import { useCallback, useEffect } from "react";
 import { View, Text, Pressable } from "react-native";
 import { useQuery } from "react-query";
+import Animated from "react-native-reanimated";
 
 // redux
 import { useDispatch, useSelector } from "react-redux";
@@ -10,14 +11,17 @@ import { type BottomSheetState } from "@/store/modules/bottomSheet";
 import { type DiaryDateState } from "@/store/modules/diaryDate";
 import { changeSelectedYearMonth } from "@/store/modules/diaryDate";
 
+// hooks
+import { usePressInOutAnimation } from "@/hooks";
+
+// apis
+import { apiService } from "@/apis";
+
 // svgs
 import ArrowDropDown from "@/assets/svgs/arrow-drop-down.svg";
 
 // styles
 import { styles } from "./index.styles";
-
-// apis
-import { apiService } from "@/apis";
 
 export function MonthPickerController() {
   const dispatch = useDispatch();
@@ -67,19 +71,32 @@ export function MonthPickerController() {
     dispatch(changeSelectedYearMonth(year, month));
   }, [diariesSummary]);
 
+  const {
+    containerAnimatedStyle,
+    Dimmed,
+    handleButtonPressIn,
+    handleButtonPressOut,
+  } = usePressInOutAnimation();
+
   return (
     <View style={styles.container}>
-      <Pressable
-        style={styles.content}
-        onPress={handleSheetOpen}
-        testID="button-month-picker"
-      >
-        <Text style={styles.dateText}>
-          {selectedYear}년 {selectedMonth}월
-        </Text>
+      <Animated.View style={[styles.content, containerAnimatedStyle]}>
+        <Pressable
+          style={styles.button}
+          onPress={handleSheetOpen}
+          onPressIn={handleButtonPressIn}
+          onPressOut={handleButtonPressOut}
+          testID="button-month-picker"
+        >
+          <Text style={styles.buttonText}>
+            {selectedYear}년 {selectedMonth}월
+          </Text>
 
-        <ArrowDropDown />
-      </Pressable>
+          <ArrowDropDown />
+        </Pressable>
+
+        {Dimmed}
+      </Animated.View>
     </View>
   );
 }

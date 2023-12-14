@@ -8,19 +8,27 @@ export const styles = StyleSheet.create({
   container: {
     alignItems: "flex-start",
 
-    paddingVertical: 10,
-    paddingHorizontal: 21,
+    paddingVertical: 6,
+    paddingHorizontal: 17,
 
     backgroundColor: color.g200,
   },
 
   content: {
+    borderRadius: 6,
+
+    overflow: "hidden",
+  },
+
+  button: {
     flexDirection: "row",
     alignItems: "center",
     gap: 12,
+
+    padding: 4,
   },
 
-  dateText: {
+  buttonText: {
     color: color.g500,
     fontSize: 18,
     fontFamily: font.YeonTheLand,
