@@ -38,7 +38,7 @@ export function InteractionPressable({
       style={[styles.containerLayout, style, containerAnimatedStyle]}
     >
       <Pressable
-        style={[styles.container, containerStyle]}
+        style={containerStyle}
         onPressIn={handleButtonPressIn}
         onPressOut={handleButtonPressOut}
         onHoverIn={handleButtonPressIn}
