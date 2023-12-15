@@ -19,7 +19,7 @@ import { CaretRightButton } from "@/components/Button/CaretRightButton";
 import { apiService } from "@/apis";
 
 // constants
-import { regExp } from "@/constants";
+import { color, regExp } from "@/constants";
 
 // styles
 import { styles } from "./index.styles";
@@ -364,6 +364,7 @@ export function SignUpFormStepOne() {
 
             <CaretRightButton
               onPress={handleTermsOfUseAndPrivacyPolicyButtonClick}
+              fill={color.g400}
             />
           </View>
         </View>
