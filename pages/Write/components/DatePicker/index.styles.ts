@@ -33,14 +33,33 @@ export const styles = StyleSheet.create({
     flexWrap: "wrap",
   },
 
-  yearPickerItem: {
+  yearPickerItemLayout: {
     width: "25%",
     height: size.DATE_PICKER_CALENDAR_HEIGHT / 3,
-    alignItems: "center",
-    justifyContent: "center",
   },
 
-  yearPickerItemText: {
+  yearPickerItem: {
+    width: "100%",
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  yearPickerItemButtonLayout: {
+    height: "80%",
+    aspectRatio: "1/1",
+
+    borderRadius: 9999,
+  },
+
+  yearPickerItemButton: {
+    width: "100%",
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  yearPickerItemButtonText: {
     color: color.g500,
     fontFamily: font.PretendardSemiBold,
     textAlign: "center",

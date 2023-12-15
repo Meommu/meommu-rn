@@ -1,6 +1,6 @@
 // react
 import { memo, useEffect, useRef, useMemo, useState } from "react";
-import { View, Text, Pressable } from "react-native";
+import { View, Text } from "react-native";
 import type { UseFormSetValue } from "react-hook-form";
 import { useQuery } from "react-query";
 
@@ -16,6 +16,7 @@ import { NonIndicatorScrollView } from "@/components/ScrollView/NonIndicatorScro
 import { Footer } from "@/components/Layout/Footer";
 import { NavigationButton } from "@/components/Button/NavigationButton";
 import { AView } from "@/components/Layout/AView";
+import { InteractionPressable } from "@/components/Pressable/InteractionPressable";
 import { renderHandle } from "./DatePickerHandle";
 import { renderBackdrop } from "./DatePickerBackdrop";
 import { DatePickerCalendar } from "./DatePickerCalendar";
@@ -147,13 +148,19 @@ export const DatePicker = memo(({ setValue }: DatePickerProps) => {
                     const year = now.getFullYear() - i;
 
                     return (
-                      <Pressable
-                        style={styles.yearPickerItem}
-                        onPress={handleYearItemClick(year)}
-                        key={year}
-                      >
-                        <Text style={styles.yearPickerItemText}>{year}</Text>
-                      </Pressable>
+                      <View style={styles.yearPickerItemLayout} key={year}>
+                        <View style={styles.yearPickerItem}>
+                          <InteractionPressable
+                            style={styles.yearPickerItemButtonLayout}
+                            containerStyle={styles.yearPickerItemButton}
+                            onPress={handleYearItemClick(year)}
+                          >
+                            <Text style={styles.yearPickerItemButtonText}>
+                              {year}
+                            </Text>
+                          </InteractionPressable>
+                        </View>
+                      </View>
                     );
                   })}
               </View>
