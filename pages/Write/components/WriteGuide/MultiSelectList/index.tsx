@@ -7,6 +7,7 @@ import { color } from "@/constants";
 
 // styles
 import { styles } from "./index.styles";
+import { InteractionPressable } from "@/components/Pressable/InteractionPressable";
 
 interface MultiSelectListProps {
   guideElementItems: GuideElementItem[];
@@ -34,10 +35,10 @@ export function MultiSelectList({ guideElementItems }: MultiSelectListProps) {
     <View style={styles.list}>
       {items.map(({ isSelect, sentence }, i) => {
         return (
-          <Pressable
+          <InteractionPressable
             key={i}
             onPress={handleItemClick(i)}
-            style={[
+            containerStyle={[
               styles.item,
               {
                 backgroundColor: isSelect ? color.primary : color.bg400,
@@ -55,7 +56,7 @@ export function MultiSelectList({ guideElementItems }: MultiSelectListProps) {
             >
               {sentence}
             </Text>
-          </Pressable>
+          </InteractionPressable>
         );
       })}
     </View>
