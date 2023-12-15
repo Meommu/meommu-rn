@@ -10,6 +10,7 @@ import { changeVisible, type ConfirmState } from "@/store/modules/confirm";
 // components
 import { AView } from "@/components/Layout/AView";
 import { ResponsiveKeyboardAvoidingView } from "@/components/Layout/ResponsiveKeyboardAvoidingView";
+import { NavigationButton } from "@/components/Button/NavigationButton";
 
 // hooks
 import { ZoomAndFadeInOut, useDynamicStyle } from "@/hooks";
@@ -130,21 +131,22 @@ export function Confirm() {
             )}
 
             <View style={styles.buttonWrapper}>
-              <Pressable
-                style={[styles.okButton, okButtonOpacityStyle]}
+              <NavigationButton
+                style={[{ width: "60%" }, [okButtonOpacityStyle]]}
+                backgroundColor={color.g800}
+                disableBackgroundColor={color.g800}
+                fontColor={color.g300}
+                content={okMessage}
                 onPress={handleOkButtonClick}
                 disabled={isOkButtonDisable}
                 testID="button-confirm-ok"
-              >
-                <Text style={styles.okButtonText}>{okMessage}</Text>
-              </Pressable>
+              />
 
-              <Pressable
-                style={styles.cancelButton}
+              <NavigationButton
+                style={{ width: "40%" }}
                 onPress={handleCancelButtonClick}
-              >
-                <Text style={styles.cancelButtonText}>{cancelMessage}</Text>
-              </Pressable>
+                content={cancelMessage}
+              />
             </View>
           </AView>
         </View>

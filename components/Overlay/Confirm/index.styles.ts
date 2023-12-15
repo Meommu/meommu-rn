@@ -89,40 +89,4 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     gap: 12,
   },
-
-  okButton: {
-    width: "60%",
-    height: size.NAVIGATION_BUTTON_HEIGHT,
-    alignItems: "center",
-    justifyContent: "center",
-    flexShrink: 1,
-
-    borderRadius: 6,
-
-    backgroundColor: color.g800,
-  },
-
-  okButtonText: {
-    fontSize: 16,
-    fontFamily: font.PretendardSemiBold,
-    color: color.g300,
-  },
-
-  cancelButton: {
-    width: "40%",
-    height: size.NAVIGATION_BUTTON_HEIGHT,
-    alignItems: "center",
-    justifyContent: "center",
-    flexShrink: 1,
-
-    borderRadius: 6,
-
-    backgroundColor: color.primary,
-  },
-
-  cancelButtonText: {
-    fontSize: 16,
-    fontFamily: font.PretendardSemiBold,
-    color: color.w,
-  },
 });
