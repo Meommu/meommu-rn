@@ -15,7 +15,7 @@ export default function AppLayout() {
         <meta property="og:type" content="website" />
         <meta
           property="og:image"
-          content={require("@/assets/open-graph-image.png")}
+          content="https://github.com/Meommu/meommu-rn/assets/44913775/54a00e6c-c300-40ff-a65c-69d5ddf55342"
         />
         <meta
           property="og:title"
