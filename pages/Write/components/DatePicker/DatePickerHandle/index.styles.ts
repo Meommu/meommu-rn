@@ -23,10 +23,6 @@ export const styles = StyleSheet.create({
   },
 
   togglerWrapper: {
-    borderRadius: 6,
-
-    overflow: "hidden",
-
     marginVertical: 14,
   },
 

@@ -1,9 +1,8 @@
 // react
-import { Pressable, type PressableProps } from "react-native";
-import Animated from "react-native-reanimated";
+import { type PressableProps } from "react-native";
 
-// hooks
-import { usePressInOutAnimation } from "@/hooks";
+// components
+import { InteractionPressable } from "@/components/Pressable/InteractionPressable";
 
 // constants
 import { color } from "@/constants";
@@ -23,25 +22,9 @@ export function CaretLeftButton({
   fill = color.g300,
   ...props
 }: CaretLeftButtonProps) {
-  const {
-    containerAnimatedStyle,
-    Dimmed,
-    handleButtonPressIn,
-    handleButtonPressOut,
-  } = usePressInOutAnimation();
-
   return (
-    <Animated.View style={[styles.container, containerAnimatedStyle]}>
-      <Pressable
-        style={styles.button}
-        onPressIn={handleButtonPressIn}
-        onPressOut={handleButtonPressOut}
-        {...props}
-      >
-        <CaretLeft fill={fill} />
-      </Pressable>
-
-      {Dimmed}
-    </Animated.View>
+    <InteractionPressable containerStyle={styles.button} {...props}>
+      <CaretLeft fill={fill} />
+    </InteractionPressable>
   );
 }
