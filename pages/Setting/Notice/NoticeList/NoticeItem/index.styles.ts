@@ -18,14 +18,6 @@ export const styles = StyleSheet.create({
     backgroundColor: color.g200,
   },
 
-  buttonWrapper: {
-    width: "100%",
-
-    borderRadius: 6,
-
-    overflow: "hidden",
-  },
-
   button: {
     width: "100%",
     flexDirection: "row",

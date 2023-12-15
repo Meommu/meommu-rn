@@ -5,14 +5,6 @@ import { StyleSheet } from "react-native";
 import { color, font } from "@/constants";
 
 export const styles = StyleSheet.create({
-  container: {
-    width: "100%",
-
-    borderRadius: 6,
-
-    overflow: "hidden",
-  },
-
   button: {
     width: "100%",
     flexDirection: "row",

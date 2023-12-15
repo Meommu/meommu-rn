@@ -58,6 +58,11 @@ export function FormDupChkButton({
         style={styles.content}
         onPressIn={handleButtonPressIn}
         onPressOut={handleButtonPressOut}
+        onTouchStart={handleButtonPressIn}
+        onTouchMove={handleButtonPressIn}
+        onTouchEnd={handleButtonPressOut}
+        onHoverIn={handleButtonPressIn}
+        onHoverOut={handleButtonPressOut}
         {...props}
       >
         <Text style={[styles.contentText, fontColorStyle]}>중복확인</Text>

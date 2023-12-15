@@ -1,9 +1,8 @@
 // react
-import { Pressable, type PressableProps, Text } from "react-native";
-import Animated from "react-native-reanimated";
+import { type PressableProps, Text } from "react-native";
 
-// hooks
-import { usePressInOutAnimation } from "@/hooks";
+// components
+import { InteractionPressable } from "@/components/Pressable/InteractionPressable";
 
 // svgs
 import CaretRight from "@/assets/svgs/caret-right.svg";
@@ -15,28 +14,12 @@ interface SettingItemProps extends PressableProps {
   title: string;
 }
 
-export function SettingItem({ title, ...props }: SettingItemProps) {
-  const {
-    containerAnimatedStyle,
-    Dimmed,
-    handleButtonPressIn,
-    handleButtonPressOut,
-  } = usePressInOutAnimation();
-
+export function SettingItem({ title, style, ...props }: SettingItemProps) {
   return (
-    <Animated.View style={[styles.container, containerAnimatedStyle]}>
-      <Pressable
-        style={styles.button}
-        onPressIn={handleButtonPressIn}
-        onPressOut={handleButtonPressOut}
-        {...props}
-      >
-        <Text style={styles.buttonText}>{title}</Text>
+    <InteractionPressable containerStyle={styles.button} {...props}>
+      <Text style={styles.buttonText}>{title}</Text>
 
-        <CaretRight />
-      </Pressable>
-
-      {Dimmed}
-    </Animated.View>
+      <CaretRight />
+    </InteractionPressable>
   );
 }

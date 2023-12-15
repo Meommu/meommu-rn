@@ -1,33 +1,16 @@
 // react
-import Animated from "react-native-reanimated";
-import { Pressable, Text, type PressableProps } from "react-native";
+import { Text, type PressableProps } from "react-native";
 
-// hooks
-import { usePressInOutAnimation } from "@/hooks";
+// components
+import { InteractionPressable } from "@/components/Pressable/InteractionPressable";
 
 // styles
 import { styles } from "./index.styles";
 
-export function CompleteButton(props: PressableProps) {
-  const {
-    containerAnimatedStyle,
-    Dimmed,
-    handleButtonPressIn,
-    handleButtonPressOut,
-  } = usePressInOutAnimation();
-
+export function CompleteButton({ style, ...props }: PressableProps) {
   return (
-    <Animated.View style={[styles.container, containerAnimatedStyle]}>
-      <Pressable
-        style={styles.button}
-        onPressIn={handleButtonPressIn}
-        onPressOut={handleButtonPressOut}
-        {...props}
-      >
-        <Text style={styles.buttonText}>완료</Text>
-      </Pressable>
-
-      {Dimmed}
-    </Animated.View>
+    <InteractionPressable containerStyle={styles.button} {...props}>
+      <Text style={styles.buttonText}>완료</Text>
+    </InteractionPressable>
   );
 }

@@ -1,6 +1,5 @@
 // react
-import { Pressable, type PressableProps } from "react-native";
-import Animated from "react-native-reanimated";
+import { type PressableProps } from "react-native";
 
 // svgs
 import ThreeDotsVertical from "@/assets/svgs/three-dots-vertical.svg";
@@ -8,8 +7,8 @@ import ThreeDotsVertical from "@/assets/svgs/three-dots-vertical.svg";
 // constants
 import { color } from "@/constants";
 
-// hooks
-import { usePressInOutAnimation } from "@/hooks";
+// components
+import { InteractionPressable } from "@/components/Pressable/InteractionPressable";
 
 // styles
 import { styles } from "./index.styles";
@@ -19,28 +18,13 @@ interface KebabMenuButtonProps extends PressableProps {
 }
 
 export function KebabMenuButton({
+  style,
   fill = color.g200,
   ...props
 }: KebabMenuButtonProps) {
-  const {
-    containerAnimatedStyle,
-    Dimmed,
-    handleButtonPressIn,
-    handleButtonPressOut,
-  } = usePressInOutAnimation();
-
   return (
-    <Animated.View style={[styles.container, containerAnimatedStyle]}>
-      <Pressable
-        style={styles.button}
-        onPressIn={handleButtonPressIn}
-        onPressOut={handleButtonPressOut}
-        {...props}
-      >
-        <ThreeDotsVertical fill={fill} />
-      </Pressable>
-
-      {Dimmed}
-    </Animated.View>
+    <InteractionPressable containerStyle={styles.button} {...props}>
+      <ThreeDotsVertical fill={fill} />
+    </InteractionPressable>
   );
 }

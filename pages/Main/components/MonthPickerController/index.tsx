@@ -1,8 +1,7 @@
 // react
 import { useCallback, useEffect } from "react";
-import { View, Text, Pressable } from "react-native";
+import { View, Text } from "react-native";
 import { useQuery } from "react-query";
-import Animated from "react-native-reanimated";
 
 // redux
 import { useDispatch, useSelector } from "react-redux";
@@ -11,8 +10,8 @@ import { type BottomSheetState } from "@/store/modules/bottomSheet";
 import { type DiaryDateState } from "@/store/modules/diaryDate";
 import { changeSelectedYearMonth } from "@/store/modules/diaryDate";
 
-// hooks
-import { usePressInOutAnimation } from "@/hooks";
+// components
+import { InteractionPressable } from "@/components/Pressable/InteractionPressable";
 
 // apis
 import { apiService } from "@/apis";
@@ -71,32 +70,19 @@ export function MonthPickerController() {
     dispatch(changeSelectedYearMonth(year, month));
   }, [diariesSummary]);
 
-  const {
-    containerAnimatedStyle,
-    Dimmed,
-    handleButtonPressIn,
-    handleButtonPressOut,
-  } = usePressInOutAnimation();
-
   return (
     <View style={styles.container}>
-      <Animated.View style={[styles.content, containerAnimatedStyle]}>
-        <Pressable
-          style={styles.button}
-          onPress={handleSheetOpen}
-          onPressIn={handleButtonPressIn}
-          onPressOut={handleButtonPressOut}
-          testID="button-month-picker"
-        >
-          <Text style={styles.buttonText}>
-            {selectedYear}년 {selectedMonth}월
-          </Text>
+      <InteractionPressable
+        containerStyle={styles.button}
+        onPress={handleSheetOpen}
+        testID="button-month-picker"
+      >
+        <Text style={styles.buttonText}>
+          {selectedYear}년 {selectedMonth}월
+        </Text>
 
-          <ArrowDropDown />
-        </Pressable>
-
-        {Dimmed}
-      </Animated.View>
+        <ArrowDropDown />
+      </InteractionPressable>
     </View>
   );
 }

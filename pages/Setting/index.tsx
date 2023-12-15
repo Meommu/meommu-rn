@@ -8,15 +8,15 @@ import { useQueryClient } from "react-query";
 import { router } from "expo-router";
 
 // constants
-import { PATH } from "@/constants";
+import { PATH, color } from "@/constants";
 
 // components
 import { GoBackButton } from "@/components/Button/GoBackButton";
 import { Header } from "@/components/Layout/Header";
 import { ProfileCard } from "./components/ProfileCard";
 import { ProfileCardSkeleton } from "./components/ProfileCard/index.skeleton";
-import { TransparentButton } from "@/components/Button/TransparentButton";
 import { SettingItem } from "./components/SettingItem";
+import { NavigationButton } from "@/components/Button/NavigationButton";
 
 // apis
 import axios from "axios";
@@ -130,7 +130,9 @@ export function SettingPage() {
       </View>
 
       <View style={styles.signLayout}>
-        <TransparentButton
+        <NavigationButton
+          backgroundColor="transparent"
+          fontColor={color.g300}
           content="로그아웃"
           onPress={handleLogoutButtonClick}
           testID="button-logout"
@@ -138,7 +140,9 @@ export function SettingPage() {
 
         <View style={styles.splitBar} />
 
-        <TransparentButton
+        <NavigationButton
+          backgroundColor="transparent"
+          fontColor={color.g300}
           content="회원 탈퇴"
           onPress={handleResignButtonClick}
         />

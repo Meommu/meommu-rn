@@ -2,9 +2,11 @@
 import React, { useRef, useMemo, useCallback, useEffect } from "react";
 
 // constants
+import { color } from "@/constants";
+
+// components
 import { Footer } from "@/components/Layout/Footer";
 import { NavigationButton } from "@/components/Button/NavigationButton";
-import { TransparentButton } from "@/components/Button/TransparentButton";
 
 // bottom sheet
 import {
@@ -104,7 +106,9 @@ export function DiaryEditDeleteBottomSheetModal({
               onPress={handleDiaryEditButtonClick}
             />
 
-            <TransparentButton
+            <NavigationButton
+              backgroundColor="transparent"
+              fontColor={color.g300}
               content="일기 삭제하기"
               onPress={handleDiaryDeleteButtonClick}
             />

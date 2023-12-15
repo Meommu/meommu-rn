@@ -14,12 +14,6 @@ export const styles = StyleSheet.create({
     backgroundColor: color.g200,
   },
 
-  content: {
-    borderRadius: 6,
-
-    overflow: "hidden",
-  },
-
   button: {
     flexDirection: "row",
     alignItems: "center",

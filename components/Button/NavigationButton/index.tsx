@@ -1,22 +1,17 @@
 // react
-import {
-  Text,
-  Pressable,
-  type PressableProps,
-  ActivityIndicator,
-} from "react-native";
-import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  withTiming,
-} from "react-native-reanimated";
+import { Text, type PressableProps, ActivityIndicator } from "react-native";
+
+// components
+import { InteractionPressable } from "@/components/Pressable/InteractionPressable";
 
 // constants
-import { color, size } from "@/constants";
+import { color } from "@/constants";
+
+// hooks
+import { useDynamicStyle } from "@/hooks";
 
 // styles
 import { styles } from "./index.styles";
-import { usePressInOutAnimation } from "@/hooks";
 
 interface NavigationButtonProps extends PressableProps {
   content: string;
@@ -35,7 +30,7 @@ export function NavigationButton({
 
   backgroundColor = color.primary,
 
-  fontColor = color.w,
+  fontColor,
 
   style,
 
@@ -43,30 +38,40 @@ export function NavigationButton({
 
   ...props
 }: NavigationButtonProps) {
-  const {
-    handleButtonPressIn,
-    handleButtonPressOut,
-    containerAnimatedStyle,
-    Dimmed,
-  } = usePressInOutAnimation();
+  const buttonBackgroundStyle = useDynamicStyle(() => {
+    if (disabled) {
+      return {
+        backgroundColor: color.g300,
+      };
+    }
+
+    return {
+      backgroundColor,
+    };
+  }, [disabled]);
+
+  const fontColorStyle = useDynamicStyle(() => {
+    if (!fontColor) {
+      return {
+        color: color.w,
+      };
+    }
+
+    return {
+      color: fontColor,
+    };
+  }, [fontColor]);
 
   return (
-    <Animated.View style={[styles.container, containerAnimatedStyle]}>
-      <Pressable
-        style={[
-          styles.content,
-          { backgroundColor: disabled ? color.g300 : backgroundColor },
-        ]}
-        disabled={disabled || isLoading}
-        onPressIn={handleButtonPressIn}
-        onPressOut={handleButtonPressOut}
-        {...props}
-      >
-        {isLoading && <ActivityIndicator color={color.primaryB} />}
-        <Text style={[styles.buttonText, { color: fontColor }]}>{content}</Text>
-      </Pressable>
+    <InteractionPressable
+      style={[styles.layout, buttonBackgroundStyle]}
+      containerStyle={styles.button}
+      disabled={disabled || isLoading}
+      {...props}
+    >
+      {isLoading && <ActivityIndicator color={color.primaryB} />}
 
-      {Dimmed}
-    </Animated.View>
+      <Text style={[styles.buttonText, fontColorStyle]}>{content}</Text>
+    </InteractionPressable>
   );
 }
