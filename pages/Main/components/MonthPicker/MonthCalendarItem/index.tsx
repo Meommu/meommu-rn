@@ -65,7 +65,7 @@ export function MonthCalendarItem({
             >
               <View style={styles.monthElement}>
                 <InteractionPressable
-                  style={styles.monthElementButtonWrapper}
+                  style={styles.monthElementButtonLayout}
                   containerStyle={styles.monthElementButton}
                   onPress={handleMonthSelect(month)}
                   disabled={isFuture}

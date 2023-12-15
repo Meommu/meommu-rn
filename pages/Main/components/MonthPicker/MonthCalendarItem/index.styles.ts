@@ -28,7 +28,7 @@ export const styles = StyleSheet.create({
     padding: 7,
   },
 
-  monthElementButtonWrapper: {
+  monthElementButtonLayout: {
     height: "80%",
     aspectRatio: "1/1",
 
