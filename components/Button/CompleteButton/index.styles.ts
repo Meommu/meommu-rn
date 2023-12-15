@@ -5,18 +5,9 @@ import { StyleSheet } from "react-native";
 import { color, font } from "@/constants";
 
 export const styles = StyleSheet.create({
-  container: {
+  button: {
     width: 40,
     height: 40,
-
-    borderRadius: 6,
-
-    overflow: "hidden",
-  },
-
-  button: {
-    width: "100%",
-    height: "100%",
     justifyContent: "center",
     alignItems: "center",
   },

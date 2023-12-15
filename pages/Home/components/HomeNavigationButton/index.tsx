@@ -1,14 +1,13 @@
 // react
-import { Text, Pressable, type PressableProps } from "react-native";
-import Animated from "react-native-reanimated";
+import { Text, type PressableProps } from "react-native";
 
-// hooks
-import { usePressInOutAnimation } from "@/hooks";
+// conponents
+import { InteractionPressable } from "@/components/Pressable/InteractionPressable";
 
 // styles
 import { styles } from "./index.styles";
 
-interface TransparentButtonProps extends PressableProps {
+interface HomeNavigationButtonProps extends PressableProps {
   content: string;
 }
 
@@ -16,26 +15,10 @@ export function HomeNavigationButton({
   content,
   style,
   ...props
-}: TransparentButtonProps) {
-  const {
-    containerAnimatedStyle,
-    handleButtonPressIn,
-    handleButtonPressOut,
-    Dimmed,
-  } = usePressInOutAnimation();
-
+}: HomeNavigationButtonProps) {
   return (
-    <Animated.View style={[styles.container, containerAnimatedStyle]}>
-      <Pressable
-        style={styles.button}
-        onPressIn={handleButtonPressIn}
-        onPressOut={handleButtonPressOut}
-        {...props}
-      >
-        <Text style={styles.buttonText}>{content}</Text>
-      </Pressable>
-
-      {Dimmed}
-    </Animated.View>
+    <InteractionPressable containerStyle={styles.button} {...props}>
+      <Text style={styles.buttonText}>{content}</Text>
+    </InteractionPressable>
   );
 }

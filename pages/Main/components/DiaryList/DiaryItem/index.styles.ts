@@ -23,12 +23,6 @@ export const styles = StyleSheet.create({
     right: 4,
   },
 
-  diaryBodyWrapper: {
-    borderRadius: 6,
-
-    overflow: "hidden",
-  },
-
   diaryBody: {
     width: "100%",
     alignItems: "flex-start",

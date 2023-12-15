@@ -1,16 +1,19 @@
 // react
-import { Text, type PressableProps } from "react-native";
+import { type PressableProps } from "react-native";
 
 // components
 import { InteractionPressable } from "@/components/Pressable/InteractionPressable";
 
+// svgs
+import ShareButtonSvg from "@/assets/svgs/share.svg";
+
 // styles
 import { styles } from "./index.styles";
 
-export function CompleteButton({ style, ...props }: PressableProps) {
+export function ShareButton({ style, ...props }: PressableProps) {
   return (
     <InteractionPressable containerStyle={styles.button} {...props}>
-      <Text style={styles.buttonText}>완료</Text>
+      <ShareButtonSvg />
     </InteractionPressable>
   );
 }

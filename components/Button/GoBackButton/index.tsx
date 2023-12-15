@@ -1,9 +1,8 @@
 // react
-import { Pressable, type PressableProps } from "react-native";
-import Animated from "react-native-reanimated";
+import { type PressableProps } from "react-native";
 
-// hooks
-import { usePressInOutAnimation } from "@/hooks";
+// components
+import { InteractionPressable } from "@/components/Pressable/InteractionPressable";
 
 // svgs
 import CaretLeft from "@/assets/svgs/caret-left.svg";
@@ -12,25 +11,9 @@ import CaretLeft from "@/assets/svgs/caret-left.svg";
 import { styles } from "./index.styles";
 
 export function GoBackButton({ style, ...props }: PressableProps) {
-  const {
-    containerAnimatedStyle,
-    Dimmed,
-    handleButtonPressIn,
-    handleButtonPressOut,
-  } = usePressInOutAnimation();
-
   return (
-    <Animated.View style={[styles.container, containerAnimatedStyle]}>
-      <Pressable
-        style={styles.button}
-        onPressIn={handleButtonPressIn}
-        onPressOut={handleButtonPressOut}
-        {...props}
-      >
-        <CaretLeft />
-      </Pressable>
-
-      {Dimmed}
-    </Animated.View>
+    <InteractionPressable containerStyle={styles.button} {...props}>
+      <CaretLeft />
+    </InteractionPressable>
   );
 }

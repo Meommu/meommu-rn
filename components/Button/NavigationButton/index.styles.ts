@@ -5,19 +5,13 @@ import { StyleSheet } from "react-native";
 import { size, font, color } from "@/constants";
 
 export const styles = StyleSheet.create({
-  container: {
+  layout: {
     width: "100%",
     height: size.NAVIGATION_BUTTON_HEIGHT,
     flexShrink: 1,
-
-    borderRadius: 6,
-
-    overflow: "hidden",
-
-    position: "relative",
   },
 
-  content: {
+  button: {
     width: "100%",
     height: "100%",
     justifyContent: "center",
