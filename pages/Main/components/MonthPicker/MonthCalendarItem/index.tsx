@@ -1,10 +1,9 @@
 // react
 import { useContext, useMemo } from "react";
-import { View, Text } from "react-native";
+import { View, Text, Pressable } from "react-native";
 
 // components
 import { LoadImage } from "@/components/Widget/LoadImage";
-import { InteractionPressable } from "@/components/Pressable/InteractionPressable";
 
 // context
 import { MonthPickerContext } from "../index.context";
@@ -64,53 +63,54 @@ export function MonthCalendarItem({
               testID={`button-month-calendar-element-${calendarYear}-${month}`}
             >
               <View style={styles.monthElement}>
-                <InteractionPressable
-                  style={styles.monthElementButtonLayout}
-                  containerStyle={styles.monthElementButton}
-                  onPress={handleMonthSelect(month)}
-                  disabled={isFuture}
-                >
-                  {diaryImageId && (
-                    <View style={styles.monthElementButtonCircleLayout}>
-                      <LoadImage imageId={diaryImageId} />
-                    </View>
-                  )}
+                <View style={styles.monthElementButtonLayout}>
+                  <Pressable
+                    style={styles.monthElementButton}
+                    onPress={handleMonthSelect(month)}
+                    disabled={isFuture}
+                  >
+                    {diaryImageId && (
+                      <View style={styles.monthElementButtonCircleLayout}>
+                        <LoadImage imageId={diaryImageId} />
+                      </View>
+                    )}
 
-                  {isCurrentDate && (
-                    <View
+                    {isCurrentDate && (
+                      <View
+                        style={[
+                          styles.monthElementButtonCircleLayout,
+                          {
+                            backgroundColor: "rgba(0, 0, 0, 0.3)",
+                          },
+                        ]}
+                      />
+                    )}
+
+                    {isSelected && (
+                      <View
+                        style={[
+                          styles.monthElementButtonCircleLayout,
+                          { borderWidth: 1 },
+                        ]}
+                      />
+                    )}
+
+                    <Text
                       style={[
-                        styles.monthElementButtonCircleLayout,
+                        styles.monthElementButtonText,
                         {
-                          backgroundColor: "rgba(0, 0, 0, 0.3)",
+                          color: isFuture
+                            ? "lightgray"
+                            : isCurrentDate || diaryImageId !== undefined
+                            ? color.w
+                            : color.g700,
                         },
                       ]}
-                    />
-                  )}
-
-                  {isSelected && (
-                    <View
-                      style={[
-                        styles.monthElementButtonCircleLayout,
-                        { borderWidth: 1 },
-                      ]}
-                    />
-                  )}
-
-                  <Text
-                    style={[
-                      styles.monthElementButtonText,
-                      {
-                        color: isFuture
-                          ? "lightgray"
-                          : isCurrentDate || diaryImageId !== undefined
-                          ? color.w
-                          : color.g700,
-                      },
-                    ]}
-                  >
-                    {month}월
-                  </Text>
-                </InteractionPressable>
+                    >
+                      {month}월
+                    </Text>
+                  </Pressable>
+                </View>
               </View>
             </View>
           );

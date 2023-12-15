@@ -1,6 +1,6 @@
 // react
 import { memo, useEffect, useRef, useMemo, useState } from "react";
-import { View, Text } from "react-native";
+import { View, Text, Pressable } from "react-native";
 import type { UseFormSetValue } from "react-hook-form";
 import { useQuery } from "react-query";
 
@@ -152,15 +152,16 @@ export const DatePicker = memo(({ setValue }: DatePickerProps) => {
                     return (
                       <View style={styles.yearPickerItemLayout} key={year}>
                         <View style={styles.yearPickerItem}>
-                          <InteractionPressable
-                            style={styles.yearPickerItemButtonLayout}
-                            containerStyle={styles.yearPickerItemButton}
-                            onPress={handleYearItemClick(year)}
-                          >
-                            <Text style={styles.yearPickerItemButtonText}>
-                              {year}
-                            </Text>
-                          </InteractionPressable>
+                          <View style={styles.yearPickerItemButtonLayout}>
+                            <Pressable
+                              style={styles.yearPickerItemButton}
+                              onPress={handleYearItemClick(year)}
+                            >
+                              <Text style={styles.yearPickerItemButtonText}>
+                                {year}
+                              </Text>
+                            </Pressable>
+                          </View>
                         </View>
                       </View>
                     );

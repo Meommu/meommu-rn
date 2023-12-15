@@ -42,6 +42,8 @@ export const styles = StyleSheet.create({
     aspectRatio: "1/1",
 
     borderRadius: 9999,
+
+    overflow: "hidden",
   },
 
   calendarItemData: {

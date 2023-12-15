@@ -1,11 +1,10 @@
 // react
 import { useContext, useMemo } from "react";
-import { View, Text } from "react-native";
+import { View, Text, Pressable } from "react-native";
 import { DatePickerContext } from "../../index.context";
 
 // components
 import { LoadImage } from "@/components/Widget/LoadImage";
-import { InteractionPressable } from "@/components/Pressable/InteractionPressable";
 
 // constants
 import { color } from "@/constants";
@@ -90,42 +89,43 @@ export function DatePickerCalendarItem({
 
         return (
           <View style={styles.calenderItemLayout} key={i}>
-            <InteractionPressable
-              style={styles.calendarItemDataLayout}
-              containerStyle={styles.calendarItemData}
-              onPress={handleCalendarItemClick(calendarDate)}
-              disabled={isFuture}
-            >
-              <View style={styles.calendarItemDataInnerLayout}>
-                {imageId && <LoadImage imageId={imageId} />}
-              </View>
+            <View style={styles.calendarItemDataLayout}>
+              <Pressable
+                style={styles.calendarItemData}
+                onPress={handleCalendarItemClick(calendarDate)}
+                disabled={isFuture}
+              >
+                <View style={styles.calendarItemDataInnerLayout}>
+                  {imageId && <LoadImage imageId={imageId} />}
+                </View>
 
-              <View style={styles.calendarItemDataInnerLayout}>
-                <Text
-                  style={[
-                    styles.calendarItemDataText,
-                    {
-                      color: isFuture
-                        ? color.g300
-                        : imageId
-                        ? color.w
-                        : color.g500,
-                    },
-                  ]}
-                >
-                  {calendarDate}
-                </Text>
-              </View>
+                <View style={styles.calendarItemDataInnerLayout}>
+                  <Text
+                    style={[
+                      styles.calendarItemDataText,
+                      {
+                        color: isFuture
+                          ? color.g300
+                          : imageId
+                          ? color.w
+                          : color.g500,
+                      },
+                    ]}
+                  >
+                    {calendarDate}
+                  </Text>
+                </View>
 
-              <View style={styles.calendarItemDataInnerLayout}>
-                <View
-                  style={[
-                    styles.calendarItemDataSelectedCircle,
-                    { borderWidth: isSelect ? 1 : 0 },
-                  ]}
-                />
-              </View>
-            </InteractionPressable>
+                <View style={styles.calendarItemDataInnerLayout}>
+                  <View
+                    style={[
+                      styles.calendarItemDataSelectedCircle,
+                      { borderWidth: isSelect ? 1 : 0 },
+                    ]}
+                  />
+                </View>
+              </Pressable>
+            </View>
           </View>
         );
       })}
