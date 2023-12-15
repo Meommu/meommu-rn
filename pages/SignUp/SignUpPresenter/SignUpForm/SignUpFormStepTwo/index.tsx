@@ -34,7 +34,7 @@ export function SignUpFormStepTwo({
         <View style={styles.greeting}>
           <Text style={styles.greetingTitle}>
             이제 곧 끝나요!{"\n"}
-            유치원 정보를 입력해주세요
+            추가 정보를 입력해주세요
           </Text>
           <Text style={styles.greetingSubTitle}>
             반려동물과의 건강한 추억을 기록해드리겠습니다.
