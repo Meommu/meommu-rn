@@ -27,7 +27,7 @@ export function DiarySkeleton() {
         <View style={styles.body}>
           <View style={styles.bodyTitleLayout}>
             <View style={styles.bodyTitle}>
-              <SView style={{ width: "70%", height: 32 }} />
+              <SView style={{ width: "70%", height: 40 }} />
             </View>
 
             <SView style={{ width: 32, height: 32 }} />

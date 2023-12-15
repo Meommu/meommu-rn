@@ -33,6 +33,7 @@ export const styles = StyleSheet.create({
 
   bodyTitleLayout: {
     flexDirection: "row",
+    alignItems: "center",
     gap: 26,
   },
 

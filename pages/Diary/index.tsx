@@ -27,11 +27,9 @@ import { apiService } from "@/apis";
 // hooks
 import { useToast, useConfirm } from "@/hooks";
 
-// svgs
-import ShareButton from "@/assets/svgs/share.svg";
-
 // styles
 import { styles } from "./index.styles";
+import { ShareButton } from "@/components/Button/ShareButton";
 
 function Diary() {
   const { diaryId } = useLocalSearchParams<{ diaryId: string }>();
@@ -163,9 +161,7 @@ function Diary() {
           <View style={styles.bodyTitleLayout}>
             <Text style={styles.bodyTitle}>{diary.title}</Text>
 
-            <Pressable onPress={handleShareButtonClick}>
-              <ShareButton />
-            </Pressable>
+            <ShareButton onPress={handleShareButtonClick} />
           </View>
 
           <Text style={styles.bodyContent}>{diary.content}</Text>
