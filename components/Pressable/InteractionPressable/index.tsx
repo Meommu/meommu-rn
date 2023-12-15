@@ -24,6 +24,8 @@ export function InteractionPressable({
 
   children,
 
+  disabled,
+
   ...props
 }: InteractionPressableProps) {
   const {
@@ -33,19 +35,36 @@ export function InteractionPressable({
     handleButtonPressOut,
   } = usePressInOutAnimation();
 
+  const _handleButtonPressIn = () => {
+    if (disabled) {
+      return;
+    }
+
+    handleButtonPressIn();
+  };
+
+  const _handleButtonPressOut = () => {
+    if (disabled) {
+      return;
+    }
+
+    handleButtonPressOut();
+  };
+
   return (
     <Animated.View
       style={[styles.containerLayout, style, containerAnimatedStyle]}
     >
       <Pressable
         style={containerStyle}
-        onPressIn={handleButtonPressIn}
-        onPressOut={handleButtonPressOut}
-        onHoverIn={handleButtonPressIn}
-        onHoverOut={handleButtonPressOut}
-        onTouchStart={handleButtonPressIn}
-        onTouchMove={handleButtonPressIn}
-        onTouchEnd={handleButtonPressOut}
+        onPressIn={_handleButtonPressIn}
+        onPressOut={_handleButtonPressOut}
+        onHoverIn={_handleButtonPressIn}
+        onHoverOut={_handleButtonPressOut}
+        onTouchStart={_handleButtonPressIn}
+        onTouchMove={_handleButtonPressIn}
+        onTouchEnd={_handleButtonPressOut}
+        disabled={disabled}
         {...props}
       >
         {children}
