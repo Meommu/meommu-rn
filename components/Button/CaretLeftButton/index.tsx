@@ -19,7 +19,7 @@ interface CaretLeftButtonProps extends PressableProps {
 
 export function CaretLeftButton({
   style,
-  fill = color.g300,
+  fill = color.g400,
   ...props
 }: CaretLeftButtonProps) {
   return (
