@@ -116,13 +116,16 @@ export function SignUpFormStepOne() {
   }, []);
 
   /**
-   * 유틸 함수
+   * util functions
    */
   const resetEmailDupChk = useCallback(() => {
     setValue("emailDupChk", null);
   }, []);
 
-  const emailInputCondition = useMemo<boolean>(() => {
+  /**
+   * form 요소 alert text 상태
+   */
+  const emailAlertCondition = useMemo<boolean>(() => {
     if (errors.email instanceof Object) {
       return false;
     }
@@ -134,7 +137,7 @@ export function SignUpFormStepOne() {
     return emailDupChk;
   }, [errors.email, emailDupChk]);
 
-  const emailInputAlertMessage = useMemo<string>(() => {
+  const emailAlertMessage = useMemo<string>(() => {
     if (errors.email instanceof Object) {
       return errors.email.message || "";
     }
@@ -145,6 +148,42 @@ export function SignUpFormStepOne() {
 
     return `사용 ${!emailDupChk ? "불" : ""}가능한 이메일 입니다.`;
   }, [errors.email, emailDupChk]);
+
+  const passwordAlertCondition = useMemo<boolean>(() => {
+    if (errors.password instanceof Object) {
+      return false;
+    }
+
+    return true;
+  }, [errors.password]);
+
+  const passwordAlertMessage = useMemo<string>(() => {
+    if (errors.password instanceof Object) {
+      return errors.password.message || "";
+    }
+
+    return "";
+  }, [errors.password]);
+
+  const passwordConfirmAlertCondition = useMemo<boolean>(() => {
+    if (errors.passwordConfirm instanceof Object) {
+      return false;
+    }
+
+    return true;
+  }, [errors.passwordConfirm]);
+
+  const passwordConfirmAlertText = useMemo<string>(() => {
+    if (errors.password instanceof Object) {
+      return "";
+    }
+
+    if (errors.passwordConfirm instanceof Object) {
+      return errors.passwordConfirm.message || "";
+    }
+
+    return "";
+  }, [errors.password, errors.passwordConfirm]);
 
   return (
     <View style={styles.container}>
@@ -169,8 +208,8 @@ export function SignUpFormStepOne() {
                 이메일 주소를 입력해주세요
               </Text>
 
-              <AlertText condition={emailInputCondition}>
-                {emailInputAlertMessage}
+              <AlertText condition={emailAlertCondition}>
+                {emailAlertMessage}
               </AlertText>
             </View>
 
@@ -219,8 +258,8 @@ export function SignUpFormStepOne() {
                 비밀번호를 입력해주세요
               </Text>
 
-              <AlertText condition={!errors.password ? true : false}>
-                {(errors.password && errors.password.message) || ""}
+              <AlertText condition={passwordAlertCondition}>
+                {passwordAlertMessage}
               </AlertText>
             </View>
 
@@ -259,12 +298,8 @@ export function SignUpFormStepOne() {
                 비밀번호를 확인해주세요
               </Text>
 
-              <AlertText condition={!errors.passwordConfirm ? true : false}>
-                {!errors.password
-                  ? (errors.passwordConfirm &&
-                      errors.passwordConfirm.message) ||
-                    ""
-                  : ""}
+              <AlertText condition={passwordConfirmAlertCondition}>
+                {passwordConfirmAlertText}
               </AlertText>
             </View>
 
