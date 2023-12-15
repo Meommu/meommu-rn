@@ -70,7 +70,7 @@ function Diary() {
         Share.share({
           title: "Meommu Diary",
           message: [
-            `${diary?.dogName}의 일기 공유`,
+            `${diary?.dogName}의 일기가 도착했습니다! 💌 강아지 일기를 확인해보세요.`,
             "",
             `${origin}/diary/shared/${uuid}`,
           ].join("\n"),
