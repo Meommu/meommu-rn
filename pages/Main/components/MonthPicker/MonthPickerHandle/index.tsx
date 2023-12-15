@@ -40,6 +40,7 @@ function MonthPickerHandle({ swiperRef, swiperIndex }: MonthPickerHandleProps) {
 
       <Header
         style={styles.header}
+        notch={false}
         title={
           <Text style={styles.yearText}>
             {`${getPastYearDate(
