@@ -1,5 +1,11 @@
 // react
-import { Text, type PressableProps, ActivityIndicator } from "react-native";
+import {
+  Text,
+  ActivityIndicator,
+  type PressableProps,
+  type StyleProp,
+  type ViewStyle,
+} from "react-native";
 
 // components
 import { InteractionPressable } from "@/components/Pressable/InteractionPressable";
@@ -15,6 +21,8 @@ import { styles } from "./index.styles";
 
 interface NavigationButtonProps extends PressableProps {
   content: string;
+
+  style?: StyleProp<ViewStyle>;
 
   isLoading?: boolean;
 
@@ -64,7 +72,7 @@ export function NavigationButton({
 
   return (
     <InteractionPressable
-      style={[styles.layout, buttonBackgroundStyle]}
+      style={[styles.layout, style, buttonBackgroundStyle]}
       containerStyle={styles.button}
       disabled={disabled || isLoading}
       {...props}
