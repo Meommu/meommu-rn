@@ -11,8 +11,8 @@ import { router } from "expo-router";
 import { PATH, color } from "@/constants";
 
 // components
-import { GoBackButton } from "@/components/Button/GoBackButton";
 import { Header } from "@/components/Layout/Header";
+import { CaretLeftButton } from "@/components/Button/CaretLeftButton";
 import { ProfileCard } from "./components/ProfileCard";
 import { ProfileCardSkeleton } from "./components/ProfileCard/index.skeleton";
 import { SettingItem } from "./components/SettingItem";
@@ -109,7 +109,7 @@ export function SettingPage() {
       <Header
         title="설정"
         style={styles.header}
-        left={<GoBackButton onPress={handleGoBackButtonClick} />}
+        left={<CaretLeftButton onPress={handleGoBackButtonClick} />}
       />
 
       <View style={styles.content}>

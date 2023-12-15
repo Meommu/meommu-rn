@@ -11,7 +11,7 @@ import { CaretRightButton } from "@/components/Button/CaretRightButton";
 import { getPastYearDate } from "@/utils";
 
 // constants
-import { size } from "@/constants";
+import { color, size } from "@/constants";
 
 // styles
 import { styles } from "./index.styles";
@@ -51,13 +51,17 @@ function MonthPickerHandle({ swiperRef, swiperIndex }: MonthPickerHandleProps) {
           swiperIndex !== 0 && (
             <CaretLeftButton
               onPress={handleSwiperPrevButtonClick}
+              fill={color.g300}
               testID="button-month-calendar-prev"
             />
           )
         }
         right={
           swiperIndex !== size.MONTH_CALENDAR_PAGE_COUNT - 1 && (
-            <CaretRightButton onPress={handleSwiperNextButtonClick} />
+            <CaretRightButton
+              onPress={handleSwiperNextButtonClick}
+              fill={color.g300}
+            />
           )
         }
       />

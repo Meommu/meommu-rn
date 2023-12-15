@@ -12,7 +12,8 @@ import { useSwiper } from "@/hooks";
 import { router } from "expo-router";
 
 // components
-import { GoBackButton } from "@/components/Button/GoBackButton";
+import { Footer } from "@/components/Layout/Footer";
+import { CaretLeftButton } from "@/components/Button/CaretLeftButton";
 import { NavigationButton } from "@/components/Button/NavigationButton";
 import { Header } from "@/components/Layout/Header";
 import { SwiperIndexForTest } from "@/components/Widget/SwiperIndexForTest";
@@ -28,7 +29,6 @@ import { styles } from "./index.styles";
 
 // apis
 import { apiService } from "@/apis";
-import { Footer } from "@/components/Layout/Footer";
 
 const FIRST_SLIDE_INDEX = 0;
 const SECOND_SLIDE_INDEX = 1;
@@ -170,7 +170,7 @@ export function SignUpPage() {
           style={styles.header}
           left={
             !isLastSlide() ? (
-              <GoBackButton onPress={handleGoBackButtonClick} />
+              <CaretLeftButton onPress={handleGoBackButtonClick} />
             ) : (
               <View style={styles.dummyButton} />
             )

@@ -7,7 +7,7 @@ import { router } from "expo-router";
 
 // components
 import { Header } from "@/components/Layout/Header";
-import { GoBackButton } from "@/components/Button/GoBackButton";
+import { CaretLeftButton } from "@/components/Button/CaretLeftButton";
 import { ProfileForm } from "./ProfileForm";
 import { ProfileFormSkeleton } from "./ProfileForm/index.skeleton";
 
@@ -31,7 +31,7 @@ export function ProfilePage() {
       <View style={styles.headerLayout}>
         <Header
           title="마이 프로필"
-          left={<GoBackButton onPress={handleGoBackButtonClick} />}
+          left={<CaretLeftButton onPress={handleGoBackButtonClick} />}
         />
       </View>
 

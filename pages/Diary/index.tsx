@@ -1,5 +1,5 @@
 // react
-import { Platform, Share, View, Text, Pressable } from "react-native";
+import { Platform, Share, View, Text } from "react-native";
 import { useCallback, useState, Suspense } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 
@@ -9,7 +9,8 @@ import { router, useLocalSearchParams } from "expo-router";
 // components
 import { DiarySkeleton } from "./index.skeleton";
 import { Header } from "@/components/Layout/Header";
-import { GoBackButton } from "@/components/Button/GoBackButton";
+import { ShareButton } from "@/components/Button/ShareButton";
+import { CaretLeftButton } from "@/components/Button/CaretLeftButton";
 import { KebabMenuButton } from "@/components/Button/KebabMenuButton";
 import { ImageSlider } from "@/components/Widget/ImageSlider";
 import { NonIndicatorScrollView } from "@/components/ScrollView/NonIndicatorScrollView";
@@ -29,7 +30,6 @@ import { useToast, useConfirm } from "@/hooks";
 
 // styles
 import { styles } from "./index.styles";
-import { ShareButton } from "@/components/Button/ShareButton";
 
 function Diary() {
   const { diaryId } = useLocalSearchParams<{ diaryId: string }>();
@@ -144,7 +144,7 @@ function Diary() {
     <FixedRelativeView style={styles.container}>
       <Header
         style={styles.header}
-        left={<GoBackButton onPress={handleGoBackButtonClick} />}
+        left={<CaretLeftButton onPress={handleGoBackButtonClick} />}
         right={
           <KebabMenuButton onPress={handleEditButtonClick} fill={color.g400} />
         }

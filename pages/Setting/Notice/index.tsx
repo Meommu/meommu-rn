@@ -6,16 +6,16 @@ import { useCallback, Suspense } from "react";
 import { router } from "expo-router";
 
 // components
-import { GoBackButton } from "@/components/Button/GoBackButton";
 import { Header } from "@/components/Layout/Header";
+import { NoticeList } from "./NoticeList";
+import { NoticeListSkeleton } from "./NoticeList/index.skeleton";
+import { CaretLeftButton } from "@/components/Button/CaretLeftButton";
 
 // constants
 import { PATH } from "@/constants";
 
 // styles
 import { styles } from "./index.styles";
-import { NoticeList } from "./NoticeList";
-import { NoticeListSkeleton } from "./NoticeList/index.skeleton";
 
 export function NoticePage() {
   const handleGoBackButtonClick = useCallback(() => {
@@ -31,7 +31,7 @@ export function NoticePage() {
       <View style={styles.headerLayout}>
         <Header
           title="공지"
-          left={<GoBackButton onPress={handleGoBackButtonClick} />}
+          left={<CaretLeftButton onPress={handleGoBackButtonClick} />}
         />
       </View>
 

@@ -11,7 +11,7 @@ import { router } from "expo-router";
 import { NavigationButton } from "@/components/Button/NavigationButton";
 import { Header } from "@/components/Layout/Header";
 import { BannerImage } from "@/components/Image/BannerImage";
-import { GoBackButton } from "@/components/Button/GoBackButton";
+import { CaretLeftButton } from "@/components/Button/CaretLeftButton";
 import { Footer } from "@/components/Layout/Footer";
 
 // swiper
@@ -239,7 +239,7 @@ export function RecoveryPage() {
   return (
     <View style={styles.container}>
       <View style={styles.headerLayout}>
-        <Header left={<GoBackButton onPress={handleGoBackButtonClick} />} />
+        <Header left={<CaretLeftButton onPress={handleGoBackButtonClick} />} />
       </View>
 
       <Swiper

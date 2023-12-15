@@ -5,7 +5,7 @@ import { useFormContext } from "react-hook-form";
 
 // components
 import { Header } from "@/components/Layout/Header";
-import { GoBackButton } from "@/components/Button/GoBackButton";
+import { CaretLeftButton } from "@/components/Button/CaretLeftButton";
 import { WriteFormStepOne } from "@/pages/Write/WritePresenter/WriteForm/WriteFormStepOne";
 import { WriteFormStepTwo } from "@/pages/Write/WritePresenter/WriteForm/WriteFormStepTwo";
 import { NavigationButton } from "@/components/Button/NavigationButton";
@@ -74,7 +74,7 @@ export function WritePresenter({
       <Header
         style={styles.header}
         title={isStepOneSlide() ? "누구에게 보낼 건가요?" : "일기쓰기"}
-        left={<GoBackButton onPress={handleGoBackButtonClick} />}
+        left={<CaretLeftButton onPress={handleGoBackButtonClick} />}
         right={
           !isStepOneSlide() && (
             <CompleteButton
