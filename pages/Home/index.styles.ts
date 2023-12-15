@@ -55,6 +55,11 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
 
+  navigationButtonStyle: {
+    width: "auto",
+    padding: 10,
+  },
+
   splitBar: {
     borderLeftColor: color.g300,
     borderLeftWidth: 2,

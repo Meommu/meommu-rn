@@ -13,10 +13,9 @@ import { NavigationButton } from "@/components/Button/NavigationButton";
 import { BannerImage } from "@/components/Image/BannerImage";
 import { FormInput } from "@/components/Input/FormInput";
 import { Footer } from "@/components/Layout/Footer";
-import { HomeNavigationButton } from "./components/HomeNavigationButton";
 
 // constants
-import { PATH, regExp, size } from "@/constants";
+import { PATH, color, regExp, size } from "@/constants";
 
 // api
 import { apiService } from "@/apis";
@@ -153,16 +152,22 @@ export function HomePage() {
         </View>
 
         <View style={styles.navigationLayout}>
-          <HomeNavigationButton
+          <NavigationButton
+            style={styles.navigationButtonStyle}
             content="비밀번호 찾기"
             onPress={handlePasswordRecoveryButtoncClick}
+            backgroundColor="transparent"
+            fontColor={color.g300}
           />
 
           <View style={styles.splitBar} />
 
-          <HomeNavigationButton
+          <NavigationButton
+            style={styles.navigationButtonStyle}
             content="회원가입"
             onPress={handleSignUpButtonClick}
+            backgroundColor="transparent"
+            fontColor={color.g300}
             testID="button-signup"
           />
         </View>
