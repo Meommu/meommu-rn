@@ -1,10 +1,11 @@
 // react
 import { useContext, useMemo } from "react";
-import { View, Text, Pressable } from "react-native";
+import { View, Text } from "react-native";
 import { DatePickerContext } from "../../index.context";
 
 // components
 import { LoadImage } from "@/components/Widget/LoadImage";
+import { InteractionPressable } from "@/components/Pressable/InteractionPressable";
 
 // constants
 import { color } from "@/constants";
@@ -14,7 +15,6 @@ import { dateToHyphenatedYYYYMMDD } from "@/utils";
 
 // styles
 import { styles } from "./index.styles";
-import { InteractionPressable } from "@/components/Pressable/InteractionPressable";
 
 interface DatePickerCalendarItemProps {
   calendarMonth: number;
