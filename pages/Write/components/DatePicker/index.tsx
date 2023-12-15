@@ -97,10 +97,12 @@ export const DatePicker = memo(({ setValue }: DatePickerProps) => {
    * event handler
    */
   const handleYearItemClick = (year: number) => () => {
-    /**
-     * TODO: 연도를 변경할 경우 없는 month, date가 선택될 수 있으므로, 무조건 존재하는 날짜(Month, Date)로 변경 필요
-     */
     setYear(year);
+
+    if (new Date(year, month - 1, date) > now) {
+      setMonth(now.getMonth() + 1);
+      setDate(now.getDate());
+    }
 
     setCalendarType("date");
   };

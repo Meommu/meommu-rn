@@ -1,5 +1,5 @@
 // react
-import React from "react";
+import React, { useEffect } from "react";
 
 // swiper
 import Swiper from "react-native-web-swiper";
@@ -21,6 +21,10 @@ export function DatePickerCalendar({
   month,
 }: DatePickerCalendarProps) {
   const { swiperRef } = useSwiper(0);
+
+  useEffect(() => {
+    swiperRef.current?.goTo(month - 1);
+  }, [month]);
 
   return (
     <Swiper
