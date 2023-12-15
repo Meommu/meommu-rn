@@ -1,4 +1,5 @@
 // react
+import { useCallback, useMemo } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { View, Text, Pressable, Platform } from "react-native";
 import { useMutation } from "react-query";
@@ -16,9 +17,6 @@ import { CaretRightButton } from "@/components/Button/CaretRightButton";
 
 // apis
 import { apiService } from "@/apis";
-
-// utils
-import { useCallback } from "react";
 
 // constants
 import { regExp } from "@/constants";
@@ -124,19 +122,29 @@ export function SignUpFormStepOne() {
     setValue("emailDupChk", null);
   }, []);
 
-  const emailInputCondition =
-    errors.email !== undefined
-      ? false
-      : typeof emailDupChk === "boolean"
-      ? emailDupChk
-      : false;
+  const emailInputCondition = useMemo<boolean>(() => {
+    if (errors.email instanceof Object) {
+      return false;
+    }
 
-  const emailInputAlertMessage =
-    errors.email !== undefined
-      ? errors.email.message
-      : typeof emailDupChk === "boolean"
-      ? `사용 ${!emailDupChk ? "불" : ""}가능한 이메일 입니다.`
-      : "";
+    if (emailDupChk === null) {
+      return false;
+    }
+
+    return emailDupChk;
+  }, [errors.email, emailDupChk]);
+
+  const emailInputAlertMessage = useMemo<string>(() => {
+    if (errors.email instanceof Object) {
+      return errors.email.message || "";
+    }
+
+    if (emailDupChk === null) {
+      return "";
+    }
+
+    return `사용 ${!emailDupChk ? "불" : ""}가능한 이메일 입니다.`;
+  }, [errors.email, emailDupChk]);
 
   return (
     <View style={styles.container}>
