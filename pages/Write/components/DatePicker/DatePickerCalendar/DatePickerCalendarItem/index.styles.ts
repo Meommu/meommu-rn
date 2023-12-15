@@ -24,6 +24,9 @@ export const styles = StyleSheet.create({
     padding: 6,
   },
 
+  /**
+   * `요일(Day)`
+   */
   calendarItemHeaderText: {
     textAlign: "center",
     color: color.g300,
@@ -31,14 +34,26 @@ export const styles = StyleSheet.create({
     fontFamily: font.PretendardRegular,
   },
 
+  /**
+   * `일(Date)`
+   */
   calendarItemDataLayout: {
-    position: "relative",
-
     height: "100%",
     aspectRatio: "1/1",
+
+    borderRadius: 9999,
   },
 
-  calenderItemData: {
+  calendarItemData: {
+    position: "relative",
+
+    width: "100%",
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  calendarItemDataInnerLayout: {
     position: "absolute",
     top: 0,
     left: 0,
@@ -55,28 +70,10 @@ export const styles = StyleSheet.create({
     fontFamily: font.PretendardRegular,
   },
 
-  calenderItemDataImage: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-
-    width: "100%",
-    height: "100%",
-
-    borderRadius: 9999,
-
-    overflow: "hidden",
-  },
-
   calendarItemDataSelectedCircle: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-
     width: "100%",
     height: "100%",
 
-    borderWidth: 1,
     borderColor: color.b,
     borderRadius: 9999,
   },

@@ -14,6 +14,7 @@ import { dateToHyphenatedYYYYMMDD } from "@/utils";
 
 // styles
 import { styles } from "./index.styles";
+import { InteractionPressable } from "@/components/Pressable/InteractionPressable";
 
 interface DatePickerCalendarItemProps {
   calendarMonth: number;
@@ -89,18 +90,17 @@ export function DatePickerCalendarItem({
 
         return (
           <View style={styles.calenderItemLayout} key={i}>
-            <Pressable
+            <InteractionPressable
               style={styles.calendarItemDataLayout}
+              containerStyle={styles.calendarItemData}
               onPress={handleCalendarItemClick(calendarDate)}
               disabled={isFuture}
             >
-              {imageId && (
-                <View style={styles.calenderItemDataImage}>
-                  <LoadImage imageId={imageId} />
-                </View>
-              )}
+              <View style={styles.calendarItemDataInnerLayout}>
+                {imageId && <LoadImage imageId={imageId} />}
+              </View>
 
-              <View style={styles.calenderItemData}>
+              <View style={styles.calendarItemDataInnerLayout}>
                 <Text
                   style={[
                     styles.calendarItemDataText,
@@ -117,10 +117,15 @@ export function DatePickerCalendarItem({
                 </Text>
               </View>
 
-              {isSelect && (
-                <View style={styles.calendarItemDataSelectedCircle} />
-              )}
-            </Pressable>
+              <View style={styles.calendarItemDataInnerLayout}>
+                <View
+                  style={[
+                    styles.calendarItemDataSelectedCircle,
+                    { borderWidth: isSelect ? 1 : 0 },
+                  ]}
+                />
+              </View>
+            </InteractionPressable>
           </View>
         );
       })}
