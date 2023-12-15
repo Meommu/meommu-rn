@@ -1,6 +1,9 @@
 // expo
 import Head from "expo-router/head";
 
+// constants
+import { domain } from "@/constants";
+
 // components
 import { RootLayout } from "@/pages/RootLayout";
 
@@ -22,7 +25,7 @@ export default function AppLayout() {
           property="og:description"
           content="우리 강아지 일기가 도착했어요!"
         />
-        <meta property="og:url" content="https://meommu-rn.vercel.app" />
+        <meta property="og:url" content={domain.FE_DOMAIN} />
       </Head>
       <RootLayout />
     </>

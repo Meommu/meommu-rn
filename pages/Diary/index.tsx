@@ -20,7 +20,7 @@ import { FixedRelativeView } from "@/components/Layout/FixedRelativeView";
 import { DiaryEditDeleteBottomSheetModal } from "@/components/Widget/DiaryEditDeleteBottomSheetModal";
 
 // constants
-import { PATH, color } from "@/constants";
+import { PATH, color, domain } from "@/constants";
 
 // apis
 import { apiService } from "@/apis";
@@ -63,9 +63,7 @@ function Diary() {
     {
       onSuccess: (uuid) => {
         const origin =
-          Platform.OS !== "web"
-            ? "https://meommu-rn.vercel.app"
-            : window.location.origin;
+          Platform.OS !== "web" ? domain.FE_DOMAIN : window.location.origin;
 
         Share.share({
           title: "Meommu Diary",
