@@ -6,3 +6,4 @@ export * as zIndex from "./zIndex";
 export * as color from "./color";
 export * as regExp from "./regexp";
 export * as font from "./font";
+export * as domain from "./domain";
