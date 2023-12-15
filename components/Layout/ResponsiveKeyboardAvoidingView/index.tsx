@@ -19,7 +19,7 @@ interface ResponsiveKeyboardAvoidingViewProps {
 export function ResponsiveKeyboardAvoidingView({
   children,
 }: ResponsiveKeyboardAvoidingViewProps) {
-  const { top, bottom } = useSafeAreaInsets();
+  const { bottom } = useSafeAreaInsets();
 
   if (Platform.OS === "ios") {
     return (
@@ -27,7 +27,7 @@ export function ResponsiveKeyboardAvoidingView({
         <KeyboardAvoidingView
           style={styles.container}
           behavior="padding"
-          keyboardVerticalOffset={top - bottom}
+          keyboardVerticalOffset={-bottom}
         >
           {children}
         </KeyboardAvoidingView>
