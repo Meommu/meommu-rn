@@ -28,6 +28,8 @@ interface NavigationButtonProps extends PressableProps {
 
   backgroundColor?: string;
 
+  disableBackgroundColor?: string;
+
   fontColor?: string;
 }
 
@@ -38,7 +40,9 @@ export function NavigationButton({
 
   backgroundColor = color.primary,
 
-  fontColor,
+  disableBackgroundColor = color.g300,
+
+  fontColor = color.w,
 
   style,
 
@@ -49,7 +53,7 @@ export function NavigationButton({
   const buttonBackgroundStyle = useDynamicStyle(() => {
     if (disabled) {
       return {
-        backgroundColor: color.g300,
+        backgroundColor: disableBackgroundColor,
       };
     }
 
@@ -59,15 +63,7 @@ export function NavigationButton({
   }, [disabled]);
 
   const fontColorStyle = useDynamicStyle(() => {
-    if (!fontColor) {
-      return {
-        color: color.w,
-      };
-    }
-
-    return {
-      color: fontColor,
-    };
+    return { color: fontColor };
   }, [fontColor]);
 
   return (
