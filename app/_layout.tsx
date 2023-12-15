@@ -10,10 +10,19 @@ export default function AppLayout() {
       <Head>
         <title>Meommu</title>
         <meta property="og:type" content="website" />
-        <meta property="og:image" content="공유시 보여질 이미지 경로" />
-        <meta property="og:title" content="공유시 보여질 제목" />
-        <meta property="og:description" content="공유시 보여질 설명" />
-        <meta property="og:url" content="공유시 이동 url" />
+        <meta
+          property="og:image"
+          content={require("@/assets/open-graph-image.png")}
+        />
+        <meta
+          property="og:title"
+          content="멈무 일기 - GPT 가이드와 함께하는 애견 일지"
+        />
+        <meta
+          property="og:description"
+          content="우리 강아지 일기가 도착했어요!"
+        />
+        <meta property="og:url" content="https://meommu-rn.vercel.app" />
       </Head>
       <RootLayout />
     </>
