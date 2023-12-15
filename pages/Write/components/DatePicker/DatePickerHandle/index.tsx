@@ -42,7 +42,7 @@ function DatePickerHandle({
         containerStyle={styles.toggler}
         onPress={handleYearMonthTextClick}
       >
-        <CaretDown fill={color.g400} />
+        <CaretDown fill={color.g400} width={14} />
 
         <Text style={styles.togglerText}>
           {year}년 {calendarMonth.toString().padStart(2, "0")}월
