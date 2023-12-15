@@ -2,15 +2,16 @@
 import { StyleSheet } from "react-native";
 
 // constants
-import { color, font, size } from "@/constants";
+import { color, font } from "@/constants";
 
 export const styles = StyleSheet.create({
   container: {
     width: "100%",
     height: "100%",
-    justifyContent: "space-between",
 
     backgroundColor: color.w,
+
+    position: "relative",
   },
 
   /**
@@ -42,7 +43,15 @@ export const styles = StyleSheet.create({
   /**
    * 로그인 폼
    */
+
   signInForm: {
+    position: "absolute",
+    bottom: 0,
+
+    width: "100%",
+  },
+
+  signInFormInputs: {
     gap: 10,
     paddingHorizontal: 20,
   },

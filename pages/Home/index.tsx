@@ -13,6 +13,7 @@ import { NavigationButton } from "@/components/Button/NavigationButton";
 import { BannerImage } from "@/components/Image/BannerImage";
 import { FormInput } from "@/components/Input/FormInput";
 import { Footer } from "@/components/Layout/Footer";
+import { Header } from "@/components/Layout/Header";
 
 // constants
 import { PATH, color, regExp, size } from "@/constants";
@@ -94,6 +95,8 @@ export function HomePage() {
 
   return (
     <View style={styles.container}>
+      <Header />
+
       <BannerImage source={require("@/assets/images/home/home.png")} />
 
       <View style={styles.brandContainer}>
@@ -103,8 +106,8 @@ export function HomePage() {
         </Text>
       </View>
 
-      <View>
-        <View style={styles.signInForm}>
+      <View style={styles.signInForm}>
+        <View style={styles.signInFormInputs}>
           <Controller
             name="id"
             control={control}
