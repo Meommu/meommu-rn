@@ -73,7 +73,7 @@ export function WritePresenter({
     <FixedRelativeView style={styles.container}>
       <Header
         style={styles.header}
-        title={isStepOneSlide() ? "누구에게 보낼 건가요?" : "일기쓰기"}
+        title={isStepOneSlide() ? "누구의 일기인가요?" : "일기쓰기"}
         left={<CaretLeftButton onPress={handleGoBackButtonClick} />}
         right={
           !isStepOneSlide() && (
