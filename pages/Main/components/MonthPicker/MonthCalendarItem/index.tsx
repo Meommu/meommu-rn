@@ -1,9 +1,10 @@
 // react
 import { useContext, useMemo } from "react";
-import { View, Text, Pressable } from "react-native";
+import { View, Text } from "react-native";
 
 // components
 import { LoadImage } from "@/components/Widget/LoadImage";
+import { InteractionPressable } from "@/components/Pressable/InteractionPressable";
 
 // context
 import { MonthPickerContext } from "../index.context";
@@ -63,8 +64,9 @@ export function MonthCalendarItem({
               testID={`button-month-calendar-element-${calendarYear}-${month}`}
             >
               <View style={styles.monthElement}>
-                <Pressable
-                  style={styles.monthElementButton}
+                <InteractionPressable
+                  style={styles.monthElementButtonWrapper}
+                  containerStyle={styles.monthElementButton}
                   onPress={handleMonthSelect(month)}
                   disabled={isFuture}
                 >
@@ -108,7 +110,7 @@ export function MonthCalendarItem({
                   >
                     {month}월
                   </Text>
-                </Pressable>
+                </InteractionPressable>
               </View>
             </View>
           );
