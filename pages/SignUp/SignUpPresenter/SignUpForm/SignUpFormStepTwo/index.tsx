@@ -80,7 +80,7 @@ export function SignUpFormStepTwo({
           <View style={styles.formField}>
             <View style={styles.formFieldGuideLayout}>
               <Text style={styles.formFieldGuideText}>
-                대표자 이름을 입력해주세요
+                사용자 이름을 입력해주세요
               </Text>
 
               <AlertText
