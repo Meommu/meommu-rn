@@ -1,1 +1,1 @@
-export const FE_DOMAIN = "https://meommu-rn.vercel.app";
+export const FE_DOMAIN = "https://meommu.site";
