@@ -4,6 +4,8 @@ import { useMutation, useQuery } from "react-query";
 import type { UseFormGetValues, UseFormSetValue } from "react-hook-form";
 import Swiper from "react-native-web-swiper";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useWindowDimensions } from "react-native";
 
 // redux
 import { useDispatch } from "react-redux";
@@ -55,13 +57,16 @@ export const WriteGuide = memo(({ setValue, getValues }: WriteGuideProps) => {
 
   const bottomSheetRef = useRef<BottomSheetModal>(null);
 
+  const { top } = useSafeAreaInsets();
+  const { height } = useWindowDimensions();
+
   const snapPoints = useMemo(
     () => [
       size.BOTTOM_SHEET_INDICATOR_HEIGHT + size.WRITE_GUIDE_HEADER_HEIGHT,
       "65%",
-      "99%",
+      height - top,
     ],
-    []
+    [height, top]
   );
 
   /**
