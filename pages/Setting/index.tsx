@@ -49,7 +49,14 @@ export function SettingPage() {
               predicate: ({ queryKey }) => {
                 const [queryType, ..._] = queryKey;
 
-                return queryType === "diaryImage" ? false : true;
+                switch (queryType) {
+                  case "diaryImage":
+                  case "writeGuide":
+                    return false;
+
+                  default:
+                    return true;
+                }
               },
             });
 
