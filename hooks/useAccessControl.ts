@@ -8,7 +8,7 @@ import { router } from "expo-router";
 import { apiService } from "@/apis";
 
 // constants
-import { PATH } from "@/constants";
+import { pagePath } from "@/constants";
 
 // hooks
 import { useToast } from "./useToast";
@@ -22,7 +22,7 @@ export function useThrowMainIfLogin() {
       .then(() => {
         fireToast("잘못된 접근입니다.", 2000);
 
-        router.replace(PATH.MAIN);
+        router.replace(pagePath.main);
       })
       .catch(() => {
         // do nothing

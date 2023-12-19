@@ -14,7 +14,7 @@ import { Header } from "@/components/Layout/Header";
 import { HomeNavigationButton } from "./components/HomeNavigationButton";
 
 // constants
-import { PATH, regExp, size } from "@/constants";
+import { regExp, size } from "@/constants";
 
 // api
 import { apiService } from "@/apis";

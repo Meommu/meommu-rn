@@ -5,7 +5,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useQueryClient } from "react-query";
 
 // constants
-import { PATH, color } from "@/constants";
+import { color } from "@/constants";
 
 // components
 import { Header } from "@/components/Layout/Header";
