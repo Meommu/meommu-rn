@@ -1,15 +1,15 @@
 const enum UPDATE_TOAST {
-  CHANGE_MESSAGE = "CHANGE_MESSAGE",
-  CHANGE_VISIBLE = "CHANGE_VISIBLE",
+  CHANGE_TOAST_MESSAGE = "CHANGE_TOAST_MESSAGE",
+  CHANGE_TOAST_VISIBLE = "CHANGE_TOAST_VISIBLE",
 }
 
 export const changeMessage = (message: string) => ({
-  type: UPDATE_TOAST.CHANGE_MESSAGE,
+  type: UPDATE_TOAST.CHANGE_TOAST_MESSAGE,
   message,
 });
 
 export const changeVisible = (isToastOpen: boolean) => ({
-  type: UPDATE_TOAST.CHANGE_VISIBLE,
+  type: UPDATE_TOAST.CHANGE_TOAST_VISIBLE,
   isToastOpen,
 });
 
@@ -34,10 +34,10 @@ const toast = (
   action: ToastAction
 ): ToastState => {
   switch (action.type) {
-    case UPDATE_TOAST.CHANGE_MESSAGE: {
+    case UPDATE_TOAST.CHANGE_TOAST_MESSAGE: {
       return { ...state, message: action.message };
     }
-    case UPDATE_TOAST.CHANGE_VISIBLE: {
+    case UPDATE_TOAST.CHANGE_TOAST_VISIBLE: {
       return { ...state, isToastOpen: action.isToastOpen };
     }
     default: {
