@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "meom-mu",
-    "slug": "meom-mu",
+    "name": "meommu",
+    "slug": "meommu",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -11,9 +11,7 @@
       "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "scheme": "meommu",
     "ios": {
       "supportsTablet": true
@@ -23,9 +21,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "permissions": [
-        "android.permission.RECORD_AUDIO"
-      ],
+      "permissions": ["android.permission.RECORD_AUDIO"],
       "package": "com.junghyunbak.meommu"
     },
     "web": {
