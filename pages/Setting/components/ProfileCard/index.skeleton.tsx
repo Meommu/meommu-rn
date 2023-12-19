@@ -17,7 +17,7 @@ export function ProfileCardSkeleton() {
       </View>
 
       <View style={styles.profileContent}>
-        <SView style={{ width: 80, height: 21 }} />
+        <SView style={{ width: 60, height: 21 }} />
         <SView style={{ width: 115, height: 14 }} />
       </View>
     </View>
