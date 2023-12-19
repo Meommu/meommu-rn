@@ -3,9 +3,6 @@ import { useCallback } from "react";
 import { View, Text } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-// expo
-import { router } from "expo-router";
-
 // components
 import { NavigationButton } from "@/components/Button/NavigationButton";
 import { BannerImage } from "@/components/Image/BannerImage";
@@ -13,10 +10,10 @@ import { Header } from "@/components/Layout/Header";
 import { Footer } from "@/components/Layout/Footer";
 
 // constants
-import { PATH, color } from "@/constants";
+import { color } from "@/constants";
 
 // hooks
-import { useSwiper } from "@/hooks";
+import { useSwiper, useExpoRouter } from "@/hooks";
 
 // swiper
 import Swiper from "react-native-web-swiper";
@@ -29,6 +26,8 @@ const SECOND_SLIDE_INDEX = 1;
 const LAST_SLIDE_INDEX = 2;
 
 export function OnBoardingPage() {
+  const { router } = useExpoRouter("onBoarding");
+
   const { swiperIndex, swiperRef, handleSwiperIndexChange } =
     useSwiper(FIRST_SLIDE_INDEX);
 
@@ -43,7 +42,7 @@ export function OnBoardingPage() {
       case LAST_SLIDE_INDEX:
         await AsyncStorage.setItem("onboarding", "end");
 
-        router.replace(PATH.HOME);
+        router.goToHomePage();
 
         break;
     }

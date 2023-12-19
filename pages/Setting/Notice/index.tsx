@@ -2,28 +2,23 @@
 import { View } from "react-native";
 import { useCallback, Suspense } from "react";
 
-// expo
-import { router } from "expo-router";
-
 // components
 import { Header } from "@/components/Layout/Header";
 import { NoticeList } from "./NoticeList";
 import { NoticeListSkeleton } from "./NoticeList/index.skeleton";
 import { CaretLeftButton } from "@/components/Button/CaretLeftButton";
 
-// constants
-import { PATH } from "@/constants";
+// hooks
+import { useExpoRouter } from "@/hooks";
 
 // styles
 import { styles } from "./index.styles";
 
 export function NoticePage() {
+  const { router } = useExpoRouter("notice");
+
   const handleGoBackButtonClick = useCallback(() => {
-    if (router.canGoBack()) {
-      router.back();
-    } else {
-      router.replace(PATH.SETTING);
-    }
+    router.goBack();
   }, []);
 
   return (

@@ -4,11 +4,10 @@ import { View, Image } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // expo
-import { router } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 
-// constants
-import { PATH } from "@/constants";
+// hooks
+import { useExpoRouter } from "@/hooks";
 
 // apis
 import { apiService } from "@/apis";
@@ -17,6 +16,8 @@ import { apiService } from "@/apis";
 import { styles } from "./index.styles";
 
 export function Splash() {
+  const { router } = useExpoRouter("splash");
+
   const chkLogin = async (): Promise<boolean> => {
     /**
      * react-query의 공통 에러처리를 피하기 위해서
@@ -41,7 +42,7 @@ export function Splash() {
 
   const initial = async (): Promise<void> => {
     if (await chkLogin()) {
-      router.replace(PATH.MAIN);
+      router.goToMainPage();
 
       SplashScreen.hideAsync();
 
@@ -49,14 +50,14 @@ export function Splash() {
     }
 
     if (await chkOnBoardingIsEnd()) {
-      router.replace(PATH.HOME);
+      router.goToHomePage();
 
       SplashScreen.hideAsync();
 
       return;
     }
 
-    router.replace(PATH.ON_BOARDING);
+    router.goToOnBoardingPage();
 
     SplashScreen.hideAsync();
 

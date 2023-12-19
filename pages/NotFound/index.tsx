@@ -2,22 +2,21 @@
 import { useCallback } from "react";
 import { View, Text, Image } from "react-native";
 
-// expo
-import { router } from "expo-router";
-
 // components
 import { NavigationButton } from "@/components/Button/NavigationButton";
 import { Footer } from "@/components/Layout/Footer";
 
-// constants
-import { PATH } from "@/constants";
+// hooks
+import { useExpoRouter } from "@/hooks";
 
 // styles
 import { styles } from "./index.styles";
 
 export function NotFound() {
+  const { router } = useExpoRouter("notFound");
+
   const handleGoHomeButtonClick = useCallback(() => {
-    router.replace(PATH.ROOT);
+    router.goToSplashPage();
   }, []);
 
   return (

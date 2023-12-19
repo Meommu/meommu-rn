@@ -14,9 +14,6 @@ import { useSelector } from "react-redux";
 import type { RootState } from "@/store";
 import type { DiaryDateState } from "@/store/modules/diaryDate";
 
-// expo
-import { router } from "expo-router";
-
 // apis
 import { apiService } from "@/apis";
 
@@ -30,10 +27,10 @@ import { Popover } from "@/components/Overlay/Popover";
 import { DiaryEditDeleteBottomSheetModal } from "@/components/Widget/DiaryEditDeleteBottomSheetModal";
 
 // hooks
-import { useConfirm } from "@/hooks";
+import { useConfirm, useExpoRouter } from "@/hooks";
 
 // constants
-import { PATH, size } from "@/constants";
+import { size } from "@/constants";
 
 // utils
 import { sleep } from "@/utils";
@@ -43,6 +40,7 @@ import { styles } from "./index.styles";
 
 export function DiaryList() {
   const queryClient = useQueryClient();
+  const { router } = useExpoRouter("main");
 
   const [menuPressedDiaryId, setMenuPressedDiaryId] = useState(-1);
   const [bottomSheetIsOpen, setBottomSheetIsOpen] = useState({ value: false });
@@ -76,7 +74,7 @@ export function DiaryList() {
   };
 
   const handleDiaryEditButtonClick = () => {
-    router.push(`/modify/${menuPressedDiaryId}`);
+    router.goToModifyPage(menuPressedDiaryId);
   };
 
   const handleDiaryDeleteButtonClick = async () => {
@@ -106,7 +104,7 @@ export function DiaryList() {
   const handleWriteButtonClick = useCallback(async () => {
     await sleep(size.BUTTON_PRESS_IN_OUT_DURATION * 2);
 
-    router.push(PATH.WRITE);
+    router.goToWritePage();
   }, []);
 
   /**

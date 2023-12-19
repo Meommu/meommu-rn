@@ -6,10 +6,7 @@ import { useForm, FormProvider } from "react-hook-form";
 import { useMutation } from "react-query";
 
 // hooks
-import { useSwiper } from "@/hooks";
-
-// expo
-import { router } from "expo-router";
+import { useSwiper, useExpoRouter } from "@/hooks";
 
 // components
 import { Footer } from "@/components/Layout/Footer";
@@ -20,9 +17,6 @@ import { SwiperIndexForTest } from "@/components/Widget/SwiperIndexForTest";
 import { SignUpFormStepOne } from "./SignUpPresenter/SignUpForm/SignUpFormStepOne";
 import { SignUpFormStepTwo } from "./SignUpPresenter/SignUpForm/SignUpFormStepTwo";
 import { SignUpFormStepThree } from "./SignUpPresenter/SignUpForm/SignUpFormStepThree";
-
-// constants
-import { PATH } from "@/constants";
 
 // styles
 import { styles } from "./index.styles";
@@ -35,6 +29,8 @@ const SECOND_SLIDE_INDEX = 1;
 const LAST_SLIDE_INDEX = 2;
 
 export function SignUpPage() {
+  const { router } = useExpoRouter("signUp");
+
   const methods = useForm<SignUpFormFieldValues>({
     defaultValues: {
       email: "",
@@ -102,7 +98,7 @@ export function SignUpPage() {
         break;
 
       case LAST_SLIDE_INDEX:
-        router.replace(PATH.HOME);
+        router.goBack();
 
         break;
     }
@@ -111,11 +107,7 @@ export function SignUpPage() {
   const handleGoBackButtonClick = useCallback(() => {
     switch (swiperIndex) {
       case FIRST_SLIDE_INDEX:
-        if (router.canGoBack()) {
-          router.back();
-        } else {
-          router.replace(PATH.HOME);
-        }
+        router.goBack();
 
         break;
 

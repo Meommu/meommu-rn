@@ -8,17 +8,14 @@ import { useSelector } from "react-redux";
 import type { RootState } from "@/store";
 import { type BottomSheetState } from "@/store/modules/bottomSheet";
 
-// expo
-import { router } from "expo-router";
-
 // components
 import { WritePresenter } from "../WritePresenter";
 
 // hooks
-import { useSwiper, useToast } from "@/hooks";
+import { useSwiper, useToast, useExpoRouter } from "@/hooks";
 
 // constants
-import { PATH, regExp } from "@/constants";
+import { regExp } from "@/constants";
 
 // utils
 import { dateToHyphenatedYYYYMMDD } from "@/utils";
@@ -30,6 +27,8 @@ const STEP_ONE_SLIDE_INDEX = 0;
 const STEP_TWO_SLIDE_INDEX = 1;
 
 export function WriteContainer() {
+  const { router } = useExpoRouter("write");
+
   const { fireToast } = useToast();
 
   const { writeGuideBottomSheetRef, datePickerBottomSheetRef } = useSelector<
@@ -74,7 +73,7 @@ export function WriteContainer() {
         await queryClient.invalidateQueries(["diaryList", year, month]);
         await queryClient.invalidateQueries(["diariesSummary"]);
 
-        router.replace(`/diary/${savedId}`);
+        router.goToDiaryPage(savedId);
       },
     }
   );
@@ -158,11 +157,7 @@ export function WriteContainer() {
   const handleGoBackButtonClick = useCallback(() => {
     switch (swiperIndex) {
       case STEP_ONE_SLIDE_INDEX:
-        if (router.canGoBack()) {
-          router.back();
-        } else {
-          router.replace(PATH.MAIN);
-        }
+        router.goBack();
 
         break;
 

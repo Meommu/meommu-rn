@@ -16,7 +16,6 @@ import { NonIndicatorScrollView } from "@/components/ScrollView/NonIndicatorScro
 import { Footer } from "@/components/Layout/Footer";
 import { NavigationButton } from "@/components/Button/NavigationButton";
 import { AView } from "@/components/Layout/AView";
-import { InteractionPressable } from "@/components/Pressable/InteractionPressable";
 import { renderHandle } from "./DatePickerHandle";
 import { renderBackdrop } from "./DatePickerBackdrop";
 import { DatePickerCalendar } from "./DatePickerCalendar";
