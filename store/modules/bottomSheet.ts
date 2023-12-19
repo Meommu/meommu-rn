@@ -44,7 +44,6 @@ interface BottomSheetAction {
 }
 
 const initialState = {
-  isOpen: false,
   writeGuideBottomSheetRef: null,
   datePickerBottomSheetRef: null,
   monthPickerBottomSheetRef: null,
