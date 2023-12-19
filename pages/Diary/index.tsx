@@ -4,7 +4,7 @@ import { useCallback, useState, Suspense } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 
 // expo
-import { router, useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams } from "expo-router";
 
 // components
 import { DiarySkeleton } from "./index.skeleton";
@@ -20,18 +20,20 @@ import { FixedRelativeView } from "@/components/Layout/FixedRelativeView";
 import { DiaryEditDeleteBottomSheetModal } from "@/components/Widget/DiaryEditDeleteBottomSheetModal";
 
 // constants
-import { PATH, color, domain } from "@/constants";
+import { color, domain } from "@/constants";
 
 // apis
 import { apiService } from "@/apis";
 
 // hooks
-import { useToast, useConfirm } from "@/hooks";
+import { useToast, useConfirm, useExpoRouter } from "@/hooks";
 
 // styles
 import { styles } from "./index.styles";
 
 function Diary() {
+  const { router } = useExpoRouter("diary");
+
   const { diaryId } = useLocalSearchParams<{ diaryId: string }>();
 
   const { openConfirm } = useConfirm();
@@ -78,11 +80,7 @@ function Diary() {
   );
 
   const handleGoBackButtonClick = useCallback(() => {
-    if (router.canGoBack()) {
-      router.back();
-    } else {
-      router.replace(PATH.MAIN);
-    }
+    router.goBack();
   }, []);
 
   const handleEditButtonClick = useCallback(() => {
@@ -94,7 +92,7 @@ function Diary() {
   }, []);
 
   const handleDiaryEditButtonClick = useCallback(() => {
-    router.push(`/modify/${diaryId}`);
+    router.goToModifyPage(Number(diaryId));
   }, [diaryId]);
 
   const handleDiaryDeleteButtonClick = useCallback(() => {
@@ -120,11 +118,7 @@ function Diary() {
             await queryClient.invalidateQueries(["diaryList", year, month]);
             await queryClient.invalidateQueries(["diariesSummary"]);
 
-            if (router.canGoBack()) {
-              router.back();
-            } else {
-              router.replace(PATH.MAIN);
-            }
+            router.goBack();
           },
         },
         cancel: {

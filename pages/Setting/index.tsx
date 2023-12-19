@@ -4,9 +4,6 @@ import { View } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useQueryClient } from "react-query";
 
-// expo
-import { router } from "expo-router";
-
 // constants
 import { PATH, color } from "@/constants";
 
@@ -17,6 +14,9 @@ import { ProfileCard } from "./components/ProfileCard";
 import { ProfileCardSkeleton } from "./components/ProfileCard/index.skeleton";
 import { SettingItem } from "./components/SettingItem";
 import { NavigationButton } from "@/components/Button/NavigationButton";
+
+// hooks
+import { useExpoRouter } from "@/hooks";
 
 // apis
 import axios from "axios";
@@ -29,6 +29,8 @@ import { styles } from "./index.styles";
 import { useConfirm } from "@/hooks";
 
 export function SettingPage() {
+  const { router } = useExpoRouter("setting");
+
   const queryClient = useQueryClient();
 
   const { openConfirm } = useConfirm();
@@ -60,7 +62,7 @@ export function SettingPage() {
               },
             });
 
-            router.replace(PATH.HOME);
+            router.goToHomePage();
           },
         },
         cancel: {
@@ -85,7 +87,7 @@ export function SettingPage() {
 
             await apiService.resignUser();
 
-            router.replace(PATH.HOME);
+            router.goToHomePage();
           },
         },
         cancel: {
@@ -96,19 +98,15 @@ export function SettingPage() {
   }, []);
 
   const handleGoBackButtonClick = useCallback(() => {
-    if (router.canGoBack()) {
-      router.back();
-    } else {
-      router.replace(PATH.MAIN);
-    }
+    router.goBack();
   }, []);
 
   const handleProfileManageButtonClick = useCallback(() => {
-    router.push(PATH.SETTING_PROFILE);
+    router.goToProfilePage();
   }, []);
 
   const handleNoticeButtonClick = useCallback(() => {
-    router.push(PATH.SETTING_NOTICE);
+    router.goToNoticePage();
   }, []);
 
   return (

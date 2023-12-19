@@ -9,7 +9,6 @@ import type { RootState } from "@/store";
 import { type BottomSheetState } from "@/store/modules/bottomSheet";
 
 // expo
-import { router } from "expo-router";
 import { useLocalSearchParams } from "expo-router";
 
 // components
@@ -17,10 +16,10 @@ import { WritePresenter } from "../WritePresenter";
 import { WritePresenterSkeleton } from "../WritePresenter/index.skeleton";
 
 // hooks
-import { useSwiper, useToast } from "@/hooks";
+import { useSwiper, useToast, useExpoRouter } from "@/hooks";
 
 // constants
-import { PATH, regExp } from "@/constants";
+import { regExp } from "@/constants";
 
 // apis
 import { apiService } from "@/apis";
@@ -29,6 +28,8 @@ const STEP_ONE_SLIDE_INDEX = 0;
 const STEP_TWO_SLIDE_INDEX = 1;
 
 export function ModifyContainer() {
+  const { router } = useExpoRouter("modify");
+
   const { fireToast } = useToast();
 
   const queryClient = useQueryClient();
@@ -103,7 +104,7 @@ export function ModifyContainer() {
         await queryClient.invalidateQueries(["diaryDetail", diaryId]);
         await queryClient.invalidateQueries(["diariesSummary"]);
 
-        router.replace(`/diary/${diaryId}`);
+        router.goBack();
       },
     }
   );
@@ -181,11 +182,7 @@ export function ModifyContainer() {
   const handleGoBackButtonClick = useCallback(() => {
     switch (swiperIndex) {
       case STEP_ONE_SLIDE_INDEX:
-        if (router.canGoBack()) {
-          router.back();
-        } else {
-          router.replace(PATH.MAIN);
-        }
+        router.goBack();
 
         break;
 

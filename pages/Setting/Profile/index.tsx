@@ -2,28 +2,23 @@
 import { Suspense, useCallback } from "react";
 import { View, Text } from "react-native";
 
-// expo
-import { router } from "expo-router";
-
 // components
 import { Header } from "@/components/Layout/Header";
 import { CaretLeftButton } from "@/components/Button/CaretLeftButton";
 import { ProfileForm } from "./ProfileForm";
 import { ProfileFormSkeleton } from "./ProfileForm/index.skeleton";
 
-// constants
-import { PATH } from "@/constants";
+// hooks
+import { useExpoRouter } from "@/hooks";
 
 // styles
 import { styles } from "./index.styles";
 
 export function ProfilePage() {
+  const { router } = useExpoRouter("profile");
+
   const handleGoBackButtonClick = useCallback(() => {
-    if (router.canGoBack()) {
-      router.back();
-    } else {
-      router.replace(PATH.SETTING);
-    }
+    router.goBack();
   }, []);
 
   return (

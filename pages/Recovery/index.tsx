@@ -4,9 +4,6 @@ import { View, Text, TextInput } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import { useMutation } from "react-query";
 
-// expo
-import { router } from "expo-router";
-
 // components
 import { NavigationButton } from "@/components/Button/NavigationButton";
 import { Header } from "@/components/Layout/Header";
@@ -18,10 +15,10 @@ import { Footer } from "@/components/Layout/Footer";
 import Swiper from "react-native-web-swiper";
 
 // hooks
-import { useSwiper, useToast } from "@/hooks";
+import { useSwiper, useToast, useExpoRouter } from "@/hooks";
 
 // constants
-import { PATH, color, regExp } from "@/constants";
+import { color, regExp } from "@/constants";
 
 // apis
 import { apiService } from "@/apis";
@@ -43,6 +40,8 @@ type RecoveryPasswordFormFieldValues = {
 };
 
 export function RecoveryPage() {
+  const { router } = useExpoRouter("recovery");
+
   const { fireToast } = useToast();
 
   const { swiperIndex, swiperRef, handleSwiperIndexChange } =
@@ -105,11 +104,7 @@ export function RecoveryPage() {
     },
     {
       onSuccess: () => {
-        if (router.canGoBack()) {
-          router.back();
-        } else {
-          router.replace(PATH.HOME);
-        }
+        router.goBack();
 
         fireToast("비밀번호가 변경되었습니다.", 3000);
       },
@@ -184,11 +179,7 @@ export function RecoveryPage() {
   const handleGoBackButtonClick = useCallback(() => {
     switch (swiperIndex) {
       case EMAIL_SLIDE:
-        if (router.canGoBack()) {
-          router.back();
-        } else {
-          router.replace(PATH.HOME);
-        }
+        router.goBack();
 
         break;
 

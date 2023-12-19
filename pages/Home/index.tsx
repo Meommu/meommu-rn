@@ -5,9 +5,6 @@ import { useForm, Controller } from "react-hook-form";
 import { useMutation } from "react-query";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-// expo
-import { router } from "expo-router";
-
 // components
 import { NavigationButton } from "@/components/Button/NavigationButton";
 import { BannerImage } from "@/components/Image/BannerImage";
@@ -24,7 +21,7 @@ import { apiService } from "@/apis";
 import axios from "axios";
 
 // hooks
-import { useToast } from "@/hooks";
+import { useToast, useExpoRouter } from "@/hooks";
 
 // utils
 import { sleep } from "@/utils";
@@ -33,6 +30,8 @@ import { sleep } from "@/utils";
 import { styles } from "./index.styles";
 
 export function HomePage() {
+  const { router } = useExpoRouter("home");
+
   const { control, handleSubmit } = useForm<SignInFormFieldValues>({
     defaultValues: {
       id: "",
@@ -56,7 +55,7 @@ export function HomePage() {
 
         await AsyncStorage.setItem("accessToken", accessToken);
 
-        router.replace(PATH.MAIN);
+        router.goToMainPage();
       },
     }
   );
@@ -85,13 +84,13 @@ export function HomePage() {
   const handleSignUpButtonClick = useCallback(async () => {
     await sleep(size.BUTTON_PRESS_IN_OUT_DURATION * 2);
 
-    router.push(PATH.SIGN_UP);
+    router.goToSignUpPage();
   }, []);
 
   const handlePasswordRecoveryButtoncClick = useCallback(async () => {
     await sleep(size.BUTTON_PRESS_IN_OUT_DURATION * 2);
 
-    router.push(PATH.RECOVERY);
+    router.goToRecoveryPage();
   }, []);
 
   return (
