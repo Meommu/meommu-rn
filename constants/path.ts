@@ -4,7 +4,7 @@ export const pagePath: Readonly<Record<PageName, string>> = {
   write: "write",
   modify: "modify",
   diary: "diary",
-  onBoarding: "on-borading",
+  onBoarding: "on-boarding",
   notFound: "404",
   setting: "setting",
   profile: "setting/profile",
