@@ -27,5 +27,6 @@ export const styles = StyleSheet.create({
     color: color.g400,
     fontFamily: font.YeonTheLand,
     fontSize: 20,
+    textAlign: "center",
   },
 });
