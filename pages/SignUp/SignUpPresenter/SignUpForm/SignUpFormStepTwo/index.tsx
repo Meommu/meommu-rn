@@ -47,39 +47,6 @@ export function SignUpFormStepTwo({
           <View style={styles.formField}>
             <View style={styles.formFieldGuideLayout}>
               <Text style={styles.formFieldGuideText}>
-                유치원 이름을 입력해주세요
-              </Text>
-
-              <AlertText condition={!errors.kindergartenName ? true : false}>
-                {errors.kindergartenName
-                  ? "2에서 8글자 사이의 이름을 입력해주세요."
-                  : ""}
-              </AlertText>
-            </View>
-
-            <Controller
-              name="kindergartenName"
-              control={control}
-              rules={{
-                required: true,
-                minLength: 2,
-                maxLength: 8,
-              }}
-              render={({ field: { onChange, onBlur, value } }) => (
-                <FormInput
-                  placeholder="유치원 이름 (2글자~8글자)"
-                  onBlur={onBlur}
-                  onChangeText={onChange}
-                  value={value}
-                  testID="input-signup-kindergarten-name"
-                />
-              )}
-            />
-          </View>
-
-          <View style={styles.formField}>
-            <View style={styles.formFieldGuideLayout}>
-              <Text style={styles.formFieldGuideText}>
                 사용자 이름을 입력해주세요
               </Text>
 
@@ -102,7 +69,7 @@ export function SignUpFormStepTwo({
               }}
               render={({ field: { onChange, onBlur, value } }) => (
                 <FormInput
-                  placeholder="예) 김숙자"
+                  placeholder="예) 홍길동"
                   onBlur={onBlur}
                   onChangeText={onChange}
                   value={value}
@@ -142,6 +109,39 @@ export function SignUpFormStepTwo({
                   }}
                   value={value}
                   testID="input-signup-phone-number"
+                />
+              )}
+            />
+          </View>
+
+          <View style={styles.formField}>
+            <View style={styles.formFieldGuideLayout}>
+              <Text style={styles.formFieldGuideText}>
+                유치원 이름을 입력해주세요
+              </Text>
+
+              <AlertText condition={!errors.kindergartenName ? true : false}>
+                {errors.kindergartenName
+                  ? "1에서 8글자 사이의 이름을 입력해주세요."
+                  : ""}
+              </AlertText>
+            </View>
+
+            <Controller
+              name="kindergartenName"
+              control={control}
+              rules={{
+                required: true,
+                minLength: 1,
+                maxLength: 7,
+              }}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <FormInput
+                  placeholder="유치원 이름 (1글자~8글자)"
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                  testID="input-signup-kindergarten-name"
                 />
               )}
             />
