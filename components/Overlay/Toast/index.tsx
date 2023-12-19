@@ -14,7 +14,7 @@ import { ResponsiveKeyboardAvoidingView } from "@/components/Layout/ResponsiveKe
 import { styles } from "./index.styles";
 
 export function Toast() {
-  const { isOpen, message } = useSelector<RootState, ToastState>(
+  const { isToastOpen, message } = useSelector<RootState, ToastState>(
     (state) => state.toast
   );
 
@@ -22,7 +22,11 @@ export function Toast() {
     <View style={styles.container}>
       <ResponsiveKeyboardAvoidingView>
         <View style={styles.content}>
-          <AView style={styles.modalLayout} isMount={isOpen} duration={300}>
+          <AView
+            style={styles.modalLayout}
+            isMount={isToastOpen}
+            duration={300}
+          >
             <View style={styles.modal}>
               <Text style={styles.modalMessage}>{message}</Text>
             </View>

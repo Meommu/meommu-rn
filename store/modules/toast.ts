@@ -8,24 +8,24 @@ export const changeMessage = (message: string) => ({
   message,
 });
 
-export const changeVisible = (isOpen: boolean) => ({
+export const changeVisible = (isToastOpen: boolean) => ({
   type: UPDATE_TOAST.CHANGE_VISIBLE,
-  isOpen,
+  isToastOpen,
 });
 
 export interface ToastState {
-  isOpen: boolean;
+  isToastOpen: boolean;
   message: string;
 }
 
 interface ToastAction {
   type: UPDATE_TOAST;
-  isOpen: boolean;
+  isToastOpen: boolean;
   message: string;
 }
 
 const initialState = {
-  isOpen: false,
+  isToastOpen: false,
   message: "",
 };
 
@@ -38,7 +38,7 @@ const toast = (
       return { ...state, message: action.message };
     }
     case UPDATE_TOAST.CHANGE_VISIBLE: {
-      return { ...state, isOpen: action.isOpen };
+      return { ...state, isToastOpen: action.isToastOpen };
     }
     default: {
       return state;
