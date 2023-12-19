@@ -14,6 +14,13 @@ import { router, useLocalSearchParams } from "expo-router";
  */
 type PageRoutingMethods = {
   // 0
+  _layout: {
+    goToNotFoundPage: () => void;
+
+    goToHomePage: () => void;
+  };
+
+  // 0
   notFound: {
     goToSplashPage: () => void;
   };
@@ -111,6 +118,14 @@ export const useExpoRouter = <T extends keyof PageRoutingMethods>(page: T) => {
 
   const pageMethods = useMemo<PageRoutingMethods>(
     () => ({
+      _layout: {
+        goToHomePage() {
+          router.replace("home");
+        },
+        goToNotFoundPage() {
+          router.replace("404");
+        },
+      },
       setting: {
         /**
          * TODO: 스택이 하나 더 쌓이는 이슈가 있어 home, main 페이지 통합 후 삭제예정

@@ -8,11 +8,11 @@ import { ReactQueryDevtools } from "react-query/devtools";
 // redux
 import { store } from "../ReduxStore";
 
-// expo
-import { router } from "expo-router";
+// hooks
+import { useExpoRouter } from "@/hooks";
 
 // constants
-import { CODE, PATH } from "@/constants";
+import { CODE } from "@/constants";
 
 // apis
 import axios, { AxiosError } from "axios";
@@ -28,6 +28,8 @@ interface QueryProviderProps {
 }
 
 export function QueryProvider({ children }: QueryProviderProps) {
+  const { router } = useExpoRouter("_layout");
+
   const errorHandler = useCallback(async (error: unknown) => {
     const axiosError = error as AxiosError;
 
@@ -84,12 +86,12 @@ export function QueryProvider({ children }: QueryProviderProps) {
           },
         });
 
-        router.replace(PATH.HOME);
+        router.goToHomePage();
 
         break;
 
       case CODE.DIARY_NOT_FOUND:
-        router.replace(PATH.NOT_FOUND);
+        router.goToNotFoundPage();
 
         break;
 
