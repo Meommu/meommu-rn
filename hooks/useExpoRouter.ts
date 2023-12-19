@@ -4,6 +4,9 @@ import { useMemo } from "react";
 // expo
 import { router, useLocalSearchParams } from "expo-router";
 
+// constants
+import { pagePath } from "@/constants";
+
 export const useExpoRouter = <T extends PageName>(page: T) => {
   const { diaryId, source } = useLocalSearchParams<{
     diaryId?: string;
@@ -14,10 +17,10 @@ export const useExpoRouter = <T extends PageName>(page: T) => {
     () => ({
       _layout: {
         goToHomePage() {
-          router.replace("home");
+          router.replace(pagePath.home);
         },
         goToNotFoundPage() {
-          router.replace("404");
+          router.replace(pagePath.notFound);
         },
       },
       setting: {
@@ -29,20 +32,20 @@ export const useExpoRouter = <T extends PageName>(page: T) => {
             router.back();
           }
 
-          router.replace("home");
+          router.replace(pagePath.home);
         },
         goBack() {
           if (router.canGoBack()) {
             router.back();
           } else {
-            router.replace("main");
+            router.replace(pagePath.main);
           }
         },
         goToNoticePage() {
-          router.push("setting/notice");
+          router.push(pagePath.notice);
         },
         goToProfilePage() {
-          router.push("setting/profile");
+          router.push(pagePath.profile);
         },
       },
       profile: {
@@ -50,7 +53,7 @@ export const useExpoRouter = <T extends PageName>(page: T) => {
           if (router.canGoBack()) {
             router.back();
           } else {
-            router.replace("setting");
+            router.replace(pagePath.setting);
           }
         },
       },
@@ -59,7 +62,7 @@ export const useExpoRouter = <T extends PageName>(page: T) => {
           if (router.canGoBack()) {
             router.back();
           } else {
-            router.replace("setting");
+            router.replace(pagePath.setting);
           }
         },
       },
@@ -68,13 +71,13 @@ export const useExpoRouter = <T extends PageName>(page: T) => {
           if (router.canGoBack()) {
             router.back();
           } else {
-            router.replace("main");
+            router.replace(pagePath.main);
           }
         },
 
         goToModifyPage(diaryId: number) {
           router.push({
-            pathname: `modify/${diaryId}`,
+            pathname: `${pagePath.modify}/${diaryId}`,
             params: { source: "diary" },
           });
         },
@@ -85,9 +88,9 @@ export const useExpoRouter = <T extends PageName>(page: T) => {
             router.back();
           } else {
             if (source === "diary") {
-              router.replace(`diary/${diaryId}`);
+              router.replace(`${pagePath.diary}/${diaryId}`);
             } else {
-              router.replace("main");
+              router.replace(pagePath.main);
             }
           }
         },
@@ -97,12 +100,12 @@ export const useExpoRouter = <T extends PageName>(page: T) => {
           if (router.canGoBack()) {
             router.back();
           } else {
-            router.replace("main");
+            router.replace(pagePath.main);
           }
         },
 
         goToDiaryPage(diaryId: number) {
-          router.push(`diary/${diaryId}`);
+          router.push(`${pagePath.diary}/${diaryId}`);
         },
       },
       recovery: {
@@ -110,7 +113,7 @@ export const useExpoRouter = <T extends PageName>(page: T) => {
           if (router.canGoBack()) {
             router.back();
           } else {
-            router.replace("home");
+            router.replace(pagePath.home);
           }
         },
       },
@@ -119,54 +122,54 @@ export const useExpoRouter = <T extends PageName>(page: T) => {
           if (router.canGoBack()) {
             router.back();
           } else {
-            router.replace("home");
+            router.replace(pagePath.home);
           }
         },
       },
       splash: {
         goToHomePage() {
-          router.replace("home");
+          router.replace(pagePath.home);
         },
         goToMainPage() {
-          router.replace("main");
+          router.replace(pagePath.main);
         },
         goToOnBoardingPage() {
-          router.replace("on-boarding");
+          router.replace(pagePath.onBoarding);
         },
       },
       onBoarding: {
         goToHomePage() {
-          router.replace("home");
+          router.replace(pagePath.home);
         },
       },
       home: {
         goToMainPage() {
-          router.replace("main");
+          router.replace(pagePath.main);
         },
         goToRecoveryPage() {
-          router.push("recovery");
+          router.push(pagePath.recovery);
         },
         goToSignUpPage() {
-          router.push("sign-up");
+          router.push(pagePath.signUp);
         },
       },
       main: {
         goToDiaryPage(diaryId: number) {
-          router.push(`diary/${diaryId}`);
+          router.push(`${pagePath.diary}/${diaryId}`);
         },
         goToWritePage() {
-          router.push("write");
+          router.push(pagePath.write);
         },
         goToSettingPage() {
-          router.push("setting");
+          router.push(pagePath.setting);
         },
         goToModifyPage(diaryId: number) {
-          router.push(`modify/${diaryId}`);
+          router.push(`${pagePath.modify}/${diaryId}`);
         },
       },
       notFound: {
         goToSplashPage() {
-          router.replace("");
+          router.replace(pagePath.splash);
         },
       },
     }),
