@@ -6,3 +6,4 @@ export * from "./useSwiper";
 export * from "./useReanimated";
 export * from "./useConfirm";
 export * from "./usePressAnimation";
+export * from "./useExpoRouter";
