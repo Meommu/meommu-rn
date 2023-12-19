@@ -12,7 +12,7 @@ export function ProfileCard() {
   const { data } = useQuery(
     ["loginInfo"],
     async () => {
-      return await apiService.getLoginInfo();
+      return await apiService.getUserInfo();
     },
     {
       suspense: true,
@@ -32,7 +32,7 @@ export function ProfileCard() {
       </View>
 
       <View style={styles.profileContent}>
-        <Text style={styles.profileContentName}>{data.name}</Text>
+        <Text style={styles.profileContentName}>{data.ownerName}</Text>
         <Text style={styles.profileContentEmail}>{data.email}</Text>
       </View>
     </View>
