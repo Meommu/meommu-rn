@@ -1,5 +1,5 @@
 // react
-import { Text, type PressableProps } from "react-native";
+import { View, Text, type PressableProps } from "react-native";
 
 // conponents
 import { InteractionPressable } from "@/components/Pressable/InteractionPressable";
@@ -17,8 +17,10 @@ export function HomeNavigationButton({
   ...props
 }: HomeNavigationButtonProps) {
   return (
-    <InteractionPressable containerStyle={styles.button} {...props}>
-      <Text style={styles.buttonText}>{content}</Text>
-    </InteractionPressable>
+    <View style={styles.container}>
+      <InteractionPressable containerStyle={styles.button} {...props}>
+        <Text style={styles.buttonText}>{content}</Text>
+      </InteractionPressable>
+    </View>
   );
 }

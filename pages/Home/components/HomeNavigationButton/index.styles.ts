@@ -5,12 +5,13 @@ import { StyleSheet } from "react-native";
 import { size, color, font } from "@/constants";
 
 export const styles = StyleSheet.create({
-  button: {
-    width: "100%",
+  container: {
     height: size.NAVIGATION_BUTTON_HEIGHT,
     justifyContent: "center",
     alignItems: "center",
+  },
 
+  button: {
     padding: 10,
   },
 
