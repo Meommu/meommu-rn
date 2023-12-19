@@ -11,7 +11,7 @@ export default function AppLayout() {
   return (
     <>
       <Head>
-        <title>Meommu</title>
+        <title>meommu</title>
         <meta property="og:type" content="website" />
         <meta
           property="og:image"
