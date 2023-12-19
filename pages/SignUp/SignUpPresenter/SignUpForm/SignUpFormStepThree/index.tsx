@@ -11,13 +11,13 @@ import { styles } from "./index.styles";
 export function SignUpFormStepThree() {
   const { watch } = useFormContext<SignUpFormFieldValues>();
 
-  const kindergartenName = watch("kindergartenName");
+  const kindergartenDirectorName = watch("kindergartenDirectorName");
 
   return (
     <View style={styles.container}>
       <View style={styles.greeting}>
         <Text style={styles.greetingTitle}>
-          {`${kindergartenName}님,`}
+          {`${kindergartenDirectorName}님,`}
           {"\n"}
           멈무유치원에 오신걸 환영합니다!
         </Text>
