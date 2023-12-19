@@ -148,49 +148,53 @@ export function DiaryList() {
 
   return (
     <>
-      <Animated.ScrollView
-        scrollEventThrottle={16}
-        onScroll={scrollHandler}
-        contentContainerStyle={styles.container}
-        showsVerticalScrollIndicator={false}
-        refreshControl={
-          <RefreshControl
-            refreshing={isRefreshing}
-            onRefresh={async () => {
-              setIsRefreshing(true);
+      {diaries.length > 0 ? (
+        <Animated.ScrollView
+          scrollEventThrottle={16}
+          onScroll={scrollHandler}
+          contentContainerStyle={styles.container}
+          showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl
+              refreshing={isRefreshing}
+              onRefresh={async () => {
+                setIsRefreshing(true);
 
-              await refetch();
+                await refetch();
 
-              setIsRefreshing(false);
-            }}
-          />
-        }
-      >
-        {isLoading || isRefreshing ? (
-          Array(3)
-            .fill(null)
-            .map((_, i) => {
-              return <DiaryItemSkeleton key={i} />;
-            })
-        ) : diaries.length > 0 ? (
-          <>
-            {diaries.map((diary) => {
-              return (
-                <DiaryItem
-                  diary={diary}
-                  key={diary.id}
-                  handleKebabMenuButtonClick={handleKebabMenuButtonClick(
-                    diary.id
-                  )}
-                />
-              );
-            })}
-            <Text style={styles.listCountText}>{diaries.length}개의 일기</Text>
-          </>
-        ) : (
-          <DiaryListPlaceholder />
-        )}
-      </Animated.ScrollView>
+                setIsRefreshing(false);
+              }}
+            />
+          }
+        >
+          {isLoading || isRefreshing ? (
+            Array(3)
+              .fill(null)
+              .map((_, i) => {
+                return <DiaryItemSkeleton key={i} />;
+              })
+          ) : (
+            <>
+              {diaries.map((diary) => {
+                return (
+                  <DiaryItem
+                    diary={diary}
+                    key={diary.id}
+                    handleKebabMenuButtonClick={handleKebabMenuButtonClick(
+                      diary.id
+                    )}
+                  />
+                );
+              })}
+              <Text style={styles.listCountText}>
+                {diaries.length}개의 일기
+              </Text>
+            </>
+          )}
+        </Animated.ScrollView>
+      ) : (
+        <DiaryListPlaceholder />
+      )}
 
       <Animated.View
         style={[
@@ -207,7 +211,7 @@ export function DiaryList() {
 
         <Popover
           id="write"
-          content="선생님 지금 시작해보세요"
+          content="지금 시작해보세요"
           bottom={
             size.NAVIGATION_BUTTON_HEIGHT + size.FOOTER_PADDING_BOTTOM + 24
           }

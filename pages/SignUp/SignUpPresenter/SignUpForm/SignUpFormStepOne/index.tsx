@@ -189,8 +189,8 @@ export function SignUpFormStepOne() {
     <View style={styles.container}>
       <View style={styles.greeting}>
         <Text style={styles.greetingTitle}>
-          안녕하세요 선생님,{"\n"}
-          멈무유치원에 오신걸 환영합니다!
+          안녕하세요,{"\n"}
+          멈무일기에 오신걸 환영합니다!
         </Text>
         <Text style={styles.greetingSubTitle}>
           반려동물과의 건강한 추억을 기록해드리겠습니다.
