@@ -127,10 +127,14 @@ export const useExpoRouter = <T extends keyof PageRoutingMethods>(page: T) => {
         },
       },
       setting: {
-        /**
-         * TODO: 스택이 하나 더 쌓이는 이슈가 있어 home, main 페이지 통합 후 삭제예정
-         */
         goToHomePage() {
+          /**
+           * 곧바로 replace할 경우 스택이 하나 더 쌓이는 이슈가 있어, back을 미리 해줌.
+           */
+          if (router.canGoBack()) {
+            router.back();
+          }
+
           router.replace("home");
         },
         goBack() {
