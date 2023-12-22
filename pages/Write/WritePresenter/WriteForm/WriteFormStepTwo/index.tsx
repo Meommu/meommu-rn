@@ -85,7 +85,11 @@ export function WriteFormStepTwo() {
               },
               maxLength: {
                 value: size.DIARY_CONTENT_MAX_LENGTH,
-                message: "일기는 최대 1,000자 까지 작성 가능합니다.",
+                message: [
+                  "일기는 최대 1,000자 까지 작성 가능합니다. (",
+                  getValues("content").length,
+                  "/1000)",
+                ].join(""),
               },
             }}
             render={({ field: { onChange, onBlur, value } }) => {
