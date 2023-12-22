@@ -13,7 +13,7 @@ import { UploadImagePicker } from "@/pages/Write/components/UploadImagePicker";
 import { DatePickerController } from "@/pages/Write/components/DatePickerController";
 
 // constants
-import { color } from "@/constants";
+import { color, size } from "@/constants";
 
 // styles
 import { styles } from "./index.styles";
@@ -81,7 +81,7 @@ export function WriteFormStepTwo() {
             rules={{
               required: true,
               minLength: 1,
-              maxLength: 1000,
+              maxLength: size.DIARY_CONTENT_MAX_LENGTH,
             }}
             render={({ field: { onChange, onBlur, value } }) => {
               return (
@@ -89,10 +89,12 @@ export function WriteFormStepTwo() {
                   style={styles.writeFormContentInput}
                   textAlignVertical="top"
                   multiline={true}
-                  maxLength={1000}
+                  maxLength={size.DIARY_CONTENT_MAX_LENGTH}
                   placeholder={`${getValues(
                     "dogName"
-                  )}의 일기를 작성해주세요. (0/1000)`}
+                  )}의 일기를 작성해주세요. (0/${
+                    size.DIARY_CONTENT_MAX_LENGTH
+                  })`}
                   placeholderTextColor={color.g300}
                   onBlur={onBlur}
                   onChangeText={onChange}

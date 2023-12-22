@@ -30,6 +30,8 @@ export const FOOTER_PADDING_BOTTOM = 13;
  */
 export const MONTH_CALENDAR_PAGE_COUNT = 10;
 
+export const DIARY_CONTENT_MAX_LENGTH = 1000;
+
 /**
  * animation
  */
