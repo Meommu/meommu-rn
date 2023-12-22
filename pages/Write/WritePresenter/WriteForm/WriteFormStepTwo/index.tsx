@@ -79,9 +79,14 @@ export function WriteFormStepTwo() {
             name="content"
             control={control}
             rules={{
-              required: true,
-              minLength: 1,
-              maxLength: size.DIARY_CONTENT_MAX_LENGTH,
+              required: {
+                value: true,
+                message: "최소 1자 이상의 일기를 입력해주세요.",
+              },
+              maxLength: {
+                value: size.DIARY_CONTENT_MAX_LENGTH,
+                message: "일기는 최대 1,000자 까지 작성 가능합니다.",
+              },
             }}
             render={({ field: { onChange, onBlur, value } }) => {
               return (
@@ -89,7 +94,6 @@ export function WriteFormStepTwo() {
                   style={styles.writeFormContentInput}
                   textAlignVertical="top"
                   multiline={true}
-                  maxLength={size.DIARY_CONTENT_MAX_LENGTH}
                   placeholder={`${getValues(
                     "dogName"
                   )}의 일기를 작성해주세요. (0/${

@@ -140,7 +140,7 @@ export function WriteContainer() {
         }
 
         if (errors.content) {
-          fireToast("올바른 일기를 입력하세요.", 2000);
+          fireToast(errors.content.message || "", 2000);
 
           return;
         }
